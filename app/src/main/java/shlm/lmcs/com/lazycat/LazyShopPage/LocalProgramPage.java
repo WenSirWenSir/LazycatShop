@@ -1,0 +1,1 @@
+package shlm.lmcs.com.lazycat.LazyShopPage;public class LocalProgramPage {}
