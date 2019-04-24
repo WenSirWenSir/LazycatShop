@@ -1,5 +1,6 @@
 package shlm.lmcs.com.lazycat.LazyCatProgramUnt;
 
+import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -28,7 +29,11 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Document;
@@ -115,6 +120,7 @@ public class Tools {
             Log.e(Config.DEBUG, "Tools.java[+]关闭Fragment失败");
         }
     }
+
 
     /**
      * Determines whether the file exists
@@ -628,4 +634,66 @@ public class Tools {
         onMemorySize.onGet(memory, totalmemory, freememory);
     }
 
+    /**
+     * @param view
+     * @param time
+     * @return
+     */
+    @SuppressLint("NewApi")
+    public static android.animation.Animator createRoundAnimation(View view, int time) {
+        int cx = (view.getLeft() + view.getRight()) / 2;
+        int cy = (view.getTop() + view.getBottom()) / 2;
+        float startx = 0f;
+        float starty = (float) Math.sqrt(cx * cx + cy * cy);
+        Animator animation = ViewAnimationUtils.createCircularReveal(view, cx, cy, startx, starty);
+        animation.setInterpolator(new AccelerateInterpolator());
+        animation.setDuration(time);
+        return animation;
+    }
+
+    /**
+     * 创建一个可以换行显示的layout
+     *
+     * @param context
+     * @param textlist 字符集合
+     */
+    public static void createshifterLinearlayout(LinearLayout layout, Context context,
+                                                 ArrayList<String> textlist) {
+        /*获取父布局的宽度*/
+        TextView t = new TextView(context);
+        t.setText("234234324");
+        TextView a = new TextView(context);
+        layout.addView(t);
+        int spec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        layout.measure(spec, spec);
+        Log.e(Config.DEBUG, "测量宽度" + t.getMeasuredWidth() + "父布局宽度：" + layout.getMeasuredWidth());
+
+    }
+
+    /**
+     * 将文本变成TextView
+     *
+     * @param text_list
+     */
+    @SuppressLint("NewApi")
+    public static ArrayList<LinearLayout> handleToarraylist(Context context, ArrayList<String>
+            text_list, int left, int top, int right, int bottom, String color, String textColor,int textSize) {
+        ArrayList<LinearLayout> textViews = new ArrayList<LinearLayout>();
+        for (int i = 0; i < text_list.size(); i++) {
+            LinearLayout layout = new LinearLayout(context);
+            TextView tv = new TextView(context);
+            tv.setText(text_list.get(i));
+            tv.setPadding(left, top, right, bottom);
+            layout.addView(tv);
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tv.getLayoutParams();
+            params.setMargins(20, 10, 10, 10);
+            tv.setLayoutParams(params);
+            tv.setTextSize(textSize);
+            tv.setTextColor(Color.parseColor(textColor));
+            tv.setBackground(CreateDrawable(1, color, color, 10));
+            textViews.add(layout);
+        }
+        return textViews;
+
+    }
 }

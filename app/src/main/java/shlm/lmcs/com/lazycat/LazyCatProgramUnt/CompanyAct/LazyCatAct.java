@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -33,7 +32,7 @@ public class LazyCatAct extends Activity {
         Intent i = new Intent();
         i.setClass(this, Bclass);
         this.startActivity(i);
-        if(ColseF){
+        if (ColseF) {
             this.finish();
         }
         //界面动画
@@ -115,11 +114,21 @@ public class LazyCatAct extends Activity {
      * 设置透明状态栏
      */
     protected void setTransparentBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        try {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    /**
+     * 设置导航栏透明
+     */
+    protected void setHideNav() {
+        try {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -140,6 +149,7 @@ public class LazyCatAct extends Activity {
 
     @Override
     public void onBackPressed() {
+        /*判断是否需要退出提示*/
         if (isBackTwo) {
             if (isBackOk) {
                 super.onBackPressed();
