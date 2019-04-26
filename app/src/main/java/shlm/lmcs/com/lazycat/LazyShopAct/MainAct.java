@@ -1,1 +1,173 @@
-package shlm.lmcs.com.lazycat.LazyShopAct;import android.animation.Animator;import android.annotation.SuppressLint;import android.app.FragmentTransaction;import android.graphics.Color;import android.os.Bundle;import android.support.graphics.drawable.VectorDrawableCompat;import android.view.View;import android.widget.ImageView;import android.widget.RelativeLayout;import android.widget.TextView;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;import shlm.lmcs.com.lazycat.LazyShopFrg.Deliveryfrg;import shlm.lmcs.com.lazycat.LazyShopFrg.Mainfrg;import shlm.lmcs.com.lazycat.R;public class MainAct extends LazyCatAct {    private FragmentTransaction ft;    private RelativeLayout btn_main, btn_delivery, btn_usercenter;    private Mainfrg mainfrg;    private Deliveryfrg deliveryfrg;    private final static int ICO_FRAGMENT_MAIN = 0;    private final static int ICO_FRAGMENT_DELIVERY = 1;    private final static int ICO_FRAGMENT_USERCENTER = 2;    @Override    protected void onCreate(Bundle savedInstanceState) {        setContentView(R.layout.activity_main);        init();        super.onCreate(savedInstanceState);    }    @SuppressLint({"ResourceType", "NewApi"})    private void init() {        setTransparentBar();        setBackStatic(true);        //Â∞ùËØïÂä†ËΩΩFragment        ft = this.getFragmentManager().beginTransaction();        mainfrg = new Mainfrg();        ft.add(R.id.activity_main_Framelayout, mainfrg);        ft.commit();        //ÊâæÂØªÂØπ‰∫éÁöÑIDÂè∑Á†Å        btn_main = findViewById(R.id.activity_main_btn_IcoMain);//‰∏ªÁïåÈù¢        btn_delivery = findViewById(R.id.activity_main_btn_IcoDelivery);//ÈÖçÈÄÅÁïåÈù¢        btn_usercenter = findViewById(R.id.activity_main_btn_IcoUserCenter);//‰∏™‰∫∫‰∏≠ÂøÉ        btn_main.setOnClickListener(new View.OnClickListener() {            @Override            public void onClick(View v) {                hideFragment();                showFragment(ICO_FRAGMENT_MAIN);                ClearallIcoBackground();                RelativeLayout rl = (RelativeLayout) v;                Animator animation = Tools.createRoundAnimation(btn_main,200);                setIcoNavColor(rl, R.drawable.ico_btn_main, animation);                LazyCatActStartActivity(ShowshopOffice.class,false);            }        });        btn_delivery.setOnClickListener(new View.OnClickListener() {            @Override            public void onClick(View v) {                ClearallIcoBackground();                hideFragment();                showFragment(ICO_FRAGMENT_DELIVERY);                RelativeLayout rl = (RelativeLayout) v;                Animator animation = Tools.createRoundAnimation(btn_delivery,200);                setIcoNavColor(rl, R.drawable.ico_delivery, animation);            }        });        btn_usercenter.setOnClickListener(new View.OnClickListener() {            @Override            public void onClick(View v) {                ClearallIcoBackground();                RelativeLayout rl = (RelativeLayout) v;                Animator animation = Tools.createRoundAnimation(btn_usercenter,200);                setIcoNavColor(rl, R.drawable.ico_usercenter, animation);                LazyCatActStartActivity(LoginAct.class,false);            }        });    }    /**     * Ê∏ÖÁ©∫ÊâÄÊúâÁöÑÂØºËà™ÁöÑÈ¢úËâ≤ÂÄº     */    @SuppressLint("ResourceType")    private void ClearallIcoBackground() {        ImageView btn_mainImg = (ImageView) btn_main.getChildAt(0);//Á¨¨0Âè∑ÁöÑ‰ΩçÁΩÆÂ∞±ÊòØImage        TextView btn_mainTv = (TextView) btn_main.getChildAt(1);        btn_mainTv.setTextColor(Color.parseColor("#666666"));        ImageView btn_deliveryImg = (ImageView) btn_delivery.getChildAt(0);        TextView btn_deliveryTv = (TextView) btn_delivery.getChildAt(1);        btn_deliveryTv.setTextColor(Color.parseColor("#666666"));        ImageView btn_usercenterImg = (ImageView) btn_usercenter.getChildAt(0);        TextView btn_usercenterTv = (TextView) btn_usercenter.getChildAt(1);        btn_usercenterTv.setTextColor(Color.parseColor("#666666"));        //ËÆæÁΩÆÈªòËÆ§ÁöÑÁ¨¨‰∏Ä‰∏™ÂØºËà™ÁöÑÈ¢úËâ≤        VectorDrawableCompat btn_mainImgVD = VectorDrawableCompat.create(getResources(), R                .drawable.ico_btn_main, getTheme());        btn_mainImgVD.setTint(Color.parseColor("#666666"));        btn_mainImg.setImageDrawable(btn_mainImgVD);        //ËÆæÁΩÆÈªòËÆ§ÁöÑÁ¨¨‰∫å‰∏™ÂØºËà™ÁöÑÈ¢úËâ≤        VectorDrawableCompat btn_deilveryImgVD = VectorDrawableCompat.create(getResources(), R                .drawable.ico_delivery, getTheme());        btn_deilveryImgVD.setTint(Color.parseColor("#666666"));        btn_deliveryImg.setImageDrawable(btn_deilveryImgVD);        //ËÆæÁΩÆÈªòËÆ§ÁöÑÁ¨¨‰∏â‰∏™ÂØºËà™ÁöÑÈ¢úËâ≤        VectorDrawableCompat btn_usercenterImgVD = VectorDrawableCompat.create(getResources(), R                .drawable.ico_usercenter, getTheme());        btn_usercenterImgVD.setTint(Color.parseColor("#666666"));        btn_usercenterImg.setImageDrawable(btn_usercenterImgVD);    }    @SuppressLint("ResourceType")    private void setIcoNavColor(RelativeLayout rl, int image, final android.animation.Animator animation) {        ImageView iv = (ImageView) rl.getChildAt(0);//Á¨¨‰∏Ä‰∏™Â∞±ÊòØÂõæÊ†á        rl.post(new Runnable() {            @Override            public void run() {                animation.start();            }        });        VectorDrawableCompat vectorDrawableCompat = VectorDrawableCompat.create(getResources(),                image, getTheme());        vectorDrawableCompat.setTint(Color.parseColor(getResources().getString(R.color                .ThemeColor)));        iv.setImageDrawable(vectorDrawableCompat);        TextView tv = (TextView) rl.getChildAt(1);        tv.setTextColor(Color.parseColor(getResources().getString(R.color.ThemeColor)));    }    private void showFragment(int position) {        FragmentTransaction ft = getFragmentManager().beginTransaction();        switch (position) {            case ICO_FRAGMENT_MAIN:                if (mainfrg != null) {                    ft.show(mainfrg);                } else {                    mainfrg = new Mainfrg();                    ft.add(R.id.activity_main_Framelayout, mainfrg);                }                break;            case ICO_FRAGMENT_DELIVERY:                if (deliveryfrg != null) {                    ft.show(deliveryfrg);                } else {                    deliveryfrg = new Deliveryfrg();                    ft.add(R.id.activity_main_Framelayout, deliveryfrg);                }                break;            case ICO_FRAGMENT_USERCENTER:                break;        }        ft.commit();    }    private void hideFragment() {        FragmentTransaction ft = getFragmentManager().beginTransaction();        if (mainfrg != null) {            ft.hide(mainfrg);        }        if (deliveryfrg != null) {            ft.hide(deliveryfrg);        }        ft.commit();    }}
+package shlm.lmcs.com.lazycat.LazyShopAct;
+
+import android.animation.Animator;
+import android.annotation.SuppressLint;
+import android.app.FragmentTransaction;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
+import shlm.lmcs.com.lazycat.LazyShopFrg.Deliveryfrg;
+import shlm.lmcs.com.lazycat.LazyShopFrg.Mainfrg;
+import shlm.lmcs.com.lazycat.R;
+
+public class MainAct extends LazyCatAct {
+    private FragmentTransaction ft;
+    private RelativeLayout btn_main, btn_delivery, btn_usercenter;
+    private Mainfrg mainfrg;
+    private Deliveryfrg deliveryfrg;
+    private final static int ICO_FRAGMENT_MAIN = 0;
+    private final static int ICO_FRAGMENT_DELIVERY = 1;
+    private final static int ICO_FRAGMENT_USERCENTER = 2;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_main);
+        init();
+        super.onCreate(savedInstanceState);
+    }
+
+    @SuppressLint({"ResourceType", "NewApi"})
+    private void init() {
+        setTransparentBar();
+        setBackStatic(true);
+
+        //≥¢ ‘º”‘ÿFragment
+        ft = this.getFragmentManager().beginTransaction();
+        mainfrg = new Mainfrg();
+        ft.add(R.id.activity_main_Framelayout, mainfrg);
+        ft.commit();
+        //’“—∞∂‘”⁄µƒID∫≈¬Î
+        btn_main = findViewById(R.id.activity_main_btn_IcoMain);//÷˜ΩÁ√Ê
+        btn_delivery = findViewById(R.id.activity_main_btn_IcoDelivery);//≈‰ÀÕΩÁ√Ê
+        btn_usercenter = findViewById(R.id.activity_main_btn_IcoUserCenter);//∏ˆ»À÷––ƒ
+        btn_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideFragment();
+                showFragment(ICO_FRAGMENT_MAIN);
+                ClearallIcoBackground();
+                RelativeLayout rl = (RelativeLayout) v;
+                Animator animation = Tools.createRoundAnimation(btn_main,200);
+                setIcoNavColor(rl, R.drawable.ico_btn_main, animation);
+                LazyCatActStartActivity(ShowshopOffice.class,false);
+
+            }
+        });
+
+        btn_delivery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClearallIcoBackground();
+                hideFragment();
+                showFragment(ICO_FRAGMENT_DELIVERY);
+                RelativeLayout rl = (RelativeLayout) v;
+                Animator animation = Tools.createRoundAnimation(btn_delivery,200);
+                setIcoNavColor(rl, R.drawable.ico_delivery, animation);
+            }
+        });
+        btn_usercenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClearallIcoBackground();
+                RelativeLayout rl = (RelativeLayout) v;
+                Animator animation = Tools.createRoundAnimation(btn_usercenter,200);
+                setIcoNavColor(rl, R.drawable.ico_usercenter, animation);
+                LazyCatActStartActivity(LoginAct.class,false);
+
+            }
+        });
+    }
+
+
+    /**
+     * «Âø’À˘”–µƒµº∫Ωµƒ—’…´÷µ
+     */
+    @SuppressLint("ResourceType")
+    private void ClearallIcoBackground() {
+        ImageView btn_mainImg = (ImageView) btn_main.getChildAt(0);//µ⁄0∫≈µƒŒª÷√æÕ «Image
+        TextView btn_mainTv = (TextView) btn_main.getChildAt(1);
+        btn_mainTv.setTextColor(Color.parseColor("#666666"));
+        ImageView btn_deliveryImg = (ImageView) btn_delivery.getChildAt(0);
+        TextView btn_deliveryTv = (TextView) btn_delivery.getChildAt(1);
+        btn_deliveryTv.setTextColor(Color.parseColor("#666666"));
+        ImageView btn_usercenterImg = (ImageView) btn_usercenter.getChildAt(0);
+        TextView btn_usercenterTv = (TextView) btn_usercenter.getChildAt(1);
+        btn_usercenterTv.setTextColor(Color.parseColor("#666666"));
+        //…Ë÷√ƒ¨»œµƒµ⁄“ª∏ˆµº∫Ωµƒ—’…´
+        VectorDrawableCompat btn_mainImgVD = VectorDrawableCompat.create(getResources(), R
+                .drawable.ico_btn_main, getTheme());
+        btn_mainImgVD.setTint(Color.parseColor("#666666"));
+        btn_mainImg.setImageDrawable(btn_mainImgVD);
+        //…Ë÷√ƒ¨»œµƒµ⁄∂˛∏ˆµº∫Ωµƒ—’…´
+        VectorDrawableCompat btn_deilveryImgVD = VectorDrawableCompat.create(getResources(), R
+                .drawable.ico_delivery, getTheme());
+        btn_deilveryImgVD.setTint(Color.parseColor("#666666"));
+        btn_deliveryImg.setImageDrawable(btn_deilveryImgVD);
+        //…Ë÷√ƒ¨»œµƒµ⁄»˝∏ˆµº∫Ωµƒ—’…´
+        VectorDrawableCompat btn_usercenterImgVD = VectorDrawableCompat.create(getResources(), R
+                .drawable.ico_usercenter, getTheme());
+        btn_usercenterImgVD.setTint(Color.parseColor("#666666"));
+        btn_usercenterImg.setImageDrawable(btn_usercenterImgVD);
+    }
+
+    @SuppressLint("ResourceType")
+    private void setIcoNavColor(RelativeLayout rl, int image, final android.animation.Animator animation) {
+        ImageView iv = (ImageView) rl.getChildAt(0);//µ⁄“ª∏ˆæÕ «Õº±Í
+        rl.post(new Runnable() {
+            @Override
+            public void run() {
+                animation.start();
+            }
+        });
+        VectorDrawableCompat vectorDrawableCompat = VectorDrawableCompat.create(getResources(),
+                image, getTheme());
+        vectorDrawableCompat.setTint(Color.parseColor(getResources().getString(R.color
+                .ThemeColor)));
+        iv.setImageDrawable(vectorDrawableCompat);
+        TextView tv = (TextView) rl.getChildAt(1);
+        tv.setTextColor(Color.parseColor(getResources().getString(R.color.ThemeColor)));
+    }
+
+    private void showFragment(int position) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        switch (position) {
+            case ICO_FRAGMENT_MAIN:
+                if (mainfrg != null) {
+                    ft.show(mainfrg);
+                } else {
+                    mainfrg = new Mainfrg();
+                    ft.add(R.id.activity_main_Framelayout, mainfrg);
+                }
+                break;
+            case ICO_FRAGMENT_DELIVERY:
+                if (deliveryfrg != null) {
+                    ft.show(deliveryfrg);
+                } else {
+                    deliveryfrg = new Deliveryfrg();
+                    ft.add(R.id.activity_main_Framelayout, deliveryfrg);
+                }
+                break;
+            case ICO_FRAGMENT_USERCENTER:
+                break;
+        }
+        ft.commit();
+    }
+
+    private void hideFragment() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if (mainfrg != null) {
+            ft.hide(mainfrg);
+        }
+        if (deliveryfrg != null) {
+            ft.hide(deliveryfrg);
+        }
+        ft.commit();
+    }
+}

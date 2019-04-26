@@ -1,1 +1,84 @@
-package shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory;import android.annotation.SuppressLint;import android.app.Dialog;import android.content.Context;import android.util.Log;import android.view.Gravity;import android.view.View;import android.view.Window;import android.view.WindowManager;import android.view.animation.Animation;import android.view.animation.RotateAnimation;import android.widget.ImageView;import android.widget.TextView;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;public class WaitDialog {    public static RefreshDialog instanceRefreshDialog(Context _Context) {        return new RefreshDialog(_Context);    }    public static class RefreshDialog extends Dialog implements View.OnClickListener {        private Context mContext;        private WAIT_ITME_DIALOGPAGE _wait_itme_dialogpage;        public RefreshDialog(Context context) {            super(context);            this.mContext = context;        }        @SuppressLint("LongLogTag")        public void Init(WAIT_ITME_DIALOGPAGE wait_itme_dialogpage) {            if (wait_itme_dialogpage != null) {                this._wait_itme_dialogpage = wait_itme_dialogpage;                setContentView(this._wait_itme_dialogpage.getView());            } else {                Log.e(Config.DEBUG, "WaitDialogRefreshDilog[+]Ê≤°ÊúâÂàùÂßãÂåñË°®Ê†º");            }        }        /**         * ÈÖçÁΩÆÊòæÁ§∫ÁöÑdialog         *         * @param msg      ÊèêÁ§∫ÁöÑ‰ø°ÊÅØ         * @param canClose ÊòØÂê¶ÂèØ‰ª•ÂÖ≥Èó≠         */        @SuppressLint("LongLogTag")        public void showRefreshDialog(String msg, boolean canClose) {            Window wd = getWindow();            WindowManager.LayoutParams params = wd.getAttributes();            ImageView img = findViewById(this._wait_itme_dialogpage.getImg());            if (img == null) {                Log.e(Config.DEBUG, "‰∏∫NULL");                Log.e(Config.DEBUG, "imageid" + this._wait_itme_dialogpage.getImg());                return;            }            RotateAnimation rotateAnimation = new RotateAnimation(0f, 359f, Animation                    .RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5F);            rotateAnimation.setDuration(1000);            rotateAnimation.setRepeatCount(-1);            img.setAnimation(rotateAnimation);//ÂºÄÂßãÊóãËΩ¨            TextView tv = findViewById(_wait_itme_dialogpage.getTitle());            if (tv == null) {                //Ê≤°ÊúâÊ†áÈ¢ò Â∞±‰∏çË¶ÅËÆæÁΩÆ            } else {                tv.setText(msg.toString().trim());            }            setCancelable(canClose);            params.gravity = Gravity.CENTER;            wd.setAttributes(params);            setCancelable(canClose);            show();        }        @Override        public void onClick(View v) {        }    }}
+package shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory;
+
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Context;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
+
+public class WaitDialog {
+
+    public static RefreshDialog instanceRefreshDialog(Context _Context) {
+        return new RefreshDialog(_Context);
+    }
+
+    public static class RefreshDialog extends Dialog implements View.OnClickListener {
+        private Context mContext;
+        private WAIT_ITME_DIALOGPAGE _wait_itme_dialogpage;
+
+        public RefreshDialog(Context context) {
+            super(context);
+            this.mContext = context;
+        }
+
+        @SuppressLint("LongLogTag")
+        public void Init(WAIT_ITME_DIALOGPAGE wait_itme_dialogpage) {
+            if (wait_itme_dialogpage != null) {
+                this._wait_itme_dialogpage = wait_itme_dialogpage;
+                setContentView(this._wait_itme_dialogpage.getView());
+            } else {
+                Log.e(Config.DEBUG, "WaitDialogRefreshDilog[+]√ª”–≥ı ºªØ±Ì∏Ò");
+            }
+        }
+
+        /**
+         * ≈‰÷√œ‘ æµƒdialog
+         *
+         * @param msg      Ã· æµƒ–≈œ¢
+         * @param canClose  «∑Òø…“‘πÿ±’
+         */
+        @SuppressLint("LongLogTag")
+        public void showRefreshDialog(String msg, boolean canClose) {
+            Window wd = getWindow();
+            WindowManager.LayoutParams params = wd.getAttributes();
+            ImageView img = findViewById(this._wait_itme_dialogpage.getImg());
+            if (img == null) {
+                Log.e(Config.DEBUG, "Œ™NULL");
+                Log.e(Config.DEBUG, "imageid" + this._wait_itme_dialogpage.getImg());
+                return;
+            }
+            RotateAnimation rotateAnimation = new RotateAnimation(0f, 359f, Animation
+                    .RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5F);
+            rotateAnimation.setDuration(1000);
+            rotateAnimation.setRepeatCount(-1);
+            img.setAnimation(rotateAnimation);//ø™ º–˝◊™
+            TextView tv = findViewById(_wait_itme_dialogpage.getTitle());
+            if (tv == null) {
+                //√ª”–±ÍÃ‚ æÕ≤ª“™…Ë÷√
+            } else {
+                tv.setText(msg.toString().trim());
+
+            }
+            setCancelable(canClose);
+            params.gravity = Gravity.CENTER;
+            wd.setAttributes(params);
+            setCancelable(canClose);
+            show();
+        }
+
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
+}

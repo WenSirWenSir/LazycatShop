@@ -1,1 +1,217 @@
-package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass;import android.app.Activity;import android.content.Context;import android.util.Log;import android.webkit.JavascriptInterface;import android.widget.Toast;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;/** * ç½‘é¡µè°ƒç”¨çš„æ–¹æ³• */public class WebMonitor {    private Context mContext;    private Activity mAc;    public WebMonitor(Context _Context, Activity ac) {        this.mAc = ac;        this.mContext = _Context;    }    /**     * ç½‘é¡µæ¥å£  å¢åŠ ç”¨æˆ·ä¸€ä¸ªæŠµç”¨å·  å¯ä»¥ç›´æ¥ä½¿ç”¨æŠµç”¨åˆ¸ä½¿ç”¨     *     * @param _pagetype æŠµç”¨å·ç±»å‹     * @param price     æŠµç”¨çš„é‡‘é¢     * @param message   å¤‡æ³¨ä¿¡æ¯     */    @JavascriptInterface    public void Getpage(int price, int _pagetype, String message) {    }    /**     * è·å–èµ å“ä¿¡æ¯     *     * @param barcode å•†å“æ¡ç      * @param id      å•†å“å”¯ä¸€ID     * @param number  èµ é€æ•°é‡     * @param message å¤‡æ³¨ä¿¡æ¯     */    @JavascriptInterface    public void Getshop(int barcode, int id, int number, String message) {    }    /**     * æ‰§è¡ŒMYSQLæ•°æ®ä¿¡æ¯     *     * @param sql MySQLè¯­å¥     * @param url æäº¤åœ°å€     */    @JavascriptInterface    public void ExeclMysql(String sql, String url) {    }    /**     * è·å–ç§¯åˆ†     *     * @param Integral ç§¯åˆ†æ•°é‡     * @param message  å¤‡æ³¨ä¿¡æ¯     */    @JavascriptInterface    public void GetIntegral(int Integral, String message) {    }    /**     * è·å–æ‰‹æœºçš„ç‰©ç†åœ°å€     */    @JavascriptInterface    public void GetphoneAddr() {    }    /**     * æç¤ºä¸€ä¸ªæç¤ºä¿¡æ¯     *     * @param message ä¿¡æ¯     * @param in      0ä»£è¡¨çŸ­æç¤º 1ä»£è¡¨é•¿æç¤º     */    @JavascriptInterface    public void ShowToast(String message, int in) {        if (in == 0) {            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();        } else {            Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();        }    }    /**     * å¯åŠ¨ç™»å½•     */    @JavascriptInterface    public void StartLogin() {    }    /**     * æµè§ˆä¸€ä¸ªåšç‰¹ä»·æˆ–è€…åšä¿ƒé”€çš„å•†å“     *     * @param barcode å•†å“çš„æ¡ç      * @param id      å•†å“çš„å”¯ä¸€ID     * @param title   å•†å“çš„æ ‡é¢˜     */    public void StartShop(int barcode, int id, String title) {    }    /**     * å…³é—­WebViewçš„çª—å£     */    @JavascriptInterface    public void Finish() {        if (mAc != null) {            mAc.finish();        } else {            Log.e(Config.DEBUG, "WebMonitor.java[+]ä¼ å…¥çš„Activityä¸ºç©ºçš„å€¼ ä¸èƒ½å…³é—­");        }    }    /**     * æ‰“å¼€ç”¨æˆ·çš„è´­ç‰©è½¦     */    public void StartShopCart() {    }    /**     * æ›´æ–°ç³»ç»Ÿçš„æ—¥å¿—ä¿¡æ¯     *     * @param logMessage æ—¥å¿—çš„ä¿¡æ¯     * @param logTitle   æ—¥å¿—çš„æ ‡é¢˜     * @param code       æ—¥å¿—çš„æ ‡å·     */    public void SystemLog(String logMessage, String logTitle, int code) {    }    /**     * å›åˆ°ç”¨æˆ·çš„ä¸»ç•Œé¢     */    public void Goindex() {    }    /**     * è·³è½¬åˆ°ç”¨æˆ·çš„ä¸»ç•Œé¢     */    public void GoinUsercontent() {    }    /**     * è·³è½¬åˆ°ç”¨æˆ·çš„è¿é€ç•Œé¢     */    public void GoinUserFreight() {    }    /**     * å‘é€æ‰‹æœºéªŒè¯ç      *     * @param phone   æ‰‹æœºå·ç      * @param sendUrl å‘é€çš„åœ°å€     */    public void SendMessage(String phone, String sendUrl) {    }    /**     * æ£€æŸ¥éªŒè¯ç æ˜¯å¦æ­£ç¡® æ­£ç¡®çš„è¯ è¦è°ƒç”¨JSç«¯çš„ä»£ç   xmlæäº¤æ–¹å¼     *     * @param phone   æ‰‹æœºå·ç      * @param code    çŸ­ä¿¡éªŒè¯ç      * @param sendUrl æ£€æŸ¥çš„åœ°å€     */    public void CheckSendCode(String phone, String code, String sendUrl) {    }    /**     * åˆ†äº«åˆ°å¾®ä¿¡ç©ºé—´çš„æ¨èçš„ä¿¡æ¯ å¦‚æœè°ƒç”¨æˆåŠŸçš„è¯  å°±è¦å›è°ƒåˆ°JSæä¾›çš„æ¥å£åœ°å€     * @param title åˆ†äº«çš„æ ‡é¢˜     * @param content åˆ†äº«çš„å†…å®¹     * @param photo åˆ†äº«çš„å›¾ç‰‡     * @param callBackurl æˆåŠŸçš„å›è°ƒåœ°å€     */    public void ShareWX(String title, String content, String photo,String callBackurl) {    }    /**     * åˆ†äº«åˆ°QQæ§ä»¶çš„æ¨èçš„ä¿¡æ¯  å¦‚æœè°ƒç”¨æˆåŠŸçš„è¯ å°±è¦å›è°ƒå¤§JSæä¾›çš„æ¥å£çš„åœ°å€     * @param title åˆ†äº«çš„æ ‡é¢˜     * @param content åˆ†äº«çš„å†…å®¹     * @param photo åˆ†äº«çš„å›¾ç‰‡     * @param callBackurl æˆåŠŸçš„å›è°ƒåœ°å€     */    public void ShareQQ(String title,String content,String photo,String callBackurl){    }}
+package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass;
+
+
+import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
+import android.webkit.JavascriptInterface;
+import android.widget.Toast;
+
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
+
+/**
+ * ÍøÒ³µ÷ÓÃµÄ·½·¨
+ */
+
+public class WebMonitor {
+    private Context mContext;
+    private Activity mAc;
+
+    public WebMonitor(Context _Context, Activity ac) {
+        this.mAc = ac;
+        this.mContext = _Context;
+    }
+
+    /**
+     * ÍøÒ³½Ó¿Ú  Ôö¼ÓÓÃ»§Ò»¸öµÖÓÃ¾í  ¿ÉÒÔÖ±½ÓÊ¹ÓÃµÖÓÃÈ¯Ê¹ÓÃ
+     *
+     * @param _pagetype µÖÓÃ¾íÀàĞÍ
+     * @param price     µÖÓÃµÄ½ğ¶î
+     * @param message   ±¸×¢ĞÅÏ¢
+     */
+    @JavascriptInterface
+    public void Getpage(int price, int _pagetype, String message) {
+
+    }
+
+    /**
+     * »ñÈ¡ÔùÆ·ĞÅÏ¢
+     *
+     * @param barcode ÉÌÆ·ÌõÂë
+     * @param id      ÉÌÆ·Î¨Ò»ID
+     * @param number  ÔùËÍÊıÁ¿
+     * @param message ±¸×¢ĞÅÏ¢
+     */
+    @JavascriptInterface
+    public void Getshop(int barcode, int id, int number, String message) {
+
+    }
+
+
+    /**
+     * Ö´ĞĞMYSQLÊı¾İĞÅÏ¢
+     *
+     * @param sql MySQLÓï¾ä
+     * @param url Ìá½»µØÖ·
+     */
+    @JavascriptInterface
+    public void ExeclMysql(String sql, String url) {
+
+    }
+
+    /**
+     * »ñÈ¡»ı·Ö
+     *
+     * @param Integral »ı·ÖÊıÁ¿
+     * @param message  ±¸×¢ĞÅÏ¢
+     */
+    @JavascriptInterface
+
+    public void GetIntegral(int Integral, String message) {
+
+    }
+
+
+    /**
+     * »ñÈ¡ÊÖ»úµÄÎïÀíµØÖ·
+     */
+    @JavascriptInterface
+
+    public void GetphoneAddr() {
+
+    }
+
+    /**
+     * ÌáÊ¾Ò»¸öÌáÊ¾ĞÅÏ¢
+     *
+     * @param message ĞÅÏ¢
+     * @param in      0´ú±í¶ÌÌáÊ¾ 1´ú±í³¤ÌáÊ¾
+     */
+    @JavascriptInterface
+    public void ShowToast(String message, int in) {
+        if (in == 0) {
+            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Æô¶¯µÇÂ¼
+     */
+    @JavascriptInterface
+
+    public void StartLogin() {
+
+    }
+
+    /**
+     * ä¯ÀÀÒ»¸ö×öÌØ¼Û»òÕß×ö´ÙÏúµÄÉÌÆ·
+     *
+     * @param barcode ÉÌÆ·µÄÌõÂë
+     * @param id      ÉÌÆ·µÄÎ¨Ò»ID
+     * @param title   ÉÌÆ·µÄ±êÌâ
+     */
+    public void StartShop(int barcode, int id, String title) {
+
+    }
+
+
+    /**
+     * ¹Ø±ÕWebViewµÄ´°¿Ú
+     */
+    @JavascriptInterface
+    public void Finish() {
+        if (mAc != null) {
+            mAc.finish();
+        } else {
+            Log.e(Config.DEBUG, "WebMonitor.java[+]´«ÈëµÄActivityÎª¿ÕµÄÖµ ²»ÄÜ¹Ø±Õ");
+        }
+    }
+
+    /**
+     * ´ò¿ªÓÃ»§µÄ¹ºÎï³µ
+     */
+    public void StartShopCart() {
+
+    }
+
+    /**
+     * ¸üĞÂÏµÍ³µÄÈÕÖ¾ĞÅÏ¢
+     *
+     * @param logMessage ÈÕÖ¾µÄĞÅÏ¢
+     * @param logTitle   ÈÕÖ¾µÄ±êÌâ
+     * @param code       ÈÕÖ¾µÄ±êºÅ
+     */
+    public void SystemLog(String logMessage, String logTitle, int code) {
+
+    }
+
+    /**
+     * »Øµ½ÓÃ»§µÄÖ÷½çÃæ
+     */
+    public void Goindex() {
+
+    }
+
+
+    /**
+     * Ìø×ªµ½ÓÃ»§µÄÖ÷½çÃæ
+     */
+    public void GoinUsercontent() {
+
+    }
+
+    /**
+     * Ìø×ªµ½ÓÃ»§µÄÔËËÍ½çÃæ
+     */
+    public void GoinUserFreight() {
+
+    }
+
+    /**
+     * ·¢ËÍÊÖ»úÑéÖ¤Âë
+     *
+     * @param phone   ÊÖ»úºÅÂë
+     * @param sendUrl ·¢ËÍµÄµØÖ·
+     */
+    public void SendMessage(String phone, String sendUrl) {
+
+    }
+
+
+    /**
+     * ¼ì²éÑéÖ¤ÂëÊÇ·ñÕıÈ· ÕıÈ·µÄ»° Òªµ÷ÓÃJS¶ËµÄ´úÂë  xmlÌá½»·½Ê½
+     *
+     * @param phone   ÊÖ»úºÅÂë
+     * @param code    ¶ÌĞÅÑéÖ¤Âë
+     * @param sendUrl ¼ì²éµÄµØÖ·
+     */
+    public void CheckSendCode(String phone, String code, String sendUrl) {
+
+    }
+
+
+    /**
+     * ·ÖÏíµ½Î¢ĞÅ¿Õ¼äµÄÍÆ¼öµÄĞÅÏ¢ Èç¹ûµ÷ÓÃ³É¹¦µÄ»°  ¾ÍÒª»Øµ÷µ½JSÌá¹©µÄ½Ó¿ÚµØÖ·
+     * @param title ·ÖÏíµÄ±êÌâ
+     * @param content ·ÖÏíµÄÄÚÈİ
+     * @param photo ·ÖÏíµÄÍ¼Æ¬
+     * @param callBackurl ³É¹¦µÄ»Øµ÷µØÖ·
+     */
+    public void ShareWX(String title, String content, String photo,String callBackurl) {
+
+    }
+
+    /**
+     * ·ÖÏíµ½QQ¿Ø¼şµÄÍÆ¼öµÄĞÅÏ¢  Èç¹ûµ÷ÓÃ³É¹¦µÄ»° ¾ÍÒª»Øµ÷´óJSÌá¹©µÄ½Ó¿ÚµÄµØÖ·
+     * @param title ·ÖÏíµÄ±êÌâ
+     * @param content ·ÖÏíµÄÄÚÈİ
+     * @param photo ·ÖÏíµÄÍ¼Æ¬
+     * @param callBackurl ³É¹¦µÄ»Øµ÷µØÖ·
+     */
+    public void ShareQQ(String title,String content,String photo,String callBackurl){
+
+    }
+
+}

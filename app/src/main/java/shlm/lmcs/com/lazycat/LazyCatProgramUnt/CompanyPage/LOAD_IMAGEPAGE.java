@@ -1,1 +1,47 @@
-package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage;import android.widget.ImageView;/** * åœ¨çº¿ç¨‹æ± ä¸­ä¸‹è½½æ—¶å€™ è¦ä¼ å…¥çš„IMAGEçš„å€¼ */public class LOAD_IMAGEPAGE {    private ImageView img;    private String tag;    private String img_url;    public ImageView getImg() {        return img;    }    public void setImg(ImageView img) {        this.img = img;    }    public String getTag() {        return tag;    }    public void setTag(String tag) {        this.tag = tag;    }    public String getImg_url() {        return img_url;    }    public void setImg_url(String img_url) {        this.img_url = img_url;    }    /**     * æ¸…ç©ºæ‰€æœ‰çš„æ•°æ®ä¿¡æ¯     */    public void clear() {        this.img = null;        this.img_url = "";        this.tag = "";    }}
+package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage;
+
+
+import android.widget.ImageView;
+
+/**
+ * ÔÚÏß³Ì³ØÖĞÏÂÔØÊ±ºò Òª´«ÈëµÄIMAGEµÄÖµ
+ */
+public class LOAD_IMAGEPAGE {
+    private ImageView img;
+    private String tag;
+    private String img_url;
+
+    public ImageView getImg() {
+        return img;
+    }
+
+    public void setImg(ImageView img) {
+        this.img = img;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getImg_url() {
+        return img_url;
+    }
+
+    public void setImg_url(String img_url) {
+        this.img_url = img_url;
+    }
+
+
+    /**
+     * Çå¿ÕËùÓĞµÄÊı¾İĞÅÏ¢
+     */
+    public void clear() {
+        this.img = null;
+        this.img_url = "";
+        this.tag = "";
+    }
+}

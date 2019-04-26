@@ -1,1 +1,204 @@
-package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools;import android.annotation.SuppressLint;import android.content.Context;import android.text.TextUtils;import android.util.Log;import java.io.InputStream;import java.net.URLEncoder;import java.util.ArrayList;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.USER_KEY_PAGE;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XMLUserAddr;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XML_PAGE;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;/** * ÂÖ¨Âè∏Ëé∑ÂèñÁî®Êà∑ÁöÑ‰ø°ÊÅØËµÑÊñôÁöÑÊìç‰ΩúAPI */public class Usertools {    /**     * Ëé∑ÂèñÁî®Êà∑ÁöÑÊâÄÊúâÁöÑËµÑÊñô‰ø°ÊÅØ     */    public static void getUservalues(Context mContext, final ProgramInterface programInterface) {        String token = Tools.gettoKen(mContext, USER_KEY_PAGE.KEY_TOKEN);        String phone = Tools.gettoKen(mContext, USER_KEY_PAGE.KEY_USERPHONE);        Net.doGet(mContext, Config.HTTP_ADDR.getUser_init(), new Net.onVisitInterServiceListener() {            @Override            public void onSucess(String tOrgin) {                if (programInterface != null) {                    programInterface.onSucess(tOrgin, 0);                }            }            @Override            public void onNotConnect() {                if (programInterface != null) {                    programInterface.onFaile("", 0);                }            }            @Override            public void onFail(String tOrgin) {                if (programInterface != null) {                    programInterface.onFaile("", 0);                }            }        }, Config.HttpMethodUserAction.KEY_ACTION, "" + Config.HttpMethodUserAction.GET_USERVAL,                Config.HttpMethodUserAction.KEY_USER, Tools.getStringMD5(phone), Config                        .HttpMethodUserAction.KEY_TOKEN, token);    }    /**     * Ëé∑ÂèñÁî®Êà∑ÁöÑÈªòËÆ§Âú∞ÂùÄ     */    public static void getUserdefaultaddr() {    }    /**     * Ëé∑ÂèñÁî®Êà∑ÁöÑÊâÄÊúâÂú∞ÂùÄ     */    public static void getUserAllAddr(Context mContext, final ProgramInterface.XMLforUserAllAddr            xmLforUserAllAddr) {        String phone_md5 = Tools.getStringMD5(Tools.gettoKen(mContext, USER_KEY_PAGE                .KEY_USERPHONE));        String token = Tools.gettoKen(mContext, USER_KEY_PAGE.KEY_TOKEN);        Net.doGetXml(mContext, Config.HTTP_ADDR.getallAddr(), new ProgramInterface                .XMLDomServiceInterface() {            @SuppressLint("LongLogTag")            @Override            public void onSucess(InputStream is) {                //ÂÖà‰øùÂ≠òISÁöÑÊï∞ÊçÆ‰ø°ÊÅØ                if (is != null) {                    ArrayList<XMLUserAddr> list = null;                    try {                        list = Tools.UserAddrXMLDomeService(is);                    } catch (Exception e) {                    }                    if (list != null) {                        if (xmLforUserAllAddr != null) {                            xmLforUserAllAddr.onDone(list);                        } else {                            Log.e(Config.DEBUG, "Usertools.java[+]XMLËß£ÊûêÂõûË∞É‰∏∫NULL");                        }                    } else {                        if (xmLforUserAllAddr != null) {                            Log.e(Config.DEBUG, "Usertools.java[+]XMLËß£ÊûêÂõûË∞É‰∏∫NULL");                            xmLforUserAllAddr.onFain();//Ëß£ÊûêÂ§±Ë¥•                        } else {                            Log.e(Config.DEBUG, "Usertools.java[+]XMLËß£ÊûêÂõûË∞É‰∏∫NULL");                        }                    }                } else {                }            }            @Override            public void onFain() {                if (xmLforUserAllAddr != null) {                    xmLforUserAllAddr.onFain();                }            }            @Override            public void onNotService() {                if (xmLforUserAllAddr != null) {                    xmLforUserAllAddr.onFain();                }            }            @SuppressLint("LongLogTag")            @Override            public void onJson(String origin) {                Log.e(Config.DEBUG,"Usertools.java[+]Âú®JSONÊï∞ÊçÆÂõûË∞É‰∏≠");                if (xmLforUserAllAddr != null) {                    xmLforUserAllAddr.onJson(origin);                }            }        }, Config.HttpMethodUserAction.KEY_ACTION, Config.HttpMethodUserAction.GET_ALLADDR,                Config.HttpMethodUserAction.KEY_USER, phone_md5, Config.HttpMethodUserAction                        .KEY_TOKEN, token);    }    /**     * Áî®Êà∑ÊèíÂÖ•‰∏ÄÊù°Êî∂‰ª∂Âú∞ÂùÄ     *     * @param mContext    ‰∏ä‰∏ãÊñá     * @param name        Áî®Êà∑Âêç     * @param phone       ÁîµËØù     * @param addr        Âú∞ÂùÄ     * @param physics_add Áâ©ÁêÜÂú∞ÂùÄ     * @param addr_in     ÊâÄÂ±ûÂå∫Âüü     * @param sex         ÊÄßÂà´     * @param year        Âπ¥ÈæÑ     * @param _Default    ÊòØÂê¶ÈªòËÆ§     * @param phone_md5   phone_md5 È™åËØÅ     * @param token       token È™åËØÅ     */    public static void insertUseraddr(Context mContext, String name, String phone, String addr,                                      String physics_add, String addr_in, int sex, String year,                                      String _Default, String phone_md5, String token, final                                      ProgramInterface programInterface) {        physics_add = URLEncoder.encode(physics_add);//ÁºñÁ†Å        XmlBuilder xmlBuilder = new XmlBuilder("body");        XML_PAGE xml_page = new XML_PAGE("", "", "");        xml_page.addGrandsonNode(Config.HttpMethodUserAction.KEY_USER, phone_md5).addGrandsonNode                (Config.HttpMethodUserAction.KEY_TOKEN, token).addGrandsonNode(Config                .HttpMethodUserAction.KEY_ADDR_NAME, name).addGrandsonNode(Config                .HttpMethodUserAction.KEY_ADDR_TEL, phone).addGrandsonNode(Config                .HttpMethodUserAction.KEY_ADDR_ADDR, addr).addGrandsonNode(Config                .HttpMethodUserAction.KEY_ADDR_IN, addr_in).addGrandsonNode(Config                .HttpMethodUserAction.KEY_ADDR_PHYSICS, physics_add).addGrandsonNode(Config                .HttpMethodUserAction.KEY_ADDR_DEFAULT, _Default).addGrandsonNode(Config                .HttpMethodUserAction.KEY_ACTION, Config.HttpMethodUserAction.INSERT_USER_ADDR)                .addGrandsonNode(Config.HttpMethodUserAction.KEY_ADDR_USER_SEX, sex + "")                .addGrandsonNode(Config.HttpMethodUserAction.KEY_ADDR_USER_YEAR, year);        ArrayList<XML_PAGE> list = new ArrayList<XML_PAGE>();        list.add(xml_page);        Net.doPostXml(mContext, xmlBuilder.getXmlString(list), Config.HTTP_ADDR.getUser_init(),                new ProgramInterface() {            @SuppressLint("LongLogTag")            @Override            public void onSucess(String data, int code) {                Log.i(Config.DEBUG, "xmlÊï∞ÊçÆËøîÂõû" + data.toString());                if (TextUtils.isEmpty(data.toString())) {                    if (programInterface != null) {                        programInterface.onFaile("", 0);                    }                } else {                    if (programInterface != null) {                        programInterface.onSucess(data.toString(), 0);                    }                }            }            @Override            public void onFaile(String data, int code) {                if (programInterface != null) {                    programInterface.onFaile("", 0);                }            }        });    }}
+package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools;
+
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
+
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.USER_KEY_PAGE;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XMLUserAddr;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XML_PAGE;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
+
+/**
+ * π´ÀæªÒ»°”√ªßµƒ–≈œ¢◊ ¡œµƒ≤Ÿ◊˜API
+ */
+public class Usertools {
+    /**
+     * ªÒ»°”√ªßµƒÀ˘”–µƒ◊ ¡œ–≈œ¢
+     */
+    public static void getUservalues(Context mContext, final ProgramInterface programInterface) {
+        String token = Tools.gettoKen(mContext, USER_KEY_PAGE.KEY_TOKEN);
+        String phone = Tools.gettoKen(mContext, USER_KEY_PAGE.KEY_USERPHONE);
+        Net.doGet(mContext, Config.HTTP_ADDR.getUser_init(), new Net.onVisitInterServiceListener() {
+            @Override
+            public void onSucess(String tOrgin) {
+                if (programInterface != null) {
+                    programInterface.onSucess(tOrgin, 0);
+                }
+
+            }
+
+            @Override
+            public void onNotConnect() {
+                if (programInterface != null) {
+                    programInterface.onFaile("", 0);
+                }
+
+            }
+
+            @Override
+            public void onFail(String tOrgin) {
+                if (programInterface != null) {
+                    programInterface.onFaile("", 0);
+                }
+
+            }
+        }, Config.HttpMethodUserAction.KEY_ACTION, "" + Config.HttpMethodUserAction.GET_USERVAL,
+                Config.HttpMethodUserAction.KEY_USER, Tools.getStringMD5(phone), Config
+                        .HttpMethodUserAction.KEY_TOKEN, token);
+    }
+
+    /**
+     * ªÒ»°”√ªßµƒƒ¨»œµÿ÷∑
+     */
+
+    public static void getUserdefaultaddr() {
+
+    }
+
+
+    /**
+     * ªÒ»°”√ªßµƒÀ˘”–µÿ÷∑
+     */
+    public static void getUserAllAddr(Context mContext, final ProgramInterface.XMLforUserAllAddr
+            xmLforUserAllAddr) {
+        String phone_md5 = Tools.getStringMD5(Tools.gettoKen(mContext, USER_KEY_PAGE
+                .KEY_USERPHONE));
+        String token = Tools.gettoKen(mContext, USER_KEY_PAGE.KEY_TOKEN);
+        Net.doGetXml(mContext, Config.HTTP_ADDR.getallAddr(), new ProgramInterface
+                .XMLDomServiceInterface() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onSucess(InputStream is) {
+                //œ»±£¥ÊISµƒ ˝æ›–≈œ¢
+                if (is != null) {
+                    ArrayList<XMLUserAddr> list = null;
+                    try {
+                        list = Tools.UserAddrXMLDomeService(is);
+                    } catch (Exception e) {
+                    }
+                    if (list != null) {
+                        if (xmLforUserAllAddr != null) {
+                            xmLforUserAllAddr.onDone(list);
+                        } else {
+                            Log.e(Config.DEBUG, "Usertools.java[+]XMLΩ‚Œˆªÿµ˜Œ™NULL");
+                        }
+
+                    } else {
+                        if (xmLforUserAllAddr != null) {
+                            Log.e(Config.DEBUG, "Usertools.java[+]XMLΩ‚Œˆªÿµ˜Œ™NULL");
+                            xmLforUserAllAddr.onFain();//Ω‚Œˆ ß∞‹
+                        } else {
+                            Log.e(Config.DEBUG, "Usertools.java[+]XMLΩ‚Œˆªÿµ˜Œ™NULL");
+                        }
+
+                    }
+                } else {
+                }
+            }
+
+            @Override
+            public void onFain() {
+                if (xmLforUserAllAddr != null) {
+                    xmLforUserAllAddr.onFain();
+                }
+
+            }
+
+            @Override
+            public void onNotService() {
+                if (xmLforUserAllAddr != null) {
+                    xmLforUserAllAddr.onFain();
+                }
+
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onJson(String origin) {
+                Log.e(Config.DEBUG,"Usertools.java[+]‘⁄JSON ˝æ›ªÿµ˜÷–");
+                if (xmLforUserAllAddr != null) {
+                    xmLforUserAllAddr.onJson(origin);
+                }
+
+            }
+        }, Config.HttpMethodUserAction.KEY_ACTION, Config.HttpMethodUserAction.GET_ALLADDR,
+                Config.HttpMethodUserAction.KEY_USER, phone_md5, Config.HttpMethodUserAction
+                        .KEY_TOKEN, token);
+
+    }
+
+
+    /**
+     * ”√ªß≤Â»Î“ªÃı ’º˛µÿ÷∑
+     *
+     * @param mContext    …œœ¬Œƒ
+     * @param name        ”√ªß√˚
+     * @param phone       µÁª∞
+     * @param addr        µÿ÷∑
+     * @param physics_add ŒÔ¿Ìµÿ÷∑
+     * @param addr_in     À˘ Ù«¯”Ú
+     * @param sex         –‘±
+     * @param year        ƒÍ¡‰
+     * @param _Default     «∑Òƒ¨»œ
+     * @param phone_md5   phone_md5 —È÷§
+     * @param token       token —È÷§
+     */
+    public static void insertUseraddr(Context mContext, String name, String phone, String addr,
+                                      String physics_add, String addr_in, int sex, String year,
+                                      String _Default, String phone_md5, String token, final
+                                      ProgramInterface programInterface) {
+        physics_add = URLEncoder.encode(physics_add);//±‡¬Î
+        XmlBuilder xmlBuilder = new XmlBuilder("body");
+        XML_PAGE xml_page = new XML_PAGE("", "", "");
+        xml_page.addGrandsonNode(Config.HttpMethodUserAction.KEY_USER, phone_md5).addGrandsonNode
+                (Config.HttpMethodUserAction.KEY_TOKEN, token).addGrandsonNode(Config
+                .HttpMethodUserAction.KEY_ADDR_NAME, name).addGrandsonNode(Config
+                .HttpMethodUserAction.KEY_ADDR_TEL, phone).addGrandsonNode(Config
+                .HttpMethodUserAction.KEY_ADDR_ADDR, addr).addGrandsonNode(Config
+                .HttpMethodUserAction.KEY_ADDR_IN, addr_in).addGrandsonNode(Config
+                .HttpMethodUserAction.KEY_ADDR_PHYSICS, physics_add).addGrandsonNode(Config
+                .HttpMethodUserAction.KEY_ADDR_DEFAULT, _Default).addGrandsonNode(Config
+                .HttpMethodUserAction.KEY_ACTION, Config.HttpMethodUserAction.INSERT_USER_ADDR)
+                .addGrandsonNode(Config.HttpMethodUserAction.KEY_ADDR_USER_SEX, sex + "")
+                .addGrandsonNode(Config.HttpMethodUserAction.KEY_ADDR_USER_YEAR, year);
+        ArrayList<XML_PAGE> list = new ArrayList<XML_PAGE>();
+        list.add(xml_page);
+        Net.doPostXml(mContext, xmlBuilder.getXmlString(list), Config.HTTP_ADDR.getUser_init(),
+                new ProgramInterface() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onSucess(String data, int code) {
+                Log.i(Config.DEBUG, "xml ˝æ›∑µªÿ" + data.toString());
+                if (TextUtils.isEmpty(data.toString())) {
+                    if (programInterface != null) {
+                        programInterface.onFaile("", 0);
+                    }
+                } else {
+                    if (programInterface != null) {
+                        programInterface.onSucess(data.toString(), 0);
+                    }
+                }
+            }
+
+            @Override
+            public void onFaile(String data, int code) {
+                if (programInterface != null) {
+                    programInterface.onFaile("", 0);
+                }
+
+            }
+        });
+
+
+    }
+}

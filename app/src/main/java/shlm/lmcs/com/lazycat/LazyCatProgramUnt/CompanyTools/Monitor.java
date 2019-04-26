@@ -1,1 +1,47 @@
-package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools;/** * å·¦è¾¹è½¯ä»¶å…¬å¸ç›‘è§†å™¨ */public class Monitor {    /**     * æ›´æ–°ä¸€æ¡é”™è¯¯ä¿¡æ¯     */    public static void _updateErrorMessage() {    }    /**     * æ›´æ–°ä¸€æ¡è¡Œä¸ºä¿¡æ¯     */    public static void _updateBehaviodMessage() {    }    /**     * ç³»ç»Ÿä¿¡æ¯     */    public static void _updateSystemMessage() {    }    /**     * æ›´æ–°ä¸€æ¡å¸¸è§„çš„ä¿¡æ¯     */    public static void _updateConventionMessage() {    }    /**     * é‡å¤§çš„æ¼æ´ä¿¡æ¯[éç‰¹æ®Šä¸ä½¿ç”¨]     */    public static void _updateBugMessage() {    }}
+package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools;
+
+
+/**
+ * ×ó±ßÈí¼ş¹«Ë¾¼àÊÓÆ÷
+ */
+public class Monitor {
+
+
+    /**
+     * ¸üĞÂÒ»Ìõ´íÎóĞÅÏ¢
+     */
+    public static void _updateErrorMessage() {
+
+    }
+
+
+    /**
+     * ¸üĞÂÒ»ÌõĞĞÎªĞÅÏ¢
+     */
+    public static void _updateBehaviodMessage() {
+
+    }
+
+    /**
+     * ÏµÍ³ĞÅÏ¢
+     */
+    public static void _updateSystemMessage() {
+
+    }
+
+    /**
+     * ¸üĞÂÒ»Ìõ³£¹æµÄĞÅÏ¢
+     */
+    public static void _updateConventionMessage() {
+
+    }
+
+
+    /**
+     * ÖØ´óµÄÂ©¶´ĞÅÏ¢[·ÇÌØÊâ²»Ê¹ÓÃ]
+     */
+    public static void _updateBugMessage() {
+
+    }
+
+}

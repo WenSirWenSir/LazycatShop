@@ -1,1 +1,51 @@
-package shlm.lmcs.com.lazycat.LazyShopAct;import android.annotation.SuppressLint;import android.os.Bundle;import android.util.DisplayMetrics;import android.widget.ImageView;import android.widget.TextView;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.ScrollViewBiggerPhoto;import shlm.lmcs.com.lazycat.R;@SuppressLint({"ResourceType", "NewApi"})public class ShowshopOffice extends LazyCatAct {    private TextView btn_addshopcart;    private ScrollViewBiggerPhoto scrollViewBiggerPhoto;    private ImageView photo;    @Override    protected void onCreate(Bundle savedInstanceState) {        super.onCreate(savedInstanceState);        setContentView(R.layout.activity_showshopoffice);        setTransparentBar();        /**         * ËÆæÁΩÆ‰øÉÈîÄÁöÑÊ†áÈ¢ò         */        findViewById(R.id.activity_showshopoffice_progrm_title).setBackground(Tools                .CreateDrawable(1, getResources().getString(R.color.ThemeColor), getResources()                        .getString(R.color.ThemeColor), 5));        //ÊâæÂá∫ViewID        btn_addshopcart = findViewById(R.id.activity_showshopoffice_btnAddshopcart);        /*ËÆæÁΩÆÂúÜËßí*/        findViewById(R.id.activity_showshopoffice_btnAddshopcartBody).setBackground(Tools                .CreateDrawable(1, getResources().getString(R.color.ThemeColor), getResources()                        .getString(R.color.ThemeColor), 50));        /*ÊªëÂä®Â¢ûÂ§ßÂõæÁâáÊéß‰ª∂*/        scrollViewBiggerPhoto = findViewById(R.id.activity_showshopoffice_scrollview);        /*ÊòæÁ§∫ÂïÜÂìÅÂõæÁâá*/        photo = findViewById(R.id.activity_showshopoffice_photo);        init();    }    private void init() {        DisplayMetrics metrics = new DisplayMetrics();        getWindowManager().getDefaultDisplay().getMetrics(metrics);        scrollViewBiggerPhoto.setImageHead(photo, metrics);    }}
+package shlm.lmcs.com.lazycat.LazyShopAct;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.ScrollViewBiggerPhoto;
+import shlm.lmcs.com.lazycat.R;
+
+@SuppressLint({"ResourceType", "NewApi"})
+public class ShowshopOffice extends LazyCatAct {
+    private TextView btn_addshopcart;
+    private ScrollViewBiggerPhoto scrollViewBiggerPhoto;
+    private ImageView photo;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_showshopoffice);
+        setTransparentBar();
+        /**
+         * …Ë÷√¥Ÿœ˙µƒ±ÍÃ‚
+         */
+        findViewById(R.id.activity_showshopoffice_progrm_title).setBackground(Tools
+                .CreateDrawable(1, getResources().getString(R.color.ThemeColor), getResources()
+                        .getString(R.color.ThemeColor), 5));
+        //’“≥ˆViewID
+        btn_addshopcart = findViewById(R.id.activity_showshopoffice_btnAddshopcart);
+        /*…Ë÷√‘≤Ω«*/
+        findViewById(R.id.activity_showshopoffice_btnAddshopcartBody).setBackground(Tools
+                .CreateDrawable(1, getResources().getString(R.color.ThemeColor), getResources()
+                        .getString(R.color.ThemeColor), 50));
+        /*ª¨∂Ø‘ˆ¥ÛÕº∆¨øÿº˛*/
+        scrollViewBiggerPhoto = findViewById(R.id.activity_showshopoffice_scrollview);
+        /*œ‘ æ…Ã∆∑Õº∆¨*/
+        photo = findViewById(R.id.activity_showshopoffice_photo);
+        init();
+    }
+
+    private void init() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        scrollViewBiggerPhoto.setImageHead(photo, metrics);
+
+
+    }
+}

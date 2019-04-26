@@ -1,8 +1,8 @@
 package shlm.lmcs.com.lazycat.LazyCatProgramUnt;
 
 public interface InterfacePage {
-    void onSucess(String tOrgin);//æˆåŠŸçš„ç›‘å¬
-    void onNotConnect();//ç½‘ç»œæ–­å¼€è¿æ¥
-    void onFail(String tOrgin);//å¤±è´¥çš„ç›‘å¬
+    void onSucess(String tOrgin);//³É¹¦µÄ¼àÌı
+    void onNotConnect();//ÍøÂç¶Ï¿ªÁ¬½Ó
+    void onFail(String tOrgin);//Ê§°ÜµÄ¼àÌı
 
 }

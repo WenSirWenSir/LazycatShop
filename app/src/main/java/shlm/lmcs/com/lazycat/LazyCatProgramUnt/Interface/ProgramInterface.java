@@ -1,1 +1,75 @@
-package shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface;import android.graphics.Bitmap;import java.io.InputStream;import java.util.ArrayList;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XMLUserAddr;/** * å¤§å®¶éƒ½å¯ä»¥ç”¨çš„æ¥å£ */public interface ProgramInterface {    /**     * é»˜è®¤çš„å¤„ç†æ–¹å¼     * @param data     * @param code     */    public void onSucess(String data, int code);    public void onFaile(String data, int code);    /**     * çŸ­ä¿¡å‘é€æ¥å£     */    public interface SMSInterface{        void onSendOk();        void onSendError();    }    /**     * XMLè·å–æ¥å£     */    public interface XMLDomServiceInterface{        void onSucess(InputStream is);        void onFain();        void onNotService();        void onJson(String origin);//è¦ç”¨JSONè§£æ    }    /**     * è·å–ç”¨æˆ·çš„æ•°æ®å¤„ç†ä¹‹åçš„å›è°ƒäº‹ä»¶     */    public interface XMLforUserAllAddr{        void onDone(ArrayList<XMLUserAddr> list);        void onFain();        /**         * Tokenè¿‡æœŸ         */        void onDated();        void onJson(String origin);    }    interface doGetImg{        void onSucess(Bitmap bitmap);        void onFain();    }    interface onMemorySize{        void onGet(int max,float total,float free);    }    /**     * å¤šçº¿ç¨‹äº‹åŠ¡å¤„ç†å®Œæ¯•     */    interface onThreaddone{        void onData(String tag);    }}
+package shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface;
+
+
+import android.graphics.Bitmap;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XMLUserAddr;
+
+/**
+ * ´ó¼Ò¶¼¿ÉÒÔÓÃµÄ½Ó¿Ú
+ */
+public interface ProgramInterface {
+
+    /**
+     * Ä¬ÈÏµÄ´¦Àí·½Ê½
+     * @param data
+     * @param code
+     */
+    public void onSucess(String data, int code);
+    public void onFaile(String data, int code);
+
+    /**
+     * ¶ÌĞÅ·¢ËÍ½Ó¿Ú
+     */
+    public interface SMSInterface{
+        void onSendOk();
+        void onSendError();
+    }
+
+
+    /**
+     * XML»ñÈ¡½Ó¿Ú
+     */
+    public interface XMLDomServiceInterface{
+        void onSucess(InputStream is);
+        void onFain();
+        void onNotService();
+        void onJson(String origin);//ÒªÓÃJSON½âÎö
+    }
+
+    /**
+     * »ñÈ¡ÓÃ»§µÄÊı¾İ´¦ÀíÖ®ºóµÄ»Øµ÷ÊÂ¼ş
+     */
+    public interface XMLforUserAllAddr{
+        void onDone(ArrayList<XMLUserAddr> list);
+        void onFain();
+
+        /**
+         * Token¹ıÆÚ
+         */
+        void onDated();
+        void onJson(String origin);
+
+    }
+
+    interface doGetImg{
+        void onSucess(Bitmap bitmap);
+        void onFain();
+    }
+    interface onMemorySize{
+        void onGet(int max,float total,float free);
+    }
+
+    /**
+     * ¶àÏß³ÌÊÂÎñ´¦ÀíÍê±Ï
+     */
+    interface onThreaddone{
+        void onData(String tag);
+    }
+
+}
+
+

@@ -25,10 +25,10 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.ImageCache;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 
 /**
- * ç½‘ç»œè®¿é—®æ¨¡å—  æœ‰å…³äºç½‘ç»œè®¿é—®çš„ç›‘å¬å’Œæäº¤äº‹ä»¶éƒ½åœ¨è¿™é‡Œ
+ * ÍøÂç·ÃÎÊÄ£¿é  ÓĞ¹ØÓÚÍøÂç·ÃÎÊµÄ¼àÌıºÍÌá½»ÊÂ¼ş¶¼ÔÚÕâÀï
  * <p>
- * è¯¥æ¨¡å—å±äºå·¦è¾¹è¿œæ™¯è½¯ä»¶å¼€å‘å·¥ä½œå®¤å…¬å¸æœåŠ¡å™¨å†…æ¨¡å— ä»»ä½•å¼€å‘ä¸ªä½“çš„android projectéƒ½å¯ä»¥ä½¿ç”¨
- * è¯¥å¥—æ¨¡å—
+ * ¸ÃÄ£¿éÊôÓÚ×ó±ßÔ¶¾°Èí¼ş¿ª·¢¹¤×÷ÊÒ¹«Ë¾·şÎñÆ÷ÄÚÄ£¿é ÈÎºÎ¿ª·¢¸öÌåµÄandroid project¶¼¿ÉÒÔÊ¹ÓÃ
+ * ¸ÃÌ×Ä£¿é
  */
 @SuppressLint("LongLogTag")
 public class Net {
@@ -39,16 +39,16 @@ public class Net {
     private int VisitInterMethod;
 
     /**
-     * ç”¨GETæ–¹å¼è·å–æ•°æ®ä¿¡æ¯
+     * ÓÃGET·½Ê½»ñÈ¡Êı¾İĞÅÏ¢
      *
-     * @param tUrl                         åœ°å€
-     * @param mOnVisitInterServiceListener ç›‘å¬å›è°ƒ
-     * @param kvs                          å‚æ•°å¯¹,æ²¡æœ‰å°±ç›´æ¥ç”¨NULL
+     * @param tUrl                         µØÖ·
+     * @param mOnVisitInterServiceListener ¼àÌı»Øµ÷
+     * @param kvs                          ²ÎÊı¶Ô,Ã»ÓĞ¾ÍÖ±½ÓÓÃNULL
      */
     public static void doGet(Context context, String tUrl, final Net.onVisitInterServiceListener
             mOnVisitInterServiceListener, String... kvs) {
         if (!Tools.isIntentConnect(context)) {
-            //ç½‘ç»œæ— è¿æ¥ å°±ä¸åšä»€ä¹ˆæ“ä½œäº†
+            //ÍøÂçÎŞÁ¬½Ó ¾Í²»×öÊ²Ã´²Ù×÷ÁË
             if (mOnVisitInterServiceListener != null) {
                 mOnVisitInterServiceListener.onNotConnect();
             }
@@ -70,7 +70,7 @@ public class Net {
                     try {
                         HttpURLConnection con = (HttpURLConnection) new URL(urls[0].trim()
                                 .toString() + "?" + kvsBuffer.toString()).openConnection();
-                        Log.i(Config.DEBUG, "è®¿é—®ç½‘ç»œåœ°å€:" + urls[0].trim().toString() + "?" +
+                        Log.i(Config.DEBUG, "·ÃÎÊÍøÂçµØÖ·:" + urls[0].trim().toString() + "?" +
                                 kvsBuffer.toString());
                         con.setRequestMethod("GET");
                         con.setConnectTimeout(5000);
@@ -118,23 +118,23 @@ public class Net {
 
     public interface onVisitInterServiceListener {
 
-        void onSucess(String tOrgin);//æˆåŠŸçš„ç›‘å¬
+        void onSucess(String tOrgin);//³É¹¦µÄ¼àÌı
 
-        void onNotConnect();//ç½‘ç»œæ–­å¼€è¿æ¥
+        void onNotConnect();//ÍøÂç¶Ï¿ªÁ¬½Ó
 
-        void onFail(String tOrgin);//å¤±è´¥çš„ç›‘å¬
+        void onFail(String tOrgin);//Ê§°ÜµÄ¼àÌı
     }
 
 
     /**
-     * è·å–XMLæ–‡ä»¶çš„ç½‘ç»œè®¿é—®
+     * »ñÈ¡XMLÎÄ¼şµÄÍøÂç·ÃÎÊ
      */
     @SuppressLint("StaticFieldLeak")
     public static void doGetXml(Context mContext, String url, final ProgramInterface
             .XMLDomServiceInterface xmlDomServiceInterface, String... kvs) {
 
         /**
-         * åˆ¤æ–­æ˜¯å¦æ²¡æœ‰ç½‘ç»œè®¿é—®
+         * ÅĞ¶ÏÊÇ·ñÃ»ÓĞÍøÂç·ÃÎÊ
          */
         if (!Tools.isIntentConnect(mContext)) {
             if (xmlDomServiceInterface != null) {
@@ -153,18 +153,18 @@ public class Net {
                 }
             }
             /**
-             * è¿”å›XMLinputStream
+             * ·µ»ØXMLinputStream
              */
             new AsyncTask<String, Void, InputStream>() {
-                boolean isJson = false;//åˆ¤æ–­æ˜¯å¦è¯¥ç”¨JSONè§£æ
-                String origin = "";//jsonè§£æçš„æ•°æ®
+                boolean isJson = false;//ÅĞ¶ÏÊÇ·ñ¸ÃÓÃJSON½âÎö
+                String origin = "";//json½âÎöµÄÊı¾İ
 
                 @Override
                 protected InputStream doInBackground(String... urls) {
                     InputStream in = null;
                     try {
                         URL url = new URL(urls[0].trim().toString() + "?" + kvsBuffer.toString());
-                        Log.i(Config.DEBUG, "ç½‘ç»œè®¿é—®çš„åœ°å€" + urls[0].trim().toString() + "?" +
+                        Log.i(Config.DEBUG, "ÍøÂç·ÃÎÊµÄµØÖ·" + urls[0].trim().toString() + "?" +
                                 kvsBuffer.toString());
                         if (url != null) {
                             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -172,13 +172,13 @@ public class Net {
                             con.setDoInput(true);
                             con.setRequestMethod("GET");
                             if (200 == con.getResponseCode()) {
-                                //æˆåŠŸ
+                                //³É¹¦
                                 Map<String, List<String>> headFiels = con.getHeaderFields();
                                 int size = headFiels.size();
                                 for (int i = 0; i < size; i++) {
                                     if (con.getHeaderFieldKey(i).equals("Content-Type")) {
                                         if (con.getHeaderField(i).indexOf("text/html") != -1) {
-                                            Log.e(Config.DEBUG, "åº”è¯¥è¦ç”¨jsonè§£æ");
+                                            Log.e(Config.DEBUG, "Ó¦¸ÃÒªÓÃjson½âÎö");
                                             isJson = true;
                                             BufferedReader bufferedReader = new BufferedReader
                                                     (new InputStreamReader(con.getInputStream()));
@@ -188,9 +188,9 @@ public class Net {
                                                 stringBuffer.append(len);
                                             }
                                             origin = stringBuffer.toString();
-                                            Log.e(Config.DEBUG, "Jsonæ•°æ®è¿”å›:" + origin);
+                                            Log.e(Config.DEBUG, "JsonÊı¾İ·µ»Ø:" + origin);
                                         } else {
-                                            Log.e(Config.DEBUG, "åº”è¯¥è¦ç”¨XMLè§£æ");
+                                            Log.e(Config.DEBUG, "Ó¦¸ÃÒªÓÃXML½âÎö");
                                             in = con.getInputStream();
                                         }
                                     }
@@ -206,17 +206,17 @@ public class Net {
                 @Override
                 protected void onPostExecute(InputStream inputStream) {
                     if (inputStream != null) {
-                        //æˆåŠŸ
+                        //³É¹¦
                         if (xmlDomServiceInterface != null) {
                             xmlDomServiceInterface.onSucess(inputStream);
                         }
                     } else {
-                        //ä¸ºç©º  è¯´æ˜è¿™ä¸ªå¯èƒ½éœ€è¦JSONè§£æ
+                        //Îª¿Õ  ËµÃ÷Õâ¸ö¿ÉÄÜĞèÒªJSON½âÎö
                         if (xmlDomServiceInterface != null && isJson) {
                             if (!TextUtils.isEmpty(origin)) {
                                 xmlDomServiceInterface.onJson(origin);
                             } else {
-                                Log.e(Config.DEBUG, "Net.java[+]è¯¥ä½¿ç”¨jsonè§£æ å¯æ˜¯è·å–æ–‡æœ¬æ•°æ®å¤±è´¥");
+                                Log.e(Config.DEBUG, "Net.java[+]¸ÃÊ¹ÓÃjson½âÎö ¿ÉÊÇ»ñÈ¡ÎÄ±¾Êı¾İÊ§°Ü");
                             }
 
                         }
@@ -233,17 +233,17 @@ public class Net {
             @Override
             protected String doInBackground(String... _url) {
                 String _data = null;
-                //æ„å»ºxmlæ•°æ®ä¿¡æ¯
+                //¹¹½¨xmlÊı¾İĞÅÏ¢
                 //StringBuilder xml = new StringBuilder();
                 //xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
                 //xml.append("<body>");
-                //xml.append("<addr_name>ç¿å¯é‘«</addr_name>");
+                //xml.append("<addr_name>ÎÌÆôöÎ</addr_name>");
                 //xml.append("</body>");
                 try {
                     byte[] xmlbyte = xml.toString().getBytes("UTF-8");
-                    Log.i(Config.DEBUG, "æäº¤XMLæ•°æ®ä¿¡æ¯" + xml);
-                    URL url = new URL(_url[0]);//åœ°å€
-                    Log.i(Config.DEBUG, "è¯·æ±‚åœ°å€:" + url.toString());
+                    Log.i(Config.DEBUG, "Ìá½»XMLÊı¾İĞÅÏ¢" + xml);
+                    URL url = new URL(_url[0]);//µØÖ·
+                    Log.i(Config.DEBUG, "ÇëÇóµØÖ·:" + url.toString());
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setConnectTimeout(5000);
                     conn.setDoOutput(true);
@@ -270,7 +270,7 @@ public class Net {
                         InputStream eis = conn.getErrorStream();
                         InputStreamReader isr = new InputStreamReader(eis, "UTF-8");
                         BufferedReader br = new BufferedReader(isr);
-                        Log.i(Config.DEBUG, "Net.java[+]xmlæäº¤å¤±è´¥");
+                        Log.i(Config.DEBUG, "Net.java[+]xmlÌá½»Ê§°Ü");
                         String line;
                         while ((line = br.readLine()) != null) {
                             Log.e(Config.DEBUG, "Net.java[+]ErrorStream:" + line);
@@ -286,18 +286,18 @@ public class Net {
             @Override
             protected void onPostExecute(String s) {
                 if (s == null) {
-                    Log.e(Config.DEBUG, "Net.java[+]xmlæäº¤è¿”å›çš„æ•°æ®ä¸ºnull");
+                    Log.e(Config.DEBUG, "Net.java[+]xmlÌá½»·µ»ØµÄÊı¾İÎªnull");
                     if (programInterface != null) {
                         programInterface.onFaile("", 0);
                     } else {
-                        Log.e(Config.DEBUG, "Net.java[+]xmlæäº¤æ•°æ®å›è°ƒä¸ºç©º");
+                        Log.e(Config.DEBUG, "Net.java[+]xmlÌá½»Êı¾İ»Øµ÷Îª¿Õ");
                     }
                 } else {
-                    //å¼€å§‹ç›‘å¬è°ƒç”¨
+                    //¿ªÊ¼¼àÌıµ÷ÓÃ
                     if (programInterface != null) {
                         programInterface.onSucess(s.toString(), 0);
                     } else {
-                        Log.e(Config.DEBUG, "Net.java[+]xmlæäº¤æ•°æ®å›è°ƒä¸ºç©º");
+                        Log.e(Config.DEBUG, "Net.java[+]xmlÌá½»Êı¾İ»Øµ÷Îª¿Õ");
                     }
                 }
                 super.onPostExecute(s);
@@ -321,9 +321,9 @@ public class Net {
                     con.connect();
                     if (con.getResponseCode() == 200) {
                         bitmap = BitmapFactory.decodeStream(con.getInputStream());
-                        Log.i(Config.DEBUG, "è®¿é—®æˆåŠŸ");
+                        Log.i(Config.DEBUG, "·ÃÎÊ³É¹¦");
                     } else {
-                        Log.e(Config.DEBUG, "è®¿é—®å¤±è´¥ è®¿é—®è¿”å›çŠ¶æ€ç :" + con.getResponseCode());
+                        Log.e(Config.DEBUG, "·ÃÎÊÊ§°Ü ·ÃÎÊ·µ»Ø×´Ì¬Âë:" + con.getResponseCode());
                     }
                 } catch (MalformedURLException e) {
                     Log.e(Config.DEBUG, "Net.java[+]" + e.getMessage());
@@ -351,30 +351,30 @@ public class Net {
 
 
     /**
-     * å¤šçº¿ç¨‹æ‰§è¡Œä¸‹è½½å›¾ç‰‡äº‹åŠ¡çš„ç®¡ç†å™¨
+     * ¶àÏß³ÌÖ´ĞĞÏÂÔØÍ¼Æ¬ÊÂÎñµÄ¹ÜÀíÆ÷
      */
     public void doThreadimage(final LOAD_IMAGEPAGE load_imagepage) {
         Log.e(Config.DEBUG,"doThreadimage[url]" + load_imagepage.getImg_url());
         if (imageCache.getImage(load_imagepage.getTag()) != null) {
-            //å­˜åœ¨å°±ä¸è¦é‡å¤åŠ è½½äº†
-            /*åˆ¤æ–­IMAGEViewæ˜¯å¦ä¸ºç©º*/
+            //´æÔÚ¾Í²»ÒªÖØ¸´¼ÓÔØÁË
+            /*ÅĞ¶ÏIMAGEViewÊÇ·ñÎª¿Õ*/
             if (load_imagepage.getImg().getDrawable() != null) {
                 load_imagepage.getImg().setImageBitmap(imageCache.getImage(load_imagepage.getTag
                         ()));
             } else {
-                /*æ²¡æœ‰æ‰§è¡Œè¦æ±‚*/
+                /*Ã»ÓĞÖ´ĞĞÒªÇó*/
             }
         } else {
             doGetimg(load_imagepage.getImg_url(), new ProgramInterface.doGetImg() {
                 @Override
                 public void onSucess(Bitmap bitmap) {
                     if (imageCache.getImage(load_imagepage.getTag()) != null) {
-                        /*å­˜åœ¨å›¾ç‰‡ä¿¡æ¯ ä¸ç¼“å­˜*/
+                        /*´æÔÚÍ¼Æ¬ĞÅÏ¢ ²»»º´æ*/
                         if (load_imagepage.getImg().getDrawable() != null) {
                             load_imagepage.getImg().setImageBitmap(imageCache.getImage
                                     (load_imagepage.getTag()));
                         } else {
-                            /*æ²¡æœ‰æ‰§è¡Œè¦æ±‚*/
+                            /*Ã»ÓĞÖ´ĞĞÒªÇó*/
                         }
                     } else {
                         imageCache.saveImage(load_imagepage.getTag(), bitmap);

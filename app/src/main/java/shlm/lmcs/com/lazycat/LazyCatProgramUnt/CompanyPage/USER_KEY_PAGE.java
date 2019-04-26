@@ -1,16 +1,16 @@
 package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage;
 
 public class USER_KEY_PAGE {
-    public static final String KEY_USERPHONE = "phone";//è´¦æˆ·
-    public static final String KEY_TOKEN = "token";//å®‰å…¨ç 
-    public static final String KEY_SEX = "sex";//æ€§åˆ«
+    public static final String KEY_USERPHONE = "phone";//ÕË»§
+    public static final String KEY_TOKEN = "token";//°²È«Âë
+    public static final String KEY_SEX = "sex";//ĞÔ±ğ
     public static final String KEY_INTER_STATUS = "status";
-    public static final String KEY_ERRORCODE = "error_code";//é”™è¯¯æ¬¡æ•°
+    public static final String KEY_ERRORCODE = "error_code";//´íÎó´ÎÊı
     public static final String KEY_UPDATESEX_ACTION = "1";
     public static final String KEY_UPDAESEX_SUCESS = "0";
     public static final String KEY_PHONE = "phone";
-    public static final int KEY_SIR = 1;//å…ˆç”Ÿ
-    public static final int KEY_LADY = 2;//å¥³å£«
+    public static final int KEY_SIR = 1;//ÏÈÉú
+    public static final int KEY_LADY = 2;//Å®Ê¿
 
 
 }

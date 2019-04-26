@@ -1,1 +1,19 @@
-package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass;import android.annotation.SuppressLint;import android.app.Fragment;import android.content.Intent;/** * è‡ªå®šä¹‰çš„Fragmentå¯ä»¥ ç”¨æ¥å®ç°ä¸€äº›ç»å¸¸ç”¨çš„æ–¹æ³• */public class LazyCatFragment extends Fragment{    @SuppressLint("NewApi")    protected void LazyCatFragmetStartAct(Class<?> into){        Intent i = new Intent();        i.setClass(getContext(),into);        startActivity(i);    }}
+package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass;
+
+import android.annotation.SuppressLint;
+import android.app.Fragment;
+import android.content.Intent;
+
+
+/**
+ * ×Ô¶¨ÒåµÄFragment¿ÉÒÔ ÓÃÀ´ÊµÏÖÒ»Ğ©¾­³£ÓÃµÄ·½·¨
+ */
+public class LazyCatFragment extends Fragment{
+
+    @SuppressLint("NewApi")
+    protected void LazyCatFragmetStartAct(Class<?> into){
+        Intent i = new Intent();
+        i.setClass(getContext(),into);
+        startActivity(i);
+    }
+}

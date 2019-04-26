@@ -1,1 +1,57 @@
-package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage;import android.annotation.SuppressLint;import android.os.Parcel;import java.io.Serializable;/** * æ„é€ WebViewæ§ä»¶çš„ä¿¡æ¯ */@SuppressLint("ParcelCreator")public class WEB_VALUES_ACT implements Serializable {    private String _title;    /**     * é»˜è®¤æ„é€ ä¸€ä¸ªURLå…¶ä»–ä¸ºé»˜è®¤     *     * @param Url     */    private String _url = "";    public WEB_VALUES_ACT(String Url) {        this._url = Url;    }    protected WEB_VALUES_ACT(Parcel in) {    }    /**     * è·å–æ„é€ çš„URLåœ°å€ä¿¡æ¯     *     * @return     */    public String get_url() {        return _url;    }    /**     * è·å–è®¾ç½®çš„Title     *     * @return     */    public String get_title() {        return this._title;    }    /**     * è®¾ç½®Title     */    public void set_title(String title) {        this._title = title;    }}
+package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage;
+
+
+import android.annotation.SuppressLint;
+import android.os.Parcel;
+
+import java.io.Serializable;
+
+/**
+ * ¹¹ÔìWebView¿Ø¼şµÄĞÅÏ¢
+ */
+@SuppressLint("ParcelCreator")
+public class WEB_VALUES_ACT implements Serializable {
+    private String _title;
+    /**
+     * Ä¬ÈÏ¹¹ÔìÒ»¸öURLÆäËûÎªÄ¬ÈÏ
+     *
+     * @param Url
+     */
+    private String _url = "";
+
+    public WEB_VALUES_ACT(String Url) {
+        this._url = Url;
+    }
+
+    protected WEB_VALUES_ACT(Parcel in) {
+
+    }
+
+    /**
+     * »ñÈ¡¹¹ÔìµÄURLµØÖ·ĞÅÏ¢
+     *
+     * @return
+     */
+    public String get_url() {
+        return _url;
+    }
+
+
+    /**
+     * »ñÈ¡ÉèÖÃµÄTitle
+     *
+     * @return
+     */
+    public String get_title() {
+        return this._title;
+    }
+
+
+    /**
+     * ÉèÖÃTitle
+     */
+    public void set_title(String title) {
+        this._title = title;
+    }
+
+}

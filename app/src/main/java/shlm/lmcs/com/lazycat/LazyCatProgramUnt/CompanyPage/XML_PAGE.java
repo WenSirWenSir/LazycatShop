@@ -1,1 +1,71 @@
-package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage;import android.text.TextUtils;/** * XMLèŠ‚ç‚¹ä¿¡æ¯ * <p> * è¿”å›çš„ä¿¡æ¯ç±»ä¼¼äº * <fater sign = "values"> * <name>ä½ å¥½å…¨ä¸–ç•Œ</name> * </fater> */public class XML_PAGE {    private StringBuilder xml = new StringBuilder();    private String _fater_nodex;    /**     * æ„é€ XMLçš„å­æ–‡ä»¶ä½“     *     * @param fater_node  çˆ¶æ–‡ä»¶å¤´ å¦‚æœä¸ºç©º åˆ™ä¼šè¿”å›ä¸€ä¸ªå­™èŠ‚ç‚¹     * @param sign        çˆ¶æ–‡ä»¶çš„æ ‡å¿—     * @param sign_values çˆ¶æ–‡ä»¶çš„æ ‡å¿—çš„å€¼     */    public XML_PAGE(String fater_node, String sign, String sign_values) {        this._fater_nodex = fater_node;//å­èŠ‚ç‚¹ä¿¡æ¯        /**         * åˆ¤æ–­æ˜¯å¦åˆ›å»ºå­™èŠ‚ç‚¹         *         */        if(TextUtils.isEmpty(fater_node)){            //ä¸ºç©ºä»€ä¹ˆéƒ½ä¸åš        }        else{            //ä¸ä¸ºç©º            if (TextUtils.isEmpty(sign)) {                xml.append("<" + fater_node + ">");//å¼€å§‹èŠ‚ç‚¹            } else {                xml.append("<" + fater_node + " " + sign + "=\"" + sign_values + "\">");//å¼€å§‹èŠ‚ç‚¹            }        }    }    /**     * æ’å…¥ä¸€ä¸ªå­™èŠ‚ç‚¹     */    public XML_PAGE addGrandsonNode(String node, String value) {        xml.append("<" + node + ">" + value + "</" + node + ">");//ä¸€ä¸ªå­™èŠ‚ç‚¹ä¿¡æ¯        return this;    }    /**     * è·å–ä¸€ä¸ªå®Œæ•´çš„XMLå­èŠ‚ç‚¹ä¿¡æ¯     *     * @return     */    public StringBuilder getXml() {        if(TextUtils.isEmpty(this._fater_nodex)){            //ä»€ä¹ˆéƒ½ä¸åš        }        else{            xml.append("</" + this._fater_nodex + ">");//é—­åˆxmlå®ä½“        }        return xml;//è·å–å­™èŠ‚ç‚¹ä¿¡æ¯    }}
+package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage;
+
+
+import android.text.TextUtils;
+
+/**
+ * XML½ÚµãĞÅÏ¢
+ * <p>
+ * ·µ»ØµÄĞÅÏ¢ÀàËÆÓÚ
+ * <fater sign = "values">
+ * <name>ÄãºÃÈ«ÊÀ½ç</name>
+ * </fater>
+ */
+public class XML_PAGE {
+    private StringBuilder xml = new StringBuilder();
+    private String _fater_nodex;
+
+    /**
+     * ¹¹ÔìXMLµÄ×ÓÎÄ¼şÌå
+     *
+     * @param fater_node  ¸¸ÎÄ¼şÍ· Èç¹ûÎª¿Õ Ôò»á·µ»ØÒ»¸öËï½Úµã
+     * @param sign        ¸¸ÎÄ¼şµÄ±êÖ¾
+     * @param sign_values ¸¸ÎÄ¼şµÄ±êÖ¾µÄÖµ
+     */
+    public XML_PAGE(String fater_node, String sign, String sign_values) {
+        this._fater_nodex = fater_node;//×Ó½ÚµãĞÅÏ¢
+
+
+        /**
+         * ÅĞ¶ÏÊÇ·ñ´´½¨Ëï½Úµã
+         *
+         */
+        if(TextUtils.isEmpty(fater_node)){
+            //Îª¿ÕÊ²Ã´¶¼²»×ö
+
+        }
+        else{
+            //²»Îª¿Õ
+            if (TextUtils.isEmpty(sign)) {
+                xml.append("<" + fater_node + ">");//¿ªÊ¼½Úµã
+            } else {
+                xml.append("<" + fater_node + " " + sign + "=\"" + sign_values + "\">");//¿ªÊ¼½Úµã
+            }
+
+        }
+    }
+
+    /**
+     * ²åÈëÒ»¸öËï½Úµã
+     */
+    public XML_PAGE addGrandsonNode(String node, String value) {
+        xml.append("<" + node + ">" + value + "</" + node + ">");//Ò»¸öËï½ÚµãĞÅÏ¢
+        return this;
+    }
+
+
+    /**
+     * »ñÈ¡Ò»¸öÍêÕûµÄXML×Ó½ÚµãĞÅÏ¢
+     *
+     * @return
+     */
+    public StringBuilder getXml() {
+        if(TextUtils.isEmpty(this._fater_nodex)){
+            //Ê²Ã´¶¼²»×ö
+        }
+        else{
+            xml.append("</" + this._fater_nodex + ">");//±ÕºÏxmlÊµÌå
+        }
+        return xml;//»ñÈ¡Ëï½ÚµãĞÅÏ¢
+    }
+}

@@ -1,1 +1,86 @@
-package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct;import android.annotation.SuppressLint;import android.graphics.Bitmap;import android.graphics.Color;import android.os.Bundle;import android.util.Log;import android.view.ViewGroup;import android.webkit.WebSettings;import android.webkit.WebView;import android.webkit.WebViewClient;import android.widget.LinearLayout;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.WebMonitor;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WEB_VALUES_ACT;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WINDOW_PAGE;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;/** * Áî®Êù•ÁÆ°ÁêÜÊòæÁ§∫UrlÁöÑViewÁïåÈù¢ * <p> */public class WebServiceAct extends LazyCatAct {    private WebView _WebView;    private WaitDialog.RefreshDialog refreshDialog;    @SuppressLint({"LongLogTag", "SetJavaScriptEnabled", "JavascriptInterface"})    @Override    protected void onCreate(Bundle savedInstanceState) {        LinearLayout item = new LinearLayout(getApplicationContext());        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams                .MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);        item.setLayoutParams(params);//ËÆæÁΩÆÂ∏ÉÂ±Ä        item.setBackgroundColor(Color.parseColor("#ffffff"));        //Â¢ûÂä†WebViewÂ∏ÉÂ±Ä        _WebView = new WebView(item.getContext());        _WebView.addJavascriptInterface(new WebMonitor(getApplicationContext(),this), "webmonitor");        item.addView(_WebView);        setContentView(item);        //Ëé∑ÂèñÊûÑÈÄ†Êï∞ÊçÆ‰ø°ÊÅØ        WEB_VALUES_ACT web_values_act = (WEB_VALUES_ACT) getIntent().getSerializableExtra                (WINDOW_PAGE.RESULT_WEBVIEW);        if (web_values_act != null) {            Log.i(Config.DEBUG, "WebServiceAct.java[+]Ëé∑ÂèñÂà∞ÁöÑÊûÑÈÄ†ÁöÑURL:" + web_values_act.get_url());            _WebView.loadUrl(web_values_act.get_url());            WebSettings webSettings = _WebView.getSettings();//Ëé∑ÂèñÈÖçÁΩÆ            webSettings.setJavaScriptEnabled(true);//ÂØπJAVAÁöÑÊîØÊåÅ            _WebView.setWebViewClient(new WebViewClient() {                @Override                public boolean shouldOverrideUrlLoading(WebView view, String request) {                    view.loadUrl(request);                    return true;                }                @Override                public void onPageStarted(WebView view, String url, Bitmap favicon) {                }                @Override                public void onPageFinished(WebView view, String url) {                    //refreshDialog.dismiss();                }            });        } else {            finish();            Log.e(Config.DEBUG, "WebServiceAct.java[+] Ëé∑ÂèñWEB_VALUES_ACT‰∏∫null");        }        super.onCreate(savedInstanceState);    }    @Override    protected void onDestroy() {        if (_WebView != null) {            _WebView.clearCache(true);//Ê∏ÖÁ©∫ÁºìÂ≠ò            _WebView.clearHistory();//Ê∏ÖÁ©∫ÂéÜÂè≤            _WebView = null;            System.gc();        }        super.onDestroy();    }}
+package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct;
+
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
+
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.WebMonitor;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WEB_VALUES_ACT;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WINDOW_PAGE;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
+
+
+/**
+ * ”√¿¥π‹¿Ìœ‘ æUrlµƒViewΩÁ√Ê
+ * <p>
+ */
+public class WebServiceAct extends LazyCatAct {
+    private WebView _WebView;
+    private WaitDialog.RefreshDialog refreshDialog;
+
+    @SuppressLint({"LongLogTag", "SetJavaScriptEnabled", "JavascriptInterface"})
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        LinearLayout item = new LinearLayout(getApplicationContext());
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
+                .MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        item.setLayoutParams(params);//…Ë÷√≤ºæ÷
+        item.setBackgroundColor(Color.parseColor("#ffffff"));
+        //‘ˆº”WebView≤ºæ÷
+        _WebView = new WebView(item.getContext());
+        _WebView.addJavascriptInterface(new WebMonitor(getApplicationContext(),this), "webmonitor");
+        item.addView(_WebView);
+        setContentView(item);
+        //ªÒ»°ππ‘Ï ˝æ›–≈œ¢
+        WEB_VALUES_ACT web_values_act = (WEB_VALUES_ACT) getIntent().getSerializableExtra
+                (WINDOW_PAGE.RESULT_WEBVIEW);
+        if (web_values_act != null) {
+            Log.i(Config.DEBUG, "WebServiceAct.java[+]ªÒ»°µΩµƒππ‘ÏµƒURL:" + web_values_act.get_url());
+            _WebView.loadUrl(web_values_act.get_url());
+            WebSettings webSettings = _WebView.getSettings();//ªÒ»°≈‰÷√
+            webSettings.setJavaScriptEnabled(true);//∂‘JAVAµƒ÷ß≥÷
+            _WebView.setWebViewClient(new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String request) {
+                    view.loadUrl(request);
+                    return true;
+                }
+
+                @Override
+                public void onPageStarted(WebView view, String url, Bitmap favicon) {
+
+                }
+
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    //refreshDialog.dismiss();
+
+                }
+            });
+        } else {
+            finish();
+            Log.e(Config.DEBUG, "WebServiceAct.java[+] ªÒ»°WEB_VALUES_ACTŒ™null");
+        }
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (_WebView != null) {
+            _WebView.clearCache(true);//«Âø’ª∫¥Ê
+            _WebView.clearHistory();//«Âø’¿˙ ∑
+            _WebView = null;
+            System.gc();
+        }
+        super.onDestroy();
+    }
+}
