@@ -15,31 +15,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a52fcd4-d8d6-4277-af4b-2d758702a440" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/ScrollViewBiggerPhoto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/heiren.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/assembly_searchact_showsearchitem.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyClass/LazyCatFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyClass/LazyCatFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/RefreshScrollView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/RefreshScrollView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/LoginAct.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/LoginAct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/MainAct.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/MainAct.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchAct.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchAct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/ShowshopOffice.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/ShowshopOffice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_showshopoffice.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_showshopoffice.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/assembly_head.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/assembly_head.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -107,14 +83,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginAct.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LoginAct.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/LoginAct.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="442">
-              <caret line="116" column="88" selection-start-line="116" selection-start-column="88" selection-end-line="116" selection-end-column="88" />
+              <caret line="116" column="87" selection-start-line="116" selection-start-column="87" selection-end-line="116" selection-end-column="87" />
               <folding>
                 <element signature="e#4093#4603#0" expanded="true" />
                 <element signature="e#4602#4603#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SearchAct.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchAct.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="14">
+              <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2712,7 +2700,7 @@
       <window_info id="Captures" order="7" weight="0.25" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="Designer" order="0" />
-      <window_info content_ui="combo" id="Project" order="4" weight="0.24959612" />
+      <window_info active="true" content_ui="combo" id="Project" order="4" visible="true" weight="0.24959612" />
       <window_info anchor="bottom" id="Build" order="0" weight="0.32827586" />
       <window_info anchor="right" id="Gradle" order="3" />
       <window_info id="Structure" order="5" side_tool="true" weight="0.25" />
@@ -3068,13 +3056,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchAct.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="36" column="42" selection-start-line="36" selection-start-column="42" selection-end-line="36" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/assembly_searchact_showsearchitem.xml">
       <provider editor-type-id="android-designer2">
         <state />
@@ -3153,10 +3134,20 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/LoginAct.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
-          <caret line="116" column="88" selection-start-line="116" selection-start-column="88" selection-end-line="116" selection-end-column="88" />
+          <caret line="116" column="87" selection-start-line="116" selection-start-column="87" selection-end-line="116" selection-end-column="87" />
           <folding>
             <element signature="e#4093#4603#0" expanded="true" />
             <element signature="e#4602#4603#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchAct.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="14">
+          <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
