@@ -1,1 +1,134 @@
-package shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views;import android.annotation.SuppressLint;import android.content.Context;import android.util.AttributeSet;import android.util.Log;import android.view.MotionEvent;import android.view.View;import android.widget.AbsListView;import android.widget.LinearLayout;import android.widget.ListView;import android.widget.ProgressBar;import android.widget.TextView;import android.widget.Toast;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;public class LeftCompanyPorgramListView extends ListView implements AbsListView.OnScrollListener {    private Context mcontext;    private View bottomview;//å°¾éƒ¨æ–‡ä»¶    private View headview;//å¤´éƒ¨æ–‡ä»¶    private int totalItemcounts;    private int lassvisible;//ä¸Šæ‹‰    private int firstvisible;//ä¸‹æ‹‰    private LoadListener loadListener;//æ¥å£å›è°ƒ    private int bottomHeight;    private int headHeight;    private int Yload;    boolean isLoading;    private TextView headTv, headTime;    private ProgressBar progressBar;    public LeftCompanyPorgramListView(Context context, AttributeSet attrs, int defStyleAttr) {        super(context, attrs, defStyleAttr);        mcontext = context;        init(context);    }    public LeftCompanyPorgramListView(Context context, AttributeSet attrs) {        super(context, attrs);        mcontext = context;        init(context);    }    public LeftCompanyPorgramListView(Context context) {        super(context);        mcontext = context;        init(context);    }    @Override    public void onScrollStateChanged(AbsListView view, int scrollState) {    }    @Override    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int            totalItemCount) {    }    public void setHeadView(int v_id) {        headview = LinearLayout.inflate(mcontext,v_id,null);        //é‡æ–°æµ‹é‡        headview.measure(0,0);        headHeight = headview.getMeasuredHeight();//è·å¾—é‡æ–°æµ‹é‡çš„é«˜åº¦        headview.setPadding(0,-headHeight,0,0);        this.addHeaderView(headview);    }    public void setBottomview(int v_id){        bottomview = LinearLayout.inflate(mcontext,v_id,null);        //é‡æ–°æµ‹é‡        bottomview.measure(0,0);        bottomHeight = bottomview.getMeasuredHeight();//é‡æ–°è·å¾—é«˜åº¦        bottomview.setPadding(0,-bottomHeight,0,0);        this.addFooterView(bottomview);    }    private void init(Context tContext) {        this.setOnScrollListener(this);    }    //æ¥å£å›è°ƒ    public interface LoadListener {        void onLoad();//åŠ è½½        void PullLoad();//ä¸‹æ‹‰    }    //åŠ è½½å®Œæˆ    public void localComplete() {        isLoading = false;        bottomview.setPadding(0, -bottomHeight, 0, 0);        headview.setPadding(0, -headHeight, 0, 0);    }    public void setInterface(LoadListener loadListener) {        this.loadListener = loadListener;    }    @SuppressLint("LongLogTag")    @Override    public boolean onTouchEvent(MotionEvent ev) {        switch (ev.getAction()){            case MotionEvent.ACTION_DOWN:                Yload = (int) ev.getY();//å®šä½                break;            case MotionEvent.ACTION_MOVE:                int moveY = (int) ev.getY();                int paddingY = 0;                try {                    paddingY = headHeight + (moveY - Yload) / 2;                } catch (Exception e) {                    Log.i(Config.DEBUG,"listviewæ²¡æœ‰å¤´éƒ¨æ–‡ä»¶");                }                if(paddingY < 0){                    Toast.makeText(mcontext,"ä¸‹æ‹‰åˆ·æ–°",Toast.LENGTH_SHORT).show();                }                else{                    Toast.makeText(mcontext,"æ¾å¼€åˆ·æ–°",Toast.LENGTH_SHORT).show();                }                if(headview != null){                    headview.setPadding(0,paddingY,0,0);                }                break;            case MotionEvent.ACTION_UP:                break;        }        return super.onTouchEvent(ev);    }}
+package shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AbsListView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
+
+public class LeftCompanyPorgramListView extends ListView implements AbsListView.OnScrollListener {
+    private Context mcontext;
+    private View bottomview;//Î²²¿ÎÄ¼ş
+    private View headview;//Í·²¿ÎÄ¼ş
+    private int totalItemcounts;
+    private int lassvisible;//ÉÏÀ­
+    private int firstvisible;//ÏÂÀ­
+    private LoadListener loadListener;//½Ó¿Ú»Øµ÷
+    private int bottomHeight;
+    private int headHeight;
+    private int Yload;
+    boolean isLoading;
+    private TextView headTv, headTime;
+    private ProgressBar progressBar;
+
+
+    public LeftCompanyPorgramListView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        mcontext = context;
+        init(context);
+    }
+
+    public LeftCompanyPorgramListView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        mcontext = context;
+        init(context);
+    }
+
+    public LeftCompanyPorgramListView(Context context) {
+        super(context);
+        mcontext = context;
+        init(context);
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int
+            totalItemCount) {
+    }
+
+    public void setHeadView(int v_id) {
+        headview = LinearLayout.inflate(mcontext,v_id,null);
+        //ÖØĞÂ²âÁ¿
+        headview.measure(0,0);
+        headHeight = headview.getMeasuredHeight();//»ñµÃÖØĞÂ²âÁ¿µÄ¸ß¶È
+        headview.setPadding(0,-headHeight,0,0);
+        this.addHeaderView(headview);
+    }
+
+    public void setBottomview(int v_id){
+        bottomview = LinearLayout.inflate(mcontext,v_id,null);
+        //ÖØĞÂ²âÁ¿
+        bottomview.measure(0,0);
+        bottomHeight = bottomview.getMeasuredHeight();//ÖØĞÂ»ñµÃ¸ß¶È
+        bottomview.setPadding(0,-bottomHeight,0,0);
+        this.addFooterView(bottomview);
+    }
+
+    private void init(Context tContext) {
+        this.setOnScrollListener(this);
+    }
+
+    //½Ó¿Ú»Øµ÷
+    public interface LoadListener {
+        void onLoad();//¼ÓÔØ
+
+        void PullLoad();//ÏÂÀ­
+    }
+
+
+    //¼ÓÔØÍê³É
+    public void localComplete() {
+        isLoading = false;
+        bottomview.setPadding(0, -bottomHeight, 0, 0);
+        headview.setPadding(0, -headHeight, 0, 0);
+    }
+
+    public void setInterface(LoadListener loadListener) {
+        this.loadListener = loadListener;
+    }
+
+    @SuppressLint("LongLogTag")
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                Yload = (int) ev.getY();//¶¨Î»
+                break;
+            case MotionEvent.ACTION_MOVE:
+                int moveY = (int) ev.getY();
+
+                int paddingY = 0;
+                try {
+                    paddingY = headHeight + (moveY - Yload) / 2;
+                } catch (Exception e) {
+                    Log.i(Config.DEBUG,"listviewÃ»ÓĞÍ·²¿ÎÄ¼ş");
+                }
+                if(paddingY < 0){
+                    Toast.makeText(mcontext,"ÏÂÀ­Ë¢ĞÂ",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(mcontext,"ËÉ¿ªË¢ĞÂ",Toast.LENGTH_SHORT).show();
+                }
+                if(headview != null){
+                    headview.setPadding(0,paddingY,0,0);
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+        }
+        return super.onTouchEvent(ev);
+    }
+}

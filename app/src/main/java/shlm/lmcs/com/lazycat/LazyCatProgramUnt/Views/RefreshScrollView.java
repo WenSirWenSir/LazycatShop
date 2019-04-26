@@ -1,1 +1,323 @@
-package shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views;import android.annotation.SuppressLint;import android.content.Context;import android.graphics.Bitmap;import android.os.Handler;import android.os.Message;import android.util.AttributeSet;import android.util.Log;import android.view.Gravity;import android.view.MotionEvent;import android.view.View;import android.widget.ImageView;import android.widget.LinearLayout;import android.widget.ProgressBar;import android.widget.ScrollView;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.ImageCache;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;/** * æ»‘åŠ¨ç›‘å¬çš„View */@SuppressLint("LongLogTag")public class RefreshScrollView extends ScrollView {    private int ViewWidth;//å®½åº¦    private LinearLayout layout;    private int _scrollY;//æ»‘åŠ¨çš„è·ç¦»    public static int CAN_REFRESH = 0;    public static int ING_REFRESH = 1;    public static int RUNNOW_REFRESH = 2;    private ImageCache imageCache = new ImageCache();    private int _downY;//è®°å½•è·ç¦»    private int _downH;//è®°å½•é«˜åº¦    private boolean b_down;    private int viewHeight;//å¯ä»¥åˆ·æ–°çš„é«˜åº¦    private boolean onGetHeadimg = false;    private int total_distance;    private Handler handler;    public boolean inLoadMessage = false;//ç”±è°ƒç”¨çš„åœ°æ–¹æ‰‹åŠ¨è°ƒèŠ‚ å¦‚æœå¤–éƒ¨è°ƒç”¨äº†åŠ è½½ å°±å¿…é¡»åœ¨å¤–éƒ¨è®¾ç½®å·²ç»åŠ è½½ ä¸èƒ½å†æ¬¡åŠ è½½    public boolean onStopHandle = false;/*ç”±å¤–éƒ¨ç»™å‡ºè¿™ä¸ªå€¼ æ¥åˆ¤æ–­å¤–éƒ¨æ˜¯å¦å·²ç»åœ¨å¤„ç†æ»‘åŠ¨åœæ­¢äº‹ä»¶*/    private RefreshScrollViewListener _RefreshScrollViewListener;//æ»‘åŠ¨ç›‘å¬å¯¹è±¡    private int RefershLog = 0;    private int RefershImg = 0;    public RefreshScrollView(Context context, AttributeSet attrs, int defStyleAttr) {        super(context, attrs, defStyleAttr);        init();    }    public RefreshScrollView(Context context, AttributeSet attrs) {        super(context, attrs);        init();    }    public RefreshScrollView(Context context) {        super(context);        init();    }    @Override    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {        super.onMeasure(widthMeasureSpec, heightMeasureSpec);        ViewWidth = getWidth();    }    private void init() {        handler = new Handler() {            @Override            public void handleMessage(Message msg) {                super.handleMessage(msg);            }        };    }    /**     * è®¾ç½®å¤´éƒ¨View     *     * @param view å¿…é¡»å·²ç»å­˜åœ¨äºScrollViewä¸­     */    public void SetHeadView(LinearLayout view, int viewHeight, int refershLogid, int refreshImgid) {        this.RefershLog = refershLogid;        this.RefershImg = refreshImgid;        layout = view;//åŠ è½½æ–‡ä»¶        if (layout == null) {            Log.e(Config.DEBUG, "RefreshScrollView.java[+]viewä¸ºç©º");        }        LinearLayout.LayoutParams _params = null;        try {            _params = (LinearLayout.LayoutParams) layout.getLayoutParams();        } catch (Exception e) {            Log.e(Config.DEBUG, "RefreshScrollView.java[+]" + e.getMessage());        }        this.viewHeight = viewHeight;        if (_params == null) {            Log.e(Config.DEBUG, "RefreshScrollView.java[+]_paramsä¸ºç©º");        } else {            _params.width = ViewWidth;            _params.height = 0;            _params.gravity = Gravity.CENTER;        }    }    public void SetLinstener(RefreshScrollViewListener i) {        if (i != null) {            this._RefreshScrollViewListener = i;        } else {            Log.e(Config.DEBUG, "RefreshScrollView.java[+]ç›‘å¬äº‹ä»¶å¯¹è±¡ä¸ºç©º");        }    }    /**     * åœæ­¢åˆ·æ–°     */    public void stopRefresh() {        LinearLayout.LayoutParams params = null;        try {            params = (LinearLayout.LayoutParams) this.layout.getLayoutParams();        } catch (Exception e) {            Log.e(Config.DEBUG, "RefreshScrollView.java[+]" + e.getMessage());        }        if (params != null) {            params.width = ViewWidth;            params.height = 0;            this.layout.setLayoutParams(params);            inLoadMessage = false;//å¯ä»¥åŠ è½½å¤–éƒ¨ä¿¡æ¯        }    }    /**     * å…³é”®ä»£ç      *     * @param ev     * @return     */    @Override    public boolean dispatchTouchEvent(MotionEvent ev) {        if (ev.getAction() == MotionEvent.ACTION_DOWN) {            /*åˆ¤æ–­onStophandle*/            if (onStopHandle) {                //å¯ä»¥å›è°ƒæ»‘åŠ¨åœæ­¢äº‹ä»¶                onStopHandle = false;            }            _downY = (int) ev.getY();            total_distance = 0;            //æŒ‰ä¸‹é¼ æ ‡        }        if (ev.getAction() == MotionEvent.ACTION_MOVE) {            //é¼ æ ‡ç§»åŠ¨            if (_scrollY == 0) {                //å¯ä»¥è¿›è¡Œä¸‹æ‹‰åˆ·æ–°  åœ¨é¡¶éƒ¨ä½ç½®                Log.i(Config.DEBUG, "RefreshScrollView.java[+]åœ¨é¡¶éƒ¨");                if (ev.getY() - _downY > 0) {                    //å‘ä¸‹æ»‘åŠ¨  å¯ä»¥åˆ·æ–°                    int downRange = (int) ((ev.getY() - _downY * 1) / 2);                    /*è®¡ç®—å‡ºæ¥æ»‘åŠ¨è·ç¦» å°±è¿›è¡Œå›è°ƒ*/                    if (_RefreshScrollViewListener != null) {                        _RefreshScrollViewListener.onScrollDistance(downRange);                    }                    b_down = false;//åˆšåˆšå¼€å§‹æ»‘åŠ¨ æ¾æ‰‹ä¸èƒ½åˆ·æ–°                    if (layout != null) {                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) layout                                .getLayoutParams();                        final ImageView head_img = (ImageView) layout.findViewById(this.RefershImg);                        /*è¿™è¾¹è¦åŠ è½½ç½‘ç»œå›¾ç‰‡*/                        if (imageCache.getImage("225522") != null || onGetHeadimg == true) {                            Log.i(Config.DEBUG, "ç¼“å­˜ä¸­å­˜åœ¨å›¾ç‰‡æˆ–è€…å·²ç»åœ¨å¼€å§‹ä¸‹è½½");                            head_img.setImageBitmap(imageCache.getImage("225522"));                        } else {                            Net.doGetimg("/photos/225522.png", new ProgramInterface.doGetImg() {                                @Override                                public void onSucess(Bitmap bitmap) {                                    //æˆåŠŸ è·å–åˆ°ç½‘ç»œå›¾ç‰‡                                    Log.i(Config.DEBUG, "è·å–åˆ°å›¾ç‰‡ä¿¡æ¯äº†");                                    imageCache.saveImage("225522", bitmap);                                    head_img.setImageBitmap(imageCache.getImage("225522"));                                }                                @Override                                public void onFain() {                                }                            });                        }                        params.width = ViewWidth;                        params.height = downRange;                        layout.setLayoutParams(params);                    }                    if (downRange >= viewHeight) {                        if (_RefreshScrollViewListener != null) {                            _RefreshScrollViewListener.onState(RefreshScrollView.CAN_REFRESH);                        }                        if (this.RefershLog == 0) {                            Log.e(Config.DEBUG, "RefreshScrollView.java[+]ä½ å¿…é¡»è¦è®¾ç½®ä¸€ä¸ªåŠ è½½çš„ç­‰å¾…ID");                        } else {                            ProgressBar progressBar = layout.findViewById(this.RefershLog);                            progressBar.setVisibility(View.VISIBLE);                        }                        b_down = true;                    } else {                        if (this.RefershLog == 0) {                            Log.e(Config.DEBUG, "RefreshScrollView.java[+]ä½ å¿…é¡»è¦è®¾ç½®ä¸€ä¸ªåŠ è½½çš„ç­‰å¾…ID");                        } else {                            ProgressBar progressBar = layout.findViewById(this.RefershLog);                            progressBar.setVisibility(View.GONE);                        }                        if (_RefreshScrollViewListener != null) {                            _RefreshScrollViewListener.onState(RefreshScrollView.ING_REFRESH);                        }                        b_down = false;                    }                    total_distance = downRange;//è®¾ç½®æ‹‰åŠ¨çš„è·ç¦»                } else {                    b_down = false;                    return super.dispatchTouchEvent(ev);                }            } else {                b_down = false;                return super.dispatchTouchEvent(ev);                //ä¸åœ¨é¡¶éƒ¨ä½ç½®  å°±ä¸è¿›è¡Œæ“ä½œ            }        }        if (ev.getAction() == MotionEvent.ACTION_UP) {            //é¼ æ ‡æŠ¬èµ·            if (b_down) {                //å¯ä»¥åˆ·æ–°                if (inLoadMessage == false) {                    if (total_distance >= viewHeight * 2) {                        //ä¸‹æ‹‰å¤§äº2å€å°±å¼€å§‹åŠ è½½å¹¿å‘Š                        if (_RefreshScrollViewListener != null) {                            _RefreshScrollViewListener.onloadMessage();                        }                    }                } else {                    Log.i(Config.DEBUG, "RefreshScrollView.java[+]å¤–éƒ¨å·²ç»å¼€å§‹æ‰“å¼€å¹¿å‘Šçª—å£");                }                if (layout != null) {                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) layout                            .getLayoutParams();                    params.width = ViewWidth;                    params.height = viewHeight;                    layout.setLayoutParams(params);                    if (_RefreshScrollViewListener != null) {                        _RefreshScrollViewListener.onState(RefreshScrollView.RUNNOW_REFRESH);                        //å¯ä»¥åŠ è½½ä¿¡æ¯äº†                        _RefreshScrollViewListener.onLoadMore();                    }                }            } else {                //ä¸å¯ä»¥åˆ·æ–° å°±åœæ­¢                stopRefresh();            }        }        return super.dispatchTouchEvent(ev);    }    @Override    protected void onScrollChanged(int l, int t, int oldl, int oldt) {        super.onScrollChanged(l, t, oldl, oldt);        _scrollY = t;//æ»‘åŠ¨çš„è·ç¦»        Log.i(Config.DEBUG, "RefreshScrooView.java[+]æ»‘åŠ¨çš„è·ç¦»ä¸º:" + _scrollY);        if (t + this.getMeasuredHeight() == this.getChildAt(0).getMeasuredHeight()) {            Log.i(Config.DEBUG, "RefreshScrollView.java[+]æ»‘åŠ¨åˆ°åº•éƒ¨");            if (_RefreshScrollViewListener != null) {                _RefreshScrollViewListener.onLoadBottom();//æ»‘åŠ¨åˆ°åº•éƒ¨            }        }    }    /**     * ç›‘å¬     */    public interface RefreshScrollViewListener {        void onRefresh();//æ­£åœ¨åˆ·æ–°        void onRefreshDone();//åˆ·æ–°å®Œæˆ        void onStopRefresh();//åœæ­¢åˆ·æ–°        void onState(int _static);//çŠ¶æ€        void onLoadMore();//åŠ è½½ä¿¡æ¯        void onLoadBottom();//åœ¨åº•éƒ¨        void onScrollStop();//æ»‘åŠ¨åœæ­¢        void onloadMessage();//åŠ è½½å¹¿å‘Š        void onScrollDistance(int distance);//æ»‘åŠ¨çš„è·ç¦»    }    @Override    protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int            scrollRangeX, int scrollRangeY, int maxOverScrollX, int maxOverScrollY, boolean            isTouchEvent) {        if (deltaY <= 2 && deltaY >= -2 && !isTouchEvent) {            if (onStopHandle) {                //è¡¨ç¤ºå¤–éƒ¨å·²ç»åœ¨å¤„ç† ä¸ç”¨é‡å¤æäº¤            } else {                _RefreshScrollViewListener.onScrollStop();            }        }        return super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX, scrollRangeY,                maxOverScrollX, maxOverScrollY, isTouchEvent);    }}
+package shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Handler;
+import android.os.Message;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
+
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.ImageCache;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
+
+/**
+ * »¬¶¯¼àÌıµÄView
+ */
+@SuppressLint("LongLogTag")
+public class RefreshScrollView extends ScrollView {
+    private int ViewWidth;//¿í¶È
+    private LinearLayout layout;
+    private int _scrollY;//»¬¶¯µÄ¾àÀë
+    public static int CAN_REFRESH = 0;
+    public static int ING_REFRESH = 1;
+    public static int RUNNOW_REFRESH = 2;
+    private ImageCache imageCache = new ImageCache();
+    private int _downY;//¼ÇÂ¼¾àÀë
+    private int _downH;//¼ÇÂ¼¸ß¶È
+    private boolean b_down;
+    private int viewHeight;//¿ÉÒÔË¢ĞÂµÄ¸ß¶È
+    private boolean onGetHeadimg = false;
+    private int total_distance;
+    private Handler handler;
+    public boolean inLoadMessage = false;//ÓÉµ÷ÓÃµÄµØ·½ÊÖ¶¯µ÷½Ú Èç¹ûÍâ²¿µ÷ÓÃÁË¼ÓÔØ ¾Í±ØĞëÔÚÍâ²¿ÉèÖÃÒÑ¾­¼ÓÔØ ²»ÄÜÔÙ´Î¼ÓÔØ
+    public boolean onStopHandle = false;/*ÓÉÍâ²¿¸ø³öÕâ¸öÖµ À´ÅĞ¶ÏÍâ²¿ÊÇ·ñÒÑ¾­ÔÚ´¦Àí»¬¶¯Í£Ö¹ÊÂ¼ş*/
+    private RefreshScrollViewListener _RefreshScrollViewListener;//»¬¶¯¼àÌı¶ÔÏó
+    private int RefershLog = 0;
+    private int RefershImg = 0;
+
+    public RefreshScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    public RefreshScrollView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+
+    public RefreshScrollView(Context context) {
+        super(context);
+        init();
+    }
+
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        ViewWidth = getWidth();
+    }
+
+    private void init() {
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+            }
+        };
+    }
+
+    /**
+     * ÉèÖÃÍ·²¿View
+     *
+     * @param view ±ØĞëÒÑ¾­´æÔÚÓÚScrollViewÖĞ
+     */
+    public void SetHeadView(LinearLayout view, int viewHeight, int refershLogid, int refreshImgid) {
+        this.RefershLog = refershLogid;
+        this.RefershImg = refreshImgid;
+        layout = view;//¼ÓÔØÎÄ¼ş
+        if (layout == null) {
+            Log.e(Config.DEBUG, "RefreshScrollView.java[+]viewÎª¿Õ");
+        }
+        LinearLayout.LayoutParams _params = null;
+        try {
+            _params = (LinearLayout.LayoutParams) layout.getLayoutParams();
+        } catch (Exception e) {
+            Log.e(Config.DEBUG, "RefreshScrollView.java[+]" + e.getMessage());
+        }
+        this.viewHeight = viewHeight;
+        if (_params == null) {
+            Log.e(Config.DEBUG, "RefreshScrollView.java[+]_paramsÎª¿Õ");
+        } else {
+            _params.width = ViewWidth;
+            _params.height = 0;
+            _params.gravity = Gravity.CENTER;
+        }
+
+    }
+
+    public void SetLinstener(RefreshScrollViewListener i) {
+        if (i != null) {
+            this._RefreshScrollViewListener = i;
+        } else {
+            Log.e(Config.DEBUG, "RefreshScrollView.java[+]¼àÌıÊÂ¼ş¶ÔÏóÎª¿Õ");
+        }
+    }
+
+    /**
+     * Í£Ö¹Ë¢ĞÂ
+     */
+    public void stopRefresh() {
+
+        LinearLayout.LayoutParams params = null;
+        try {
+            params = (LinearLayout.LayoutParams) this.layout.getLayoutParams();
+        } catch (Exception e) {
+            Log.e(Config.DEBUG, "RefreshScrollView.java[+]" + e.getMessage());
+        }
+        if (params != null) {
+            params.width = ViewWidth;
+            params.height = 0;
+            this.layout.setLayoutParams(params);
+            inLoadMessage = false;//¿ÉÒÔ¼ÓÔØÍâ²¿ĞÅÏ¢
+        }
+    }
+
+
+    /**
+     * ¹Ø¼ü´úÂë
+     *
+     * @param ev
+     * @return
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            /*ÅĞ¶ÏonStophandle*/
+            if (onStopHandle) {
+                //¿ÉÒÔ»Øµ÷»¬¶¯Í£Ö¹ÊÂ¼ş
+                onStopHandle = false;
+            }
+            _downY = (int) ev.getY();
+            total_distance = 0;
+            //°´ÏÂÊó±ê
+        }
+        if (ev.getAction() == MotionEvent.ACTION_MOVE) {
+            //Êó±êÒÆ¶¯
+            if (_scrollY == 0) {
+                //¿ÉÒÔ½øĞĞÏÂÀ­Ë¢ĞÂ  ÔÚ¶¥²¿Î»ÖÃ
+                Log.i(Config.DEBUG, "RefreshScrollView.java[+]ÔÚ¶¥²¿");
+                if (ev.getY() - _downY > 0) {
+                    //ÏòÏÂ»¬¶¯  ¿ÉÒÔË¢ĞÂ
+                    int downRange = (int) ((ev.getY() - _downY * 1) / 2);
+                    /*¼ÆËã³öÀ´»¬¶¯¾àÀë ¾Í½øĞĞ»Øµ÷*/
+                    if (_RefreshScrollViewListener != null) {
+                        _RefreshScrollViewListener.onScrollDistance(downRange);
+                    }
+                    b_down = false;//¸Õ¸Õ¿ªÊ¼»¬¶¯ ËÉÊÖ²»ÄÜË¢ĞÂ
+                    if (layout != null) {
+                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) layout
+                                .getLayoutParams();
+                        final ImageView head_img = (ImageView) layout.findViewById(this.RefershImg);
+                        /*Õâ±ßÒª¼ÓÔØÍøÂçÍ¼Æ¬*/
+                        if (imageCache.getImage("225522") != null || onGetHeadimg == true) {
+                            Log.i(Config.DEBUG, "»º´æÖĞ´æÔÚÍ¼Æ¬»òÕßÒÑ¾­ÔÚ¿ªÊ¼ÏÂÔØ");
+                            head_img.setImageBitmap(imageCache.getImage("225522"));
+                        } else {
+                            Net.doGetimg("/photos/225522.png", new ProgramInterface.doGetImg() {
+                                @Override
+                                public void onSucess(Bitmap bitmap) {
+                                    //³É¹¦ »ñÈ¡µ½ÍøÂçÍ¼Æ¬
+                                    Log.i(Config.DEBUG, "»ñÈ¡µ½Í¼Æ¬ĞÅÏ¢ÁË");
+                                    imageCache.saveImage("225522", bitmap);
+                                    head_img.setImageBitmap(imageCache.getImage("225522"));
+                                }
+
+                                @Override
+                                public void onFain() {
+
+                                }
+                            });
+
+                        }
+                        params.width = ViewWidth;
+                        params.height = downRange;
+                        layout.setLayoutParams(params);
+                    }
+                    if (downRange >= viewHeight) {
+                        if (_RefreshScrollViewListener != null) {
+                            _RefreshScrollViewListener.onState(RefreshScrollView.CAN_REFRESH);
+
+                        }
+                        if (this.RefershLog == 0) {
+                            Log.e(Config.DEBUG, "RefreshScrollView.java[+]Äã±ØĞëÒªÉèÖÃÒ»¸ö¼ÓÔØµÄµÈ´ıID");
+                        } else {
+                            ProgressBar progressBar = layout.findViewById(this.RefershLog);
+                            progressBar.setVisibility(View.VISIBLE);
+                        }
+
+                        b_down = true;
+                    } else {
+                        if (this.RefershLog == 0) {
+                            Log.e(Config.DEBUG, "RefreshScrollView.java[+]Äã±ØĞëÒªÉèÖÃÒ»¸ö¼ÓÔØµÄµÈ´ıID");
+
+                        } else {
+                            ProgressBar progressBar = layout.findViewById(this.RefershLog);
+                            progressBar.setVisibility(View.GONE);
+                        }
+                        if (_RefreshScrollViewListener != null) {
+                            _RefreshScrollViewListener.onState(RefreshScrollView.ING_REFRESH);
+
+                        }
+
+                        b_down = false;
+                    }
+                    total_distance = downRange;//ÉèÖÃÀ­¶¯µÄ¾àÀë
+                } else {
+                    b_down = false;
+                    return super.dispatchTouchEvent(ev);
+                }
+            } else {
+                b_down = false;
+                return super.dispatchTouchEvent(ev);
+                //²»ÔÚ¶¥²¿Î»ÖÃ  ¾Í²»½øĞĞ²Ù×÷
+            }
+        }
+        if (ev.getAction() == MotionEvent.ACTION_UP) {
+            //Êó±êÌ§Æğ
+            if (b_down) {
+                //¿ÉÒÔË¢ĞÂ
+                if (inLoadMessage == false) {
+                    if (total_distance >= viewHeight * 2) {
+                        //ÏÂÀ­´óÓÚ2±¶¾Í¿ªÊ¼¼ÓÔØ¹ã¸æ
+                        if (_RefreshScrollViewListener != null) {
+                            _RefreshScrollViewListener.onloadMessage();
+                        }
+                    }
+                } else {
+                    Log.i(Config.DEBUG, "RefreshScrollView.java[+]Íâ²¿ÒÑ¾­¿ªÊ¼´ò¿ª¹ã¸æ´°¿Ú");
+                }
+                if (layout != null) {
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) layout
+                            .getLayoutParams();
+                    params.width = ViewWidth;
+                    params.height = viewHeight;
+                    layout.setLayoutParams(params);
+                    if (_RefreshScrollViewListener != null) {
+                        _RefreshScrollViewListener.onState(RefreshScrollView.RUNNOW_REFRESH);
+                        //¿ÉÒÔ¼ÓÔØĞÅÏ¢ÁË
+                        _RefreshScrollViewListener.onLoadMore();
+                    }
+                }
+
+            } else {
+                //²»¿ÉÒÔË¢ĞÂ ¾ÍÍ£Ö¹
+                stopRefresh();
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+        super.onScrollChanged(l, t, oldl, oldt);
+        _scrollY = t;//»¬¶¯µÄ¾àÀë
+        Log.i(Config.DEBUG, "RefreshScrooView.java[+]»¬¶¯µÄ¾àÀëÎª:" + _scrollY);
+        if (t + this.getMeasuredHeight() == this.getChildAt(0).getMeasuredHeight()) {
+            Log.i(Config.DEBUG, "RefreshScrollView.java[+]»¬¶¯µ½µ×²¿");
+            if (_RefreshScrollViewListener != null) {
+                _RefreshScrollViewListener.onLoadBottom();//»¬¶¯µ½µ×²¿
+            }
+        }
+    }
+
+
+    /**
+     * ¼àÌı
+     */
+
+    public interface RefreshScrollViewListener {
+        void onRefresh();//ÕıÔÚË¢ĞÂ
+
+        void onRefreshDone();//Ë¢ĞÂÍê³É
+
+        void onStopRefresh();//Í£Ö¹Ë¢ĞÂ
+
+        void onState(int _static);//×´Ì¬
+
+        void onLoadMore();//¼ÓÔØĞÅÏ¢
+
+        void onLoadBottom();//ÔÚµ×²¿
+
+        void onScrollStop();//»¬¶¯Í£Ö¹
+
+        void onloadMessage();//¼ÓÔØ¹ã¸æ
+
+        void onScrollDistance(int distance);//»¬¶¯µÄ¾àÀë
+    }
+
+    @Override
+    protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int
+            scrollRangeX, int scrollRangeY, int maxOverScrollX, int maxOverScrollY, boolean
+            isTouchEvent) {
+        if (deltaY <= 2 && deltaY >= -2 && !isTouchEvent) {
+            if (onStopHandle) {
+                //±íÊ¾Íâ²¿ÒÑ¾­ÔÚ´¦Àí ²»ÓÃÖØ¸´Ìá½»
+            } else {
+                _RefreshScrollViewListener.onScrollStop();
+            }
+        }
+        return super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX, scrollRangeY,
+                maxOverScrollX, maxOverScrollY, isTouchEvent);
+    }
+}

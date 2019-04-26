@@ -1,1 +1,99 @@
-package shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views;import android.content.Context;import android.util.AttributeSet;import android.util.DisplayMetrics;import android.util.Log;import android.view.MotionEvent;import android.view.View;import android.view.ViewGroup;import android.widget.ScrollView;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;/** * è®¾ç½®ä¸‹æ‹‰çš„æ—¶å€™æ§ä»¶å¤§ */public class ScrollViewBiggerPhoto extends ScrollView {    private View img_body;    private float myFirstMove = 0;    private DisplayMetrics metrics;//    public ScrollViewBiggerPhoto(Context context) {        super(context);    }    public ScrollViewBiggerPhoto(Context context, AttributeSet attrs) {        super(context, attrs);    }    public ScrollViewBiggerPhoto(Context context, AttributeSet attrs, int defStyleAttr) {        super(context, attrs, defStyleAttr);    }    public void setImageHead(View _imgbody, DisplayMetrics _metrics) {        this.img_body = _imgbody;        this.metrics = _metrics;//å±å¹•çŸ©é˜µ        Log.e(Config.DEBUG, "ScrollViewBiggerPhoto.java[+]å±å¹•å®½åº¦:" + this.metrics.widthPixels);        Log.e(Config.DEBUG, "ScrollViewBiggerPhoto.java[+]å±å¹•é«˜åº¦:" + this.metrics.heightPixels);        /*è®¾ç½®æ§ä»¶çš„é«˜åº¦å’Œå®½åº¦*/        ViewGroup.LayoutParams params = this.img_body.getLayoutParams();        params.width = this.metrics.widthPixels;        params.height = this.metrics.heightPixels * 8 / 16;    }    @Override    public boolean dispatchTouchEvent(MotionEvent ev) {        ViewGroup.LayoutParams params = null;        if (this.img_body != null) {            params = this.img_body.getLayoutParams();        } else {            Log.e(Config.DEBUG, "ScrollViewBiggerPhoto.java[+]æ‚¨å¿…é¡»è®¾ç½®ä¸€ä¸ªæ§ä»¶");        }        switch (ev.getAction()) {            case MotionEvent.ACTION_UP:                ClearImage();                break;            case MotionEvent.ACTION_DOWN:                myFirstMove = ev.getY();                break;            case MotionEvent.ACTION_MOVE:                /*åˆ¤æ–­æ˜¯å¦åœ¨é¡¶éƒ¨*/                if (getScrollY() == 0) {                    Log.e(Config.DEBUG, "åœ¨é¡¶éƒ¨");                    /*è®°å½•ä½ç½®*/                    /*è®¡ç®—æ»šåŠ¨è·ç¦»*/                    int distance = (int) ((ev.getY() - myFirstMove) * 0.6);                    if (distance < 0) {                        /*ä¸èƒ½æ”¾å¤§*/                        break;                    }                    /*å¼€å§‹å¤„ç†æ”¾å¤§*/                    if (params != null) {                        params.width = this.metrics.widthPixels + distance;                        params.height = (this.metrics.heightPixels + distance) * 8 / 16;                        this.img_body.setLayoutParams(params);                    }                }                break;        }        return super.dispatchTouchEvent(ev);    }    /**     * æ¸…ç©ºImageViewçš„æ”¾å¤§æ•ˆæœ     */    private void ClearImage() {        ViewGroup.LayoutParams params = this.img_body.getLayoutParams();        params.width = this.metrics.widthPixels;        params.height = this.metrics.heightPixels * 8 / 16;        this.img_body.setLayoutParams(params);    }}
+package shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ScrollView;
+
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
+
+
+/**
+ * ÉèÖÃÏÂÀ­µÄÊ±ºò¿Ø¼ş´ó
+ */
+public class ScrollViewBiggerPhoto extends ScrollView {
+    private View img_body;
+    private float myFirstMove = 0;
+    private DisplayMetrics metrics;//
+
+    public ScrollViewBiggerPhoto(Context context) {
+        super(context);
+    }
+
+    public ScrollViewBiggerPhoto(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public ScrollViewBiggerPhoto(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    public void setImageHead(View _imgbody, DisplayMetrics _metrics) {
+        this.img_body = _imgbody;
+        this.metrics = _metrics;//ÆÁÄ»¾ØÕó
+        Log.e(Config.DEBUG, "ScrollViewBiggerPhoto.java[+]ÆÁÄ»¿í¶È:" + this.metrics.widthPixels);
+        Log.e(Config.DEBUG, "ScrollViewBiggerPhoto.java[+]ÆÁÄ»¸ß¶È:" + this.metrics.heightPixels);
+        /*ÉèÖÃ¿Ø¼şµÄ¸ß¶ÈºÍ¿í¶È*/
+        ViewGroup.LayoutParams params = this.img_body.getLayoutParams();
+        params.width = this.metrics.widthPixels;
+        params.height = this.metrics.heightPixels * 8 / 16;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        ViewGroup.LayoutParams params = null;
+        if (this.img_body != null) {
+            params = this.img_body.getLayoutParams();
+        } else {
+            Log.e(Config.DEBUG, "ScrollViewBiggerPhoto.java[+]Äú±ØĞëÉèÖÃÒ»¸ö¿Ø¼ş");
+
+        }
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_UP:
+                ClearImage();
+                break;
+            case MotionEvent.ACTION_DOWN:
+                myFirstMove = ev.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                /*ÅĞ¶ÏÊÇ·ñÔÚ¶¥²¿*/
+                if (getScrollY() == 0) {
+                    Log.e(Config.DEBUG, "ÔÚ¶¥²¿");
+                    /*¼ÇÂ¼Î»ÖÃ*/
+                    /*¼ÆËã¹ö¶¯¾àÀë*/
+                    int distance = (int) ((ev.getY() - myFirstMove) * 0.6);
+                    if (distance < 0) {
+                        /*²»ÄÜ·Å´ó*/
+                        break;
+                    }
+                    /*¿ªÊ¼´¦Àí·Å´ó*/
+                    if (params != null) {
+                        params.width = this.metrics.widthPixels + distance;
+                        params.height = (this.metrics.heightPixels + distance) * 8 / 16;
+                        this.img_body.setLayoutParams(params);
+                    }
+
+                }
+
+                break;
+        }
+
+
+        return super.dispatchTouchEvent(ev);
+    }
+
+
+    /**
+     * Çå¿ÕImageViewµÄ·Å´óĞ§¹û
+     */
+    private void ClearImage() {
+        ViewGroup.LayoutParams params = this.img_body.getLayoutParams();
+        params.width = this.metrics.widthPixels;
+        params.height = this.metrics.heightPixels * 8 / 16;
+        this.img_body.setLayoutParams(params);
+    }
+}
