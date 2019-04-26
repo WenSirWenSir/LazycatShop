@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -121,6 +122,15 @@ public class Tools {
         }
     }
 
+
+    /**
+     * 使得某一控件获取焦点
+     *
+     * @param view
+     */
+    public static void getFoucus(View view) {
+        view.requestFocus();
+    }
 
     /**
      * Determines whether the file exists
@@ -635,6 +645,8 @@ public class Tools {
     }
 
     /**
+     * 创建一个波形显示的动画
+     *
      * @param view
      * @param time
      * @return
@@ -677,7 +689,8 @@ public class Tools {
      */
     @SuppressLint("NewApi")
     public static ArrayList<LinearLayout> handleToarraylist(Context context, ArrayList<String>
-            text_list, int left, int top, int right, int bottom, String color, String textColor,int textSize) {
+            text_list, int left, int top, int right, int bottom, String color, String textColor,
+                                                            int textSize) {
         ArrayList<LinearLayout> textViews = new ArrayList<LinearLayout>();
         for (int i = 0; i < text_list.size(); i++) {
             LinearLayout layout = new LinearLayout(context);
@@ -695,5 +708,32 @@ public class Tools {
         }
         return textViews;
 
+    }
+
+    /**
+     * 创建一个可以让View逐渐显示动画
+     * @param time
+     * @param fill_after
+     * @return
+     */
+    public static AlphaAnimation createOnalpha(int time,boolean fill_after) {
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+        alphaAnimation.setDuration(time);
+        alphaAnimation.setFillAfter(fill_after);
+        return alphaAnimation;
+    }
+
+
+    /**
+     * 创建一个可以让View逐渐消失的动画
+     * @param time
+     * @param fill_after
+     * @return
+     */
+    public static AlphaAnimation clearOnalpha(int time,boolean fill_after) {
+        AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
+        alphaAnimation.setDuration(time);
+        alphaAnimation.setFillAfter(fill_after);
+        return alphaAnimation;
     }
 }
