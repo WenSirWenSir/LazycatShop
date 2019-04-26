@@ -1,1 +1,21 @@
-package shlm.lmcs.com.lazycat.LazyShopMonitor;/** * ç»§æ‰¿çˆ¶ç±»çš„æ–¹æ³• */public class Monitor {    private int tag;    public void SaveTag(int _tag) {        this.tag = _tag;    }    /**     * @return     */    public int GetTag() {        return tag;    }}
+package shlm.lmcs.com.lazycat.LazyShopMonitor;
+
+
+/**
+ * ¼Ì³Ð¸¸ÀàµÄ·½·¨
+ */
+public class Monitor {
+    private int tag;
+
+    public void SaveTag(int _tag) {
+        this.tag = _tag;
+
+    }
+
+    /**
+     * @return
+     */
+    public int GetTag() {
+        return tag;
+    }
+}

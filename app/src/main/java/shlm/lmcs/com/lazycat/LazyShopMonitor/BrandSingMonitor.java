@@ -1,1 +1,319 @@
-package shlm.lmcs.com.lazycat.LazyShopMonitor;import android.annotation.SuppressLint;import android.content.Context;import android.util.Log;import android.view.View;import android.widget.ImageView;import android.widget.TextView;import org.xmlpull.v1.XmlPullParser;import java.util.ArrayList;import java.util.List;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.LOAD_IMAGEPAGE;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.ThreadFactory;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlanalysisFactory;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;import shlm.lmcs.com.lazycat.R;/** * ä¸»ç•Œé¢å“ç‰Œç®¡ç†è€… */@SuppressLint("LongLogTag")public class BrandSingMonitor extends Monitor {    private View item;    private Context mContext;    private Boolean is;    public Boolean _Static;//æ˜¯å¦å¯ä»¥åŠ è½½ä¿¡æ¯çš„çŠ¶æ€    public Boolean Stop = false;//å¤–éƒ¨è°ƒç”¨ æ˜¯å¦å¯ä»¥è¿›è¡ŒåŠ è½½æ“ä½œ    public Boolean Runing = false;//å¤–éƒ¨åˆ¤æ–­å†…éƒ¨æ˜¯å¦åœ¨åˆ·æ–°æ“ä½œ    private List<LOAD_IMAGEPAGE> load_imagepages = new ArrayList<LOAD_IMAGEPAGE>();    private List<Runnable> RunnableList = null;    private ProgramInterface programInterface;    public int SUCESS = 1023;/*æ¯ä¸€ä¸ªå¤„ç†çš„ç®¡ç†è€… åœ¨å¤„ç†å®Œæˆä¹‹å å°±è¦ç»™å®šè¿™ä¸ªå€¼*/    /**     * åˆ¤æ–­çŠ¶æ€  åŠ è½½å®Œæˆ æˆ–è€… æ²¡æœ‰åŠ è½½å®Œæˆ     *     * @return     */    public Boolean GetStatic() {        return _Static;    }    /**     * ç«‹å³åœæ­¢åŠ è½½     */    public void Stop() {    }    /**     * é‡æ–°å¼€å§‹åŠ è½½     */    public void ReStart() {        /*åˆ¤æ–­çº¿ç¨‹å…ƒç´ æ˜¯å¦è¿˜å­˜åœ¨*/        if (RunnableList != null) {            /*å¯åŠ¨ç®¡ç†*/        } else {            Start(programInterface);//é‡æ–°å¯åŠ¨        }    }    @SuppressLint("NewApi")    public BrandSingMonitor(View _View, Context _Context) {        this.item = _View;        this.mContext = _Context;        //å¼€å§‹æœ€åŸºç¡€çš„æ•´ç†ç•Œé¢        this.item.findViewById(R.id.assembly_fragment_main_singleAlphaTitle).setBackground(Tools                .CreateDrawable(1, "#000000", "#000000", 50));        this.item.findViewById(R.id.assembly_fragment_main_singleShopabody).setBackground(Tools                .CreateDrawable(1, "#ffffff", "#ffffff", 20));        this.item.findViewById(R.id.assembly_fragment_main_singleShopbbody).setBackground(Tools                .CreateDrawable(1, "#ffffff", "#ffffff", 20));        this.item.findViewById(R.id.assembly_fragment_main_singleShopcbody).setBackground(Tools                .CreateDrawable(1, "#ffffff", "#ffffff", 20));    }    /**     * å¼€å§‹æ•´ç†äº‹åŠ¡     */    public void Start(ProgramInterface _programInterface) {        this.programInterface = _programInterface;        Net.doGet(mContext, "http://120.79.63.36/lazyShop/config/main_brand_promotion.xml", new                Net.onVisitInterServiceListener() {            @Override            public void onSucess(String tOrgin) {                //è®©å­å‡½æ•°å»å¤„ç†XMLè¿”å›çš„ä¿¡æ¯                programInterface.onSucess("è°ƒç”¨æˆåŠŸ", 0);                onXml(tOrgin);            }            @Override            public void onNotConnect() {                programInterface.onFaile("", 0);            }            @Override            public void onFail(String tOrgin) {                programInterface.onFaile("", 0);            }        });    }    void onXml(String origin) {        //è·å–XMLè§£æ        XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(origin);        xmlanalysisFactory.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {            @Override            public void onFaile() {            }            @Override            public void onStartDocument() {                //å¼€å§‹è§£ææ–‡æ¡£            }            @Override            public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {                //å¼€å§‹è§£ææ•°æ®                try {                    if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion.key_back)) {                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setBack(pullParser.nextText());                        LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();                        load_imagepage.setTag("key_back");                        load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion                                .getBack());                        load_imagepage.setImg((ImageView) item.findViewById(R.id                                .assembly_fragment_main_singleBack));                        load_imagepages.add(load_imagepage);                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion                            .key_big_img)) {                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setBig_img(pullParser                                .nextText());                        /**                         * é‡æ–°æ„é€ ä¸€ä¸ªé…ç½®æ–‡ä»¶                         */                        LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();                        load_imagepage.setTag("key_big_img");                        load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion                                .getBig_img());                        ImageView img = item.findViewById(R.id.assembly_fragment_main_singleBigImg);                        load_imagepage.setImg(img);                        load_imagepages.add(load_imagepage);//æ·»åŠ ä¸€ä¸ªå…ƒç´                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion                            .key_shop_a_img)) {                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_a_img(pullParser                                .nextText());                        /**                         * é‡æ–°æ„é€ ä¸€ä¸ªé…ç½®æ–‡ä»¶                         */                        LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();                        load_imagepage.setTag("key_shop_a_img");                        load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion                                .getShop_a_img());                        ImageView img = item.findViewById(R.id                                .assembly_fragment_main_singleShopaImage);                        load_imagepage.setImg(img);                        load_imagepages.add(load_imagepage);//æ·»åŠ ä¸€ä¸ªå…ƒç´                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion                            .key_shop_b_img)) {                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_b_img(pullParser                                .nextText());                        /**                         * é‡æ–°æ„é€ ä¸€ä¸ªé…ç½®æ–‡ä»¶                         */                        LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();                        load_imagepage.setTag("key_shop_b_img");                        load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion                                .getShop_b_img());                        ImageView img = item.findViewById(R.id                                .assembly_fragment_main_singleShopbImage);                        load_imagepage.setImg(img);                        load_imagepages.add(load_imagepage);//æ·»åŠ ä¸€ä¸ªå…ƒç´                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion                            .key_shop_c_img)) {                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_c_img(pullParser                                .nextText());                        /**                         * é‡æ–°æ„é€ ä¸€ä¸ªé…ç½®æ–‡ä»¶                         */                        LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();                        load_imagepage.setTag("key_shop_c_img");                        load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion                                .getShop_c_img());                        ImageView img = item.findViewById(R.id                                .assembly_fragment_main_singleShopcImage);                        load_imagepage.setImg(img);                        load_imagepages.add(load_imagepage);//æ·»åŠ ä¸€ä¸ªå…ƒç´                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion                            .key_title_a)) {                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setTitle_a(pullParser                                .nextText());                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion                            .key_title_b)) {                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setTitle_b(pullParser                                .nextText());                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion                            .key_shop_a_price)) {                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_a_price(pullParser                                .nextText());                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion                            .key_shop_b_price)) {                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_b_price(pullParser                                .nextText());                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion                            .key_shop_c_price)) {                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_c_price(pullParser                                .nextText());                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion                            .key_shop_a_title)) {                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_a_title(pullParser                                .nextText());                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion                            .key_shop_b_title)) {                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_b_title(pullParser                                .nextText());                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion                            .key_shop_c_title)) {                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_c_title(pullParser                                .nextText());                    }                } catch (Exception e) {                    Log.e(Config.DEBUG, "BrandSingMonitor.java[+]" + e.getMessage());                }            }            @Override            public void onEndTag() {            }            @Override            public void onEndDocument() {                //å¼€å§‹å¤„ç†                Log.e(Config.DEBUG, "å¤„ç†åˆ°çš„å…ƒç´ çš„ä¸ªæ•°ä¸º:" + load_imagepages.size());                if (Stop == true) {                    //ä¸å‡†åˆ·æ–°                } else {                    Runing = true;//ä»£è¡¨å·²ç»åœ¨å¤„ç†äº†                    /**                     * å¤„ç†æ–‡å­—ä¿¡æ¯                     */                    TextView title_a = item.findViewById(R.id.assembly_fragment_main_singleTitlea);                    TextView title_b = item.findViewById(R.id.assembly_fragment_main_singleTitleb);                    TextView shop_a_title = item.findViewById(R.id                            .assembly_fragment_main_singleShopaTitle);                    TextView shop_b_title = item.findViewById(R.id                            .assembly_fragment_main_singleShopbTitle);                    TextView shop_c_title = item.findViewById(R.id                            .assembly_fragment_main_singleShopcTitle);                    title_b.setText(XmlTagValuesFactory.XMLtagMainBrandPromotion.getTitle_b());                    title_a.setText(XmlTagValuesFactory.XMLtagMainBrandPromotion.getTitle_a());                    /**                     * è®¾ç½®å•†å“çš„æ ‡é¢˜                     */                    shop_a_title.setText(XmlTagValuesFactory.XMLtagMainBrandPromotion                            .getShop_a_title());                    shop_b_title.setText(XmlTagValuesFactory.XMLtagMainBrandPromotion                            .getShop_b_title());                    shop_c_title.setText(XmlTagValuesFactory.XMLtagMainBrandPromotion                            .getShop_c_title());                    ThreadFactory threadFactory = new ThreadFactory();                    RunnableList = new ArrayList<>();                    for (int i = 0; i < load_imagepages.size(); i++) {                        final int y = i;                        Runnable rbl = new Runnable() {                            @Override                            public void run() {                                Net net = new Net();                                net.doThreadimage(load_imagepages.get(y));                            }                        };                        RunnableList.add(rbl);                    }                    threadFactory.doThread(RunnableList);                    ImageView backImageView = item.findViewById(R.id                            .assembly_fragment_main_singleBack);//èƒŒæ™¯                    /*æ‰¾åˆ°æ‰€æœ‰çš„ImageViewçš„æ§ä»¶*/                    final ImageView back = item.findViewById(R.id                            .assembly_fragment_main_singleBack);                    /**                     * åŠ è½½èƒŒæ™¯å›¾ç‰‡                     */                }            }        });    }    /**     * æ¨¡æ‹Ÿå¤„ç†xmlæ•°æ®ä¿¡æ¯     */    class Page {    }}
+package shlm.lmcs.com.lazycat.LazyShopMonitor;
+
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.xmlpull.v1.XmlPullParser;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.LOAD_IMAGEPAGE;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.ThreadFactory;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlanalysisFactory;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
+import shlm.lmcs.com.lazycat.R;
+
+/**
+ * Ö÷½çÃæÆ·ÅÆ¹ÜÀíÕß
+ */
+@SuppressLint("LongLogTag")
+public class BrandSingMonitor extends Monitor {
+    private View item;
+    private Context mContext;
+    private Boolean is;
+    public Boolean _Static;//ÊÇ·ñ¿ÉÒÔ¼ÓÔØĞÅÏ¢µÄ×´Ì¬
+    public Boolean Stop = false;//Íâ²¿µ÷ÓÃ ÊÇ·ñ¿ÉÒÔ½øĞĞ¼ÓÔØ²Ù×÷
+    public Boolean Runing = false;//Íâ²¿ÅĞ¶ÏÄÚ²¿ÊÇ·ñÔÚË¢ĞÂ²Ù×÷
+    private List<LOAD_IMAGEPAGE> load_imagepages = new ArrayList<LOAD_IMAGEPAGE>();
+    private List<Runnable> RunnableList = null;
+    private ProgramInterface programInterface;
+    public int SUCESS = 1023;/*Ã¿Ò»¸ö´¦ÀíµÄ¹ÜÀíÕß ÔÚ´¦ÀíÍê³ÉÖ®ºó ¾ÍÒª¸ø¶¨Õâ¸öÖµ*/
+
+
+    /**
+     * ÅĞ¶Ï×´Ì¬  ¼ÓÔØÍê³É »òÕß Ã»ÓĞ¼ÓÔØÍê³É
+     *
+     * @return
+     */
+    public Boolean GetStatic() {
+        return _Static;
+    }
+
+    /**
+     * Á¢¼´Í£Ö¹¼ÓÔØ
+     */
+    public void Stop() {
+
+    }
+
+    /**
+     * ÖØĞÂ¿ªÊ¼¼ÓÔØ
+     */
+    public void ReStart() {
+
+        /*ÅĞ¶ÏÏß³ÌÔªËØÊÇ·ñ»¹´æÔÚ*/
+        if (RunnableList != null) {
+            /*Æô¶¯¹ÜÀí*/
+        } else {
+            Start(programInterface);//ÖØĞÂÆô¶¯
+        }
+
+    }
+
+    @SuppressLint("NewApi")
+    public BrandSingMonitor(View _View, Context _Context) {
+        this.item = _View;
+        this.mContext = _Context;
+        //¿ªÊ¼×î»ù´¡µÄÕûÀí½çÃæ
+        this.item.findViewById(R.id.assembly_fragment_main_singleAlphaTitle).setBackground(Tools
+                .CreateDrawable(1, "#000000", "#000000", 50));
+        this.item.findViewById(R.id.assembly_fragment_main_singleShopabody).setBackground(Tools
+                .CreateDrawable(1, "#ffffff", "#ffffff", 20));
+        this.item.findViewById(R.id.assembly_fragment_main_singleShopbbody).setBackground(Tools
+                .CreateDrawable(1, "#ffffff", "#ffffff", 20));
+        this.item.findViewById(R.id.assembly_fragment_main_singleShopcbody).setBackground(Tools
+                .CreateDrawable(1, "#ffffff", "#ffffff", 20));
+    }
+
+    /**
+     * ¿ªÊ¼ÕûÀíÊÂÎñ
+     */
+    public void Start(ProgramInterface _programInterface) {
+        this.programInterface = _programInterface;
+        Net.doGet(mContext, "http://120.79.63.36/lazyShop/config/main_brand_promotion.xml", new
+                Net.onVisitInterServiceListener() {
+            @Override
+            public void onSucess(String tOrgin) {
+                //ÈÃ×Óº¯ÊıÈ¥´¦ÀíXML·µ»ØµÄĞÅÏ¢
+                programInterface.onSucess("µ÷ÓÃ³É¹¦", 0);
+                onXml(tOrgin);
+            }
+
+            @Override
+            public void onNotConnect() {
+                programInterface.onFaile("", 0);
+            }
+
+            @Override
+            public void onFail(String tOrgin) {
+                programInterface.onFaile("", 0);
+
+            }
+        });
+
+    }
+
+    void onXml(String origin) {
+
+        //»ñÈ¡XML½âÎö
+        XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(origin);
+        xmlanalysisFactory.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
+            @Override
+            public void onFaile() {
+            }
+
+            @Override
+            public void onStartDocument() {
+                //¿ªÊ¼½âÎöÎÄµµ
+
+            }
+
+            @Override
+            public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
+                //¿ªÊ¼½âÎöÊı¾İ
+                try {
+                    if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion.key_back)) {
+                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setBack(pullParser.nextText());
+                        LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
+                        load_imagepage.setTag("key_back");
+                        load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                                .getBack());
+
+                        load_imagepage.setImg((ImageView) item.findViewById(R.id
+                                .assembly_fragment_main_singleBack));
+                        load_imagepages.add(load_imagepage);
+                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                            .key_big_img)) {
+                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setBig_img(pullParser
+                                .nextText());
+                        /**
+                         * ÖØĞÂ¹¹ÔìÒ»¸öÅäÖÃÎÄ¼ş
+                         */
+                        LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
+                        load_imagepage.setTag("key_big_img");
+                        load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                                .getBig_img());
+                        ImageView img = item.findViewById(R.id.assembly_fragment_main_singleBigImg);
+                        load_imagepage.setImg(img);
+                        load_imagepages.add(load_imagepage);//Ìí¼ÓÒ»¸öÔªËØ
+                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                            .key_shop_a_img)) {
+                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_a_img(pullParser
+                                .nextText());
+                        /**
+                         * ÖØĞÂ¹¹ÔìÒ»¸öÅäÖÃÎÄ¼ş
+                         */
+                        LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
+                        load_imagepage.setTag("key_shop_a_img");
+                        load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                                .getShop_a_img());
+                        ImageView img = item.findViewById(R.id
+                                .assembly_fragment_main_singleShopaImage);
+                        load_imagepage.setImg(img);
+                        load_imagepages.add(load_imagepage);//Ìí¼ÓÒ»¸öÔªËØ
+
+                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                            .key_shop_b_img)) {
+                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_b_img(pullParser
+                                .nextText());
+                        /**
+                         * ÖØĞÂ¹¹ÔìÒ»¸öÅäÖÃÎÄ¼ş
+                         */
+                        LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
+                        load_imagepage.setTag("key_shop_b_img");
+                        load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                                .getShop_b_img());
+                        ImageView img = item.findViewById(R.id
+                                .assembly_fragment_main_singleShopbImage);
+                        load_imagepage.setImg(img);
+                        load_imagepages.add(load_imagepage);//Ìí¼ÓÒ»¸öÔªËØ
+                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                            .key_shop_c_img)) {
+                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_c_img(pullParser
+                                .nextText());
+                        /**
+                         * ÖØĞÂ¹¹ÔìÒ»¸öÅäÖÃÎÄ¼ş
+                         */
+                        LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
+                        load_imagepage.setTag("key_shop_c_img");
+                        load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                                .getShop_c_img());
+                        ImageView img = item.findViewById(R.id
+                                .assembly_fragment_main_singleShopcImage);
+                        load_imagepage.setImg(img);
+                        load_imagepages.add(load_imagepage);//Ìí¼ÓÒ»¸öÔªËØ
+                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                            .key_title_a)) {
+                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setTitle_a(pullParser
+                                .nextText());
+                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                            .key_title_b)) {
+                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setTitle_b(pullParser
+                                .nextText());
+                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                            .key_shop_a_price)) {
+                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_a_price(pullParser
+                                .nextText());
+                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                            .key_shop_b_price)) {
+                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_b_price(pullParser
+                                .nextText());
+                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                            .key_shop_c_price)) {
+                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_c_price(pullParser
+                                .nextText());
+                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                            .key_shop_a_title)) {
+                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_a_title(pullParser
+                                .nextText());
+                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                            .key_shop_b_title)) {
+                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_b_title(pullParser
+                                .nextText());
+                    } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                            .key_shop_c_title)) {
+                        XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_c_title(pullParser
+                                .nextText());
+                    }
+                } catch (Exception e) {
+                    Log.e(Config.DEBUG, "BrandSingMonitor.java[+]" + e.getMessage());
+                }
+
+            }
+
+            @Override
+            public void onEndTag() {
+
+
+            }
+
+            @Override
+            public void onEndDocument() {
+                //¿ªÊ¼´¦Àí
+                Log.e(Config.DEBUG, "´¦Àíµ½µÄÔªËØµÄ¸öÊıÎª:" + load_imagepages.size());
+                if (Stop == true) {
+                    //²»×¼Ë¢ĞÂ
+                } else {
+                    Runing = true;//´ú±íÒÑ¾­ÔÚ´¦ÀíÁË
+                    /**
+                     * ´¦ÀíÎÄ×ÖĞÅÏ¢
+                     */
+                    TextView title_a = item.findViewById(R.id.assembly_fragment_main_singleTitlea);
+                    TextView title_b = item.findViewById(R.id.assembly_fragment_main_singleTitleb);
+                    TextView shop_a_title = item.findViewById(R.id
+                            .assembly_fragment_main_singleShopaTitle);
+                    TextView shop_b_title = item.findViewById(R.id
+                            .assembly_fragment_main_singleShopbTitle);
+                    TextView shop_c_title = item.findViewById(R.id
+                            .assembly_fragment_main_singleShopcTitle);
+                    title_b.setText(XmlTagValuesFactory.XMLtagMainBrandPromotion.getTitle_b());
+                    title_a.setText(XmlTagValuesFactory.XMLtagMainBrandPromotion.getTitle_a());
+                    /**
+                     * ÉèÖÃÉÌÆ·µÄ±êÌâ
+                     */
+                    shop_a_title.setText(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                            .getShop_a_title());
+                    shop_b_title.setText(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                            .getShop_b_title());
+                    shop_c_title.setText(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                            .getShop_c_title());
+
+                    ThreadFactory threadFactory = new ThreadFactory();
+                    RunnableList = new ArrayList<>();
+                    for (int i = 0; i < load_imagepages.size(); i++) {
+                        final int y = i;
+                        Runnable rbl = new Runnable() {
+                            @Override
+                            public void run() {
+                                Net net = new Net();
+                                net.doThreadimage(load_imagepages.get(y));
+                            }
+                        };
+                        RunnableList.add(rbl);
+                    }
+                    threadFactory.doThread(RunnableList);
+                    ImageView backImageView = item.findViewById(R.id
+                            .assembly_fragment_main_singleBack);//±³¾°
+
+                    /*ÕÒµ½ËùÓĞµÄImageViewµÄ¿Ø¼ş*/
+                    final ImageView back = item.findViewById(R.id
+                            .assembly_fragment_main_singleBack);
+                    /**
+                     * ¼ÓÔØ±³¾°Í¼Æ¬
+                     */
+
+                }
+
+            }
+        });
+
+    }
+
+    /**
+     * Ä£Äâ´¦ÀíxmlÊı¾İĞÅÏ¢
+     */
+
+    class Page {
+    }
+
+}

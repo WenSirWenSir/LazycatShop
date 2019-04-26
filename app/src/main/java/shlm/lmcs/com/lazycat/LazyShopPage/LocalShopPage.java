@@ -1,1 +1,253 @@
-package shlm.lmcs.com.lazycat.LazyShopPage;/** * å•†å“çš„Config */public class LocalShopPage {    /**     * æ ‡é¢˜     */    public final static String SHOP_TITLE = "title";    /**     * æ¡ç      */    public final static String SHOP_BARCODE = "barcode";    private String title;//æ ‡é¢˜    private String barcode;//æ¡ç     private String small_img;//å°å›¾ç‰‡    /**     * å°å›¾ç‰‡     */    public final static String SHOP_SMALL_IMG = "small_img";    private String in_img;/*ä¸­å›¾ç‰‡*/    /**     * ä¸­å›¾ç‰‡     */    public final static String SHOP_IN_IMG = "in_img";    private String big_img;/*å¤§å›¾ç‰‡*/    /**     * å¤§å›¾ç‰‡     */    public final static String SHOP_BIG_IMG = "big_img";    private float origin_price;/*åŸä»·æ ¼*/    /**     * åŸä»·æ ¼     */    public final static String SHOP_ORIGIN_PRICE = "origin_price";    private float now_price;/*ç°ä»·æ ¼*/    /**     * ç°ä»·æ ¼     */    public final static String SHOP_NOW_PRICE = "now_price";    private int shop_static;/*å•†å“çš„çŠ¶æ€*/    /**     * å•†å“çš„çŠ¶æ€     */    public final static String SHOP_STATIC = "shop_static";    private int sale_number;/*é”€å”®æ•°é‡*/    /**     * é”€å”®æ•°é‡     */    public final static String SHOP_SALE_NUMBER = "sale_number";    private int like_number;/*å–œæ¬¢çš„æ•°é‡*/    /**     * å–œæ¬¢çš„æ•°é‡     */    public final static String SHOP_LIKE_NUMBER = "like_number";    private String big_showshop_office_promotion_title;/*å±•ç¤ºå…çš„ä¿ƒé”€æ ‡é¢˜*/    /**     * å±•ç¤ºå…çš„ä¿ƒé”€æ ‡é¢˜     */    public final static String SHOP_BIG_SHOWSHOP_OFFICE_PROMOTION_TITLE =            "big_showshop_office_promotion_title";    private String big_showshop_office_promotion_formula;/*å±•ç¤ºå…çš„ä¿ƒé”€å…¬å¼*/    /**     * å±•ç¤ºå…çš„ä¿ƒé”€å…¬å¼     */    public final static String SHOP_BIG_SHOWSHOP_OFFICE_PROMOTION_FORMULA =            "big_showshop_office_promotion_formula";    private float shop_score;/*å•†å“çš„è¯„åˆ†*/    /**     * å•†å“çš„è¯„åˆ†     */    public final static String SHOP_SCORE = "shop_score";    private String shop_unit;/*å•†å“çš„å•ä½*/    /**     * å•†å“çš„å•ä½     */    public final static String SHOP_UNIT = "shop_unit";    private String shop_spec;/*å•†å“çš„ç±»å‹*/    /**     * å•†å“çš„ç±»å‹     */    public final static String SHOP_SPEC = "shop_spec";    public String getTitle() {        return title;    }    public void setTitle(String title) {        this.title = title;    }    public String getBarcode() {        return barcode;    }    public void setBarcode(String barcode) {        this.barcode = barcode;    }    public String getSmall_img() {        return small_img;    }    public void setSmall_img(String small_img) {        this.small_img = small_img;    }    public String getIn_img() {        return in_img;    }    public void setIn_img(String in_img) {        this.in_img = in_img;    }    public String getBig_img() {        return big_img;    }    public void setBig_img(String big_img) {        this.big_img = big_img;    }    public float getOrigin_price() {        return origin_price;    }    public void setOrigin_price(float origin_price) {        this.origin_price = origin_price;    }    public float getNow_price() {        return now_price;    }    public void setNow_price(float now_price) {        this.now_price = now_price;    }    public int getShop_static() {        return shop_static;    }    public void setShop_static(int shop_static) {        this.shop_static = shop_static;    }    public int getSale_number() {        return sale_number;    }    public void setSale_number(int sale_number) {        this.sale_number = sale_number;    }    public int getLike_number() {        return like_number;    }    public void setLike_number(int like_number) {        this.like_number = like_number;    }    public String getBig_showshop_office_promotion_title() {        return big_showshop_office_promotion_title;    }    public void setBig_showshop_office_promotion_title(String big_showshop_office_promotion_title) {        this.big_showshop_office_promotion_title = big_showshop_office_promotion_title;    }    public String getBig_showshop_office_promotion_formula() {        return big_showshop_office_promotion_formula;    }    public void setBig_showshop_office_promotion_formula(String big_showshop_office_promotion_formula) {        this.big_showshop_office_promotion_formula = big_showshop_office_promotion_formula;    }    public float getShop_score() {        return shop_score;    }    public void setShop_score(float shop_score) {        this.shop_score = shop_score;    }    public String getShop_unit() {        return shop_unit;    }    public void setShop_unit(String shop_unit) {        this.shop_unit = shop_unit;    }    public String getShop_spec() {        return shop_spec;    }    public void setShop_spec(String shop_spec) {        this.shop_spec = shop_spec;    }    public boolean isIs_special_delivery() {        return is_special_delivery;    }    public void setIs_special_delivery(boolean is_special_delivery) {        this.is_special_delivery = is_special_delivery;    }    public String getShowcabinet_classified_labels() {        return showcabinet_classified_labels;    }    public void setShowcabinet_classified_labels(String showcabinet_classified_labels) {        this.showcabinet_classified_labels = showcabinet_classified_labels;    }    public String getShowcabinet_classified_promotion_title() {        return showcabinet_classified_promotion_title;    }    public void setShowcabinet_classified_promotion_title(String showcabinet_classified_promotion_title) {        this.showcabinet_classified_promotion_title = showcabinet_classified_promotion_title;    }    public int getShop_business_type() {        return shop_business_type;    }    public void setShop_business_type(int shop_business_type) {        this.shop_business_type = shop_business_type;    }    public boolean isIs_shop_imported() {        return is_shop_imported;    }    public void setIs_shop_imported(boolean is_shop_imported) {        this.is_shop_imported = is_shop_imported;    }    private boolean is_special_delivery;/*æ˜¯å¦è‡ªå·±é…é€*/    private String showcabinet_classified_labels;/*å±•ç¤ºæŸœ/å…çš„åˆ†ç±»æ ‡ç­¾*/    private String showcabinet_classified_promotion_title;/*å±•ç¤ºæŸœçš„ä¿ƒé”€çš„æ ‡é¢˜*/    private int shop_business_type;/*è¥ä¸šçš„ç±»å‹0è‡ªè¥1ç»é”€å•†2åº—é“º3ä¸ªäºº*/    private boolean is_shop_imported;/*æ˜¯å¦è¿›å£*/}
+package shlm.lmcs.com.lazycat.LazyShopPage;
+
+
+/**
+ * ÉÌÆ·µÄConfig
+ */
+public class LocalShopPage {
+    /**
+     * ±êÌâ
+     */
+    public final static String SHOP_TITLE = "title";
+    /**
+     * ÌõÂë
+     */
+    public final static String SHOP_BARCODE = "barcode";
+    private String title;//±êÌâ
+    private String barcode;//ÌõÂë
+    private String small_img;//Ğ¡Í¼Æ¬
+    /**
+     * Ğ¡Í¼Æ¬
+     */
+    public final static String SHOP_SMALL_IMG = "small_img";
+    private String in_img;/*ÖĞÍ¼Æ¬*/
+    /**
+     * ÖĞÍ¼Æ¬
+     */
+    public final static String SHOP_IN_IMG = "in_img";
+    private String big_img;/*´óÍ¼Æ¬*/
+    /**
+     * ´óÍ¼Æ¬
+     */
+    public final static String SHOP_BIG_IMG = "big_img";
+    private float origin_price;/*Ô­¼Û¸ñ*/
+    /**
+     * Ô­¼Û¸ñ
+     */
+    public final static String SHOP_ORIGIN_PRICE = "origin_price";
+    private float now_price;/*ÏÖ¼Û¸ñ*/
+    /**
+     * ÏÖ¼Û¸ñ
+     */
+    public final static String SHOP_NOW_PRICE = "now_price";
+    private int shop_static;/*ÉÌÆ·µÄ×´Ì¬*/
+    /**
+     * ÉÌÆ·µÄ×´Ì¬
+     */
+    public final static String SHOP_STATIC = "shop_static";
+    private int sale_number;/*ÏúÊÛÊıÁ¿*/
+    /**
+     * ÏúÊÛÊıÁ¿
+     */
+    public final static String SHOP_SALE_NUMBER = "sale_number";
+    private int like_number;/*Ï²»¶µÄÊıÁ¿*/
+    /**
+     * Ï²»¶µÄÊıÁ¿
+     */
+    public final static String SHOP_LIKE_NUMBER = "like_number";
+    private String big_showshop_office_promotion_title;/*Õ¹Ê¾ÌüµÄ´ÙÏú±êÌâ*/
+    /**
+     * Õ¹Ê¾ÌüµÄ´ÙÏú±êÌâ
+     */
+    public final static String SHOP_BIG_SHOWSHOP_OFFICE_PROMOTION_TITLE =
+            "big_showshop_office_promotion_title";
+    private String big_showshop_office_promotion_formula;/*Õ¹Ê¾ÌüµÄ´ÙÏú¹«Ê½*/
+    /**
+     * Õ¹Ê¾ÌüµÄ´ÙÏú¹«Ê½
+     */
+    public final static String SHOP_BIG_SHOWSHOP_OFFICE_PROMOTION_FORMULA =
+            "big_showshop_office_promotion_formula";
+    private float shop_score;/*ÉÌÆ·µÄÆÀ·Ö*/
+    /**
+     * ÉÌÆ·µÄÆÀ·Ö
+     */
+    public final static String SHOP_SCORE = "shop_score";
+    private String shop_unit;/*ÉÌÆ·µÄµ¥Î»*/
+    /**
+     * ÉÌÆ·µÄµ¥Î»
+     */
+    public final static String SHOP_UNIT = "shop_unit";
+    private String shop_spec;/*ÉÌÆ·µÄÀàĞÍ*/
+    /**
+     * ÉÌÆ·µÄÀàĞÍ
+     */
+    public final static String SHOP_SPEC = "shop_spec";
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
+
+    public String getSmall_img() {
+        return small_img;
+    }
+
+    public void setSmall_img(String small_img) {
+        this.small_img = small_img;
+    }
+
+    public String getIn_img() {
+        return in_img;
+    }
+
+    public void setIn_img(String in_img) {
+        this.in_img = in_img;
+    }
+
+    public String getBig_img() {
+        return big_img;
+    }
+
+    public void setBig_img(String big_img) {
+        this.big_img = big_img;
+    }
+
+    public float getOrigin_price() {
+        return origin_price;
+    }
+
+    public void setOrigin_price(float origin_price) {
+        this.origin_price = origin_price;
+    }
+
+    public float getNow_price() {
+        return now_price;
+    }
+
+    public void setNow_price(float now_price) {
+        this.now_price = now_price;
+    }
+
+    public int getShop_static() {
+        return shop_static;
+    }
+
+    public void setShop_static(int shop_static) {
+        this.shop_static = shop_static;
+    }
+
+    public int getSale_number() {
+        return sale_number;
+    }
+
+    public void setSale_number(int sale_number) {
+        this.sale_number = sale_number;
+    }
+
+    public int getLike_number() {
+        return like_number;
+    }
+
+    public void setLike_number(int like_number) {
+        this.like_number = like_number;
+    }
+
+    public String getBig_showshop_office_promotion_title() {
+        return big_showshop_office_promotion_title;
+    }
+
+    public void setBig_showshop_office_promotion_title(String big_showshop_office_promotion_title) {
+        this.big_showshop_office_promotion_title = big_showshop_office_promotion_title;
+    }
+
+    public String getBig_showshop_office_promotion_formula() {
+        return big_showshop_office_promotion_formula;
+    }
+
+    public void setBig_showshop_office_promotion_formula(String big_showshop_office_promotion_formula) {
+        this.big_showshop_office_promotion_formula = big_showshop_office_promotion_formula;
+    }
+
+    public float getShop_score() {
+        return shop_score;
+    }
+
+    public void setShop_score(float shop_score) {
+        this.shop_score = shop_score;
+    }
+
+    public String getShop_unit() {
+        return shop_unit;
+    }
+
+    public void setShop_unit(String shop_unit) {
+        this.shop_unit = shop_unit;
+    }
+
+    public String getShop_spec() {
+        return shop_spec;
+    }
+
+    public void setShop_spec(String shop_spec) {
+        this.shop_spec = shop_spec;
+    }
+
+    public boolean isIs_special_delivery() {
+        return is_special_delivery;
+    }
+
+    public void setIs_special_delivery(boolean is_special_delivery) {
+        this.is_special_delivery = is_special_delivery;
+    }
+
+    public String getShowcabinet_classified_labels() {
+        return showcabinet_classified_labels;
+    }
+
+    public void setShowcabinet_classified_labels(String showcabinet_classified_labels) {
+        this.showcabinet_classified_labels = showcabinet_classified_labels;
+    }
+
+    public String getShowcabinet_classified_promotion_title() {
+        return showcabinet_classified_promotion_title;
+    }
+
+    public void setShowcabinet_classified_promotion_title(String showcabinet_classified_promotion_title) {
+        this.showcabinet_classified_promotion_title = showcabinet_classified_promotion_title;
+    }
+
+    public int getShop_business_type() {
+        return shop_business_type;
+    }
+
+    public void setShop_business_type(int shop_business_type) {
+        this.shop_business_type = shop_business_type;
+    }
+
+    public boolean isIs_shop_imported() {
+        return is_shop_imported;
+    }
+
+    public void setIs_shop_imported(boolean is_shop_imported) {
+        this.is_shop_imported = is_shop_imported;
+    }
+
+    private boolean is_special_delivery;/*ÊÇ·ñ×Ô¼ºÅäËÍ*/
+    private String showcabinet_classified_labels;/*Õ¹Ê¾¹ñ/ÌüµÄ·ÖÀà±êÇ©*/
+    private String showcabinet_classified_promotion_title;/*Õ¹Ê¾¹ñµÄ´ÙÏúµÄ±êÌâ*/
+    private int shop_business_type;/*ÓªÒµµÄÀàĞÍ0×ÔÓª1¾­ÏúÉÌ2µêÆÌ3¸öÈË*/
+    private boolean is_shop_imported;/*ÊÇ·ñ½ø¿Ú*/
+
+
+}

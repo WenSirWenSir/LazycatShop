@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,7 +29,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
@@ -50,7 +48,6 @@ import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.LazyCatFragment;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XMLUserAddr;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 
@@ -84,41 +81,6 @@ public class Tools {
             }
             return false;
 
-        }
-    }
-
-
-    /**
-     * gets the screen height or width
-     */
-    public static int GetWindowScreen(Context tContext, int tModule) {
-        int value = 0;
-        try {
-            WindowManager wm = (WindowManager) tContext.getSystemService(Context.WINDOW_SERVICE);
-            switch (tModule) {
-                case Config.Windows.GET_WINDOW_HEIGHT:
-                    value = wm.getDefaultDisplay().getHeight();
-                    break;
-                case Config.Windows.GET_WINDOW_WIDHT:
-                    value = wm.getDefaultDisplay().getWidth();
-                    break;
-            }
-            return value;
-        } catch (Exception e) {
-
-        }
-        return value;
-    }
-
-    /**
-     * 隐藏一个Fragment
-     */
-
-    public static void hideFragment(FragmentTransaction ft, LazyCatFragment ftagment) {
-        if (ft != null) {
-            ft.hide(ftagment);
-        } else {
-            Log.e(Config.DEBUG, "Tools.java[+]关闭Fragment失败");
         }
     }
 
@@ -417,6 +379,13 @@ public class Tools {
     }
 
 
+    /**
+     * 用户的地址XML解析器
+     *
+     * @param is
+     * @return
+     * @throws Exception
+     */
     @SuppressLint("LongLogTag")
     public static ArrayList<XMLUserAddr> UserAddrXMLDomeService(InputStream is) throws Exception {
         ArrayList<XMLUserAddr> list = new ArrayList<XMLUserAddr>();
@@ -664,25 +633,6 @@ public class Tools {
     }
 
     /**
-     * 创建一个可以换行显示的layout
-     *
-     * @param context
-     * @param textlist 字符集合
-     */
-    public static void createshifterLinearlayout(LinearLayout layout, Context context,
-                                                 ArrayList<String> textlist) {
-        /*获取父布局的宽度*/
-        TextView t = new TextView(context);
-        t.setText("234234324");
-        TextView a = new TextView(context);
-        layout.addView(t);
-        int spec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        layout.measure(spec, spec);
-        Log.e(Config.DEBUG, "测量宽度" + t.getMeasuredWidth() + "父布局宽度：" + layout.getMeasuredWidth());
-
-    }
-
-    /**
      * 将文本变成TextView
      *
      * @param text_list
@@ -712,11 +662,12 @@ public class Tools {
 
     /**
      * 创建一个可以让View逐渐显示动画
+     *
      * @param time
      * @param fill_after
      * @return
      */
-    public static AlphaAnimation createOnalpha(int time,boolean fill_after) {
+    public static AlphaAnimation createOnalpha(int time, boolean fill_after) {
         AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
         alphaAnimation.setDuration(time);
         alphaAnimation.setFillAfter(fill_after);
@@ -726,11 +677,12 @@ public class Tools {
 
     /**
      * 创建一个可以让View逐渐消失的动画
+     *
      * @param time
      * @param fill_after
      * @return
      */
-    public static AlphaAnimation clearOnalpha(int time,boolean fill_after) {
+    public static AlphaAnimation clearOnalpha(int time, boolean fill_after) {
         AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
         alphaAnimation.setDuration(time);
         alphaAnimation.setFillAfter(fill_after);

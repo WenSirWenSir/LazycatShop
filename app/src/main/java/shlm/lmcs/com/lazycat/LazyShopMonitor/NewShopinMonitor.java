@@ -1,1 +1,34 @@
-package shlm.lmcs.com.lazycat.LazyShopMonitor;/** * æ–°å“ä¸Šæ¶çš„æ•°æ®ç®¡ç†è€… */public class NewShopinMonitor extends Monitor {    private boolean StopLoad = false;    /**     * æ„é€ æ–¹æ³•     */    public NewShopinMonitor() {    }    /**     * å¯åŠ¨ç®¡ç†     */    public void Start(){        if(StopLoad){            /*ä¸å‡†åŠ è½½*/        }    }    /**     * åœæ­¢ç®¡ç†     */    public void Stop(){    }}
+package shlm.lmcs.com.lazycat.LazyShopMonitor;
+
+
+/**
+ * ĞÂÆ·ÉÏ¼ÜµÄÊı¾İ¹ÜÀíÕß
+ */
+public class NewShopinMonitor extends Monitor {
+    private boolean StopLoad = false;
+
+    /**
+     * ¹¹Ôì·½·¨
+     */
+    public NewShopinMonitor() {
+
+    }
+
+
+    /**
+     * Æô¶¯¹ÜÀí
+     */
+    public void Start(){
+        if(StopLoad){
+            /*²»×¼¼ÓÔØ*/
+        }
+    }
+
+
+    /**
+     * Í£Ö¹¹ÜÀí
+     */
+    public void Stop(){
+
+    }
+}

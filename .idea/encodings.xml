@@ -32,6 +32,12 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchAct.java" charset="GB2312" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/ShowshopOffice.java" charset="GB2312" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopMonitor/BrandSingMonitor.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopMonitor/Monitor.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopMonitor/NewShopinMonitor.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopPage/LocalShopPage.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopTools/LocalProgramTools.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/lazyCatLogAct.java" charset="GB2312" />
     <file url="file://$USER_HOME$/Downloads/zzbj-5/zzbj/src/com/com/zzbj/MainActivity.java" charset="GB2312" />
   </component>
 </project>

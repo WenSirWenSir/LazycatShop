@@ -1,1 +1,9 @@
-package shlm.lmcs.com.lazycat.LazyShopTools;/** * æœ¬åœ°å·¥å…·ç±» åªé’ˆå¯¹äºæœ¬ç¨‹åºä½¿ç”¨ ä¸èƒ½æ„æˆæ¨¡å—åŒ– */public class LocalProgramTools {}
+package shlm.lmcs.com.lazycat.LazyShopTools;
+
+
+/**
+ * ±¾µØ¹¤¾ßÀà Ö»Õë¶ÔÓÚ±¾³ÌĞòÊ¹ÓÃ ²»ÄÜ¹¹³ÉÄ£¿é»¯
+ */
+public class LocalProgramTools {
+
+}
