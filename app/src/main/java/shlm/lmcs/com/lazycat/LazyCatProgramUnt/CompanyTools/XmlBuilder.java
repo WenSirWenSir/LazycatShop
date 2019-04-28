@@ -6,32 +6,32 @@ import java.util.ArrayList;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XML_PAGE;
 
 /**
- * Éú³ÉÒ»¶ÎXMLµÄÉú³ÉÆ÷
+ * ç”Ÿæˆä¸€æ®µXMLçš„ç”Ÿæˆå™¨
  */
 public class XmlBuilder {
     private StringBuilder xml = new StringBuilder();
     private String mParcel;
 
     /**
-     * @param parcel       ×î´óµÄÍâÎ§½Úµã
+     * @param parcel       æœ€å¤§çš„å¤–å›´èŠ‚ç‚¹
      */
     public XmlBuilder(String parcel) {
         xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
-        xml.append("<"+parcel + ">");//Ìí¼Ó×î´óµÄÍ·²¿½Úµã
+        xml.append("<"+parcel + ">");//æ·»åŠ æœ€å¤§çš„å¤´éƒ¨èŠ‚ç‚¹
         this.mParcel = parcel;
     }
 
 
     /**
-     * »ñÈ¡XMLÎÄ¼şÌå
-     * @param list ÎÄ¼şµÄÅäÖÃĞÅÏ¢
+     * è·å–XMLæ–‡ä»¶ä½“
+     * @param list æ–‡ä»¶çš„é…ç½®ä¿¡æ¯
      * @return
      */
     public StringBuilder getXmlString(ArrayList<XML_PAGE> list) {
         for(int i = 0;i < list.size();i++){
             xml.append(list.get(i).getXml());
         }
-        //Ìí¼ÓÎ²²¿½Úµã
+        //æ·»åŠ å°¾éƒ¨èŠ‚ç‚¹
         xml.append("</"+mParcel+">");
         return xml;
 

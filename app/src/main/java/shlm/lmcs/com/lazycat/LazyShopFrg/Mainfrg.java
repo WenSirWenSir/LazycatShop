@@ -45,7 +45,7 @@ public class Mainfrg extends LazyCatFragment {
                 case GONE_HEADE_IMG:
                     _GoneHeadimg.cancel();
                     if (_RefreshScrollView != null) {
-                        _RefreshScrollView.stopRefresh();//Í£Ö¹Ë¢ĞÂ
+                        _RefreshScrollView.stopRefresh();//åœæ­¢åˆ·æ–°
                     }
                     break;
             }
@@ -58,7 +58,7 @@ public class Mainfrg extends LazyCatFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         View item = inflater.inflate(R.layout.fragment_main, null);
-        //³õÊ¼»¯Ò»¸ö±³¾°ÑùÊ½
+        //åˆå§‹åŒ–ä¸€ä¸ªèƒŒæ™¯æ ·å¼
         item.findViewById(R.id.assembly_head_input).setBackground(Tools.CreateDrawable(3,
                 getResources().getString(R.color.ThemeColor), "#ffffff", 10));
         item.findViewById(R.id.assembly_head_input).setFocusable(false);
@@ -67,7 +67,7 @@ public class Mainfrg extends LazyCatFragment {
             @SuppressLint("LongLogTag")
             @Override
             public void onGet(int max, float total, float free) {
-                Log.i(Config.DEBUG, "×î´óÊ¹ÓÃÄÚ´æ:" + max + "ºÏ¼Æ·ÖÅäÄÚ´æ:" + total + "Ê£ÓàÄÚ´æ:" + free);
+                Log.i(Config.DEBUG, "æœ€å¤§ä½¿ç”¨å†…å­˜:" + max + "åˆè®¡åˆ†é…å†…å­˜:" + total + "å‰©ä½™å†…å­˜:" + free);
             }
         });
         return item;
@@ -75,50 +75,50 @@ public class Mainfrg extends LazyCatFragment {
 
     @SuppressLint({"NewApi", "ResourceType", "LongLogTag"})
     private void init(View item) {
-        inflater = LayoutInflater.from(getContext());//³õÊ¼»¯inflater
-        //¼ÓÔØµÚÒ»¸öºáÏòµÄ¹ã¸æ²¼¾Ö
-        horizontaladv_body = item.findViewById(R.id.fragment_main_horizontaladv_body);//ºáÏò¹ã¸æµÄ²¼¾Ö
+        inflater = LayoutInflater.from(getContext());//åˆå§‹åŒ–inflater
+        //åŠ è½½ç¬¬ä¸€ä¸ªæ¨ªå‘çš„å¹¿å‘Šå¸ƒå±€
+        horizontaladv_body = item.findViewById(R.id.fragment_main_horizontaladv_body);//æ¨ªå‘å¹¿å‘Šçš„å¸ƒå±€
         View horizontaladv_view = inflater.inflate(R.layout.assembly_fragment_main_horizontaladv,
                 null);
         horizontaladv_body.addView(horizontaladv_view);
 
         /**
-         * ³¢ÊÔ¼ÓÔØ
+         * å°è¯•åŠ è½½
          */
         _RefreshScrollView = item.findViewById(R.id.fragment_main_refreshScrollview);
         LinearLayout _layout = item.findViewById(R.id.fragment_main_layoutmore);
         _RefreshScrollView.SetHeadView(_layout, 200, R.id.layoutmore_progressbar, R.id
                 .layoutmore_headimg);
         /**
-         * ÔÚ½çÃæÖĞ ±ØĞëÒª¼ÓÔØµÄÈı¸öÔÚÖ÷Òª½çÃæµÄÊı¾İĞÅÏ¢
+         * åœ¨ç•Œé¢ä¸­ å¿…é¡»è¦åŠ è½½çš„ä¸‰ä¸ªåœ¨ä¸»è¦ç•Œé¢çš„æ•°æ®ä¿¡æ¯
          */
-        /*Ê×Ò³µÄÍÆ¼öµÄºáÏòµÄ¹ö¶¯*/
+        /*é¦–é¡µçš„æ¨èçš„æ¨ªå‘çš„æ»šåŠ¨*/
         /**
-         * »ªÀö·Ö¸îÏß
+         * åä¸½åˆ†å‰²çº¿
          * ========================================================
          */
-        /*<Ê×Ò³µÄĞÂÆ·ÉÏ¼ÜµÄ¹ÜÀí>*/
+        /*<é¦–é¡µçš„æ–°å“ä¸Šæ¶çš„ç®¡ç†>*/
         LinearLayout navA_body = item.findViewById(R.id.fragment_main_navA_body);
         View _navaBody = inflater.inflate(R.layout.assembly_fragment_main_nava, null);
         NewShopinMonitor newShopinMonitor = new NewShopinMonitor();
-        newShopinMonitor.SaveTag(LocalMonitorPage.MONITOR_NEWSHOPIN);/*ÉèÖÃ±êÊ¶ ±êÊ¶Õâ¸ö¹ÜÀíÕßµÄÃû×Ö*/
+        newShopinMonitor.SaveTag(LocalMonitorPage.MONITOR_NEWSHOPIN);/*è®¾ç½®æ ‡è¯† æ ‡è¯†è¿™ä¸ªç®¡ç†è€…çš„åå­—*/
         navA_body.addView(_navaBody);
         navA_body.setTag(newShopinMonitor);
-        /*</Ê×Ò³µÄĞÂÆ·ÉÏ¼ÜµÄ¹ÜÀí>*/
+        /*</é¦–é¡µçš„æ–°å“ä¸Šæ¶çš„ç®¡ç†>*/
         /**
-         * »ªÀö·Ö¸îÏß
+         * åä¸½åˆ†å‰²çº¿
          * ========================================================
          */
-        /*<Ê×Ò³µÄÆ·ÅÆ´ÙÏúµÄ¹ÜÀí>*/
+        /*<é¦–é¡µçš„å“ç‰Œä¿ƒé”€çš„ç®¡ç†>*/
         LinearLayout layout = item.findViewById(R.id.fragment_main_singlebody);
         View mainSingle = inflater.inflate(R.layout.assembly_fragment_main_single, null);
         layout.addView(mainSingle);
-        /*Æô¶¯Æ·ÅÆµÄÊÂÎñ¹ÜÀíÆ÷*/
+        /*å¯åŠ¨å“ç‰Œçš„äº‹åŠ¡ç®¡ç†å™¨*/
         BrandSingMonitor brandSingMonitor = new BrandSingMonitor(mainSingle, getContext());
         brandSingMonitor.Start(new ProgramInterface() {
             @Override
             public void onSucess(String data, int code) {
-                //ÅĞ¶Ïcode Èç¹ûcodeÕıÈ·µÄ»° ÒªÉèÖÃScrollViewµÄÍ£Ö¹¼àÌıtag
+                //åˆ¤æ–­code å¦‚æœcodeæ­£ç¡®çš„è¯ è¦è®¾ç½®ScrollViewçš„åœæ­¢ç›‘å¬tag
             }
 
             @Override
@@ -126,9 +126,9 @@ public class Mainfrg extends LazyCatFragment {
 
             }
         });
-        brandSingMonitor.SaveTag(LocalMonitorPage.MONITOR_BRANDSING);/*±êÊ¶¹ÜÀíÕßµÄÃû×Ö*/
-        layout.setTag(brandSingMonitor);/*±£´æ¹ÜÀíÕß*/
-        /*</Ê×Ò³µÄÆ·ÅÆ´ÙÏúµÄ¹ÜÀí>*/
+        brandSingMonitor.SaveTag(LocalMonitorPage.MONITOR_BRANDSING);/*æ ‡è¯†ç®¡ç†è€…çš„åå­—*/
+        layout.setTag(brandSingMonitor);/*ä¿å­˜ç®¡ç†è€…*/
+        /*</é¦–é¡µçš„å“ç‰Œä¿ƒé”€çš„ç®¡ç†>*/
         _RefreshScrollView.SetLinstener(new RefreshScrollView.RefreshScrollViewListener() {
             @Override
             public void onRefresh() {
@@ -148,7 +148,7 @@ public class Mainfrg extends LazyCatFragment {
             @Override
             public void onState(int _static) {
                 if (_static == RefreshScrollView.RUNNOW_REFRESH) {
-                    //¿ÉÒÔ¿ªÊ¼Ë¢ĞÂ
+                    //å¯ä»¥å¼€å§‹åˆ·æ–°
 
                 }
 
@@ -157,7 +157,7 @@ public class Mainfrg extends LazyCatFragment {
             @Override
             public void onLoadMore() {
                 /**
-                 * ¿ªÆôÒ»¸ö¶¨Ê±µÄÏß³Ì ÓÃÀ´ÔÚÈıÃëÖĞ¹ıºóÆô¶¯
+                 * å¼€å¯ä¸€ä¸ªå®šæ—¶çš„çº¿ç¨‹ ç”¨æ¥åœ¨ä¸‰ç§’ä¸­è¿‡åå¯åŠ¨
                  */
                 _GoneHeadimg = new Timer();
                 _GoneHeadimg.schedule(new TimerTask() {
@@ -183,7 +183,7 @@ public class Mainfrg extends LazyCatFragment {
                 Rect rect = new Rect();
                 for (int y = 0; y < i.getChildCount(); y++) {
                     if (i.getChildAt(y).getLocalVisibleRect(rect)) {
-                        /*ÕıÔÚÏÔÊ¾*/
+                        /*æ­£åœ¨æ˜¾ç¤º*/
                         Monitor monitor = (Monitor) i.getChildAt(y).getTag();
                         if (monitor != null) {
                             Toast.makeText(getContext(), "Tag:" + monitor.GetTag(), Toast
@@ -193,21 +193,21 @@ public class Mainfrg extends LazyCatFragment {
                     }
                 }
                 _RefreshScrollView.getHitRect(rect);
-                _RefreshScrollView.onStopHandle = true;/*ÉèÖÃ²»ÄÜÔÙ´Î»Øµ÷Í£Ö¹ÊÂ¼ş ÔÚ°´ÏÂµÄÊ±ºò ¸ÃÖµÖØĞÂ±»¼¤»î*/
+                _RefreshScrollView.onStopHandle = true;/*è®¾ç½®ä¸èƒ½å†æ¬¡å›è°ƒåœæ­¢äº‹ä»¶ åœ¨æŒ‰ä¸‹çš„æ—¶å€™ è¯¥å€¼é‡æ–°è¢«æ¿€æ´»*/
 
             }
 
             @Override
             public void onloadMessage() {
-                Log.i(Config.DEBUG, "ÏÖÔÚ¿ÉÒÔ¿ªÊ¼¼ÓÔØ¹ã¸æ´°¿ÚÁË");
-                _RefreshScrollView.inLoadMessage = true;//¸æËßÄÚ²¿ ÒÑ¾­¿ªÊ¼¼ÓÔØ ²»ÄÜÔÙ´Îµ÷ÓÃ½Ó¿Ú
+                Log.i(Config.DEBUG, "ç°åœ¨å¯ä»¥å¼€å§‹åŠ è½½å¹¿å‘Šçª—å£äº†");
+                _RefreshScrollView.inLoadMessage = true;//å‘Šè¯‰å†…éƒ¨ å·²ç»å¼€å§‹åŠ è½½ ä¸èƒ½å†æ¬¡è°ƒç”¨æ¥å£
                 WEB_VALUES_ACT web_values_act = new WEB_VALUES_ACT
                         ("http://120.79.63.36/lazyShop/webpage/1.html");
                 Intent i = new Intent();
                 i.setClass(getContext(), WebServiceAct.class);
                 i.putExtra(WINDOW_PAGE.RESULT_WEBVIEW, web_values_act);
                 startActivity(i);
-                //Í£Ö¹Ë¢ĞÂ
+                //åœæ­¢åˆ·æ–°
             }
 
             @Override
@@ -217,7 +217,7 @@ public class Mainfrg extends LazyCatFragment {
         });
 
         /**
-         * ³¢ÊÔ¼ÓÔØĞÂÆ·ÉÏ¼Ü»òÕßÁÙÊ±´ÙÏúµÄ²úÆ·
+         * å°è¯•åŠ è½½æ–°å“ä¸Šæ¶æˆ–è€…ä¸´æ—¶ä¿ƒé”€çš„äº§å“
          */
         LinearLayout newShopin = item.findViewById(R.id.fragment_main_newShopin);
         newShopin.setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff", 10));
@@ -225,7 +225,7 @@ public class Mainfrg extends LazyCatFragment {
         newShopin.addView(_itemNewshopin);
 
         /**
-         * ÊµÏÖµã»÷ËÑË÷¿ò½øÈëËÑË÷½çÃæ
+         * å®ç°ç‚¹å‡»æœç´¢æ¡†è¿›å…¥æœç´¢ç•Œé¢
          */
         item.findViewById(R.id.assembly_head_input).setOnClickListener(new View.OnClickListener() {
             @Override

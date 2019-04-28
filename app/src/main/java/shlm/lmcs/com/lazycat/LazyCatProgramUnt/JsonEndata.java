@@ -7,7 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * jsonÊı¾İ½âÎö
+ * jsonæ•°æ®è§£æ
  */
 public class JsonEndata {
     private String mJsonString;
@@ -18,7 +18,7 @@ public class JsonEndata {
     }
 
     /**
-     * »ñÈ¡JSONÖĞµÄÒ»¸öÖ¸¶¨µÄKEYµÄÖµ
+     * è·å–JSONä¸­çš„ä¸€ä¸ªæŒ‡å®šçš„KEYçš„å€¼
      */
     public String getJsonKeyValue(String key) {
         String keyValue = "";
@@ -26,7 +26,7 @@ public class JsonEndata {
             JSONObject jsonObject = new JSONObject(this.mJsonString);
             keyValue = jsonObject.getString(key);
         } catch (JSONException e) {
-            Log.e("capitalist", "json½âÎö´íÎó:" + e.getMessage());
+            Log.e("capitalist", "jsonè§£æé”™è¯¯:" + e.getMessage());
             return "";
         }
         return keyValue;

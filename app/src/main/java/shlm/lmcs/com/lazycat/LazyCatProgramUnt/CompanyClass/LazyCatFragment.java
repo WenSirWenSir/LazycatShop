@@ -6,7 +6,7 @@ import android.content.Intent;
 
 
 /**
- * ×Ô¶¨ÒåµÄFragment¿ÉÒÔ ÓÃÀ´ÊµÏÖÒ»Ğ©¾­³£ÓÃµÄ·½·¨
+ * è‡ªå®šä¹‰çš„Fragmentå¯ä»¥ ç”¨æ¥å®ç°ä¸€äº›ç»å¸¸ç”¨çš„æ–¹æ³•
  */
 public class LazyCatFragment extends Fragment{
 

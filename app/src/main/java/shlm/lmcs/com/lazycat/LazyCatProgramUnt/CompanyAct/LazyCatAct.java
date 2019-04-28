@@ -17,16 +17,16 @@ import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
 
 
 /**
- * ÑºÖà¹Ù·½Activity
+ * æŠ¼ç²¥å®˜æ–¹Activity
  */
 public class LazyCatAct extends Activity {
-    private Boolean isBackTwo = false;//ÍË³öÔÙ°´Ò»´Î
+    private Boolean isBackTwo = false;//é€€å‡ºå†æŒ‰ä¸€æ¬¡
     private Boolean isBackOk = false;
 
     /**
-     * ´ò¿ªÒ»¸ö´°¿Ú
+     * æ‰“å¼€ä¸€ä¸ªçª—å£
      *
-     * @param Bclass ClassµÄÃû³Æ
+     * @param Bclass Classçš„åç§°
      */
     protected void LazyCatActStartActivity(Class<?> Bclass, Boolean ColseF) {
         Intent i = new Intent();
@@ -35,7 +35,7 @@ public class LazyCatAct extends Activity {
         if (ColseF) {
             this.finish();
         }
-        //½çÃæ¶¯»­
+        //ç•Œé¢åŠ¨ç”»
     }
 
     /**
@@ -52,7 +52,7 @@ public class LazyCatAct extends Activity {
     }
 
     /**
-     * ´ò¿ªÒ»¸ö´°¿Ú ²¢ÇÒ´«ÈëÖµ
+     * æ‰“å¼€ä¸€ä¸ªçª—å£ å¹¶ä¸”ä¼ å…¥å€¼
      */
     protected void LeftCompanyActStartActivityWithBundler(Class<?> Bclass, Boolean ColoseF,
                                                           String... values) {
@@ -65,10 +65,10 @@ public class LazyCatAct extends Activity {
     }
 
     /**
-     * Æô¶¯Ò»¸öWebView
+     * å¯åŠ¨ä¸€ä¸ªWebView
      *
-     * @param ColoseF         ÊÇ·ñ¹Ø±Õ¸¸´°¿Ú
-     * @param _web_values_act ¹¹Ôì²ÎÊı
+     * @param ColoseF         æ˜¯å¦å…³é—­çˆ¶çª—å£
+     * @param _web_values_act æ„é€ å‚æ•°
      */
     @SuppressLint("NewApi")
     protected void LeftCompanyActStartWebView(Boolean ColoseF, WEB_VALUES_ACT _web_values_act) {
@@ -79,7 +79,7 @@ public class LazyCatAct extends Activity {
     }
 
     /**
-     * »ñÈ¡´«Èë´°¿ÚµÄÖµ
+     * è·å–ä¼ å…¥çª—å£çš„å€¼
      *
      * @param key
      * @return
@@ -98,11 +98,11 @@ public class LazyCatAct extends Activity {
     }
 
     /**
-     * ÉèÖÃ×´Ì¬À¸
+     * è®¾ç½®çŠ¶æ€æ 
      */
     protected void setStatusBar(String tColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //5.O°æ±¾¼°ÒÔÉÏ
+            //5.Oç‰ˆæœ¬åŠä»¥ä¸Š
             View decorView = getWindow().getDecorView();
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | SYSTEM_UI_FLAG_LAYOUT_STABLE;
             decorView.setSystemUiVisibility(option);
@@ -111,7 +111,7 @@ public class LazyCatAct extends Activity {
     }
 
     /**
-     * ÉèÖÃÍ¸Ã÷×´Ì¬À¸
+     * è®¾ç½®é€æ˜çŠ¶æ€æ 
      */
     protected void setTransparentBar() {
         try {
@@ -122,7 +122,7 @@ public class LazyCatAct extends Activity {
     }
 
     /**
-     * ÉèÖÃµ¼º½À¸Í¸Ã÷
+     * è®¾ç½®å¯¼èˆªæ é€æ˜
      */
     protected void setHideNav() {
         try {
@@ -133,9 +133,9 @@ public class LazyCatAct extends Activity {
     }
 
     /**
-     * ÉèÖÃÊÇ·ñÒª½øĞĞÍË³öµÄ¼àÌı  Ä¬ÈÏ²»¼àÌı
+     * è®¾ç½®æ˜¯å¦è¦è¿›è¡Œé€€å‡ºçš„ç›‘å¬  é»˜è®¤ä¸ç›‘å¬
      *
-     * @param i false ²»¼àÌı true ¼àÌı
+     * @param i false ä¸ç›‘å¬ true ç›‘å¬
      */
     protected void setBackStatic(Boolean i) {
         if (i) {
@@ -149,13 +149,13 @@ public class LazyCatAct extends Activity {
 
     @Override
     public void onBackPressed() {
-        /*ÅĞ¶ÏÊÇ·ñĞèÒªÍË³öÌáÊ¾*/
+        /*åˆ¤æ–­æ˜¯å¦éœ€è¦é€€å‡ºæç¤º*/
         if (isBackTwo) {
             if (isBackOk) {
                 super.onBackPressed();
             } else {
                 isBackOk = true;
-                Toast.makeText(this, "ÔÙ°´Ò»´ÎÍË³ö", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "å†æŒ‰ä¸€æ¬¡é€€å‡º", Toast.LENGTH_LONG).show();
             }
 
         } else {

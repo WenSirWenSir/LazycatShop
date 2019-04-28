@@ -19,11 +19,11 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 
 /**
- * ¹«Ë¾»ñÈ¡ÓÃ»§µÄĞÅÏ¢×ÊÁÏµÄ²Ù×÷API
+ * å…¬å¸è·å–ç”¨æˆ·çš„ä¿¡æ¯èµ„æ–™çš„æ“ä½œAPI
  */
 public class Usertools {
     /**
-     * »ñÈ¡ÓÃ»§µÄËùÓĞµÄ×ÊÁÏĞÅÏ¢
+     * è·å–ç”¨æˆ·çš„æ‰€æœ‰çš„èµ„æ–™ä¿¡æ¯
      */
     public static void getUservalues(Context mContext, final ProgramInterface programInterface) {
         String token = Tools.gettoKen(mContext, USER_KEY_PAGE.KEY_TOKEN);
@@ -58,7 +58,7 @@ public class Usertools {
     }
 
     /**
-     * »ñÈ¡ÓÃ»§µÄÄ¬ÈÏµØÖ·
+     * è·å–ç”¨æˆ·çš„é»˜è®¤åœ°å€
      */
 
     public static void getUserdefaultaddr() {
@@ -67,7 +67,7 @@ public class Usertools {
 
 
     /**
-     * »ñÈ¡ÓÃ»§µÄËùÓĞµØÖ·
+     * è·å–ç”¨æˆ·çš„æ‰€æœ‰åœ°å€
      */
     public static void getUserAllAddr(Context mContext, final ProgramInterface.XMLforUserAllAddr
             xmLforUserAllAddr) {
@@ -79,7 +79,7 @@ public class Usertools {
             @SuppressLint("LongLogTag")
             @Override
             public void onSucess(InputStream is) {
-                //ÏÈ±£´æISµÄÊı¾İĞÅÏ¢
+                //å…ˆä¿å­˜ISçš„æ•°æ®ä¿¡æ¯
                 if (is != null) {
                     ArrayList<XMLUserAddr> list = null;
                     try {
@@ -90,15 +90,15 @@ public class Usertools {
                         if (xmLforUserAllAddr != null) {
                             xmLforUserAllAddr.onDone(list);
                         } else {
-                            Log.e(Config.DEBUG, "Usertools.java[+]XML½âÎö»Øµ÷ÎªNULL");
+                            Log.e(Config.DEBUG, "Usertools.java[+]XMLè§£æå›è°ƒä¸ºNULL");
                         }
 
                     } else {
                         if (xmLforUserAllAddr != null) {
-                            Log.e(Config.DEBUG, "Usertools.java[+]XML½âÎö»Øµ÷ÎªNULL");
-                            xmLforUserAllAddr.onFain();//½âÎöÊ§°Ü
+                            Log.e(Config.DEBUG, "Usertools.java[+]XMLè§£æå›è°ƒä¸ºNULL");
+                            xmLforUserAllAddr.onFain();//è§£æå¤±è´¥
                         } else {
-                            Log.e(Config.DEBUG, "Usertools.java[+]XML½âÎö»Øµ÷ÎªNULL");
+                            Log.e(Config.DEBUG, "Usertools.java[+]XMLè§£æå›è°ƒä¸ºNULL");
                         }
 
                     }
@@ -125,7 +125,7 @@ public class Usertools {
             @SuppressLint("LongLogTag")
             @Override
             public void onJson(String origin) {
-                Log.e(Config.DEBUG,"Usertools.java[+]ÔÚJSONÊı¾İ»Øµ÷ÖĞ");
+                Log.e(Config.DEBUG,"Usertools.java[+]åœ¨JSONæ•°æ®å›è°ƒä¸­");
                 if (xmLforUserAllAddr != null) {
                     xmLforUserAllAddr.onJson(origin);
                 }
@@ -139,25 +139,25 @@ public class Usertools {
 
 
     /**
-     * ÓÃ»§²åÈëÒ»ÌõÊÕ¼şµØÖ·
+     * ç”¨æˆ·æ’å…¥ä¸€æ¡æ”¶ä»¶åœ°å€
      *
-     * @param mContext    ÉÏÏÂÎÄ
-     * @param name        ÓÃ»§Ãû
-     * @param phone       µç»°
-     * @param addr        µØÖ·
-     * @param physics_add ÎïÀíµØÖ·
-     * @param addr_in     ËùÊôÇøÓò
-     * @param sex         ĞÔ±ğ
-     * @param year        ÄêÁä
-     * @param _Default    ÊÇ·ñÄ¬ÈÏ
-     * @param phone_md5   phone_md5 ÑéÖ¤
-     * @param token       token ÑéÖ¤
+     * @param mContext    ä¸Šä¸‹æ–‡
+     * @param name        ç”¨æˆ·å
+     * @param phone       ç”µè¯
+     * @param addr        åœ°å€
+     * @param physics_add ç‰©ç†åœ°å€
+     * @param addr_in     æ‰€å±åŒºåŸŸ
+     * @param sex         æ€§åˆ«
+     * @param year        å¹´é¾„
+     * @param _Default    æ˜¯å¦é»˜è®¤
+     * @param phone_md5   phone_md5 éªŒè¯
+     * @param token       token éªŒè¯
      */
     public static void insertUseraddr(Context mContext, String name, String phone, String addr,
                                       String physics_add, String addr_in, int sex, String year,
                                       String _Default, String phone_md5, String token, final
                                       ProgramInterface programInterface) {
-        physics_add = URLEncoder.encode(physics_add);//±àÂë
+        physics_add = URLEncoder.encode(physics_add);//ç¼–ç 
         XmlBuilder xmlBuilder = new XmlBuilder("body");
         XML_PAGE xml_page = new XML_PAGE("", "", "");
         xml_page.addGrandsonNode(Config.HttpMethodUserAction.KEY_USER, phone_md5).addGrandsonNode
@@ -178,7 +178,7 @@ public class Usertools {
             @SuppressLint("LongLogTag")
             @Override
             public void onSucess(String data, int code) {
-                Log.i(Config.DEBUG, "xmlÊı¾İ·µ»Ø" + data.toString());
+                Log.i(Config.DEBUG, "xmlæ•°æ®è¿”å›" + data.toString());
                 if (TextUtils.isEmpty(data.toString())) {
                     if (programInterface != null) {
                         programInterface.onFaile("", 0);

@@ -22,7 +22,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.AutoLineLayout;
 import shlm.lmcs.com.lazycat.R;
 
 /**
- * ËÑË÷½çÃæ
+ * æœç´¢ç•Œé¢
  */
 public class SearchAct extends LazyCatAct {
     private AutoLineLayout everyoneSearch;
@@ -50,7 +50,7 @@ public class SearchAct extends LazyCatAct {
     private void init() {
 
         /**
-         * ±à¼­¿òµÄ¼àÌıÊÂ¼ş
+         * ç¼–è¾‘æ¡†çš„ç›‘å¬äº‹ä»¶
          */
         input.addTextChangedListener(new TextWatcher() {
             @Override
@@ -66,40 +66,40 @@ public class SearchAct extends LazyCatAct {
             @Override
             public void afterTextChanged(Editable s) {
                 /**
-                 * ¼ì²éÊÇ·ñÃ»ÓĞÊı¾İ Èç¹ûÃ»ÓĞ ¾Í²»Òª½øĞĞÁĞ±í²Ù×÷
+                 * æ£€æŸ¥æ˜¯å¦æ²¡æœ‰æ•°æ® å¦‚æœæ²¡æœ‰ å°±ä¸è¦è¿›è¡Œåˆ—è¡¨æ“ä½œ
                  */
                 if (TextUtils.isEmpty(s.toString())) {
-                    /*Îª¿Õ*/
+                    /*ä¸ºç©º*/
                     findViewById(R.id.activity_search_listview).setVisibility(View.GONE);
                     findViewById(R.id.activity_search_RefreshScrollView).setVisibility(View
                             .VISIBLE);
                 } else {
-                    /*²»Îª¿Õ*/
+                    /*ä¸ä¸ºç©º*/
 
-                    /*Ä£ÄâÍøÂç·ÃÎÊÓĞÊı¾İ*/
+                    /*æ¨¡æ‹Ÿç½‘ç»œè®¿é—®æœ‰æ•°æ®*/
                     ArrayList<String> text_list2 = new ArrayList<>();
-                    text_list2.add("Á÷ÀËµØÇò");
-                    text_list2.add("åĞÒ£É¢ÈË");
-                    text_list2.add("¶«¹¬");
+                    text_list2.add("æµæµªåœ°çƒ");
+                    text_list2.add("é€é¥æ•£äºº");
+                    text_list2.add("ä¸œå®«");
                     text_list2.add("EXO");
-                    text_list2.add("ÀÏ·¬ÇÑ");
-                    text_list2.add("¼ÙÃæÆïÊ¿ZI-O");
-                    text_list2.add("ĞÅÊÄµ©µ©");
+                    text_list2.add("è€ç•ªèŒ„");
+                    text_list2.add("å‡é¢éª‘å£«ZI-O");
+                    text_list2.add("ä¿¡èª“æ—¦æ—¦");
                     SearchLogAdapter adapter = new SearchLogAdapter(text_list2);
                     SearchlogListview.setAdapter(adapter);
                     findViewById(R.id.activity_search_listview).setVisibility(View.VISIBLE);
                     findViewById(R.id.activity_search_RefreshScrollView).setVisibility(View.GONE);
                 }
-                //Ö´ĞĞ¶¯»­
+                //æ‰§è¡ŒåŠ¨ç”»
                 if (TextUtils.isEmpty(s.toString())) {
-                    /*ÊäÈë¿òµÄÊı¾İÎª¿Õ*/
+                    /*è¾“å…¥æ¡†çš„æ•°æ®ä¸ºç©º*/
                     btn_search.clearAnimation();
-                    /*Öğ½¥Òş²Ø¶¯»­*/
+                    /*é€æ¸éšè—åŠ¨ç”»*/
                     btn_search.startAnimation(Tools.clearOnalpha(1000, false));
                     btn_search.setVisibility(View.GONE);
-                    /*listView²»ÏÔÊ¾*/
+                    /*listViewä¸æ˜¾ç¤º*/
                 } else if (btn_search.getVisibility() != View.VISIBLE) {
-                    //²»ÔÚÏÔÊ¾
+                    //ä¸åœ¨æ˜¾ç¤º
                     btn_search.clearAnimation();
                     btn_search.setVisibility(View.VISIBLE);
                     btn_search.clearAnimation();
@@ -110,7 +110,7 @@ public class SearchAct extends LazyCatAct {
 
 
         /**
-         * µã»÷ËÑË÷¿òµÄ¼àÌıÊÂ¼ş
+         * ç‚¹å‡»æœç´¢æ¡†çš„ç›‘å¬äº‹ä»¶
          */
 
         btn_search.setOnClickListener(new View.OnClickListener() {
@@ -121,28 +121,28 @@ public class SearchAct extends LazyCatAct {
             }
         });
         ArrayList<String> text_list = new ArrayList<>();
-        text_list.add("Á÷ÀËµØÇò");
-        text_list.add("åĞÒ£É¢ÈË");
-        text_list.add("¶«¹¬");
+        text_list.add("æµæµªåœ°çƒ");
+        text_list.add("é€é¥æ•£äºº");
+        text_list.add("ä¸œå®«");
         text_list.add("EXO");
-        text_list.add("ÀÏ·¬ÇÑ");
-        text_list.add("¼ÙÃæÆïÊ¿ZI-O");
-        text_list.add("ĞÅÊÄµ©µ©");
+        text_list.add("è€ç•ªèŒ„");
+        text_list.add("å‡é¢éª‘å£«ZI-O");
+        text_list.add("ä¿¡èª“æ—¦æ—¦");
         ArrayList<String> text_list2 = new ArrayList<>();
-        text_list2.add("Á÷ÀËµØÇò");
-        text_list2.add("åĞÒ£É¢ÈË");
-        text_list2.add("¶«¹¬");
+        text_list2.add("æµæµªåœ°çƒ");
+        text_list2.add("é€é¥æ•£äºº");
+        text_list2.add("ä¸œå®«");
         text_list2.add("EXO");
-        text_list2.add("ÀÏ·¬ÇÑ");
-        text_list2.add("¼ÙÃæÆïÊ¿ZI-O");
-        text_list2.add("ĞÅÊÄµ©µ©");
+        text_list2.add("è€ç•ªèŒ„");
+        text_list2.add("å‡é¢éª‘å£«ZI-O");
+        text_list2.add("ä¿¡èª“æ—¦æ—¦");
         ArrayList<LinearLayout> tv_list = Tools.handleToarraylist(getApplicationContext(),
                 text_list, 20, 10, 20, 10, "#e9e9e9", "#666666", 13);
         ArrayList<LinearLayout> tv_list2 = Tools.handleToarraylist(getApplicationContext(),
                 text_list2, 20, 10, 20, 10, "#e9e9e9", "#666666", 13);
 
-        everyoneSearch = findViewById(R.id.activity_everyone_searchBody);/*´ó¼Ò¶¼ÔÚËÑ*/
-        searchLog = findViewById(R.id.activity_search_searchLogBody);/*ÓÃ»§µÄËÑË÷¼ÇÂ¼*/
+        everyoneSearch = findViewById(R.id.activity_everyone_searchBody);/*å¤§å®¶éƒ½åœ¨æœ*/
+        searchLog = findViewById(R.id.activity_search_searchLogBody);/*ç”¨æˆ·çš„æœç´¢è®°å½•*/
         for (int i = 0; i < tv_list.size(); i++) {
             everyoneSearch.addView(tv_list.get(i));
         }
@@ -191,7 +191,7 @@ public class SearchAct extends LazyCatAct {
                         .assembly_searchact_showsearchitem_static);
                 convertView.setTag(_viewpage);
             }
-            /*´¦ÀíÎÄ×ÖµÈ*/
+            /*å¤„ç†æ–‡å­—ç­‰*/
             _viewpage.title.setText(this.list.get(position));
             _viewpage._static.setBackground(Tools.CreateDrawable(1, "#f30d88", "#ffffff", 5));
 
@@ -199,6 +199,7 @@ public class SearchAct extends LazyCatAct {
         }
 
         class viewpage {
+            
             TextView title;
             TextView _static;
         }

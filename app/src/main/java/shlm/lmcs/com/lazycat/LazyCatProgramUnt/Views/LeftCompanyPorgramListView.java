@@ -17,12 +17,12 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 
 public class LeftCompanyPorgramListView extends ListView implements AbsListView.OnScrollListener {
     private Context mcontext;
-    private View bottomview;//Î²²¿ÎÄ¼ş
-    private View headview;//Í·²¿ÎÄ¼ş
+    private View bottomview;//å°¾éƒ¨æ–‡ä»¶
+    private View headview;//å¤´éƒ¨æ–‡ä»¶
     private int totalItemcounts;
-    private int lassvisible;//ÉÏÀ­
-    private int firstvisible;//ÏÂÀ­
-    private LoadListener loadListener;//½Ó¿Ú»Øµ÷
+    private int lassvisible;//ä¸Šæ‹‰
+    private int firstvisible;//ä¸‹æ‹‰
+    private LoadListener loadListener;//æ¥å£å›è°ƒ
     private int bottomHeight;
     private int headHeight;
     private int Yload;
@@ -61,18 +61,18 @@ public class LeftCompanyPorgramListView extends ListView implements AbsListView.
 
     public void setHeadView(int v_id) {
         headview = LinearLayout.inflate(mcontext,v_id,null);
-        //ÖØĞÂ²âÁ¿
+        //é‡æ–°æµ‹é‡
         headview.measure(0,0);
-        headHeight = headview.getMeasuredHeight();//»ñµÃÖØĞÂ²âÁ¿µÄ¸ß¶È
+        headHeight = headview.getMeasuredHeight();//è·å¾—é‡æ–°æµ‹é‡çš„é«˜åº¦
         headview.setPadding(0,-headHeight,0,0);
         this.addHeaderView(headview);
     }
 
     public void setBottomview(int v_id){
         bottomview = LinearLayout.inflate(mcontext,v_id,null);
-        //ÖØĞÂ²âÁ¿
+        //é‡æ–°æµ‹é‡
         bottomview.measure(0,0);
-        bottomHeight = bottomview.getMeasuredHeight();//ÖØĞÂ»ñµÃ¸ß¶È
+        bottomHeight = bottomview.getMeasuredHeight();//é‡æ–°è·å¾—é«˜åº¦
         bottomview.setPadding(0,-bottomHeight,0,0);
         this.addFooterView(bottomview);
     }
@@ -81,15 +81,15 @@ public class LeftCompanyPorgramListView extends ListView implements AbsListView.
         this.setOnScrollListener(this);
     }
 
-    //½Ó¿Ú»Øµ÷
+    //æ¥å£å›è°ƒ
     public interface LoadListener {
-        void onLoad();//¼ÓÔØ
+        void onLoad();//åŠ è½½
 
-        void PullLoad();//ÏÂÀ­
+        void PullLoad();//ä¸‹æ‹‰
     }
 
 
-    //¼ÓÔØÍê³É
+    //åŠ è½½å®Œæˆ
     public void localComplete() {
         isLoading = false;
         bottomview.setPadding(0, -bottomHeight, 0, 0);
@@ -105,7 +105,7 @@ public class LeftCompanyPorgramListView extends ListView implements AbsListView.
     public boolean onTouchEvent(MotionEvent ev) {
         switch (ev.getAction()){
             case MotionEvent.ACTION_DOWN:
-                Yload = (int) ev.getY();//¶¨Î»
+                Yload = (int) ev.getY();//å®šä½
                 break;
             case MotionEvent.ACTION_MOVE:
                 int moveY = (int) ev.getY();
@@ -114,13 +114,13 @@ public class LeftCompanyPorgramListView extends ListView implements AbsListView.
                 try {
                     paddingY = headHeight + (moveY - Yload) / 2;
                 } catch (Exception e) {
-                    Log.i(Config.DEBUG,"listviewÃ»ÓĞÍ·²¿ÎÄ¼ş");
+                    Log.i(Config.DEBUG,"listviewæ²¡æœ‰å¤´éƒ¨æ–‡ä»¶");
                 }
                 if(paddingY < 0){
-                    Toast.makeText(mcontext,"ÏÂÀ­Ë¢ĞÂ",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mcontext,"ä¸‹æ‹‰åˆ·æ–°",Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Toast.makeText(mcontext,"ËÉ¿ªË¢ĞÂ",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mcontext,"æ¾å¼€åˆ·æ–°",Toast.LENGTH_SHORT).show();
                 }
                 if(headview != null){
                     headview.setPadding(0,paddingY,0,0);

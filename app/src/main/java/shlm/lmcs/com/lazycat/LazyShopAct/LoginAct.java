@@ -38,12 +38,12 @@ public class LoginAct extends LazyCatAct {
         layout = findViewById(R.id.activity_login_main);
         inputBody = findViewById(R.id.activity_login_inputbody);
         progressbody = findViewById(R.id.activity_login_progressbody);/**/
-        inputPhone = findViewById(R.id.activity_login_inputphone);/*ÊäÈëÊÖ»úºÅÂë*/
-        inputCode = findViewById(R.id.activity_login_inputcode);/*ÑéÖ¤Âë*/
+        inputPhone = findViewById(R.id.activity_login_inputphone);/*è¾“å…¥æ‰‹æœºå·ç */
+        inputCode = findViewById(R.id.activity_login_inputcode);/*éªŒè¯ç */
         Typeface typeface = Typeface.createFromAsset(getApplication().getAssets(), "font/price" +
                 ".ttf");
-        inputPhone.setTypeface(typeface);/*ÉèÖÃ×ÖÌå*/
-        inputCode.setTypeface(typeface);/*ÉèÖÃ×ÖÌå*/
+        inputPhone.setTypeface(typeface);/*è®¾ç½®å­—ä½“*/
+        inputCode.setTypeface(typeface);/*è®¾ç½®å­—ä½“*/
         layout.post(new Runnable() {
             @Override
             public void run() {
@@ -51,9 +51,9 @@ public class LoginAct extends LazyCatAct {
                 animation.start();
             }
         });
-        /*ÊµÏÖlogoÖğ½¥ÏÔÊ¾*/
+        /*å®ç°logoé€æ¸æ˜¾ç¤º*/
         findViewById(R.id.activity_login_logo).startAnimation(Tools.createOnalpha(3000, false));
-        /*ÉèÖÃ±ß¿ò*/
+        /*è®¾ç½®è¾¹æ¡†*/
         inputBody.setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff", 10));
         init();
 
@@ -61,7 +61,7 @@ public class LoginAct extends LazyCatAct {
 
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
-        /*µÇÂ¼*/
+        /*ç™»å½•*/
         findViewById(R.id.activity_login_btnLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,26 +71,26 @@ public class LoginAct extends LazyCatAct {
                         .getMeasuredHeight());
             }
         });
-        /*ÍË³ö*/
+        /*é€€å‡º*/
         findViewById(R.id.activity_login_btnBack).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        /*ÅĞ¶ÏÊÇ·ñÇå¿Õ*/
+        /*åˆ¤æ–­æ˜¯å¦æ¸…ç©º*/
         inputCode.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (inputCode.getText().toString().trim().equals("ÊäÈëÑéÖ¤Âë")) inputCode.setText("");
+                if (inputCode.getText().toString().trim().equals("è¾“å…¥éªŒè¯ç ")) inputCode.setText("");
                 return false;
             }
         });
-        /*ÅĞ¶ÏÊÇ·ñÇå¿Õ*/
+        /*åˆ¤æ–­æ˜¯å¦æ¸…ç©º*/
         inputPhone.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (inputPhone.getText().toString().trim().equals("ÊÖ»úºÅ")) inputPhone.setText("");
+                if (inputPhone.getText().toString().trim().equals("æ‰‹æœºå·")) inputPhone.setText("");
                 return false;
             }
         });
@@ -98,7 +98,7 @@ public class LoginAct extends LazyCatAct {
 
 
     /**
-     * ÊäÈë¿òµÄ¶¯»­
+     * è¾“å…¥æ¡†çš„åŠ¨ç”»
      */
     private void inputAnimation(final View view, float w, float h) {
         AnimatorSet set = new AnimatorSet();
@@ -127,7 +127,7 @@ public class LoginAct extends LazyCatAct {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                /*ÏÔÊ¾¼ÓÔØ½ø¶È*/
+                /*æ˜¾ç¤ºåŠ è½½è¿›åº¦*/
                 progressbody.setVisibility(View.VISIBLE);
                 progressAnimation(progressbody);
                 inputBody.setVisibility(View.GONE);
@@ -149,7 +149,7 @@ public class LoginAct extends LazyCatAct {
 
 
     /**
-     * ³öÏÖ¼ÓÔØµÄ¶¯»­
+     * å‡ºç°åŠ è½½çš„åŠ¨ç”»
      *
      * @param view
      */
@@ -164,7 +164,7 @@ public class LoginAct extends LazyCatAct {
 
 
     /**
-     * ×Ô¶¨ÒåµÄ²åÖµÆ÷
+     * è‡ªå®šä¹‰çš„æ’å€¼å™¨
      */
     class myInterpolator extends LinearInterpolator {
         private float factor;

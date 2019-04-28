@@ -2,13 +2,13 @@ package shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory;
 
 
 /**
- * XML¶ÔÓ¦µÄÊı¾İ½âÎö
+ * XMLå¯¹åº”çš„æ•°æ®è§£æ
  */
 public class XmlTagValuesFactory {
 
 
     /**
-     * Ê×Ò³µÄÆ·ÅÆ´ÙÏúµÄÕûÀí
+     * é¦–é¡µçš„å“ç‰Œä¿ƒé”€çš„æ•´ç†
      */
     public static class XMLtagMainBrandPromotion {
         public static String key_back = "background";

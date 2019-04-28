@@ -6,14 +6,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 /**
- * 展示的图片可以放大或者是缩小
+ * 灞曠ず鐨勫浘鐗囧彲浠ユ斁澶ф垨鑰呮槸缂╁皬
  */
 public class ZzomImage extends LazyCatAct {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         /**
-         * 创建布局
+         * 鍒涘缓甯冨眬
          */
         LinearLayout layout = new LinearLayout(getApplicationContext());
         layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams

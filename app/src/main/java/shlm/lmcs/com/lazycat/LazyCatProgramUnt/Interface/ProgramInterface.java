@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XMLUserAddr;
 
 /**
- * ´ó¼Ò¶¼¿ÉÒÔÓÃµÄ½Ó¿Ú
+ * å¤§å®¶éƒ½å¯ä»¥ç”¨çš„æ¥å£
  */
 public interface ProgramInterface {
 
     /**
-     * Ä¬ÈÏµÄ´¦Àí·½Ê½
+     * é»˜è®¤çš„å¤„ç†æ–¹å¼
      * @param data
      * @param code
      */
@@ -22,7 +22,7 @@ public interface ProgramInterface {
     public void onFaile(String data, int code);
 
     /**
-     * ¶ÌĞÅ·¢ËÍ½Ó¿Ú
+     * çŸ­ä¿¡å‘é€æ¥å£
      */
     public interface SMSInterface{
         void onSendOk();
@@ -31,24 +31,24 @@ public interface ProgramInterface {
 
 
     /**
-     * XML»ñÈ¡½Ó¿Ú
+     * XMLè·å–æ¥å£
      */
     public interface XMLDomServiceInterface{
         void onSucess(InputStream is);
         void onFain();
         void onNotService();
-        void onJson(String origin);//ÒªÓÃJSON½âÎö
+        void onJson(String origin);//è¦ç”¨JSONè§£æ
     }
 
     /**
-     * »ñÈ¡ÓÃ»§µÄÊı¾İ´¦ÀíÖ®ºóµÄ»Øµ÷ÊÂ¼ş
+     * è·å–ç”¨æˆ·çš„æ•°æ®å¤„ç†ä¹‹åçš„å›è°ƒäº‹ä»¶
      */
     public interface XMLforUserAllAddr{
         void onDone(ArrayList<XMLUserAddr> list);
         void onFain();
 
         /**
-         * Token¹ıÆÚ
+         * Tokenè¿‡æœŸ
          */
         void onDated();
         void onJson(String origin);
@@ -64,7 +64,7 @@ public interface ProgramInterface {
     }
 
     /**
-     * ¶àÏß³ÌÊÂÎñ´¦ÀíÍê±Ï
+     * å¤šçº¿ç¨‹äº‹åŠ¡å¤„ç†å®Œæ¯•
      */
     interface onThreaddone{
         void onData(String tag);

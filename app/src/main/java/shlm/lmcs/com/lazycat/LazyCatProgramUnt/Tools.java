@@ -26,6 +26,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -53,10 +54,10 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 
 
 /**
- * ¼ÈÈ»Óö¼ûÁË ¼ÈÈ»Ïà°®ÁË
- * ÄÇ¾Í±ğ·ÅÆú±ğÈ¥¼Æ½Ï,±ğÈ¥ÔÚÒâ±ğÈËµÄÏë·¨¡£
- * ¼ÓÓÍµã
- * Ö»ÊÇÎªÁËÒÔºóÃ»ÓĞÈË¿ÉÒÔÓÃÇ®°ÑÄãÔÒµÄµÍÍ·
+ * æ—¢ç„¶é‡è§äº† æ—¢ç„¶ç›¸çˆ±äº†
+ * é‚£å°±åˆ«æ”¾å¼ƒåˆ«å»è®¡è¾ƒ,åˆ«å»åœ¨æ„åˆ«äººçš„æƒ³æ³•ã€‚
+ * åŠ æ²¹ç‚¹
+ * åªæ˜¯ä¸ºäº†ä»¥åæ²¡æœ‰äººå¯ä»¥ç”¨é’±æŠŠä½ ç ¸çš„ä½å¤´
  */
 @SuppressLint("LongLogTag")
 public class Tools {
@@ -86,13 +87,14 @@ public class Tools {
 
 
     /**
-     * Ê¹µÃÄ³Ò»¿Ø¼ş»ñÈ¡½¹µã
+     * ä½¿å¾—æŸä¸€æ§ä»¶è·å–ç„¦ç‚¹
      *
      * @param view
      */
     public static void getFoucus(View view) {
         view.requestFocus();
     }
+
 
     /**
      * Determines whether the file exists
@@ -123,7 +125,7 @@ public class Tools {
     public static String gettoKen(Context tContext, String key) {
         SharedPreferences sharedPreferences = tContext.getSharedPreferences("YazhouUser", 0);
         try {
-            return sharedPreferences.getString(key, "");//Èç¹û²»´æÔÚ  ¾Í·µ»ØÒ»¸ö¿Õ×Ö·û
+            return sharedPreferences.getString(key, "");//å¦‚æœä¸å­˜åœ¨  å°±è¿”å›ä¸€ä¸ªç©ºå­—ç¬¦
         } catch (Exception e) {
             Log.i(Config.DEBUG, "LeftCompanyProgram Tools.java[+]" + e.getMessage());
             return "";
@@ -141,7 +143,7 @@ public class Tools {
         SharedPreferences sharedPreferences = tContext.getSharedPreferences("YazhouUser", 0);
         try {
             sharedPreferences.edit().putString(tdata[0], tdata[1]).commit();
-            Log.i(Config.DEBUG, "LeftCompanyProgarm Tools.java[+]±£´æÓÃ»§Êı¾İ³É¹¦");
+            Log.i(Config.DEBUG, "LeftCompanyProgarm Tools.java[+]ä¿å­˜ç”¨æˆ·æ•°æ®æˆåŠŸ");
         } catch (Exception e) {
             Log.e(Config.DEBUG, "LeftCompnayProgram Tools.java[+]" + e.getMessage());
         }
@@ -149,11 +151,11 @@ public class Tools {
     }
 
     /**
-     * ·¢ËÍ¶ÌĞÅÑéÖ¤Âë
+     * å‘é€çŸ­ä¿¡éªŒè¯ç 
      * <p>
-     * ¶ÌĞÅµÄÑéÖ¤ÂëÓÉ·şÎñÆ÷½øĞĞÉèÖÃ
+     * çŸ­ä¿¡çš„éªŒè¯ç ç”±æœåŠ¡å™¨è¿›è¡Œè®¾ç½®
      *
-     * @param tPhone µç»°ºÅÂë
+     * @param tPhone ç”µè¯å·ç 
      */
     public static void sendVerificationCodeSMS(final Context tContext, String tPhone, final
     ProgramInterface.SMSInterface listener) {
@@ -291,19 +293,19 @@ public class Tools {
                 });
 
             } else {
-                Log.e(Config.DEBUG, "Tools.java[+]±íÀïµÄÖµÎª¿Õ{0001}");
+                Log.e(Config.DEBUG, "Tools.java[+]è¡¨é‡Œçš„å€¼ä¸ºç©º{0001}");
 
             }
             if (alertViewIDpage.getTitle() != null) {
                 alertViewIDpage.getTitle().setText(title);
             } else {
-                Log.e(Config.DEBUG, "Tools.java[+]±íÀïµÄÖµÎª¿Õ{0001}");
+                Log.e(Config.DEBUG, "Tools.java[+]è¡¨é‡Œçš„å€¼ä¸ºç©º{0001}");
 
             }
             if (alertViewIDpage.getContext() != null) {
                 alertViewIDpage.getContext().setText(context);
             } else {
-                Log.e(Config.DEBUG, "Tools.java[+]±íÀïµÄÖµÎª¿Õ{0001}");
+                Log.e(Config.DEBUG, "Tools.java[+]è¡¨é‡Œçš„å€¼ä¸ºç©º{0001}");
 
             }
             if (alertViewIDpage.getConfirm() != null) {
@@ -318,17 +320,17 @@ public class Tools {
                 });
 
             } else {
-                Log.e(Config.DEBUG, "Tools.java[+]±íÀïµÄÖµÎª¿Õ{0001}");
+                Log.e(Config.DEBUG, "Tools.java[+]è¡¨é‡Œçš„å€¼ä¸ºç©º{0001}");
             }
 
             if (alertViewIDpage.isCanwindow()) {
-                Log.e(Config.DEBUG, "Tools.java[+]±íÀïµÄÖµÎª¿Õ{0002}");
+                Log.e(Config.DEBUG, "Tools.java[+]è¡¨é‡Œçš„å€¼ä¸ºç©º{0002}");
             }
             alertDialog.setView(view);
             alertDialog.show();
 
         } else {
-            Log.e(Config.DEBUG, "Tools.java[+]±íÊÇ¿ÕµÄ");
+            Log.e(Config.DEBUG, "Tools.java[+]è¡¨æ˜¯ç©ºçš„");
 
         }
 
@@ -342,7 +344,7 @@ public class Tools {
 
 
     /**
-     * ¼ì²éÑéÖ¤ÂëÊÇ·ñÕıÈ·
+     * æ£€æŸ¥éªŒè¯ç æ˜¯å¦æ­£ç¡®
      */
     public static void checkVerficationCode(Context tContext, String phone, String code, final
     ProgramInterface programInterface) {
@@ -380,7 +382,7 @@ public class Tools {
 
 
     /**
-     * ÓÃ»§µÄµØÖ·XML½âÎöÆ÷
+     * ç”¨æˆ·çš„åœ°å€XMLè§£æå™¨
      *
      * @param is
      * @return
@@ -392,57 +394,57 @@ public class Tools {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
         Document document = builder.parse(is);
-        Element element = document.getDocumentElement();//»ñÈ¡ÔªËØ
+        Element element = document.getDocumentElement();//è·å–å…ƒç´ 
         NodeList nodes = element.getElementsByTagName("addrs");
         if (nodes.getLength() <= 0) {
-            list = null;//Ã»ÓĞÊı¾İĞÅÏ¢
+            list = null;//æ²¡æœ‰æ•°æ®ä¿¡æ¯
 
         } else {
             for (int i = 0; i < nodes.getLength(); i++) {
                 Element bodyelement = (Element) nodes.item(i);
                 XMLUserAddr xmlUserAddr = new XMLUserAddr();
                 NodeList childNodes = bodyelement.getChildNodes();
-                Log.i(Config.DEBUG, "childnodes×ÜÊı£º" + childNodes.getLength());
+                Log.i(Config.DEBUG, "childnodesæ€»æ•°ï¼š" + childNodes.getLength());
                 for (int y = 0; y < childNodes.getLength(); y++) {
                     if (childNodes.item(y).getNodeType() == Node.ELEMENT_NODE) {
                         if ("USER_NAME".equals(childNodes.item(y).getNodeName())) {
-                            //ÓÃ»§µÄÃû³Æ
-                            Log.i(Config.DEBUG, "»ñÈ¡µ½µÄÃû³Æ" + childNodes.item(y).getFirstChild()
+                            //ç”¨æˆ·çš„åç§°
+                            Log.i(Config.DEBUG, "è·å–åˆ°çš„åç§°" + childNodes.item(y).getFirstChild()
                                     .getNodeValue());
                             xmlUserAddr.setUSER_NAME(childNodes.item(y).getFirstChild()
                                     .getNodeValue());
                         } else if ("USER_TEL".equals(childNodes.item(y).getNodeName())) {
-                            Log.i(Config.DEBUG, "»ñÈ¡µ½µÄµç»°" + childNodes.item(y).getFirstChild()
+                            Log.i(Config.DEBUG, "è·å–åˆ°çš„ç”µè¯" + childNodes.item(y).getFirstChild()
                                     .getNodeValue());
                             xmlUserAddr.setUSER_TEL(childNodes.item(y).getFirstChild()
                                     .getNodeValue());
                         } else if ("USER_ADDR".equals(childNodes.item(y).getNodeName())) {
-                            Log.i(Config.DEBUG, "»ñÈ¡µ½µÄµØÖ·" + childNodes.item(y).getFirstChild()
+                            Log.i(Config.DEBUG, "è·å–åˆ°çš„åœ°å€" + childNodes.item(y).getFirstChild()
                                     .getNodeValue());
                             xmlUserAddr.setUSER_ADDR(childNodes.item(y).getFirstChild()
                                     .getNodeValue());
                         } else if ("PHYSICS_ADDR".equals(childNodes.item(y).getNodeName())) {
-                            Log.i(Config.DEBUG, "»ñÈ¡µ½µÄÎïÀíµØÖ·" + childNodes.item(y).getFirstChild()
+                            Log.i(Config.DEBUG, "è·å–åˆ°çš„ç‰©ç†åœ°å€" + childNodes.item(y).getFirstChild()
                                     .getNodeValue());
                             xmlUserAddr.setPHYSICS_ADDR(childNodes.item(y).getFirstChild()
                                     .getNodeValue());
                         } else if ("ADDR_IN".equals(childNodes.item(y).getNodeName())) {
-                            Log.i(Config.DEBUG, "»ñÈ¡µ½µÄµØÖ·ËùÊô" + childNodes.item(y).getFirstChild()
+                            Log.i(Config.DEBUG, "è·å–åˆ°çš„åœ°å€æ‰€å±" + childNodes.item(y).getFirstChild()
                                     .getNodeValue());
                             xmlUserAddr.setADDR_IN(childNodes.item(y).getFirstChild()
                                     .getNodeValue());
                         } else if ("USER_SEX".equals(childNodes.item(y).getNodeName())) {
-                            Log.i(Config.DEBUG, "»ñÈ¡µ½µÄÓÃ»§µÄĞÔ±ğ" + childNodes.item(y).getFirstChild()
+                            Log.i(Config.DEBUG, "è·å–åˆ°çš„ç”¨æˆ·çš„æ€§åˆ«" + childNodes.item(y).getFirstChild()
                                     .getNodeValue());
                             xmlUserAddr.setUSER_SEX(childNodes.item(y).getFirstChild()
                                     .getNodeValue());
                         } else if ("USER_YEAR".equals(childNodes.item(y).getNodeName())) {
-                            Log.i(Config.DEBUG, "»ñÈ¡µ½µÄÓÃ»§µÄÄêÁä" + childNodes.item(y).getFirstChild()
+                            Log.i(Config.DEBUG, "è·å–åˆ°çš„ç”¨æˆ·çš„å¹´é¾„" + childNodes.item(y).getFirstChild()
                                     .getNodeValue());
                             xmlUserAddr.setUSER_YEAR(childNodes.item(y).getFirstChild()
                                     .getNodeValue());
                         } else if ("DEFAULT_ADDR".equals(childNodes.item(y).getNodeName())) {
-                            Log.i(Config.DEBUG, "»ñÈ¡µ½ÊÇ·ñÄ¬ÈÏµØÖ·" + childNodes.item(y).getFirstChild()
+                            Log.i(Config.DEBUG, "è·å–åˆ°æ˜¯å¦é»˜è®¤åœ°å€" + childNodes.item(y).getFirstChild()
                                     .getNodeValue());
                             xmlUserAddr.setDEFAULT_ADDR(childNodes.item(y).getFirstChild()
                                     .getNodeValue());
@@ -457,69 +459,69 @@ public class Tools {
 
 
     /**
-     * ÅĞ¶ÏÊÇ·ñ»ñÈ¡µ½È¨ÏŞ
+     * åˆ¤æ–­æ˜¯å¦è·å–åˆ°æƒé™
      *
      * @param mContext
-     * @param permission Çåµ¥ÎÄ¼şÖĞµÄÈ¨ÏŞ
+     * @param permission æ¸…å•æ–‡ä»¶ä¸­çš„æƒé™
      * @return
      */
     public static boolean isPermission(Context mContext, String permission) {
         if (ContextCompat.checkSelfPermission(mContext, permission) != PackageManager
                 .PERMISSION_DENIED) {
-            //»ñÈ¡µ½È¨ÏŞ
+            //è·å–åˆ°æƒé™
             return true;
         } else {
-            //Ã»ÓĞ»ñÈ¡µ½È¨ÏŞ
+            //æ²¡æœ‰è·å–åˆ°æƒé™
             return false;
         }
     }
 
 
     /**
-     * ÉèÖÃÒ»¸ö±³¾°ÑùÊ½
+     * è®¾ç½®ä¸€ä¸ªèƒŒæ™¯æ ·å¼
      *
-     * @param width           ÏßÌõµÄ¿í¶È
-     * @param StockColor      ÏßÌõµÄÑÕÉ«
-     * @param backgroundColor ±³¾°µÄÑÕÉ«
-     * @param radius          ½Ç¶È
+     * @param width           çº¿æ¡çš„å®½åº¦
+     * @param StockColor      çº¿æ¡çš„é¢œè‰²
+     * @param backgroundColor èƒŒæ™¯çš„é¢œè‰²
+     * @param radius          è§’åº¦
      * @return GradientDrawable
      */
 
     public static GradientDrawable CreateDrawable(int width, String StockColor, String
             backgroundColor, int radius) {
         GradientDrawable gradientDrawable = new GradientDrawable();
-        gradientDrawable.setColor(Color.parseColor(backgroundColor));//ÉèÖÃ±³¾°
-        gradientDrawable.setStroke(width, Color.parseColor(StockColor));//ÉèÖÃÏßÌõµÄ¿í¶ÈºÍÑÕÉ«
+        gradientDrawable.setColor(Color.parseColor(backgroundColor));//è®¾ç½®èƒŒæ™¯
+        gradientDrawable.setStroke(width, Color.parseColor(StockColor));//è®¾ç½®çº¿æ¡çš„å®½åº¦å’Œé¢œè‰²
         gradientDrawable.setCornerRadius(radius);
         return gradientDrawable;
     }
 
     /**
-     * ²¦´òµç»°
+     * æ‹¨æ‰“ç”µè¯
      *
-     * @param mContext ÉÏÏÂÎÄ
-     * @param phone    µç»°ºÅÂë
+     * @param mContext ä¸Šä¸‹æ–‡
+     * @param phone    ç”µè¯å·ç 
      */
 
     public static void callPhone(Context mContext, String phone) {
         if (!TextUtils.isEmpty(phone)) {
-            Log.i(Config.DEBUG, "Tools.java[+]Òª²¦´òµÄµç»°Îª:" + phone);
+            Log.i(Config.DEBUG, "Tools.java[+]è¦æ‹¨æ‰“çš„ç”µè¯ä¸º:" + phone);
             Intent i = new Intent(Intent.ACTION_CALL);
             Uri uri = Uri.parse("tel:" + phone);
             i.setData(uri);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(i);
         } else {
-            Toast.makeText(mContext, "ÊµÔÚ²»ºÃÒâË¼,¿Í·şÈËÔ±ÔİÊ±²»·½±ã½Óµç»°", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "å®åœ¨ä¸å¥½æ„æ€,å®¢æœäººå‘˜æš‚æ—¶ä¸æ–¹ä¾¿æ¥ç”µè¯", Toast.LENGTH_SHORT).show();
         }
 
     }
 
     /**
-     * ¶¯Ì¬ÉêÇëÈ¨ÏŞ
+     * åŠ¨æ€ç”³è¯·æƒé™
      *
-     * @param mContext   ÉÏÏÂÎÄ
-     * @param permission È¨ÏŞÃû³Æ
+     * @param mContext   ä¸Šä¸‹æ–‡
+     * @param permission æƒé™åç§°
      */
     public static void getPermission(Context mContext, String permission) {
         ActivityCompat.requestPermissions((Activity) mContext, new String[]{permission}, 1);
@@ -527,7 +529,7 @@ public class Tools {
 
 
     /**
-     * ·µ»Ø¿Í·şÈËÔ±µÄÊÖ»úºÅÂë
+     * è¿”å›å®¢æœäººå‘˜çš„æ‰‹æœºå·ç 
      *
      * @return
      */
@@ -537,7 +539,7 @@ public class Tools {
 
 
     /**
-     * °ÑÍ¼Æ¬¼ôÇĞ³ÉÔ²½Ç
+     * æŠŠå›¾ç‰‡å‰ªåˆ‡æˆåœ†è§’
      *
      * @return
      */
@@ -561,17 +563,17 @@ public class Tools {
 
 
     /**
-     * Í¼Æ¬Ëõ·Å[Ê§ÕæÑÏÖØ]
+     * å›¾ç‰‡ç¼©æ”¾[å¤±çœŸä¸¥é‡]
      *
      * @return
      */
     public static Bitmap zoomImg(Context mContext, Bitmap bt, int _height, int _width) {
-        int height = bt.getHeight();/*»ñÈ¡Ô­Ê¼µÄ¸ß¶È*/
+        int height = bt.getHeight();/*è·å–åŸå§‹çš„é«˜åº¦*/
         Log.i(Config.DEBUG, "height" + bt.getHeight());
-        int width = bt.getWidth();/*»ñÈ¡Ô­Ê¼µÄ¿í¶È*/
+        int width = bt.getWidth();/*è·å–åŸå§‹çš„å®½åº¦*/
         Log.i(Config.DEBUG, "widht" + bt.getWidth());
 
-        /*¼ÆËãËõ·Å±ÈÀı*/
+        /*è®¡ç®—ç¼©æ”¾æ¯”ä¾‹*/
         float _sWidth = 0, _sHeight = 0;
 
         if (height > _height && width > _width) {
@@ -588,7 +590,7 @@ public class Tools {
 
 
     /**
-     * ±£´æÎÄ¼ş
+     * ä¿å­˜æ–‡ä»¶
      *
      * @param key
      * @param bitmap
@@ -599,7 +601,7 @@ public class Tools {
 
 
     /**
-     * »ñÈ¡Ê£ÓàÄÚ´æ ×î´óÄÚ´æ ·ÖÅäÄÚ´æ
+     * è·å–å‰©ä½™å†…å­˜ æœ€å¤§å†…å­˜ åˆ†é…å†…å­˜
      *
      * @param onMemorySize
      * @param mContext
@@ -614,7 +616,7 @@ public class Tools {
     }
 
     /**
-     * ´´½¨Ò»¸ö²¨ĞÎÏÔÊ¾µÄ¶¯»­
+     * åˆ›å»ºä¸€ä¸ªæ³¢å½¢æ˜¾ç¤ºçš„åŠ¨ç”»
      *
      * @param view
      * @param time
@@ -633,7 +635,7 @@ public class Tools {
     }
 
     /**
-     * ½«ÎÄ±¾±ä³ÉTextView
+     * å°†æ–‡æœ¬å˜æˆTextView
      *
      * @param text_list
      */
@@ -661,7 +663,7 @@ public class Tools {
     }
 
     /**
-     * ´´½¨Ò»¸ö¿ÉÒÔÈÃViewÖğ½¥ÏÔÊ¾¶¯»­
+     * åˆ›å»ºä¸€ä¸ªå¯ä»¥è®©Viewé€æ¸æ˜¾ç¤ºåŠ¨ç”»
      *
      * @param time
      * @param fill_after
@@ -676,7 +678,7 @@ public class Tools {
 
 
     /**
-     * ´´½¨Ò»¸ö¿ÉÒÔÈÃViewÖğ½¥ÏûÊ§µÄ¶¯»­
+     * åˆ›å»ºä¸€ä¸ªå¯ä»¥è®©Viewé€æ¸æ¶ˆå¤±çš„åŠ¨ç”»
      *
      * @param time
      * @param fill_after
@@ -688,4 +690,48 @@ public class Tools {
         alphaAnimation.setFillAfter(fill_after);
         return alphaAnimation;
     }
+
+
+    /**
+     * è®¡ç®—è¶…æ—¶å¹¿å‘Šçš„é«˜åº¦
+     *
+     * @param metrics
+     * @return
+     */
+    public static int getCount_downAdvert(DisplayMetrics metrics) {
+        return metrics.heightPixels * 8 / 48;
+    }
+
+
+    /**
+     * è®¾ç½®ä¸­çº¿
+     *
+     * @param tv
+     */
+    public static void setMidcourtLine(TextView tv) {
+        tv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+    }
+
+
+    /**
+     * æ¸…ç©ºä¸­çº¿
+     *
+     * @param tv
+     */
+    public static void clearMidcourtLine(TextView tv) {
+        tv.getPaint().setFlags(0);
+
+    }
+
+
+    /**
+     * è·å–æŒ‡å®šèŒƒå›´çš„æ•°å­—
+     * @param min æœ€å°çš„æ•°å­—
+     * @param max æœ€å¤§çš„èŒƒå›´
+     * @return
+     */
+    public static int getRandom(int min, int max) {
+        return (int) (Math.random() * (max - min) + min);
+    }
+
 }

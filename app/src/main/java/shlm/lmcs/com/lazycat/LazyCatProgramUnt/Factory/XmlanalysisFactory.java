@@ -13,38 +13,38 @@ import java.io.InputStream;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 
 /**
- * XML½âÎö¹¤³§
+ * XMLè§£æå·¥å‚
  */
 @SuppressLint("LongLogTag")
 public class XmlanalysisFactory {
     private InputStream is;
 
     public XmlanalysisFactory(String _Xmldata) {
-        is = new ByteArrayInputStream(_Xmldata.getBytes());/*ÖØĞÂ×ª»»ÎªInputStream*/
+        is = new ByteArrayInputStream(_Xmldata.getBytes());/*é‡æ–°è½¬æ¢ä¸ºInputStream*/
     }
 
     /**
-     * ¿ªÊ¼½âÎö
+     * å¼€å§‹è§£æ
      */
     public void Startanalysis(XmlanalysisInterface _XmlanalysisInterface) {
         if (_XmlanalysisInterface != null) {
-            XmlPullParser pullParser = Xml.newPullParser();//µÃµ½½âÎöÆ÷
+            XmlPullParser pullParser = Xml.newPullParser();//å¾—åˆ°è§£æå™¨
             if (is != null) {
                 try {
                     pullParser.setInput(is, "UTF-8");
-                    /*»ñÈ¡ÊÂ¼şÀàĞÍ*/
+                    /*è·å–äº‹ä»¶ç±»å‹*/
                     int eventType = pullParser.getEventType();
                     while (eventType != XmlPullParser.END_DOCUMENT) {
                         switch (eventType) {
                             case XmlPullParser.START_DOCUMENT:
-                                _XmlanalysisInterface.onStartDocument();/*ÎÄµµ¿ªÊ¼µÄ´¦ÀíÊÂ¼ş*/
+                                _XmlanalysisInterface.onStartDocument();/*æ–‡æ¡£å¼€å§‹çš„å¤„ç†äº‹ä»¶*/
                                 break;
                             case XmlPullParser.START_TAG:
                                 _XmlanalysisInterface.onStartTag(pullParser.getName(),
                                         pullParser, 0);
                                 break;
                             case XmlPullParser.END_TAG:
-                                _XmlanalysisInterface.onEndTag();/*½áÊø±êÇ©*/
+                                _XmlanalysisInterface.onEndTag();/*ç»“æŸæ ‡ç­¾*/
                                 break;
                         }
                         eventType = pullParser.next();
@@ -54,30 +54,30 @@ public class XmlanalysisFactory {
                         }
                     }
                 } catch (Exception e) {
-                    Log.e(Config.DEBUG, "XmlanalysisFactory.java[+]½âÎöÊ§°Ü" + e.getMessage());
+                    Log.e(Config.DEBUG, "XmlanalysisFactory.java[+]è§£æå¤±è´¥" + e.getMessage());
                     _XmlanalysisInterface.onFaile();
                     e.printStackTrace();
                 }
             }
 
         } else {
-            Log.e(Config.DEBUG, "XmlanalysisFactory.java[+]Ã»ÓĞ¼àÌıÊÂ¼ş");
+            Log.e(Config.DEBUG, "XmlanalysisFactory.java[+]æ²¡æœ‰ç›‘å¬äº‹ä»¶");
         }
     }
 
     /**
-     * ¶¨ÒåÁ½¸ö½Ó¿Ú ¹ØÓÚ½âÎö³É¹¦ºÍ½âÎöÊ§°Ü
+     * å®šä¹‰ä¸¤ä¸ªæ¥å£ å…³äºè§£ææˆåŠŸå’Œè§£æå¤±è´¥
      */
 
     public interface XmlanalysisInterface {
         void onFaile();
 
-        void onStartDocument();//ÎÄµµ¿ªÊ¼
+        void onStartDocument();//æ–‡æ¡£å¼€å§‹
 
-        void onStartTag(String tag, XmlPullParser pullParser, Integer id);//¿ªÊ¼½âÎö½Úµã
+        void onStartTag(String tag, XmlPullParser pullParser, Integer id);//å¼€å§‹è§£æèŠ‚ç‚¹
 
-        void onEndTag();//½áÊø½Úµã
+        void onEndTag();//ç»“æŸèŠ‚ç‚¹
 
-        void onEndDocument();//ÎÄµµ½áÊø»Øµ÷·½·¨
+        void onEndDocument();//æ–‡æ¡£ç»“æŸå›è°ƒæ–¹æ³•
     }
 }

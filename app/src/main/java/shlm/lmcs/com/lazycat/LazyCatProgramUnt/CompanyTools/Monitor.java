@@ -2,13 +2,13 @@ package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools;
 
 
 /**
- * ×ó±ßÈí¼ş¹«Ë¾¼àÊÓÆ÷
+ * å·¦è¾¹è½¯ä»¶å…¬å¸ç›‘è§†å™¨
  */
 public class Monitor {
 
 
     /**
-     * ¸üĞÂÒ»Ìõ´íÎóĞÅÏ¢
+     * æ›´æ–°ä¸€æ¡é”™è¯¯ä¿¡æ¯
      */
     public static void _updateErrorMessage() {
 
@@ -16,21 +16,21 @@ public class Monitor {
 
 
     /**
-     * ¸üĞÂÒ»ÌõĞĞÎªĞÅÏ¢
+     * æ›´æ–°ä¸€æ¡è¡Œä¸ºä¿¡æ¯
      */
     public static void _updateBehaviodMessage() {
 
     }
 
     /**
-     * ÏµÍ³ĞÅÏ¢
+     * ç³»ç»Ÿä¿¡æ¯
      */
     public static void _updateSystemMessage() {
 
     }
 
     /**
-     * ¸üĞÂÒ»Ìõ³£¹æµÄĞÅÏ¢
+     * æ›´æ–°ä¸€æ¡å¸¸è§„çš„ä¿¡æ¯
      */
     public static void _updateConventionMessage() {
 
@@ -38,7 +38,7 @@ public class Monitor {
 
 
     /**
-     * ÖØ´óµÄÂ©¶´ĞÅÏ¢[·ÇÌØÊâ²»Ê¹ÓÃ]
+     * é‡å¤§çš„æ¼æ´ä¿¡æ¯[éç‰¹æ®Šä¸ä½¿ç”¨]
      */
     public static void _updateBugMessage() {
 

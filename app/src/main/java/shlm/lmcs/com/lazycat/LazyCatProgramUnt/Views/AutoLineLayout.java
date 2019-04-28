@@ -25,15 +25,15 @@ public class AutoLineLayout extends ViewGroup {
     }
 
     private void init() {
-        final int count = getChildCount();/*È¡µÃ×ÜÊı*/
+        final int count = getChildCount();/*å–å¾—æ€»æ•°*/
 
-        final int lineWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();/*×ÜµÄ¿í¶È*/
+        final int lineWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();/*æ€»çš„å®½åº¦*/
 
-        int paddingTop = getPaddingTop();/*¾àÀëÍ·²¿*/
+        int paddingTop = getPaddingTop();/*è·ç¦»å¤´éƒ¨*/
         int childTop = 0;
-        int childLeft = getPaddingLeft();/*¾àÀë×ó±ß*/
+        int childLeft = getPaddingLeft();/*è·ç¦»å·¦è¾¹*/
 
-        int availableLineWidh = lineWidth;/*±£´æ¿í¶È*/
+        int availableLineWidh = lineWidth;/*ä¿å­˜å®½åº¦*/
 
         int maxLineHight = 0;
 
@@ -42,11 +42,11 @@ public class AutoLineLayout extends ViewGroup {
             if (child == null) {
                 continue;
             } else if (child.getVisibility() != GONE) {
-                final int childWidth = child.getMeasuredWidth();/*»ñÈ¡×ÓÀàµÄ¿í¶È*/
-                final int childHeight = child.getMeasuredHeight();/*»ñÈ¡×ÓÀàµÄ¸ß¶È*/
+                final int childWidth = child.getMeasuredWidth();/*è·å–å­ç±»çš„å®½åº¦*/
+                final int childHeight = child.getMeasuredHeight();/*è·å–å­ç±»çš„é«˜åº¦*/
 
                 if (availableLineWidh < childWidth) {
-                    availableLineWidh = lineWidth;//Ì«³¤ÁË
+                    availableLineWidh = lineWidth;//å¤ªé•¿äº†
                     paddingTop = paddingTop + maxLineHight;
                     childLeft = getPaddingLeft();
                     maxLineHight = 0;

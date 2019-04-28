@@ -26,15 +26,15 @@ public class lazyCatLogAct extends LazyCatAct {
             @Override
             public void handleMessage(Message msg) {
                 //refreshDialog.dismiss();
-                //½øÈëÖ÷½çÃæ
+                //è¿›å…¥ä¸»ç•Œé¢
                 LazyCatActStartActivity(MainAct.class, true);
                 super.handleMessage(msg);
             }
         };
         setContentView(R.layout.activity_lazy_cat_log);
-        /*ÉèÖÃµ¼º½À¸Í¸Ã÷*/
+        /*è®¾ç½®å¯¼èˆªæ é€æ˜*/
         setHideNav();
-        //³õÊ¼»¯ÉÔµÈµÄ±í¸ñ  ÅĞ¶ÏÍøÂçÊÇ·ñÒª¸üĞÂÎÄ¼ş
+        //åˆå§‹åŒ–ç¨ç­‰çš„è¡¨æ ¼  åˆ¤æ–­ç½‘ç»œæ˜¯å¦è¦æ›´æ–°æ–‡ä»¶
         WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
         wait_itme_dialogpage.setView(R.layout.item_wait);
         wait_itme_dialogpage.setImg(R.id.item_wait_img);

@@ -37,15 +37,15 @@ public class WaitDialog {
                 this._wait_itme_dialogpage = wait_itme_dialogpage;
                 setContentView(this._wait_itme_dialogpage.getView());
             } else {
-                Log.e(Config.DEBUG, "WaitDialogRefreshDilog[+]Ã»ÓĞ³õÊ¼»¯±í¸ñ");
+                Log.e(Config.DEBUG, "WaitDialogRefreshDilog[+]æ²¡æœ‰åˆå§‹åŒ–è¡¨æ ¼");
             }
         }
 
         /**
-         * ÅäÖÃÏÔÊ¾µÄdialog
+         * é…ç½®æ˜¾ç¤ºçš„dialog
          *
-         * @param msg      ÌáÊ¾µÄĞÅÏ¢
-         * @param canClose ÊÇ·ñ¿ÉÒÔ¹Ø±Õ
+         * @param msg      æç¤ºçš„ä¿¡æ¯
+         * @param canClose æ˜¯å¦å¯ä»¥å…³é—­
          */
         @SuppressLint("LongLogTag")
         public void showRefreshDialog(String msg, boolean canClose) {
@@ -53,7 +53,7 @@ public class WaitDialog {
             WindowManager.LayoutParams params = wd.getAttributes();
             ImageView img = findViewById(this._wait_itme_dialogpage.getImg());
             if (img == null) {
-                Log.e(Config.DEBUG, "ÎªNULL");
+                Log.e(Config.DEBUG, "ä¸ºNULL");
                 Log.e(Config.DEBUG, "imageid" + this._wait_itme_dialogpage.getImg());
                 return;
             }
@@ -61,10 +61,10 @@ public class WaitDialog {
                     .RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5F);
             rotateAnimation.setDuration(1000);
             rotateAnimation.setRepeatCount(-1);
-            img.setAnimation(rotateAnimation);//¿ªÊ¼Ğı×ª
+            img.setAnimation(rotateAnimation);//å¼€å§‹æ—‹è½¬
             TextView tv = findViewById(_wait_itme_dialogpage.getTitle());
             if (tv == null) {
-                //Ã»ÓĞ±êÌâ ¾Í²»ÒªÉèÖÃ
+                //æ²¡æœ‰æ ‡é¢˜ å°±ä¸è¦è®¾ç½®
             } else {
                 tv.setText(msg.toString().trim());
 

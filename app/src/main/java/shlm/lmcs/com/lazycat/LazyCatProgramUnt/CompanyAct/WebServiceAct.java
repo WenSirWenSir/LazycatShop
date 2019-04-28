@@ -19,7 +19,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 
 
 /**
- * ÓÃÀ´¹ÜÀíÏÔÊ¾UrlµÄView½çÃæ
+ * ç”¨æ¥ç®¡ç†æ˜¾ç¤ºUrlçš„Viewç•Œé¢
  * <p>
  */
 public class WebServiceAct extends LazyCatAct {
@@ -32,21 +32,21 @@ public class WebServiceAct extends LazyCatAct {
         LinearLayout item = new LinearLayout(getApplicationContext());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
                 .MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        item.setLayoutParams(params);//ÉèÖÃ²¼¾Ö
+        item.setLayoutParams(params);//è®¾ç½®å¸ƒå±€
         item.setBackgroundColor(Color.parseColor("#ffffff"));
-        //Ôö¼ÓWebView²¼¾Ö
+        //å¢åŠ WebViewå¸ƒå±€
         _WebView = new WebView(item.getContext());
         _WebView.addJavascriptInterface(new WebMonitor(getApplicationContext(),this), "webmonitor");
         item.addView(_WebView);
         setContentView(item);
-        //»ñÈ¡¹¹ÔìÊı¾İĞÅÏ¢
+        //è·å–æ„é€ æ•°æ®ä¿¡æ¯
         WEB_VALUES_ACT web_values_act = (WEB_VALUES_ACT) getIntent().getSerializableExtra
                 (WINDOW_PAGE.RESULT_WEBVIEW);
         if (web_values_act != null) {
-            Log.i(Config.DEBUG, "WebServiceAct.java[+]»ñÈ¡µ½µÄ¹¹ÔìµÄURL:" + web_values_act.get_url());
+            Log.i(Config.DEBUG, "WebServiceAct.java[+]è·å–åˆ°çš„æ„é€ çš„URL:" + web_values_act.get_url());
             _WebView.loadUrl(web_values_act.get_url());
-            WebSettings webSettings = _WebView.getSettings();//»ñÈ¡ÅäÖÃ
-            webSettings.setJavaScriptEnabled(true);//¶ÔJAVAµÄÖ§³Ö
+            WebSettings webSettings = _WebView.getSettings();//è·å–é…ç½®
+            webSettings.setJavaScriptEnabled(true);//å¯¹JAVAçš„æ”¯æŒ
             _WebView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String request) {
@@ -67,7 +67,7 @@ public class WebServiceAct extends LazyCatAct {
             });
         } else {
             finish();
-            Log.e(Config.DEBUG, "WebServiceAct.java[+] »ñÈ¡WEB_VALUES_ACTÎªnull");
+            Log.e(Config.DEBUG, "WebServiceAct.java[+] è·å–WEB_VALUES_ACTä¸ºnull");
         }
         super.onCreate(savedInstanceState);
 
@@ -76,8 +76,8 @@ public class WebServiceAct extends LazyCatAct {
     @Override
     protected void onDestroy() {
         if (_WebView != null) {
-            _WebView.clearCache(true);//Çå¿Õ»º´æ
-            _WebView.clearHistory();//Çå¿ÕÀúÊ·
+            _WebView.clearCache(true);//æ¸…ç©ºç¼“å­˜
+            _WebView.clearHistory();//æ¸…ç©ºå†å²
             _WebView = null;
             System.gc();
         }

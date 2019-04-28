@@ -2,7 +2,7 @@ package shlm.lmcs.com.lazycat.LazyShopMonitor;
 
 
 /**
- * ¼Ì³Ð¸¸ÀàµÄ·½·¨
+ * ç»§æ‰¿çˆ¶ç±»çš„æ–¹æ³•
  */
 public class Monitor {
     private int tag;

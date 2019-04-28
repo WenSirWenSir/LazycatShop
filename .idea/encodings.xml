@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyAct/LazyCatAct.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyAct/WebServiceAct.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyAct/ZzomImage.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyClass/LazyCatFragment.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyClass/WebMonitor.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyAct/LazyCatAct.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyAct/WebServiceAct.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyAct/ZzomImage.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyClass/LazyCatFragment.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyClass/WebMonitor.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyPage/LOAD_IMAGEPAGE.java" charset="GB2312" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyPage/USER_KEY_PAGE.java" charset="GB2312" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyPage/WAIT_ITME_DIALOGPAGE.java" charset="GB2312" />
@@ -13,36 +13,36 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyPage/WINDOW_PAGE.java" charset="GB2312" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyPage/XMLUserAddr.java" charset="GB2312" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyPage/XML_PAGE.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/Monitor.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/Usertools.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/XmlBuilder.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Config.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/ThreadFactory.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/WaitDialog.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/XmlTagValuesFactory.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/XmlanalysisFactory.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Interface/ProgramInterface.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/InterfacePage.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/JsonEndata.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Net.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Tools.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/UserMsg.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/AutoLineLayout.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/LeftCompanyPorgramListView.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/PullUptoLoadMore.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/RefreshScrollView.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/ScrollViewBiggerPhoto.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/LoginAct.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/MainAct.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchAct.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/ShowshopOffice.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopMonitor/BrandSingMonitor.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopMonitor/Monitor.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopMonitor/NewShopinMonitor.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopPage/LocalShopPage.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopTools/LocalProgramTools.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/lazyCatLogAct.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/Monitor.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/Usertools.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/XmlBuilder.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Config.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/ThreadFactory.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/WaitDialog.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/XmlTagValuesFactory.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/XmlanalysisFactory.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Interface/ProgramInterface.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/InterfacePage.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/JsonEndata.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Net.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Tools.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/UserMsg.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/AutoLineLayout.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/LeftCompanyPorgramListView.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/PullUptoLoadMore.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/RefreshScrollView.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/ScrollViewBiggerPhoto.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/LoginAct.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/MainAct.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchAct.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/ShowshopOffice.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopMonitor/BrandSingMonitor.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopMonitor/Monitor.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopMonitor/NewShopinMonitor.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopPage/LocalShopPage.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopTools/LocalProgramTools.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/lazyCatLogAct.java" charset="UTF-8" />
     <file url="file://$USER_HOME$/Downloads/zzbj-5/zzbj/src/com/com/zzbj/MainActivity.java" charset="GB2312" />
     <file url="PROJECT" charset="UTF-8" />
   </component>

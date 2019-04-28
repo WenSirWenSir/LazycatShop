@@ -38,15 +38,15 @@ public class MainAct extends LazyCatAct {
         setTransparentBar();
         setBackStatic(true);
 
-        //³¢ÊÔ¼ÓÔØFragment
+        //å°è¯•åŠ è½½Fragment
         ft = this.getFragmentManager().beginTransaction();
         mainfrg = new Mainfrg();
         ft.add(R.id.activity_main_Framelayout, mainfrg);
         ft.commit();
-        //ÕÒÑ°¶ÔÓÚµÄIDºÅÂë
-        btn_main = findViewById(R.id.activity_main_btn_IcoMain);//Ö÷½çÃæ
-        btn_delivery = findViewById(R.id.activity_main_btn_IcoDelivery);//ÅäËÍ½çÃæ
-        btn_usercenter = findViewById(R.id.activity_main_btn_IcoUserCenter);//¸öÈËÖĞĞÄ
+        //æ‰¾å¯»å¯¹äºçš„IDå·ç 
+        btn_main = findViewById(R.id.activity_main_btn_IcoMain);//ä¸»ç•Œé¢
+        btn_delivery = findViewById(R.id.activity_main_btn_IcoDelivery);//é…é€ç•Œé¢
+        btn_usercenter = findViewById(R.id.activity_main_btn_IcoUserCenter);//ä¸ªäººä¸­å¿ƒ
         btn_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,11 +87,11 @@ public class MainAct extends LazyCatAct {
 
 
     /**
-     * Çå¿ÕËùÓĞµÄµ¼º½µÄÑÕÉ«Öµ
+     * æ¸…ç©ºæ‰€æœ‰çš„å¯¼èˆªçš„é¢œè‰²å€¼
      */
     @SuppressLint("ResourceType")
     private void ClearallIcoBackground() {
-        ImageView btn_mainImg = (ImageView) btn_main.getChildAt(0);//µÚ0ºÅµÄÎ»ÖÃ¾ÍÊÇImage
+        ImageView btn_mainImg = (ImageView) btn_main.getChildAt(0);//ç¬¬0å·çš„ä½ç½®å°±æ˜¯Image
         TextView btn_mainTv = (TextView) btn_main.getChildAt(1);
         btn_mainTv.setTextColor(Color.parseColor("#666666"));
         ImageView btn_deliveryImg = (ImageView) btn_delivery.getChildAt(0);
@@ -100,17 +100,17 @@ public class MainAct extends LazyCatAct {
         ImageView btn_usercenterImg = (ImageView) btn_usercenter.getChildAt(0);
         TextView btn_usercenterTv = (TextView) btn_usercenter.getChildAt(1);
         btn_usercenterTv.setTextColor(Color.parseColor("#666666"));
-        //ÉèÖÃÄ¬ÈÏµÄµÚÒ»¸öµ¼º½µÄÑÕÉ«
+        //è®¾ç½®é»˜è®¤çš„ç¬¬ä¸€ä¸ªå¯¼èˆªçš„é¢œè‰²
         VectorDrawableCompat btn_mainImgVD = VectorDrawableCompat.create(getResources(), R
                 .drawable.ico_btn_main, getTheme());
         btn_mainImgVD.setTint(Color.parseColor("#666666"));
         btn_mainImg.setImageDrawable(btn_mainImgVD);
-        //ÉèÖÃÄ¬ÈÏµÄµÚ¶ş¸öµ¼º½µÄÑÕÉ«
+        //è®¾ç½®é»˜è®¤çš„ç¬¬äºŒä¸ªå¯¼èˆªçš„é¢œè‰²
         VectorDrawableCompat btn_deilveryImgVD = VectorDrawableCompat.create(getResources(), R
                 .drawable.ico_delivery, getTheme());
         btn_deilveryImgVD.setTint(Color.parseColor("#666666"));
         btn_deliveryImg.setImageDrawable(btn_deilveryImgVD);
-        //ÉèÖÃÄ¬ÈÏµÄµÚÈı¸öµ¼º½µÄÑÕÉ«
+        //è®¾ç½®é»˜è®¤çš„ç¬¬ä¸‰ä¸ªå¯¼èˆªçš„é¢œè‰²
         VectorDrawableCompat btn_usercenterImgVD = VectorDrawableCompat.create(getResources(), R
                 .drawable.ico_usercenter, getTheme());
         btn_usercenterImgVD.setTint(Color.parseColor("#666666"));
@@ -119,7 +119,7 @@ public class MainAct extends LazyCatAct {
 
     @SuppressLint("ResourceType")
     private void setIcoNavColor(RelativeLayout rl, int image, final android.animation.Animator animation) {
-        ImageView iv = (ImageView) rl.getChildAt(0);//µÚÒ»¸ö¾ÍÊÇÍ¼±ê
+        ImageView iv = (ImageView) rl.getChildAt(0);//ç¬¬ä¸€ä¸ªå°±æ˜¯å›¾æ ‡
         rl.post(new Runnable() {
             @Override
             public void run() {

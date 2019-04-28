@@ -13,7 +13,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 
 
 /**
- * ÉèÖÃÏÂÀ­µÄÊ±ºò¿Ø¼ş´ó
+ * è®¾ç½®ä¸‹æ‹‰çš„æ—¶å€™æ§ä»¶å¤§
  */
 public class ScrollViewBiggerPhoto extends ScrollView {
     private View img_body;
@@ -34,10 +34,10 @@ public class ScrollViewBiggerPhoto extends ScrollView {
 
     public void setImageHead(View _imgbody, DisplayMetrics _metrics) {
         this.img_body = _imgbody;
-        this.metrics = _metrics;//ÆÁÄ»¾ØÕó
-        Log.e(Config.DEBUG, "ScrollViewBiggerPhoto.java[+]ÆÁÄ»¿í¶È:" + this.metrics.widthPixels);
-        Log.e(Config.DEBUG, "ScrollViewBiggerPhoto.java[+]ÆÁÄ»¸ß¶È:" + this.metrics.heightPixels);
-        /*ÉèÖÃ¿Ø¼şµÄ¸ß¶ÈºÍ¿í¶È*/
+        this.metrics = _metrics;//å±å¹•çŸ©é˜µ
+        Log.e(Config.DEBUG, "ScrollViewBiggerPhoto.java[+]å±å¹•å®½åº¦:" + this.metrics.widthPixels);
+        Log.e(Config.DEBUG, "ScrollViewBiggerPhoto.java[+]å±å¹•é«˜åº¦:" + this.metrics.heightPixels);
+        /*è®¾ç½®æ§ä»¶çš„é«˜åº¦å’Œå®½åº¦*/
         ViewGroup.LayoutParams params = this.img_body.getLayoutParams();
         params.width = this.metrics.widthPixels;
         params.height = this.metrics.heightPixels * 8 / 16;
@@ -49,7 +49,7 @@ public class ScrollViewBiggerPhoto extends ScrollView {
         if (this.img_body != null) {
             params = this.img_body.getLayoutParams();
         } else {
-            Log.e(Config.DEBUG, "ScrollViewBiggerPhoto.java[+]Äú±ØĞëÉèÖÃÒ»¸ö¿Ø¼ş");
+            Log.e(Config.DEBUG, "ScrollViewBiggerPhoto.java[+]æ‚¨å¿…é¡»è®¾ç½®ä¸€ä¸ªæ§ä»¶");
 
         }
         switch (ev.getAction()) {
@@ -60,17 +60,17 @@ public class ScrollViewBiggerPhoto extends ScrollView {
                 myFirstMove = ev.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                /*ÅĞ¶ÏÊÇ·ñÔÚ¶¥²¿*/
+                /*åˆ¤æ–­æ˜¯å¦åœ¨é¡¶éƒ¨*/
                 if (getScrollY() == 0) {
-                    Log.e(Config.DEBUG, "ÔÚ¶¥²¿");
-                    /*¼ÇÂ¼Î»ÖÃ*/
-                    /*¼ÆËã¹ö¶¯¾àÀë*/
+                    Log.e(Config.DEBUG, "åœ¨é¡¶éƒ¨");
+                    /*è®°å½•ä½ç½®*/
+                    /*è®¡ç®—æ»šåŠ¨è·ç¦»*/
                     int distance = (int) ((ev.getY() - myFirstMove) * 0.6);
                     if (distance < 0) {
-                        /*²»ÄÜ·Å´ó*/
+                        /*ä¸èƒ½æ”¾å¤§*/
                         break;
                     }
-                    /*¿ªÊ¼´¦Àí·Å´ó*/
+                    /*å¼€å§‹å¤„ç†æ”¾å¤§*/
                     if (params != null) {
                         params.width = this.metrics.widthPixels + distance;
                         params.height = (this.metrics.heightPixels + distance) * 8 / 16;
@@ -88,7 +88,7 @@ public class ScrollViewBiggerPhoto extends ScrollView {
 
 
     /**
-     * Çå¿ÕImageViewµÄ·Å´óĞ§¹û
+     * æ¸…ç©ºImageViewçš„æ”¾å¤§æ•ˆæœ
      */
     private void ClearImage() {
         ViewGroup.LayoutParams params = this.img_body.getLayoutParams();

@@ -24,24 +24,24 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.R;
 
 /**
- * Ö÷½çÃæÆ·ÅÆ¹ÜÀíÕß
+ * ä¸»ç•Œé¢å“ç‰Œç®¡ç†è€…
  */
 @SuppressLint("LongLogTag")
 public class BrandSingMonitor extends Monitor {
     private View item;
     private Context mContext;
     private Boolean is;
-    public Boolean _Static;//ÊÇ·ñ¿ÉÒÔ¼ÓÔØĞÅÏ¢µÄ×´Ì¬
-    public Boolean Stop = false;//Íâ²¿µ÷ÓÃ ÊÇ·ñ¿ÉÒÔ½øĞĞ¼ÓÔØ²Ù×÷
-    public Boolean Runing = false;//Íâ²¿ÅĞ¶ÏÄÚ²¿ÊÇ·ñÔÚË¢ĞÂ²Ù×÷
+    public Boolean _Static;//æ˜¯å¦å¯ä»¥åŠ è½½ä¿¡æ¯çš„çŠ¶æ€
+    public Boolean Stop = false;//å¤–éƒ¨è°ƒç”¨ æ˜¯å¦å¯ä»¥è¿›è¡ŒåŠ è½½æ“ä½œ
+    public Boolean Runing = false;//å¤–éƒ¨åˆ¤æ–­å†…éƒ¨æ˜¯å¦åœ¨åˆ·æ–°æ“ä½œ
     private List<LOAD_IMAGEPAGE> load_imagepages = new ArrayList<LOAD_IMAGEPAGE>();
     private List<Runnable> RunnableList = null;
     private ProgramInterface programInterface;
-    public int SUCESS = 1023;/*Ã¿Ò»¸ö´¦ÀíµÄ¹ÜÀíÕß ÔÚ´¦ÀíÍê³ÉÖ®ºó ¾ÍÒª¸ø¶¨Õâ¸öÖµ*/
+    public int SUCESS = 1023;/*æ¯ä¸€ä¸ªå¤„ç†çš„ç®¡ç†è€… åœ¨å¤„ç†å®Œæˆä¹‹å å°±è¦ç»™å®šè¿™ä¸ªå€¼*/
 
 
     /**
-     * ÅĞ¶Ï×´Ì¬  ¼ÓÔØÍê³É »òÕß Ã»ÓĞ¼ÓÔØÍê³É
+     * åˆ¤æ–­çŠ¶æ€  åŠ è½½å®Œæˆ æˆ–è€… æ²¡æœ‰åŠ è½½å®Œæˆ
      *
      * @return
      */
@@ -50,22 +50,22 @@ public class BrandSingMonitor extends Monitor {
     }
 
     /**
-     * Á¢¼´Í£Ö¹¼ÓÔØ
+     * ç«‹å³åœæ­¢åŠ è½½
      */
     public void Stop() {
 
     }
 
     /**
-     * ÖØĞÂ¿ªÊ¼¼ÓÔØ
+     * é‡æ–°å¼€å§‹åŠ è½½
      */
     public void ReStart() {
 
-        /*ÅĞ¶ÏÏß³ÌÔªËØÊÇ·ñ»¹´æÔÚ*/
+        /*åˆ¤æ–­çº¿ç¨‹å…ƒç´ æ˜¯å¦è¿˜å­˜åœ¨*/
         if (RunnableList != null) {
-            /*Æô¶¯¹ÜÀí*/
+            /*å¯åŠ¨ç®¡ç†*/
         } else {
-            Start(programInterface);//ÖØĞÂÆô¶¯
+            Start(programInterface);//é‡æ–°å¯åŠ¨
         }
 
     }
@@ -74,7 +74,7 @@ public class BrandSingMonitor extends Monitor {
     public BrandSingMonitor(View _View, Context _Context) {
         this.item = _View;
         this.mContext = _Context;
-        //¿ªÊ¼×î»ù´¡µÄÕûÀí½çÃæ
+        //å¼€å§‹æœ€åŸºç¡€çš„æ•´ç†ç•Œé¢
         this.item.findViewById(R.id.assembly_fragment_main_singleAlphaTitle).setBackground(Tools
                 .CreateDrawable(1, "#000000", "#000000", 50));
         this.item.findViewById(R.id.assembly_fragment_main_singleShopabody).setBackground(Tools
@@ -86,7 +86,7 @@ public class BrandSingMonitor extends Monitor {
     }
 
     /**
-     * ¿ªÊ¼ÕûÀíÊÂÎñ
+     * å¼€å§‹æ•´ç†äº‹åŠ¡
      */
     public void Start(ProgramInterface _programInterface) {
         this.programInterface = _programInterface;
@@ -94,8 +94,8 @@ public class BrandSingMonitor extends Monitor {
                 Net.onVisitInterServiceListener() {
             @Override
             public void onSucess(String tOrgin) {
-                //ÈÃ×Óº¯ÊıÈ¥´¦ÀíXML·µ»ØµÄĞÅÏ¢
-                programInterface.onSucess("µ÷ÓÃ³É¹¦", 0);
+                //è®©å­å‡½æ•°å»å¤„ç†XMLè¿”å›çš„ä¿¡æ¯
+                programInterface.onSucess("è°ƒç”¨æˆåŠŸ", 0);
                 onXml(tOrgin);
             }
 
@@ -115,7 +115,7 @@ public class BrandSingMonitor extends Monitor {
 
     void onXml(String origin) {
 
-        //»ñÈ¡XML½âÎö
+        //è·å–XMLè§£æ
         XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(origin);
         xmlanalysisFactory.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
             @Override
@@ -124,13 +124,13 @@ public class BrandSingMonitor extends Monitor {
 
             @Override
             public void onStartDocument() {
-                //¿ªÊ¼½âÎöÎÄµµ
+                //å¼€å§‹è§£ææ–‡æ¡£
 
             }
 
             @Override
             public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
-                //¿ªÊ¼½âÎöÊı¾İ
+                //å¼€å§‹è§£ææ•°æ®
                 try {
                     if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion.key_back)) {
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setBack(pullParser.nextText());
@@ -147,7 +147,7 @@ public class BrandSingMonitor extends Monitor {
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setBig_img(pullParser
                                 .nextText());
                         /**
-                         * ÖØĞÂ¹¹ÔìÒ»¸öÅäÖÃÎÄ¼ş
+                         * é‡æ–°æ„é€ ä¸€ä¸ªé…ç½®æ–‡ä»¶
                          */
                         LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
                         load_imagepage.setTag("key_big_img");
@@ -155,13 +155,13 @@ public class BrandSingMonitor extends Monitor {
                                 .getBig_img());
                         ImageView img = item.findViewById(R.id.assembly_fragment_main_singleBigImg);
                         load_imagepage.setImg(img);
-                        load_imagepages.add(load_imagepage);//Ìí¼ÓÒ»¸öÔªËØ
+                        load_imagepages.add(load_imagepage);//æ·»åŠ ä¸€ä¸ªå…ƒç´ 
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_shop_a_img)) {
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_a_img(pullParser
                                 .nextText());
                         /**
-                         * ÖØĞÂ¹¹ÔìÒ»¸öÅäÖÃÎÄ¼ş
+                         * é‡æ–°æ„é€ ä¸€ä¸ªé…ç½®æ–‡ä»¶
                          */
                         LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
                         load_imagepage.setTag("key_shop_a_img");
@@ -170,14 +170,14 @@ public class BrandSingMonitor extends Monitor {
                         ImageView img = item.findViewById(R.id
                                 .assembly_fragment_main_singleShopaImage);
                         load_imagepage.setImg(img);
-                        load_imagepages.add(load_imagepage);//Ìí¼ÓÒ»¸öÔªËØ
+                        load_imagepages.add(load_imagepage);//æ·»åŠ ä¸€ä¸ªå…ƒç´ 
 
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_shop_b_img)) {
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_b_img(pullParser
                                 .nextText());
                         /**
-                         * ÖØĞÂ¹¹ÔìÒ»¸öÅäÖÃÎÄ¼ş
+                         * é‡æ–°æ„é€ ä¸€ä¸ªé…ç½®æ–‡ä»¶
                          */
                         LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
                         load_imagepage.setTag("key_shop_b_img");
@@ -186,13 +186,13 @@ public class BrandSingMonitor extends Monitor {
                         ImageView img = item.findViewById(R.id
                                 .assembly_fragment_main_singleShopbImage);
                         load_imagepage.setImg(img);
-                        load_imagepages.add(load_imagepage);//Ìí¼ÓÒ»¸öÔªËØ
+                        load_imagepages.add(load_imagepage);//æ·»åŠ ä¸€ä¸ªå…ƒç´ 
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_shop_c_img)) {
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_c_img(pullParser
                                 .nextText());
                         /**
-                         * ÖØĞÂ¹¹ÔìÒ»¸öÅäÖÃÎÄ¼ş
+                         * é‡æ–°æ„é€ ä¸€ä¸ªé…ç½®æ–‡ä»¶
                          */
                         LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
                         load_imagepage.setTag("key_shop_c_img");
@@ -201,7 +201,7 @@ public class BrandSingMonitor extends Monitor {
                         ImageView img = item.findViewById(R.id
                                 .assembly_fragment_main_singleShopcImage);
                         load_imagepage.setImg(img);
-                        load_imagepages.add(load_imagepage);//Ìí¼ÓÒ»¸öÔªËØ
+                        load_imagepages.add(load_imagepage);//æ·»åŠ ä¸€ä¸ªå…ƒç´ 
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_title_a)) {
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setTitle_a(pullParser
@@ -249,14 +249,14 @@ public class BrandSingMonitor extends Monitor {
 
             @Override
             public void onEndDocument() {
-                //¿ªÊ¼´¦Àí
-                Log.e(Config.DEBUG, "´¦Àíµ½µÄÔªËØµÄ¸öÊıÎª:" + load_imagepages.size());
+                //å¼€å§‹å¤„ç†
+                Log.e(Config.DEBUG, "å¤„ç†åˆ°çš„å…ƒç´ çš„ä¸ªæ•°ä¸º:" + load_imagepages.size());
                 if (Stop == true) {
-                    //²»×¼Ë¢ĞÂ
+                    //ä¸å‡†åˆ·æ–°
                 } else {
-                    Runing = true;//´ú±íÒÑ¾­ÔÚ´¦ÀíÁË
+                    Runing = true;//ä»£è¡¨å·²ç»åœ¨å¤„ç†äº†
                     /**
-                     * ´¦ÀíÎÄ×ÖĞÅÏ¢
+                     * å¤„ç†æ–‡å­—ä¿¡æ¯
                      */
                     TextView title_a = item.findViewById(R.id.assembly_fragment_main_singleTitlea);
                     TextView title_b = item.findViewById(R.id.assembly_fragment_main_singleTitleb);
@@ -269,7 +269,7 @@ public class BrandSingMonitor extends Monitor {
                     title_b.setText(XmlTagValuesFactory.XMLtagMainBrandPromotion.getTitle_b());
                     title_a.setText(XmlTagValuesFactory.XMLtagMainBrandPromotion.getTitle_a());
                     /**
-                     * ÉèÖÃÉÌÆ·µÄ±êÌâ
+                     * è®¾ç½®å•†å“çš„æ ‡é¢˜
                      */
                     shop_a_title.setText(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .getShop_a_title());
@@ -293,13 +293,13 @@ public class BrandSingMonitor extends Monitor {
                     }
                     threadFactory.doThread(RunnableList);
                     ImageView backImageView = item.findViewById(R.id
-                            .assembly_fragment_main_singleBack);//±³¾°
+                            .assembly_fragment_main_singleBack);//èƒŒæ™¯
 
-                    /*ÕÒµ½ËùÓĞµÄImageViewµÄ¿Ø¼ş*/
+                    /*æ‰¾åˆ°æ‰€æœ‰çš„ImageViewçš„æ§ä»¶*/
                     final ImageView back = item.findViewById(R.id
                             .assembly_fragment_main_singleBack);
                     /**
-                     * ¼ÓÔØ±³¾°Í¼Æ¬
+                     * åŠ è½½èƒŒæ™¯å›¾ç‰‡
                      */
 
                 }
@@ -310,7 +310,7 @@ public class BrandSingMonitor extends Monitor {
     }
 
     /**
-     * Ä£Äâ´¦ÀíxmlÊı¾İĞÅÏ¢
+     * æ¨¡æ‹Ÿå¤„ç†xmlæ•°æ®ä¿¡æ¯
      */
 
     class Page {

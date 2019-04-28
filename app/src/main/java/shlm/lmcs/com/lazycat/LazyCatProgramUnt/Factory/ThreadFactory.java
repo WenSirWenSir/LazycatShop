@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 
 /**
- * ¶àÏß³Ì´¦ÀíÀà
+ * å¤šçº¿ç¨‹å¤„ç†ç±»
  */
 public class ThreadFactory {
     private boolean can_load;
@@ -22,11 +22,11 @@ public class ThreadFactory {
     }
 
     /**
-     * Ê¹ÓÃ¶àÏß³Ì´¦ÀíÊÂÎñ
+     * ä½¿ç”¨å¤šçº¿ç¨‹å¤„ç†äº‹åŠ¡
      */
     public void doThread(List<Runnable> r_list) {
         Log.e(Config.DEBUG, "doThread");
-        //»ù±¾Ïß³Ì³Ø
+        //åŸºæœ¬çº¿ç¨‹æ± 
         threadPoolExecutor = new ThreadPoolExecutor(3, 5, 1, TimeUnit.SECONDS, new
                 LinkedBlockingQueue<Runnable>(100));
         Log.e(Config.DEBUG, "doThread2" + r_list.size());
@@ -43,8 +43,8 @@ public class ThreadFactory {
     }
 
     public void Stop() {
-        this.can_load = false;//²»¿ÉÒÔ¼ÓÔØ
-        threadPoolExecutor.shutdownNow();//¹Ø±Õ
+        this.can_load = false;//ä¸å¯ä»¥åŠ è½½
+        threadPoolExecutor.shutdownNow();//å…³é—­
         threadPoolExecutor = null;
     }
 

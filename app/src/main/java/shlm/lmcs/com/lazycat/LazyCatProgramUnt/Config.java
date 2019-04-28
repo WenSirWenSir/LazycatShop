@@ -5,56 +5,56 @@ public class Config {
     public static final String DEBUG = "LazyCatProgramUnt";
 
     /**
-     * ·ÃÎÊÓÃ»§Êı¾İµÄÊ±ºò  ÓÃµ½µÄ¹ØÓÚÓÃ»§·µ»ØµÄ×´Ì¬ºÍ±êÊ¶·û
+     * è®¿é—®ç”¨æˆ·æ•°æ®çš„æ—¶å€™  ç”¨åˆ°çš„å…³äºç”¨æˆ·è¿”å›çš„çŠ¶æ€å’Œæ ‡è¯†ç¬¦
      */
     public static class HttpMethodUserAction {
         public static final int SEND_VERIFICATION = 0;
         /**
-         * ÇëÇó²Ù×÷
+         * è¯·æ±‚æ“ä½œ
          */
-        public static final String GET_USERVAL = "get_userval";//»ñÈ¡ÓÃ»§µÄÈ«²¿Êı¾İ
-        public static final String GET_DEFAULT_ADDR = "get_userdefault_addr";//»ñÈ¡Ä¬ÈÏµÄÊÕ¼şµØÖ·
-        public static final String GET_ALLADDR = "get_alladdr";//»ñÈ¡ÓÃ»§µÄËùÓĞÊÕ¼şµØÖ·
-        public static final String UPDATE_USER_SEX = "update_user_sex";//¸üĞÂÓÃ»§µÄĞÔ±ğ
-        public static final String INSERT_USER_ADDR = "insert_user_addr";//²åÈëÒ»ÌõÓÃ»§µÄµØÖ·ĞÅÏ¢
+        public static final String GET_USERVAL = "get_userval";//è·å–ç”¨æˆ·çš„å…¨éƒ¨æ•°æ®
+        public static final String GET_DEFAULT_ADDR = "get_userdefault_addr";//è·å–é»˜è®¤çš„æ”¶ä»¶åœ°å€
+        public static final String GET_ALLADDR = "get_alladdr";//è·å–ç”¨æˆ·çš„æ‰€æœ‰æ”¶ä»¶åœ°å€
+        public static final String UPDATE_USER_SEX = "update_user_sex";//æ›´æ–°ç”¨æˆ·çš„æ€§åˆ«
+        public static final String INSERT_USER_ADDR = "insert_user_addr";//æ’å…¥ä¸€æ¡ç”¨æˆ·çš„åœ°å€ä¿¡æ¯
 
         /**
-         * ±êÊ¶·ûºÅ
+         * æ ‡è¯†ç¬¦å·
          */
         public static final String KEY_ACTION = "action";
         public static final String KEY_USER = "user_md5";
         public static final String KEY_TOKEN = "user_token";
-        public static final String KEY_STATUS = "status";//¼üÖµ »ñÈ¡×´Ì¬
+        public static final String KEY_STATUS = "status";//é”®å€¼ è·å–çŠ¶æ€
         public static final String KEY_PHONE = "user_phone";
         public static final String KEY_CODE = "user_code";
-        public static final String KEY_UPDATESEX = "update_sex";//¸üĞÂµÄÓÃ»§µÄÖµ¼ü
-        public static final String KEY_ADDR_NAME = "addr_name";//Ãû³Æ
-        public static final String KEY_ADDR_TEL = "tel";//µç»°
-        public static final String KEY_ADDR_ADDR = "addr";//µØÖ·
-        public static final String KEY_ADDR_PHYSICS = "physics_addr";//ÎïÀíµØÖ·
-        public static final String KEY_ADDR_IN = "addr_in";//ËùÊôÇøÓò
-        public static final String KEY_ADDR_USER_SEX = "user_sex";//ĞÔ±ğ
-        public static final String KEY_ADDR_USER_YEAR = "user_year";//ÄêÁä
-        public static final String KEY_ADDR_DEFAULT = "default";//ÊÇ·ñÄ¬ÈÏµØÖ·
+        public static final String KEY_UPDATESEX = "update_sex";//æ›´æ–°çš„ç”¨æˆ·çš„å€¼é”®
+        public static final String KEY_ADDR_NAME = "addr_name";//åç§°
+        public static final String KEY_ADDR_TEL = "tel";//ç”µè¯
+        public static final String KEY_ADDR_ADDR = "addr";//åœ°å€
+        public static final String KEY_ADDR_PHYSICS = "physics_addr";//ç‰©ç†åœ°å€
+        public static final String KEY_ADDR_IN = "addr_in";//æ‰€å±åŒºåŸŸ
+        public static final String KEY_ADDR_USER_SEX = "user_sex";//æ€§åˆ«
+        public static final String KEY_ADDR_USER_YEAR = "user_year";//å¹´é¾„
+        public static final String KEY_ADDR_DEFAULT = "default";//æ˜¯å¦é»˜è®¤åœ°å€
 
         /**
-         * ×´Ì¬Âë
+         * çŠ¶æ€ç 
          */
         public static final String STATUS_SENDOK = "0";
         public static final String STATUS_LOGINOK = "0";
         public static final String STATUS_NO_USER = "2";
-        public static final String STATUS_TOKEN_ERROR = "1";//token¹ıÆÚ
-        public static final String STATUS_LOGCODE_TOMUCH = "-2";//´íÎó´ÎÊıÌ«¶à
-        public static final String STATUS_GETVALUES_NODATA = "2";//Ã»ÓĞÓÃ»§µÄÊı¾İĞÅÏ¢
-        public static final String STATUS_GETVALUES_OK = "0";//»ñÈ¡Íê³É
-        public static final String STATUS_GETVALUES_ERROR = "1";//token ¹ıÆÚ
-        public static final String STATUS_SELECT_SEX_OK = "0";//¸üĞÂÓÃ»§µÄĞÔ±ğ³É¹¦
-        public static final String STATUS_SELECT_SEX_ERROR = "1";//¸üĞÂÓÃ»§µÄĞÔ±ğÊ§°Ü
+        public static final String STATUS_TOKEN_ERROR = "1";//tokenè¿‡æœŸ
+        public static final String STATUS_LOGCODE_TOMUCH = "-2";//é”™è¯¯æ¬¡æ•°å¤ªå¤š
+        public static final String STATUS_GETVALUES_NODATA = "2";//æ²¡æœ‰ç”¨æˆ·çš„æ•°æ®ä¿¡æ¯
+        public static final String STATUS_GETVALUES_OK = "0";//è·å–å®Œæˆ
+        public static final String STATUS_GETVALUES_ERROR = "1";//token è¿‡æœŸ
+        public static final String STATUS_SELECT_SEX_OK = "0";//æ›´æ–°ç”¨æˆ·çš„æ€§åˆ«æˆåŠŸ
+        public static final String STATUS_SELECT_SEX_ERROR = "1";//æ›´æ–°ç”¨æˆ·çš„æ€§åˆ«å¤±è´¥
         public static final String CHECK_VERIFICATION = "1";
-        public static final String STATUS_INSERT_ADDR_OK = "0";//²åÈëÓÃ»§µÄµØÖ·³É¹¦
-        public static final String STATUS_INSERT_ADDR_ERROR = "1";//²åÈëÊ§°Ü
-        public static final String STATUS_INSERT_ADDR_TOKEN_ERROR = "2";//Token ¹ıÆÚ
-        public static final String STATUS_USER_NOADDRS = "1";//ÓÃ»§Ã»ÓĞµØÖ·ĞÅÏ¢
+        public static final String STATUS_INSERT_ADDR_OK = "0";//æ’å…¥ç”¨æˆ·çš„åœ°å€æˆåŠŸ
+        public static final String STATUS_INSERT_ADDR_ERROR = "1";//æ’å…¥å¤±è´¥
+        public static final String STATUS_INSERT_ADDR_TOKEN_ERROR = "2";//Token è¿‡æœŸ
+        public static final String STATUS_USER_NOADDRS = "1";//ç”¨æˆ·æ²¡æœ‰åœ°å€ä¿¡æ¯
 
 
 
@@ -111,11 +111,11 @@ public class Config {
         public static final String USER_ABOUT = "user_about";
         public static final String USER_SIGNATURE = "user_signature";
         public static final String USER_LAST_INCOORD = "last_incoord";//The user last logged
-        // incoord,longitude in the former£¬the dimension in the end
-        public static final String USER_EDUCATION = "education";//Ñ§Àú
-        public static final String USER_INTEREST = "interest";//°®ºÃ
-        public static final String USER_UNIT = "unit";//µ¥Î»
-        public static final String USER_ISBLACK_LIST = "black_list";//ÓÃ»§ÊÇ·ñºÚÃûµ¥  0 ±íÊ¾²»ÊÇ 1 ±íÊ¾ÎªºÚÃûµ¥
+        // incoord,longitude in the formerï¼Œthe dimension in the end
+        public static final String USER_EDUCATION = "education";//å­¦å†
+        public static final String USER_INTEREST = "interest";//çˆ±å¥½
+        public static final String USER_UNIT = "unit";//å•ä½
+        public static final String USER_ISBLACK_LIST = "black_list";//ç”¨æˆ·æ˜¯å¦é»‘åå•  0 è¡¨ç¤ºä¸æ˜¯ 1 è¡¨ç¤ºä¸ºé»‘åå•
         public static final String USER_PHONE_MD5 = "phone_md5";
 
     }
@@ -142,14 +142,14 @@ public class Config {
         public static String PHOTO_SERVICE_ADDR = "http://120.79.63.36/photo";
 
         /**
-         * »ñÈ¡¼ì²éÑéÖ¤ÂëµÄµØÖ·
+         * è·å–æ£€æŸ¥éªŒè¯ç çš„åœ°å€
          */
         public static String CheckVerificationAddr() {
             return HTTP_ADDR.SERVICE + "reg/register.php";
         }
 
         /**
-         * »ñÈ¡ÓÃ»§pageµÄµØÖ·
+         * è·å–ç”¨æˆ·pageçš„åœ°å€
          */
         public static String getUser_init() {
             return HTTP_ADDR.SERVICE + "user/user_init.php";
@@ -157,7 +157,7 @@ public class Config {
 
 
         /**
-         * ÒªÇó¸üĞÂÓÃ»§µÄĞÔ±ğ
+         * è¦æ±‚æ›´æ–°ç”¨æˆ·çš„æ€§åˆ«
          *
          * @return
          */

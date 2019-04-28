@@ -2,13 +2,13 @@ package shlm.lmcs.com.lazycat.LazyShopMonitor;
 
 
 /**
- * ĞÂÆ·ÉÏ¼ÜµÄÊı¾İ¹ÜÀíÕß
+ * æ–°å“ä¸Šæ¶çš„æ•°æ®ç®¡ç†è€…
  */
 public class NewShopinMonitor extends Monitor {
     private boolean StopLoad = false;
 
     /**
-     * ¹¹Ôì·½·¨
+     * æ„é€ æ–¹æ³•
      */
     public NewShopinMonitor() {
 
@@ -16,17 +16,17 @@ public class NewShopinMonitor extends Monitor {
 
 
     /**
-     * Æô¶¯¹ÜÀí
+     * å¯åŠ¨ç®¡ç†
      */
     public void Start(){
         if(StopLoad){
-            /*²»×¼¼ÓÔØ*/
+            /*ä¸å‡†åŠ è½½*/
         }
     }
 
 
     /**
-     * Í£Ö¹¹ÜÀí
+     * åœæ­¢ç®¡ç†
      */
     public void Stop(){
 

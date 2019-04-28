@@ -2,84 +2,84 @@ package shlm.lmcs.com.lazycat.LazyShopPage;
 
 
 /**
- * ÉÌÆ·µÄConfig
+ * å•†å“çš„Config
  */
 public class LocalShopPage {
     /**
-     * ±êÌâ
+     * æ ‡é¢˜
      */
     public final static String SHOP_TITLE = "title";
     /**
-     * ÌõÂë
+     * æ¡ç 
      */
     public final static String SHOP_BARCODE = "barcode";
-    private String title;//±êÌâ
-    private String barcode;//ÌõÂë
-    private String small_img;//Ğ¡Í¼Æ¬
+    private String title;//æ ‡é¢˜
+    private String barcode;//æ¡ç 
+    private String small_img;//å°å›¾ç‰‡
     /**
-     * Ğ¡Í¼Æ¬
+     * å°å›¾ç‰‡
      */
     public final static String SHOP_SMALL_IMG = "small_img";
-    private String in_img;/*ÖĞÍ¼Æ¬*/
+    private String in_img;/*ä¸­å›¾ç‰‡*/
     /**
-     * ÖĞÍ¼Æ¬
+     * ä¸­å›¾ç‰‡
      */
     public final static String SHOP_IN_IMG = "in_img";
-    private String big_img;/*´óÍ¼Æ¬*/
+    private String big_img;/*å¤§å›¾ç‰‡*/
     /**
-     * ´óÍ¼Æ¬
+     * å¤§å›¾ç‰‡
      */
     public final static String SHOP_BIG_IMG = "big_img";
-    private float origin_price;/*Ô­¼Û¸ñ*/
+    private float origin_price;/*åŸä»·æ ¼*/
     /**
-     * Ô­¼Û¸ñ
+     * åŸä»·æ ¼
      */
     public final static String SHOP_ORIGIN_PRICE = "origin_price";
-    private float now_price;/*ÏÖ¼Û¸ñ*/
+    private float now_price;/*ç°ä»·æ ¼*/
     /**
-     * ÏÖ¼Û¸ñ
+     * ç°ä»·æ ¼
      */
     public final static String SHOP_NOW_PRICE = "now_price";
-    private int shop_static;/*ÉÌÆ·µÄ×´Ì¬*/
+    private int shop_static;/*å•†å“çš„çŠ¶æ€*/
     /**
-     * ÉÌÆ·µÄ×´Ì¬
+     * å•†å“çš„çŠ¶æ€
      */
     public final static String SHOP_STATIC = "shop_static";
-    private int sale_number;/*ÏúÊÛÊıÁ¿*/
+    private int sale_number;/*é”€å”®æ•°é‡*/
     /**
-     * ÏúÊÛÊıÁ¿
+     * é”€å”®æ•°é‡
      */
     public final static String SHOP_SALE_NUMBER = "sale_number";
-    private int like_number;/*Ï²»¶µÄÊıÁ¿*/
+    private int like_number;/*å–œæ¬¢çš„æ•°é‡*/
     /**
-     * Ï²»¶µÄÊıÁ¿
+     * å–œæ¬¢çš„æ•°é‡
      */
     public final static String SHOP_LIKE_NUMBER = "like_number";
-    private String big_showshop_office_promotion_title;/*Õ¹Ê¾ÌüµÄ´ÙÏú±êÌâ*/
+    private String big_showshop_office_promotion_title;/*å±•ç¤ºå…çš„ä¿ƒé”€æ ‡é¢˜*/
     /**
-     * Õ¹Ê¾ÌüµÄ´ÙÏú±êÌâ
+     * å±•ç¤ºå…çš„ä¿ƒé”€æ ‡é¢˜
      */
     public final static String SHOP_BIG_SHOWSHOP_OFFICE_PROMOTION_TITLE =
             "big_showshop_office_promotion_title";
-    private String big_showshop_office_promotion_formula;/*Õ¹Ê¾ÌüµÄ´ÙÏú¹«Ê½*/
+    private String big_showshop_office_promotion_formula;/*å±•ç¤ºå…çš„ä¿ƒé”€å…¬å¼*/
     /**
-     * Õ¹Ê¾ÌüµÄ´ÙÏú¹«Ê½
+     * å±•ç¤ºå…çš„ä¿ƒé”€å…¬å¼
      */
     public final static String SHOP_BIG_SHOWSHOP_OFFICE_PROMOTION_FORMULA =
             "big_showshop_office_promotion_formula";
-    private float shop_score;/*ÉÌÆ·µÄÆÀ·Ö*/
+    private float shop_score;/*å•†å“çš„è¯„åˆ†*/
     /**
-     * ÉÌÆ·µÄÆÀ·Ö
+     * å•†å“çš„è¯„åˆ†
      */
     public final static String SHOP_SCORE = "shop_score";
-    private String shop_unit;/*ÉÌÆ·µÄµ¥Î»*/
+    private String shop_unit;/*å•†å“çš„å•ä½*/
     /**
-     * ÉÌÆ·µÄµ¥Î»
+     * å•†å“çš„å•ä½
      */
     public final static String SHOP_UNIT = "shop_unit";
-    private String shop_spec;/*ÉÌÆ·µÄÀàĞÍ*/
+    private String shop_spec;/*å•†å“çš„ç±»å‹*/
     /**
-     * ÉÌÆ·µÄÀàĞÍ
+     * å•†å“çš„ç±»å‹
      */
     public final static String SHOP_SPEC = "shop_spec";
 
@@ -243,11 +243,11 @@ public class LocalShopPage {
         this.is_shop_imported = is_shop_imported;
     }
 
-    private boolean is_special_delivery;/*ÊÇ·ñ×Ô¼ºÅäËÍ*/
-    private String showcabinet_classified_labels;/*Õ¹Ê¾¹ñ/ÌüµÄ·ÖÀà±êÇ©*/
-    private String showcabinet_classified_promotion_title;/*Õ¹Ê¾¹ñµÄ´ÙÏúµÄ±êÌâ*/
-    private int shop_business_type;/*ÓªÒµµÄÀàĞÍ0×ÔÓª1¾­ÏúÉÌ2µêÆÌ3¸öÈË*/
-    private boolean is_shop_imported;/*ÊÇ·ñ½ø¿Ú*/
+    private boolean is_special_delivery;/*æ˜¯å¦è‡ªå·±é…é€*/
+    private String showcabinet_classified_labels;/*å±•ç¤ºæŸœ/å…çš„åˆ†ç±»æ ‡ç­¾*/
+    private String showcabinet_classified_promotion_title;/*å±•ç¤ºæŸœçš„ä¿ƒé”€çš„æ ‡é¢˜*/
+    private int shop_business_type;/*è¥ä¸šçš„ç±»å‹0è‡ªè¥1ç»é”€å•†2åº—é“º3ä¸ªäºº*/
+    private boolean is_shop_imported;/*æ˜¯å¦è¿›å£*/
 
 
 }
