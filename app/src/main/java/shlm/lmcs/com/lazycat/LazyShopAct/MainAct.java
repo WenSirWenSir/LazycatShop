@@ -54,9 +54,9 @@ public class MainAct extends LazyCatAct {
                 showFragment(ICO_FRAGMENT_MAIN);
                 ClearallIcoBackground();
                 RelativeLayout rl = (RelativeLayout) v;
-                Animator animation = Tools.createRoundAnimation(btn_main,200);
+                Animator animation = Tools.createRoundAnimation(btn_main, 200);
                 setIcoNavColor(rl, R.drawable.ico_btn_main, animation);
-                LazyCatActStartActivity(ShowshopOffice.class,false);
+                LazyCatActStartActivity(ShowshopOffice.class, false);
 
             }
         });
@@ -68,8 +68,8 @@ public class MainAct extends LazyCatAct {
                 hideFragment();
                 showFragment(ICO_FRAGMENT_DELIVERY);
                 RelativeLayout rl = (RelativeLayout) v;
-                Animator animation = Tools.createRoundAnimation(btn_delivery,200);
-                setIcoNavColor(rl, R.drawable.ico_delivery, animation);
+                Animator animation = Tools.createRoundAnimation(btn_delivery, 200);
+                setIcoNavColor(rl, R.drawable.ico_freight, animation);
             }
         });
         btn_usercenter.setOnClickListener(new View.OnClickListener() {
@@ -77,9 +77,9 @@ public class MainAct extends LazyCatAct {
             public void onClick(View v) {
                 ClearallIcoBackground();
                 RelativeLayout rl = (RelativeLayout) v;
-                Animator animation = Tools.createRoundAnimation(btn_usercenter,200);
-                setIcoNavColor(rl, R.drawable.ico_usercenter, animation);
-                LazyCatActStartActivity(LoginAct.class,false);
+                Animator animation = Tools.createRoundAnimation(btn_usercenter, 200);
+                setIcoNavColor(rl, R.drawable.ico_usercontent, animation);
+                LazyCatActStartActivity(LoginAct.class, false);
 
             }
         });
@@ -93,32 +93,33 @@ public class MainAct extends LazyCatAct {
     private void ClearallIcoBackground() {
         ImageView btn_mainImg = (ImageView) btn_main.getChildAt(0);//第0号的位置就是Image
         TextView btn_mainTv = (TextView) btn_main.getChildAt(1);
-        btn_mainTv.setTextColor(Color.parseColor("#666666"));
+        btn_mainTv.setTextColor(Color.parseColor("#bfbfbf"));
         ImageView btn_deliveryImg = (ImageView) btn_delivery.getChildAt(0);
         TextView btn_deliveryTv = (TextView) btn_delivery.getChildAt(1);
-        btn_deliveryTv.setTextColor(Color.parseColor("#666666"));
+        btn_deliveryTv.setTextColor(Color.parseColor("#bfbfbf"));
         ImageView btn_usercenterImg = (ImageView) btn_usercenter.getChildAt(0);
         TextView btn_usercenterTv = (TextView) btn_usercenter.getChildAt(1);
-        btn_usercenterTv.setTextColor(Color.parseColor("#666666"));
+        btn_usercenterTv.setTextColor(Color.parseColor("#bfbfbf"));
         //设置默认的第一个导航的颜色
         VectorDrawableCompat btn_mainImgVD = VectorDrawableCompat.create(getResources(), R
                 .drawable.ico_btn_main, getTheme());
-        btn_mainImgVD.setTint(Color.parseColor("#666666"));
+        btn_mainImgVD.setTint(Color.parseColor("#bfbfbf"));
         btn_mainImg.setImageDrawable(btn_mainImgVD);
         //设置默认的第二个导航的颜色
         VectorDrawableCompat btn_deilveryImgVD = VectorDrawableCompat.create(getResources(), R
-                .drawable.ico_delivery, getTheme());
-        btn_deilveryImgVD.setTint(Color.parseColor("#666666"));
+                .drawable.ico_freight, getTheme());
+        btn_deilveryImgVD.setTint(Color.parseColor("#bfbfbf"));
         btn_deliveryImg.setImageDrawable(btn_deilveryImgVD);
         //设置默认的第三个导航的颜色
         VectorDrawableCompat btn_usercenterImgVD = VectorDrawableCompat.create(getResources(), R
-                .drawable.ico_usercenter, getTheme());
-        btn_usercenterImgVD.setTint(Color.parseColor("#666666"));
+                .drawable.ico_usercontent, getTheme());
+        btn_usercenterImgVD.setTint(Color.parseColor("#bfbfbf"));
         btn_usercenterImg.setImageDrawable(btn_usercenterImgVD);
     }
 
     @SuppressLint("ResourceType")
-    private void setIcoNavColor(RelativeLayout rl, int image, final android.animation.Animator animation) {
+    private void setIcoNavColor(RelativeLayout rl, int image, final android.animation.Animator
+            animation) {
         ImageView iv = (ImageView) rl.getChildAt(0);//第一个就是图标
         rl.post(new Runnable() {
             @Override

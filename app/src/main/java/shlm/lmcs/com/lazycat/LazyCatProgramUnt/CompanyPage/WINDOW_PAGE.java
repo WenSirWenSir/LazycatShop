@@ -2,7 +2,7 @@ package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage;
 
 
 /**
- * 一些界面传值的action
+ * 涓�浜涚晫闈紶鍊肩殑action
  */
 public class WINDOW_PAGE {
     public static final String ACTION_USER_NAME = "user_name";
@@ -13,10 +13,10 @@ public class WINDOW_PAGE {
 
 
     /**
-     * 状态类
+     * 鐘舵�佺被
      */
-    public static final int STATIC_RESULT_CODE = 1;//界面跳转携带的状态码
+    public static final int STATIC_RESULT_CODE = 1;//鐣岄潰璺宠浆鎼哄甫鐨勭姸鎬佺爜
 
 
-    public static final String RESULT_WEBVIEW = "web_page";//界面跳转携带的资源的名称
+    public static final String RESULT_WEBVIEW = "web_page";//鐣岄潰璺宠浆鎼哄甫鐨勮祫婧愮殑鍚嶇О
 }

@@ -74,6 +74,8 @@ public class ScrollViewBiggerPhoto extends ScrollView {
                     if (params != null) {
                         params.width = this.metrics.widthPixels + distance;
                         params.height = (this.metrics.heightPixels + distance) * 8 / 16;
+                        Log.e(Config.DEBUG, "ScrollViewBiggerPhoto.java[+]改变的屏幕高度:" + params
+                                .height + "改变屏幕的宽度:" + params.width);
                         this.img_body.setLayoutParams(params);
                     }
 
@@ -81,8 +83,6 @@ public class ScrollViewBiggerPhoto extends ScrollView {
 
                 break;
         }
-
-
         return super.dispatchTouchEvent(ev);
     }
 

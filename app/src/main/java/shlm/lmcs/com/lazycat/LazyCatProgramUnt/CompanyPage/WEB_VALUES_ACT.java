@@ -7,13 +7,13 @@ import android.os.Parcel;
 import java.io.Serializable;
 
 /**
- * ¹¹ÔìWebView¿Ø¼şµÄĞÅÏ¢
+ * æ„é€ WebViewæ§ä»¶çš„ä¿¡æ¯
  */
 @SuppressLint("ParcelCreator")
 public class WEB_VALUES_ACT implements Serializable {
     private String _title;
     /**
-     * Ä¬ÈÏ¹¹ÔìÒ»¸öURLÆäËûÎªÄ¬ÈÏ
+     * é»˜è®¤æ„é€ ä¸€ä¸ªURLå…¶ä»–ä¸ºé»˜è®¤
      *
      * @param Url
      */
@@ -28,7 +28,7 @@ public class WEB_VALUES_ACT implements Serializable {
     }
 
     /**
-     * »ñÈ¡¹¹ÔìµÄURLµØÖ·ĞÅÏ¢
+     * è·å–æ„é€ çš„URLåœ°å€ä¿¡æ¯
      *
      * @return
      */
@@ -38,7 +38,7 @@ public class WEB_VALUES_ACT implements Serializable {
 
 
     /**
-     * »ñÈ¡ÉèÖÃµÄTitle
+     * è·å–è®¾ç½®çš„Title
      *
      * @return
      */
@@ -48,7 +48,7 @@ public class WEB_VALUES_ACT implements Serializable {
 
 
     /**
-     * ÉèÖÃTitle
+     * è®¾ç½®Title
      */
     public void set_title(String title) {
         this._title = title;

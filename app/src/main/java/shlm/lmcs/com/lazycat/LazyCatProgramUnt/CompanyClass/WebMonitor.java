@@ -194,23 +194,25 @@ public class WebMonitor {
 
     /**
      * 分享到微信空间的推荐的信息 如果调用成功的话  就要回调到JS提供的接口地址
-     * @param title 分享的标题
-     * @param content 分享的内容
-     * @param photo 分享的图片
+     *
+     * @param title       分享的标题
+     * @param content     分享的内容
+     * @param photo       分享的图片
      * @param callBackurl 成功的回调地址
      */
-    public void ShareWX(String title, String content, String photo,String callBackurl) {
+    public void ShareWX(String title, String content, String photo, String callBackurl) {
 
     }
 
     /**
      * 分享到QQ控件的推荐的信息  如果调用成功的话 就要回调大JS提供的接口的地址
-     * @param title 分享的标题
-     * @param content 分享的内容
-     * @param photo 分享的图片
+     *
+     * @param title       分享的标题
+     * @param content     分享的内容
+     * @param photo       分享的图片
      * @param callBackurl 成功的回调地址
      */
-    public void ShareQQ(String title,String content,String photo,String callBackurl){
+    public void ShareQQ(String title, String content, String photo, String callBackurl) {
 
     }
 

@@ -1,6 +1,8 @@
 package shlm.lmcs.com.lazycat.LazyShopAct;
 
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,8 +37,10 @@ public class ShowshopOffice extends LazyCatAct {
     private ImageView countDownadavert;
     private LinearLayout select_numberBody;
     private RelativeLayout shopCartnumberBody;
+    private TextView btnAccount;
     private TextView select_number;
     private TextView shopCartNumber;
+    private TextView ReplayPrice;//还需要多少金额开始送
     private final static int MSG_COUNT_DOWN_ADAVERT = 0;
     private final static int MSG_CLEAR_COUNT_DOWN_ADAVERT = 1;
     private Handler handler = new Handler() {
@@ -57,13 +60,28 @@ public class ShowshopOffice extends LazyCatAct {
                             msg.what = MSG_CLEAR_COUNT_DOWN_ADAVERT;
                             handler.sendMessage(msg);
                         }
-                    }, Tools.getRandom(2, 4) * 1000);
+                    }, Tools.getRandom(7, 11) * 1000);
                     break;
                 case MSG_CLEAR_COUNT_DOWN_ADAVERT:
                     /*清空倒计时广告*/
-                    AlphaAnimation clearap = Tools.clearOnalpha(2000, true);
-                    countDownadavert.startAnimation(clearap);
-                    countDownadavert.setVisibility(View.GONE);
+                    final ValueAnimator anim = ValueAnimator.ofInt(countDownadavert.getHeight(), 0);
+                    anim.setDuration(Tools.getRandom(1, 2) * 1000);
+                    anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            Log.e(Config.DEBUG, "ShowshopOffice.java[+]属性动画值: " + animation
+                                    .getAnimatedValue() + "广告图片的高度:" + countDownadavert.getHeight
+                                    ());
+                            ViewGroup.LayoutParams params = countDownadavert.getLayoutParams();
+                            params.height = (int) animation.getAnimatedValue();
+                            countDownadavert.setLayoutParams(params);
+
+                        }
+                    });
+                    anim.start();//属性改变动画
+                    //AlphaAnimation clearap = Tools.clearOnalpha(Tools.getRandom(3, 6) * 1000,
+                    // true);
+                    //countDownadavert.startAnimation(clearap);
                     break;
             }
             super.handleMessage(msg);
@@ -109,16 +127,49 @@ public class ShowshopOffice extends LazyCatAct {
         shopCartNumber = findViewById(R.id.activity_showshopoffice_shopCartnumber);
         /*购物车数量边框标志*/
         shopCartnumberBody = findViewById(R.id.activity_showshopoffice_shopCartnumberBody);
+        /*还需多少金额开始起送*/
+        ReplayPrice = findViewById(R.id.activity_showshopoffice_Repayprice);
+        /*订购按钮*/
+        btnAccount = findViewById(R.id.activity_showshopoffice_btnAccount);
+        /*图片包裹*/
         Tools.setMidcourtLine(historicePrice);
         init();
         /*count down advert*/
     }
 
     private void init() {
+        /*设置边框的圆角*/
+        ReplayPrice.setBackground(Tools.CreateDrawable(1, getResources().getString(R.color
+                .ThemeColor), getResources().getString(R.color.ThemeColor), 5));
+        /*设置订购边框的圆角 订单未满*/
+        // btnAccount.setBackground(Tools.CreateDrawable(1, getResources().getString(R.color
+        //         .ThemeColor), getResources().getString(R.color.ThemeColor), 5));
+        btnAccount.setBackground(Tools.CreateDrawable(1, "#666666", "#666666", 5));
+        btnAccount.setTextColor(Color.parseColor("#ffffff"));
         /*首先隐藏购物车的显示数量*/
         shopCartnumberBody.setVisibility(View.GONE);
         DisplayMetrics metrics = new DisplayMetrics();/*获取屏幕矩阵*/
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        /*重新计算图片的高度实现开场动画*/
+        final ViewGroup.LayoutParams photoParams = photo.getLayoutParams();
+        photoParams.height = metrics.heightPixels;
+        photoParams.width = metrics.widthPixels;
+        photo.setLayoutParams(photoParams);
+
+        /*图片边框动画*/
+        ValueAnimator anim = ValueAnimator.ofInt(metrics.heightPixels, metrics.heightPixels * 8
+                / 16);
+        anim.setDuration(1000);
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                ViewGroup.LayoutParams params = photo.getLayoutParams();
+                Log.e(Config.DEBUG,"ShowshopOffice.java[+]改变的高度值:" + animation.getAnimatedValue());
+                params.height = (int) animation.getAnimatedValue();
+                photo.setLayoutParams(params);
+            }
+        });
+        anim.start();
         /*重新计算高度和宽度*/
         ViewGroup.LayoutParams params = countDownadavert.getLayoutParams();
         params.width = metrics.widthPixels;
@@ -126,9 +177,6 @@ public class ShowshopOffice extends LazyCatAct {
         countDownadavert.setLayoutParams(params);
         countDownadavert.setVisibility(View.GONE);
         /*线程开启计算倒计时广告*/
-        Random rand = new Random();
-        int i = rand.nextInt(10);
-        Log.e(Config.DEBUG, "ShowshopOffice.java[+]计算的倒计时为:" + i);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -138,7 +186,7 @@ public class ShowshopOffice extends LazyCatAct {
                 handler.sendMessage(msg);
 
             }
-        }, i * 1000);
+        }, Tools.getRandom(10, 20) * 1000);
         scrollViewBiggerPhoto.setImageHead(photo, metrics);
         /*加入购物车的布局*/
         btn_addshopcart.setOnClickListener(new View.OnClickListener() {

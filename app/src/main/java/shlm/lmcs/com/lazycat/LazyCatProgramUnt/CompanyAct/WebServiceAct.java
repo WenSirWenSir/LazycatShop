@@ -36,7 +36,8 @@ public class WebServiceAct extends LazyCatAct {
         item.setBackgroundColor(Color.parseColor("#ffffff"));
         //增加WebView布局
         _WebView = new WebView(item.getContext());
-        _WebView.addJavascriptInterface(new WebMonitor(getApplicationContext(),this), "webmonitor");
+        _WebView.addJavascriptInterface(new WebMonitor(getApplicationContext(), this),
+                "webmonitor");
         item.addView(_WebView);
         setContentView(item);
         //获取构造数据信息
