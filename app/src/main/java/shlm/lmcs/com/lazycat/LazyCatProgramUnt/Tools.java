@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -41,7 +42,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -93,6 +100,19 @@ public class Tools {
      */
     public static void getFoucus(View view) {
         view.requestFocus();
+    }
+
+
+    /**
+     * @param bitmap
+     * @param tag
+     */
+    public static InputStream bitmaptoInputStream(Bitmap bitmap, Bitmap.CompressFormat tag) {
+
+        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+        bitmap.compress(tag, 100, bao);
+        InputStream is = new ByteArrayInputStream(bao.toByteArray());
+        return is;
     }
 
 
@@ -726,12 +746,141 @@ public class Tools {
 
     /**
      * 获取指定范围的数字
+     *
      * @param min 最小的数字
      * @param max 最大的范围
      * @return
      */
     public static int getRandom(int min, int max) {
         return (int) (Math.random() * (max - min) + min);
+    }
+
+
+    /**
+     * 将Bitmap转换成byte字节
+     *
+     * @param bm
+     * @param compress
+     * @return
+     */
+    public static byte[] bitMaptoByte(Bitmap bm, Bitmap.CompressFormat compress) {
+        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+        bm.compress(compress, 100, bao);
+        return bao.toByteArray();
+
+    }
+
+    /**
+     * 保存一个图片
+     *
+     * @param mContext
+     * @param bm
+     * @param name     如果为NULL就随机取一个名字
+     * @param postfix  后缀名字
+     * @return
+     */
+    public static void saveImageBitmap(Context mContext, Bitmap bm, String name, String postfix) {
+        /*转换成字节*/
+        Log.e(Config.DEBUG, "ImageCache.java[+]转换图片的字节长度为:" + Tools.bitMaptoByte(bm, Bitmap
+                .CompressFormat.PNG).length);
+        /*保存图片*/
+        String path = mContext.getFilesDir() + "/LocalPhotos/";/*获取文件路径*/
+        File appDir = new File(path);
+        Log.i(Config.DEBUG, "ImageCache.java[+]保存路径:" + appDir);
+        /*判断文件夹是否存在*/
+        if (!appDir.exists()) {
+            appDir.mkdir();/*创建文件夹*/
+        }
+        if (name == null && TextUtils.isEmpty(name)) {
+            /*如果为空就随机取一个名称*/
+            name = System.currentTimeMillis() + "." + postfix;
+        } else {
+            name += "." + postfix;
+        }
+        File file = new File(appDir, name);
+        if (bm != null) {
+            Log.i(Config.DEBUG, "ImageCache.java[+]Bitmap不为NULL");
+            FileOutputStream fos = null;
+            try {
+                InputStream is = null;
+                if (postfix.equals("png")) {
+                    /*保存为PNG的格式*/
+                    is = Tools.bitmaptoInputStream(bm, Bitmap.CompressFormat.PNG);
+
+                } else {
+                    /*保存为JPG的格式*/
+                    is = Tools.bitmaptoInputStream(bm, Bitmap.CompressFormat.JPEG);
+                }
+                /*输入输出流不为空*/
+                if (is != null) {
+                    fos = new FileOutputStream(file);
+                    byte[] buffer = new byte[1024];
+                    int len = 0;
+                    while ((len = is.read(buffer)) != -1) {
+                        fos.write(buffer, 0, len);
+
+                    }
+                    is.close();
+                    fos.close();
+                } else {
+                    Log.e(Config.DEBUG, "ImageCache.java[+]输入输出流为空");
+                }
+
+            } catch (FileNotFoundException e) {
+                Log.e(Config.DEBUG, "ImageCache.java[+]错误信息" + e.getMessage());
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.e(Config.DEBUG, "ImageCache.java[+]Bitmap为NULL");
+        }
+        Log.i(Config.DEBUG, "ImageCache.java[+]保存的文件路径和名称:" + file);
+    }
+
+
+    /**
+     * 获取一张本地缓存的图片
+     *
+     * @param context
+     * @param file
+     * @return
+     */
+    public static Bitmap getLocalBitmap(Context context, File file) {
+        Bitmap bitmap = null;
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            bitmap = BitmapFactory.decodeStream(fis);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
+    /**
+     * 判断本地是否有缓存图片
+     *
+     * @param file
+     * @return
+     */
+    public static boolean isLocalBitmap(File file) {
+        if (file.exists()) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
+    /**
+     * 获取一个随机数
+     *
+     * @return
+     */
+    public static String getRandString() {
+        return String.valueOf(System.currentTimeMillis());
+
     }
 
 }

@@ -6,7 +6,6 @@ package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools;
  */
 public class Monitor {
 
-
     /**
      * 更新一条错误信息
      */

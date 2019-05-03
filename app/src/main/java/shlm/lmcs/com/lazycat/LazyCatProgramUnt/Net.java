@@ -10,12 +10,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +33,7 @@ public class Net {
     private String tUrl = "";
     private StringBuffer mKvsBuffer = new StringBuffer();
     private Net.onVisitInterServiceListener mOnVisitInterServiceListener;
-    private ImageCache imageCache = new ImageCache();
+    private ImageCache imageCache;
     private int VisitInterMethod;
 
     /**
@@ -307,9 +305,9 @@ public class Net {
 
     }
 
-    public static void doGetimg(String imgfile, final ProgramInterface.doGetImg _doGetimg) {
+    public static void doGetimg(final LOAD_IMAGEPAGE imgfile, final ProgramInterface.doGetImg
+            _doGetimg) {
         new AsyncTask<String, Void, Bitmap>() {
-
             @Override
             protected Bitmap doInBackground(String... imgurl) {
                 Bitmap bitmap = null;
@@ -325,12 +323,9 @@ public class Net {
                     } else {
                         Log.e(Config.DEBUG, "访问失败 访问返回状态码:" + con.getResponseCode());
                     }
-                } catch (MalformedURLException e) {
+                } catch (Exception e) {
                     Log.e(Config.DEBUG, "Net.java[+]" + e.getMessage());
                     e.printStackTrace();
-                } catch (IOException e) {
-                    Log.e(Config.DEBUG, "Net.java[+]" + e.getMessage());
-
                 }
                 return bitmap;
             }
@@ -342,55 +337,17 @@ public class Net {
                 } else {
                     _doGetimg.onFain();
                 }
-                super.onPostExecute(bitmap);
             }
-        }.execute(Config.HTTP_ADDR.PHOTO_SERVICE_ADDR.trim() + imgfile.trim());
+        }.execute(Config.HTTP_ADDR.PHOTO_SERVICE_ADDR.trim() + imgfile.getImg_url());
 
 
     }
 
 
-    /**
-     * 多线程执行下载图片事务的管理器
-     */
-    public void doThreadimage(final LOAD_IMAGEPAGE load_imagepage) {
-        Log.e(Config.DEBUG,"doThreadimage[url]" + load_imagepage.getImg_url());
-        if (imageCache.getImage(load_imagepage.getTag()) != null) {
-            //存在就不要重复加载了
-            /*判断IMAGEView是否为空*/
-            if (load_imagepage.getImg().getDrawable() != null) {
-                load_imagepage.getImg().setImageBitmap(imageCache.getImage(load_imagepage.getTag
-                        ()));
-            } else {
-                /*没有执行要求*/
-            }
-        } else {
-            doGetimg(load_imagepage.getImg_url(), new ProgramInterface.doGetImg() {
-                @Override
-                public void onSucess(Bitmap bitmap) {
-                    if (imageCache.getImage(load_imagepage.getTag()) != null) {
-                        /*存在图片信息 不缓存*/
-                        if (load_imagepage.getImg().getDrawable() != null) {
-                            load_imagepage.getImg().setImageBitmap(imageCache.getImage
-                                    (load_imagepage.getTag()));
-                        } else {
-                            /*没有执行要求*/
-                        }
-                    } else {
-                        imageCache.saveImage(load_imagepage.getTag(), bitmap);
-                        load_imagepage.getImg().setImageBitmap(imageCache.getImage(load_imagepage
-                                .getTag()));
-                    }
-                }
+    public static Bitmap doGetBitmap() {
+        Bitmap bitmap = null;
 
-                @Override
-                public void onFain() {
-
-                }
-            });
-        }
-
-
+        return bitmap;
     }
 
 

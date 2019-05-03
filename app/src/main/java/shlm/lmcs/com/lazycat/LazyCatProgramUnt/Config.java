@@ -139,7 +139,7 @@ public class Config {
         public static String SendVerificationCodeAddr() {
             return HTTP_ADDR.SERVICE + "reg/register.php";
         }
-        public static String PHOTO_SERVICE_ADDR = "http://120.79.63.36/photo";
+        public static String PHOTO_SERVICE_ADDR = "http://120.79.63.36/photo/";
 
         /**
          * 获取检查验证码的地址

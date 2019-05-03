@@ -59,13 +59,13 @@ public class BrandSingMonitor extends Monitor {
     /**
      * 重新开始加载
      */
-    public void ReStart() {
+    public void ReStart(Context context) {
 
         /*判断线程元素是否还存在*/
         if (RunnableList != null) {
             /*启动管理*/
         } else {
-            Start(programInterface);//重新启动
+            Start(programInterface, context);//重新启动
         }
 
     }
@@ -88,7 +88,7 @@ public class BrandSingMonitor extends Monitor {
     /**
      * 开始整理事务
      */
-    public void Start(ProgramInterface _programInterface) {
+    public void Start(ProgramInterface _programInterface, final Context context) {
         this.programInterface = _programInterface;
         Net.doGet(mContext, "http://120.79.63.36/lazyShop/config/main_brand_promotion.xml", new
                 Net.onVisitInterServiceListener() {
@@ -96,7 +96,7 @@ public class BrandSingMonitor extends Monitor {
             public void onSucess(String tOrgin) {
                 //让子函数去处理XML返回的信息
                 programInterface.onSucess("调用成功", 0);
-                onXml(tOrgin);
+                onXml(tOrgin, context);
             }
 
             @Override
@@ -113,7 +113,7 @@ public class BrandSingMonitor extends Monitor {
 
     }
 
-    void onXml(String origin) {
+    void onXml(String origin, final Context context) {
 
         //获取XML解析
         XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(origin);
@@ -133,24 +133,31 @@ public class BrandSingMonitor extends Monitor {
                 //开始解析数据
                 try {
                     if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion.key_back)) {
+                        /*处理背景*/
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setBack(pullParser.nextText());
                         LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
-                        load_imagepage.setTag("key_back");
+                        load_imagepage.setSaveName("key_back.png");
                         load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion
                                 .getBack());
-
+                        if (load_imagepage.getImg_url().indexOf("png") != -1) {
+                            /*存在*/
+                            load_imagepage.setPostPixt("png");
+                        } else {
+                            load_imagepage.setPostPixt("jpg");
+                        }
                         load_imagepage.setImg((ImageView) item.findViewById(R.id
                                 .assembly_fragment_main_singleBack));
                         load_imagepages.add(load_imagepage);
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_big_img)) {
+                        /*处理大图片*/
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setBig_img(pullParser
                                 .nextText());
                         /**
                          * 重新构造一个配置文件
                          */
                         LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
-                        load_imagepage.setTag("key_big_img");
+                        load_imagepage.setSaveName("key_big_img.png");
                         load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion
                                 .getBig_img());
                         ImageView img = item.findViewById(R.id.assembly_fragment_main_singleBigImg);
@@ -158,15 +165,23 @@ public class BrandSingMonitor extends Monitor {
                         load_imagepages.add(load_imagepage);//添加一个元素
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_shop_a_img)) {
+                        /*处理第一个商品图片*/
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_a_img(pullParser
                                 .nextText());
                         /**
                          * 重新构造一个配置文件
                          */
                         LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
-                        load_imagepage.setTag("key_shop_a_img");
+                        /*设置保存到本地的名称*/
+                        load_imagepage.setSaveName(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                                .getShop_a_img());
+                        /*设置要访问互联网的名称*/
                         load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion
                                 .getShop_a_img());
+                        /*设置本地存储目录*/
+                        load_imagepage.setDefaultFile(mContext.getFilesDir());
+                        /*设置缓存的Tag*/
+                        load_imagepage.setLruchTag(Tools.getRandString());
                         ImageView img = item.findViewById(R.id
                                 .assembly_fragment_main_singleShopaImage);
                         load_imagepage.setImg(img);
@@ -174,64 +189,88 @@ public class BrandSingMonitor extends Monitor {
 
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_shop_b_img)) {
+                        /*处理第二个商品图片*/
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_b_img(pullParser
                                 .nextText());
                         /**
                          * 重新构造一个配置文件
                          */
                         LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
-                        load_imagepage.setTag("key_shop_b_img");
+                        /*设置保存到手机上的名字*/
+                        load_imagepage.setSaveName(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                                .getShop_b_img());
+                        /*设置要访问的文件名称*/
                         load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion
                                 .getShop_b_img());
                         ImageView img = item.findViewById(R.id
                                 .assembly_fragment_main_singleShopbImage);
+                        /*设置一个TAG用来缓存图片*/
+                        load_imagepage.setLruchTag(Tools.getRandString());
                         load_imagepage.setImg(img);
                         load_imagepages.add(load_imagepage);//添加一个元素
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_shop_c_img)) {
+                        /*处理第三个商品图片*/
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_c_img(pullParser
                                 .nextText());
                         /**
                          * 重新构造一个配置文件
                          */
                         LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
-                        load_imagepage.setTag("key_shop_c_img");
+                        /*设置本地存储位置*/
+                        load_imagepage.setDefaultFile(mContext.getFilesDir());
+                        /*设置保存的图片名称*/
+                        load_imagepage.setSaveName(XmlTagValuesFactory.XMLtagMainBrandPromotion
+                                .getShop_c_img());
+                        /*设置图片的地址*/
                         load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion
                                 .getShop_c_img());
+                        /*设置对应的图片的View*/
                         ImageView img = item.findViewById(R.id
                                 .assembly_fragment_main_singleShopcImage);
+                        /*设置缓存的Tag表示*/
+                        load_imagepage.setLruchTag(Tools.getRandString());
                         load_imagepage.setImg(img);
+                        /*数组添加一个数据*/
                         load_imagepages.add(load_imagepage);//添加一个元素
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_title_a)) {
+                        /*文字信息 不做处理 直接交个XmlTagValuesFactory.XMLtagMainBrandPromotion处理*/
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setTitle_a(pullParser
                                 .nextText());
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_title_b)) {
+                        /*文字信息 不做处理 直接交个XmlTagValuesFactory.XMLtagMainBrandPromotion处理*/
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setTitle_b(pullParser
                                 .nextText());
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_shop_a_price)) {
+                        /*文字信息 不做处理 直接交个XmlTagValuesFactory.XMLtagMainBrandPromotion处理*/
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_a_price(pullParser
                                 .nextText());
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_shop_b_price)) {
+                        /*文字信息 不做处理 直接交个XmlTagValuesFactory.XMLtagMainBrandPromotion处理*/
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_b_price(pullParser
                                 .nextText());
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_shop_c_price)) {
+                        /*文字信息 不做处理 直接交个XmlTagValuesFactory.XMLtagMainBrandPromotion处理*/
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_c_price(pullParser
                                 .nextText());
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_shop_a_title)) {
+                        /*文字信息 不做处理 直接交个XmlTagValuesFactory.XMLtagMainBrandPromotion处理*/
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_a_title(pullParser
                                 .nextText());
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_shop_b_title)) {
+                        /*文字信息 不做处理 直接交个XmlTagValuesFactory.XMLtagMainBrandPromotion处理*/
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_b_title(pullParser
                                 .nextText());
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_shop_c_title)) {
+                        /*文字信息 不做处理 直接交个XmlTagValuesFactory.XMLtagMainBrandPromotion处理*/
                         XmlTagValuesFactory.XMLtagMainBrandPromotion.setShop_c_title(pullParser
                                 .nextText());
                     }
@@ -282,26 +321,8 @@ public class BrandSingMonitor extends Monitor {
                     RunnableList = new ArrayList<>();
                     for (int i = 0; i < load_imagepages.size(); i++) {
                         final int y = i;
-                        Runnable rbl = new Runnable() {
-                            @Override
-                            public void run() {
-                                Net net = new Net();
-                                net.doThreadimage(load_imagepages.get(y));
-                            }
-                        };
-                        RunnableList.add(rbl);
                     }
-                    threadFactory.doThread(RunnableList);
-                    ImageView backImageView = item.findViewById(R.id
-                            .assembly_fragment_main_singleBack);//背景
-
-                    /*找到所有的ImageView的控件*/
-                    final ImageView back = item.findViewById(R.id
-                            .assembly_fragment_main_singleBack);
-                    /**
-                     * 加载背景图片
-                     */
-
+                    // threadFactory.doThread(RunnableList);
                 }
 
             }

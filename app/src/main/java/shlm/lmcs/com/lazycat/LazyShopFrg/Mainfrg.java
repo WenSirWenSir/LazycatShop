@@ -125,7 +125,7 @@ public class Mainfrg extends LazyCatFragment {
             public void onFaile(String data, int code) {
 
             }
-        });
+        }, getContext());
         brandSingMonitor.SaveTag(LocalMonitorPage.MONITOR_BRANDSING);/*标识管理者的名字*/
         layout.setTag(brandSingMonitor);/*保存管理者*/
         /*</首页的品牌促销的管理>*/

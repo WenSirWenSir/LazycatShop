@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.LOAD_IMAGEPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.ImageCache;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
@@ -31,7 +32,7 @@ public class RefreshScrollView extends ScrollView {
     public static int CAN_REFRESH = 0;
     public static int ING_REFRESH = 1;
     public static int RUNNOW_REFRESH = 2;
-    private ImageCache imageCache = new ImageCache();
+    private ImageCache imageCache;
     private int _downY;//记录距离
     private int _downH;//记录高度
     private boolean b_down;
@@ -68,6 +69,7 @@ public class RefreshScrollView extends ScrollView {
     }
 
     private void init() {
+        imageCache = new ImageCache(getContext());
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -174,7 +176,11 @@ public class RefreshScrollView extends ScrollView {
                             Log.i(Config.DEBUG, "缓存中存在图片或者已经在开始下载");
                             head_img.setImageBitmap(imageCache.getImage("225522"));
                         } else {
-                            Net.doGetimg("/photos/225522.png", new ProgramInterface.doGetImg() {
+                            LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
+                            load_imagepage.setImg_url("/photos/225522.png");
+                            load_imagepage.setLruchTag("2423423");
+                            load_imagepage.setImg(head_img);
+                            Net.doGetimg(load_imagepage, new ProgramInterface.doGetImg() {
                                 @Override
                                 public void onSucess(Bitmap bitmap) {
                                     //成功 获取到网络图片
