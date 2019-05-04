@@ -114,7 +114,6 @@ public class BrandSingMonitor extends Monitor {
     }
 
     void onXml(String origin, final Context context) {
-
         //获取XML解析
         XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(origin);
         xmlanalysisFactory.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
@@ -281,8 +280,7 @@ public class BrandSingMonitor extends Monitor {
             }
 
             @Override
-            public void onEndTag() {
-
+            public void onEndTag(String tag, XmlPullParser pullParser, Integer id) {
 
             }
 

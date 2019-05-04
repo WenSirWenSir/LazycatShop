@@ -44,7 +44,10 @@ public class XmlanalysisFactory {
                                         pullParser, 0);
                                 break;
                             case XmlPullParser.END_TAG:
-                                _XmlanalysisInterface.onEndTag();/*结束标签*/
+                                Log.e(Config.DEBUG, "XmlanalysisFactory.java[+]Xml解析解析到的结束节点:" +
+                                        pullParser.getName());
+                                _XmlanalysisInterface.onEndTag(pullParser.getName(), pullParser,
+                                        0);/*结束标签*/
                                 break;
                         }
                         eventType = pullParser.next();
@@ -76,7 +79,7 @@ public class XmlanalysisFactory {
 
         void onStartTag(String tag, XmlPullParser pullParser, Integer id);//开始解析节点
 
-        void onEndTag();//结束节点
+        void onEndTag(String tag, XmlPullParser pullParser, Integer id);//结束节点
 
         void onEndDocument();//文档结束回调方法
     }

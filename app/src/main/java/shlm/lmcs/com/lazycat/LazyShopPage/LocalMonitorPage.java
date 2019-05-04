@@ -1,1 +1,1 @@
-package shlm.lmcs.com.lazycat.LazyShopPage;public class LocalMonitorPage {    public final static int MONITOR_BRANDSING = 1;    public final static int MONITOR_NEWSHOPIN = 2;}
+package shlm.lmcs.com.lazycat.LazyShopPage;public class LocalMonitorPage {    public final static int MONITOR_BRANDSING = 1;/*品牌促销的TAG*/    public final static int MONITOR_MERCHANT = 2;/*商家促销的TAG*/}

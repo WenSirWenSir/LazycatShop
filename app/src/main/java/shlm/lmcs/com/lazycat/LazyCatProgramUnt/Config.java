@@ -57,8 +57,6 @@ public class Config {
         public static final String STATUS_USER_NOADDRS = "1";//用户没有地址信息
 
 
-
-
         public static final int UPDATE_USER_VALUES = 1;
     }
 
@@ -139,6 +137,7 @@ public class Config {
         public static String SendVerificationCodeAddr() {
             return HTTP_ADDR.SERVICE + "reg/register.php";
         }
+
         public static String PHOTO_SERVICE_ADDR = "http://120.79.63.36/photo/";
 
         /**
@@ -155,6 +154,18 @@ public class Config {
             return HTTP_ADDR.SERVICE + "user/user_init.php";
         }
 
+
+        /**
+         * 获取经销商促销的地址
+         * @return
+         */
+        public static String getMerchantMonitorAddr() {
+            return HTTP_ADDR.SERVICE + "/lazyShop/configXml/merchant.xml";/**/
+        }
+
+        public static String getNewshopInUrl(){
+            return HTTP_ADDR.SERVICE + "/lazyShop/configXml/newshopin.xml";
+        }
 
         /**
          * 要求更新用户的性别

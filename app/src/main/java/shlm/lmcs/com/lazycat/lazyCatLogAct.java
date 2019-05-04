@@ -17,6 +17,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.ImageCache;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.ImageMonitor;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
+import shlm.lmcs.com.lazycat.LazyShopAct.MainAct;
 
 
 public class lazyCatLogAct extends LazyCatAct {
@@ -33,7 +34,7 @@ public class lazyCatLogAct extends LazyCatAct {
             public void handleMessage(Message msg) {
                 //refreshDialog.dismiss();
                 //进入主界面
-                //LazyCatActStartActivity(MainAct.class, true);
+                LazyCatActStartActivity(MainAct.class, true);
                 super.handleMessage(msg);
             }
         };

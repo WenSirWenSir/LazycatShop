@@ -26,6 +26,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.RefreshScrollView;
 import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.BrandSingMonitor;
+import shlm.lmcs.com.lazycat.LazyShopMonitor.MerchantMonitor;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.Monitor;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.NewShopinMonitor;
 import shlm.lmcs.com.lazycat.LazyShopPage.LocalMonitorPage;
@@ -89,27 +90,54 @@ public class Mainfrg extends LazyCatFragment {
         LinearLayout _layout = item.findViewById(R.id.fragment_main_layoutmore);
         _RefreshScrollView.SetHeadView(_layout, 200, R.id.layoutmore_progressbar, R.id
                 .layoutmore_headimg);
-        /**
-         * 在界面中 必须要加载的三个在主要界面的数据信息
-         */
-        /*首页的推荐的横向的滚动*/
+
         /**
          * 华丽分割线
          * ========================================================
          */
-        /*<首页的新品上架的管理>*/
+        /*<首页的商家促销的界面管理>*/
+
+        /*找到展示的界面的父布局*/
+        LinearLayout merchantLayout = item.findViewById(R.id.fragment_main_merchant);
+        View merchantView = inflater.inflate(R.layout.assembly_fragment_main_erpromotion, null);
+        merchantLayout.addView(merchantView);/*添加View*/
+        MerchantMonitor merchantMonitor = new MerchantMonitor(merchantView, getContext());
+        merchantMonitor.Start();
+        /*创建商家促销管理者*/
+        merchantMonitor.SaveTag(LocalMonitorPage.MONITOR_MERCHANT);
+        merchantLayout.setTag(merchantMonitor);
+        /*</首页的商家促销的界面管理>*/
+
+        /**
+         * 华丽分割线
+         * ========================================================
+         */
+
+        /*<新品上架促销>*/
+
+        LinearLayout newShopin = item.findViewById(R.id.fragment_main_newShopin);
+        View newShopinView = inflater.inflate(R.layout.assembly_fragment_main_newshopin, null);
+        newShopin.setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff", 10));
+        newShopin.addView(newShopinView);
+        NewShopinMonitor newShopinMonitor = new NewShopinMonitor(newShopinView, getContext());
+        newShopinMonitor.Start();
+
+        /*</新品上架促销>*/
+
+
+        /**
+         * 华丽分割线
+         * ========================================================
+         */
+        /*<导航界面的管理>*/
         LinearLayout navA_body = item.findViewById(R.id.fragment_main_navA_body);
         View _navaBody = inflater.inflate(R.layout.assembly_fragment_main_nava, null);
-        NewShopinMonitor newShopinMonitor = new NewShopinMonitor();
-        newShopinMonitor.SaveTag(LocalMonitorPage.MONITOR_NEWSHOPIN);/*设置标识 标识这个管理者的名字*/
-        navA_body.addView(_navaBody);
-        navA_body.setTag(newShopinMonitor);
         /*</首页的新品上架的管理>*/
         /**
          * 华丽分割线
          * ========================================================
          */
-        /*<首页的品牌促销的管理>*/
+        /*<品牌促销的界面管理>*/
         LinearLayout layout = item.findViewById(R.id.fragment_main_singlebody);
         View mainSingle = inflater.inflate(R.layout.assembly_fragment_main_single, null);
         layout.addView(mainSingle);
@@ -128,7 +156,7 @@ public class Mainfrg extends LazyCatFragment {
         }, getContext());
         brandSingMonitor.SaveTag(LocalMonitorPage.MONITOR_BRANDSING);/*标识管理者的名字*/
         layout.setTag(brandSingMonitor);/*保存管理者*/
-        /*</首页的品牌促销的管理>*/
+        /*</品牌促销的界面管理>*/
         _RefreshScrollView.SetLinstener(new RefreshScrollView.RefreshScrollViewListener() {
             @Override
             public void onRefresh() {
@@ -188,7 +216,6 @@ public class Mainfrg extends LazyCatFragment {
                         if (monitor != null) {
                             Toast.makeText(getContext(), "Tag:" + monitor.GetTag(), Toast
                                     .LENGTH_SHORT).show();
-
                         }
                     }
                 }
@@ -216,13 +243,6 @@ public class Mainfrg extends LazyCatFragment {
             }
         });
 
-        /**
-         * 尝试加载新品上架或者临时促销的产品
-         */
-        LinearLayout newShopin = item.findViewById(R.id.fragment_main_newShopin);
-        newShopin.setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff", 10));
-        View _itemNewshopin = inflater.inflate(R.layout.assembly_fragment_main_newshopin, null);
-        newShopin.addView(_itemNewshopin);
 
         /**
          * 实现点击搜索框进入搜索界面

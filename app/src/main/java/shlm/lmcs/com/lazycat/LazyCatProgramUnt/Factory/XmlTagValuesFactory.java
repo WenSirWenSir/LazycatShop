@@ -8,6 +8,84 @@ public class XmlTagValuesFactory {
 
 
     /**
+     * 首页的新品促销
+     */
+    public static class XMLtagMainNewshopIn {
+        public static String key_newshopin_title = "newshopin_title";
+        public static String key_newshopin_photoaddr = "newshopin_photoaddr";
+        public static String key_newshopin_text = "newshopin_text";
+        public static String key_values = "values";
+        public static String key_values_title = "title";
+        public static String key_values_text = "text";
+        public static String key_values_status = "status";
+        public static String key_values_img = "img";
+
+        public static String getNewshopin_title() {
+            return newshopin_title;
+        }
+
+        public static void setNewshopin_title(String newshopin_title) {
+            XMLtagMainNewshopIn.newshopin_title = newshopin_title;
+        }
+
+        public static String getNewshopin_text() {
+            return newshopin_text;
+        }
+
+        public static void setNewshopin_text(String newshopin_text) {
+            XMLtagMainNewshopIn.newshopin_text = newshopin_text;
+        }
+
+        public static String getNewshopin_photoaddr() {
+            return newshopin_photoaddr;
+        }
+
+        public static void setNewshopin_photoaddr(String newshopin_photoaddr) {
+            XMLtagMainNewshopIn.newshopin_photoaddr = newshopin_photoaddr;
+        }
+
+        public static String newshopin_title;/*首页新品促销标题*/
+        public static String newshopin_text;/*首页新品促销标语*/
+        public static String newshopin_photoaddr;/*首页新品促销图片地址*/
+    }
+
+    /**
+     * 首页的经销商管理的界面
+     */
+
+    public static class XMLtagMainMerchant {
+        public static String key_merchant_title = "merchant_title";/*大界面标题*/
+        public static String key_merchant_photoaddr = "merchant_photoaddr";/*图片的地址*/
+        public static String key_merchant_values = "values";/*包裹开始标签*/
+        public static String key_merchant_values_title = "title";/*控件值的标题*/
+        public static String key_merchant_values_text = "text";/*控件的标语*/
+        public static String key_merchant_values_status = "status";/*控件的状态*/
+        public static String key_merchant_values_background = "background";/*控件的背景图片*/
+
+
+        private static String merchant_title;
+
+        public static String getMerchant_photoaddr() {
+            return merchant_photoaddr;
+        }
+
+        public static void setMerchant_photoaddr(String merchant_photoaddr) {
+            XMLtagMainMerchant.merchant_photoaddr = merchant_photoaddr;
+        }
+
+        private static String merchant_photoaddr;
+
+        public static String getMerchant_title() {
+            return merchant_title;
+        }
+
+        public static void setMerchant_title(String merchant_title) {
+            XMLtagMainMerchant.merchant_title = merchant_title;
+        }
+    }
+
+
+    /**
      * 首页的品牌促销的整理
      */
     public static class XMLtagMainBrandPromotion {
