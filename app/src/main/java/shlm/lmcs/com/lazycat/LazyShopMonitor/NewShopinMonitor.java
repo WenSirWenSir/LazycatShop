@@ -12,6 +12,7 @@ import org.xmlpull.v1.XmlPullParser;
 import java.util.ArrayList;
 import java.util.List;
 
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlanalysisFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
@@ -26,7 +27,6 @@ public class NewShopinMonitor extends Monitor {
     private String MSG = "NewShopinMonitor";
     private LocalNewshopIn localNewshopIn = null;
     private Context mContext;
-    private String url;
     private XmlTagValuesFactory.XMLtagMainNewshopIn newShopin = new XmlTagValuesFactory
             .XMLtagMainNewshopIn();
     private LocalNewshopIn shopinValues = null;//保存一个控件的值
@@ -39,8 +39,6 @@ public class NewShopinMonitor extends Monitor {
     public NewShopinMonitor(View newShopinView, Context context) {
         this.mContext = context;
         this._newShopinView = (LinearLayout) newShopinView;
-        this.url = url;
-
     }
 
 
@@ -52,7 +50,8 @@ public class NewShopinMonitor extends Monitor {
             /*不准加载*/
         } else {
             /*准许加载*/
-            Net.doGet(mContext, this.url, new Net.onVisitInterServiceListener() {
+            Net.doGet(mContext, Config.HTTP_ADDR.SERVICE + "/lazyShop/configXml/newshopin.xml",
+                    new Net.onVisitInterServiceListener() {
                 @Override
                 public void onSucess(String tOrgin) {
                     Log.i(MSG, "NewShopinMonitor.java[+]网络返回的Xml数据:" + tOrgin);
@@ -116,6 +115,10 @@ public class NewShopinMonitor extends Monitor {
                     if (tag.equals(XmlTagValuesFactory.XMLtagMainNewshopIn.key_values_img)) {
                         shopinValues.setImg(pullParser.nextText());/*图片*/
                     }
+
+                    if (tag.equals(XmlTagValuesFactory.XMLtagMainNewshopIn.key_values_status)) {
+                        shopinValues.setStatus(pullParser.nextText());/*状态*/
+                    }
                 } catch (Exception e) {
                     Log.e(MSG, "NewShopinMonitor.java[+]错误信息:" + e.getMessage());
                 }
@@ -136,9 +139,14 @@ public class NewShopinMonitor extends Monitor {
                 /**
                  * 初始化View不加载图片
                  */
-                for (int i = 0; i < shopinList.size(); i++) {
-                    Log.i(MSG, "NewShopinMonitor.java[" + i + "]" + shopinList.get(i).getTitle());
-                }
+                /*大标题*/
+                TextView big_title = _newShopinView.findViewById(R.id
+                        .assembly_fragment_main_newshopin_title);
+                big_title.setText(newShopin.getNewshopin_title());
+                /*大标语*/
+                TextView big_text = _newShopinView.findViewById(R.id
+                        .assembly_fragment_main_newshopin_text);
+                big_text.setText(newShopin.getNewshopin_text());
                 /*标题*/
                 TextView first_title = _newShopinView.findViewById(R.id
                         .assembly_fragment_main_newshopin_firstTitle);

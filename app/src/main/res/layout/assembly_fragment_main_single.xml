@@ -12,7 +12,8 @@
             android:id="@+id/assembly_fragment_main_singleBack"
             android:layout_width="match_parent"
             android:layout_height="270dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/sdf987656" />
     </LinearLayout>
 
     <LinearLayout
@@ -22,7 +23,6 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="30dp"
         android:alpha="0.2"
-
         android:background="#000000"
         android:orientation="vertical">
 
@@ -37,8 +37,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="30dp"
         android:gravity="center_vertical"
-        android:text="感谢陪伴飘柔品牌大促销"
-        android:textColor="@color/ThemeColor"
+        android:text="海天蚝油,一招定鲜"
+        android:textColor="#000000"
         android:textSize="18dp"
         android:textStyle="bold" />
 
@@ -49,8 +49,8 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="70dp"
-        android:text="一招定鲜,海天蚝油"
-        android:textColor="#000000"
+        android:text="海天回馈,7折起购."
+        android:textColor="#666666"
         android:textSize="15dp"
         android:textStyle="bold" />
     <!--背景透明的商品或者商户图片-->
@@ -61,7 +61,17 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
         android:layout_marginRight="30dp"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        android:src="@drawable/sf998" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginTop="140dp"
+        android:alpha="0.4"
+        android:background="#000000">
+
+    </LinearLayout>
 
 
     <LinearLayout
@@ -74,9 +84,7 @@
             android:id="@+id/assembly_fragment_main_singleShopabody"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical">
@@ -85,7 +93,8 @@
                 android:id="@+id/assembly_fragment_main_singleShopaImage"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                android:src="@drawable/yu8899" />
 
             <TextView
                 android:id="@+id/assembly_fragment_main_singleShopaTitle"
@@ -97,26 +106,61 @@
                 android:maxLines="1"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:textColor="#000000"
+                android:text="沙宣750毫升洗发露"
+                android:textColor="#ffffff"
                 android:textSize="10sp"
-                android:textStyle="bold" />
+                 />
 
-            <shlm.lmcs.com.lazycat.LazyShopView.PriceNumberView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="18"
-                android:textColor="@color/colorMoney"
-                android:textSize="18dp" />
+                android:orientation="horizontal">
+
+                <shlm.lmcs.com.lazycat.LazyShopView.PriceNumberView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:paddingRight="5dp"
+                    android:text="18"
+                    android:textColor="#ffffff"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <shlm.lmcs.com.lazycat.LazyShopView.PriceNumberView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/PriceSymbol"
+                        android:textColor="@color/colorPrice"
+                        android:textSize="12dp"
+                        android:textStyle="bold" />
+                    <shlm.lmcs.com.lazycat.LazyShopView.PriceNumberView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="19"
+                        android:textColor="@color/colorPrice"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/assembly_fragment_main_singleShopbbody"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:gravity="center_horizontal"
@@ -127,6 +171,7 @@
                 android:layout_width="49dp"
                 android:layout_height="50dp"
                 android:scaleType="fitXY"
+                android:src="@drawable/yu8899"
 
                 />
 
@@ -152,12 +197,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/assembly_fragment_main_singleShopcbody"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:gravity="center_horizontal"
@@ -167,7 +209,8 @@
                 android:id="@+id/assembly_fragment_main_singleShopcImage"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                android:src="@drawable/yu8899" />
 
             <TextView
                 android:id="@+id/assembly_fragment_main_singleShopcTitle"

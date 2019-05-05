@@ -77,12 +77,6 @@ public class BrandSingMonitor extends Monitor {
         //开始最基础的整理界面
         this.item.findViewById(R.id.assembly_fragment_main_singleAlphaTitle).setBackground(Tools
                 .CreateDrawable(1, "#000000", "#000000", 50));
-        this.item.findViewById(R.id.assembly_fragment_main_singleShopabody).setBackground(Tools
-                .CreateDrawable(1, "#ffffff", "#ffffff", 20));
-        this.item.findViewById(R.id.assembly_fragment_main_singleShopbbody).setBackground(Tools
-                .CreateDrawable(1, "#ffffff", "#ffffff", 20));
-        this.item.findViewById(R.id.assembly_fragment_main_singleShopcbody).setBackground(Tools
-                .CreateDrawable(1, "#ffffff", "#ffffff", 20));
     }
 
     /**

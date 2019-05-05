@@ -57,7 +57,7 @@ public class WebServiceAct extends LazyCatAct {
 
                 @Override
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
-
+                    /*开始加载信息*/
                 }
 
                 @Override

@@ -2,6 +2,7 @@ package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage;
 
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.os.Parcel;
 
 import java.io.Serializable;
@@ -12,6 +13,17 @@ import java.io.Serializable;
 @SuppressLint("ParcelCreator")
 public class WEB_VALUES_ACT implements Serializable {
     private String _title;
+
+    public Dialog get_dialog() {
+        return _dialog;
+    }
+
+    public void set_dialog(Dialog _dialog) {
+        this._dialog = _dialog;
+    }
+
+    private Dialog _dialog;
+
     /**
      * 默认构造一个URL其他为默认
      *

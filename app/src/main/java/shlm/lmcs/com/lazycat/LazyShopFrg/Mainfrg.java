@@ -1,6 +1,7 @@
 package shlm.lmcs.com.lazycat.LazyShopFrg;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -230,6 +231,10 @@ public class Mainfrg extends LazyCatFragment {
                 _RefreshScrollView.inLoadMessage = true;//告诉内部 已经开始加载 不能再次调用接口
                 WEB_VALUES_ACT web_values_act = new WEB_VALUES_ACT
                         ("http://120.79.63.36/lazyShop/webpage/1.html");
+                /*创建加载框*/
+                Dialog _dialog = new Dialog(getContext());
+                _dialog.setContentView(R.layout.item_wait);
+                _dialog.show();
                 Intent i = new Intent();
                 i.setClass(getContext(), WebServiceAct.class);
                 i.putExtra(WINDOW_PAGE.RESULT_WEBVIEW, web_values_act);
