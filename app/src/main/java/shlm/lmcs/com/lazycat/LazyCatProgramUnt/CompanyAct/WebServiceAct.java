@@ -12,10 +12,12 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.WebMonitor;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WEB_VALUES_ACT;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WINDOW_PAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
+import shlm.lmcs.com.lazycat.R;
 
 
 /**
@@ -41,7 +43,7 @@ public class WebServiceAct extends LazyCatAct {
         item.addView(_WebView);
         setContentView(item);
         //获取构造数据信息
-        WEB_VALUES_ACT web_values_act = (WEB_VALUES_ACT) getIntent().getSerializableExtra
+        final WEB_VALUES_ACT web_values_act = (WEB_VALUES_ACT) getIntent().getSerializableExtra
                 (WINDOW_PAGE.RESULT_WEBVIEW);
         if (web_values_act != null) {
             Log.i(Config.DEBUG, "WebServiceAct.java[+]获取到的构造的URL:" + web_values_act.get_url());
@@ -58,11 +60,17 @@ public class WebServiceAct extends LazyCatAct {
                 @Override
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
                     /*开始加载信息*/
+                    refreshDialog = new WaitDialog.RefreshDialog(WebServiceAct.this);
+                    WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+                    wait_itme_dialogpage.setView(R.layout.item_wait);
+                    wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                    refreshDialog.Init(wait_itme_dialogpage);
+                    refreshDialog.showRefreshDialog("", false);
                 }
 
                 @Override
                 public void onPageFinished(WebView view, String url) {
-                    //refreshDialog.dismiss();
+                    refreshDialog.dismiss();
 
                 }
             });

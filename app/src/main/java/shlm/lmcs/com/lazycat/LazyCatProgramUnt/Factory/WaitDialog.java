@@ -69,10 +69,8 @@ public class WaitDialog {
                 tv.setText(msg.toString().trim());
 
             }
-            setCancelable(canClose);
             params.gravity = Gravity.CENTER;
             wd.setAttributes(params);
-            setCancelable(canClose);
             show();
         }
 

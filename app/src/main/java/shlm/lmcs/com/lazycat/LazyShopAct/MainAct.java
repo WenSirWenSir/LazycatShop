@@ -56,7 +56,8 @@ public class MainAct extends LazyCatAct {
                 RelativeLayout rl = (RelativeLayout) v;
                 Animator animation = Tools.createRoundAnimation(btn_main, 200);
                 setIcoNavColor(rl, R.drawable.ico_btn_main, animation);
-                LazyCatActStartActivity(ShowshopOffice.class, false);
+                //LazyCatActStartActivity(ShowshopOffice.class, false);
+                LazyCatActStartActivity(UploadApp.class, false);
 
             }
         });

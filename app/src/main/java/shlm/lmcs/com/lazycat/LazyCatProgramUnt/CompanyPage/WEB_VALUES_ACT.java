@@ -2,10 +2,11 @@ package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage;
 
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.os.Parcel;
 
 import java.io.Serializable;
+
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 
 /**
  * 构造WebView控件的信息
@@ -14,15 +15,15 @@ import java.io.Serializable;
 public class WEB_VALUES_ACT implements Serializable {
     private String _title;
 
-    public Dialog get_dialog() {
+    public WaitDialog.RefreshDialog get_dialog() {
         return _dialog;
     }
 
-    public void set_dialog(Dialog _dialog) {
+    public void set_dialog(WaitDialog.RefreshDialog _dialog) {
         this._dialog = _dialog;
     }
 
-    private Dialog _dialog;
+    private WaitDialog.RefreshDialog _dialog;
 
     /**
      * 默认构造一个URL其他为默认

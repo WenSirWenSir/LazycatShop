@@ -1,12 +1,12 @@
 package shlm.lmcs.com.lazycat.LazyShopFrg;
 
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +17,9 @@ import android.widget.Toast;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.WebServiceAct;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.LazyCatFragment;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WEB_VALUES_ACT;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WINDOW_PAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
@@ -72,18 +71,34 @@ public class Mainfrg extends LazyCatFragment {
                 Log.i(Config.DEBUG, "最大使用内存:" + max + "合计分配内存:" + total + "剩余内存:" + free);
             }
         });
+        /*获取输入框的文字进行动画处理*/
+        item.findViewById(R.id.assembly_head_input).startAnimation(Tools.createOnalpha(1000, true));
         return item;
     }
 
     @SuppressLint({"NewApi", "ResourceType", "LongLogTag"})
     private void init(View item) {
         inflater = LayoutInflater.from(getContext());//初始化inflater
-        //加载第一个横向的广告布局
-        horizontaladv_body = item.findViewById(R.id.fragment_main_horizontaladv_body);//横向广告的布局
-        View horizontaladv_view = inflater.inflate(R.layout.assembly_fragment_main_horizontaladv,
-                null);
-        horizontaladv_body.addView(horizontaladv_view);
 
+        /*横向的广告图片的布局*/
+        horizontaladv_body = item.findViewById(R.id.fragment_main_horizontaladv_body);//横向广告的布局
+        final View horizontaladv_view = inflater.inflate(R.layout
+                .assembly_fragment_main_horizontaladv, null);
+        horizontaladv_body.addView(horizontaladv_view);
+        /*横向动画开始*/
+        DisplayMetrics matrix = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(matrix);
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, matrix.widthPixels);
+        valueAnimator.setDuration(2000);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                ViewGroup.LayoutParams params = horizontaladv_body.getLayoutParams();
+                params.width = (int) animation.getAnimatedValue();
+                horizontaladv_body.setLayoutParams(params);
+            }
+        });
+        valueAnimator.start();
         /**
          * 尝试加载
          */
@@ -133,6 +148,7 @@ public class Mainfrg extends LazyCatFragment {
         /*<导航界面的管理>*/
         LinearLayout navA_body = item.findViewById(R.id.fragment_main_navA_body);
         View _navaBody = inflater.inflate(R.layout.assembly_fragment_main_nava, null);
+        navA_body.addView(_navaBody);
         /*</首页的新品上架的管理>*/
         /**
          * 华丽分割线
@@ -232,14 +248,8 @@ public class Mainfrg extends LazyCatFragment {
                 WEB_VALUES_ACT web_values_act = new WEB_VALUES_ACT
                         ("http://120.79.63.36/lazyShop/webpage/1.html");
                 /*创建加载框*/
-                Dialog _dialog = new Dialog(getContext());
-                _dialog.setContentView(R.layout.item_wait);
-                _dialog.show();
-                Intent i = new Intent();
-                i.setClass(getContext(), WebServiceAct.class);
-                i.putExtra(WINDOW_PAGE.RESULT_WEBVIEW, web_values_act);
-                startActivity(i);
-                //停止刷新
+
+                LazyCatFragmentStartWevact(web_values_act);
             }
 
             @Override
