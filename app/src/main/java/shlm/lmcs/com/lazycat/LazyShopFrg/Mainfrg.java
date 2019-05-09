@@ -18,7 +18,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.LazyCatFragment;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WEB_VALUES_ACT;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
@@ -231,8 +230,36 @@ public class Mainfrg extends LazyCatFragment {
                         /*正在显示*/
                         Monitor monitor = (Monitor) i.getChildAt(y).getTag();
                         if (monitor != null) {
+                            /*获取到了数据信息*/
+                            if (monitor.GetTag() == LocalMonitorPage.MONITOR_BRANDSING) {
+                                /*品牌促销的界面*/
+                                BrandSingMonitor bsm = (BrandSingMonitor) monitor;
+                                bsm.Start(new ProgramInterface() {
+                                    @Override
+                                    public void onSucess(String data, int code) {
+
+                                    }
+
+                                    @Override
+                                    public void onFaile(String data, int code) {
+
+                                    }
+                                }, getContext());
+
+                            }
                             Toast.makeText(getContext(), "Tag:" + monitor.GetTag(), Toast
                                     .LENGTH_SHORT).show();
+                        }
+                    } else {
+                        /*不在显示的话 就调用清空*/
+                        Monitor monitor = (Monitor) i.getChildAt(y).getTag();
+                        if (monitor != null) {
+                            if (monitor.GetTag() == LocalMonitorPage.MONITOR_BRANDSING) {
+                                /*品牌促销*/
+                                BrandSingMonitor bsm = (BrandSingMonitor) monitor;
+                                bsm.pause();
+                            }
+
                         }
                     }
                 }

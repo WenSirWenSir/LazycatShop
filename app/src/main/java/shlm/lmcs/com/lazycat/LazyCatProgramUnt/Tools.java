@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +58,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XMLUserAddr;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.FastBlur;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 
 
@@ -880,7 +882,15 @@ public class Tools {
      */
     public static String getRandString() {
         return String.valueOf(System.currentTimeMillis());
-
     }
 
+    public static void Blur(Bitmap bitmap, ImageView view) {
+        long startMs = System.currentTimeMillis();
+        float scaleFactor = 10;
+        float radius = 2;
+        Bitmap overlay = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth() /
+                scaleFactor), (int) (bitmap.getHeight() / scaleFactor), false);
+        Bitmap able = FastBlur.doBlur(overlay, (int) radius, true);
+        view.setImageBitmap(able);
+    }
 }

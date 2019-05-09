@@ -174,12 +174,12 @@ public class RefreshScrollView extends ScrollView {
                         /*这边要加载网络图片*/
                         if (imageCache.getImage("225522") != null || onGetHeadimg == true) {
                             Log.i(Config.DEBUG, "缓存中存在图片或者已经在开始下载");
-                            head_img.setImageBitmap(imageCache.getImage("225522"));
+                            //head_img.setImageBitmap(imageCache.getImage("225522"));
                         } else {
                             LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
                             load_imagepage.setImg_url("/photos/225522.png");
                             load_imagepage.setLruchTag("2423423");
-                            load_imagepage.setImg(head_img);
+                            //load_imagepage.setImgBody(head_img);
                             Net.doGetimg(load_imagepage, new ProgramInterface.doGetImg() {
                                 @Override
                                 public void onSucess(Bitmap bitmap) {

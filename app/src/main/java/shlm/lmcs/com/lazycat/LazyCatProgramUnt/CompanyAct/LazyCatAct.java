@@ -127,6 +127,7 @@ public class LazyCatAct extends Activity {
     protected void setHideNav() {
         try {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -15,6 +15,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Deliveryfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Mainfrg;
+import shlm.lmcs.com.lazycat.LazyShopFrg.UserCenterfrg;
 import shlm.lmcs.com.lazycat.R;
 
 public class MainAct extends LazyCatAct {
@@ -22,6 +23,7 @@ public class MainAct extends LazyCatAct {
     private RelativeLayout btn_main, btn_delivery, btn_usercenter;
     private Mainfrg mainfrg;
     private Deliveryfrg deliveryfrg;
+    private UserCenterfrg usercneterfrg;
     private final static int ICO_FRAGMENT_MAIN = 0;
     private final static int ICO_FRAGMENT_DELIVERY = 1;
     private final static int ICO_FRAGMENT_USERCENTER = 2;
@@ -56,8 +58,8 @@ public class MainAct extends LazyCatAct {
                 RelativeLayout rl = (RelativeLayout) v;
                 Animator animation = Tools.createRoundAnimation(btn_main, 200);
                 setIcoNavColor(rl, R.drawable.ico_btn_main, animation);
-                //LazyCatActStartActivity(ShowshopOffice.class, false);
-                LazyCatActStartActivity(UploadApp.class, false);
+                LazyCatActStartActivity(ShowshopOffice.class, false);
+                //LazyCatActStartActivity(UploadApp.class, false);
 
             }
         });
@@ -78,10 +80,12 @@ public class MainAct extends LazyCatAct {
             public void onClick(View v) {
                 ClearallIcoBackground();
                 RelativeLayout rl = (RelativeLayout) v;
+                hideFragment();
+                showFragment(ICO_FRAGMENT_USERCENTER);
+                setStatusBar("#f30d88");
                 Animator animation = Tools.createRoundAnimation(btn_usercenter, 200);
                 setIcoNavColor(rl, R.drawable.ico_usercontent, animation);
                 LazyCatActStartActivity(LoginAct.class, false);
-
             }
         });
     }
@@ -157,6 +161,12 @@ public class MainAct extends LazyCatAct {
                 }
                 break;
             case ICO_FRAGMENT_USERCENTER:
+                if (usercneterfrg != null) {
+                    ft.show(usercneterfrg);
+                } else {
+                    usercneterfrg = new UserCenterfrg();
+                    ft.add(R.id.activity_main_Framelayout, usercneterfrg);
+                }
                 break;
         }
         ft.commit();
@@ -169,6 +179,9 @@ public class MainAct extends LazyCatAct {
         }
         if (deliveryfrg != null) {
             ft.hide(deliveryfrg);
+        }
+        if (usercneterfrg != null) {
+            ft.hide(usercneterfrg);
         }
         ft.commit();
     }

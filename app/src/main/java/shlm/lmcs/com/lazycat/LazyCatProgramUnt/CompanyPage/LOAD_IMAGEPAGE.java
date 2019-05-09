@@ -1,7 +1,7 @@
 package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage;
 
 
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.io.File;
 
@@ -9,7 +9,7 @@ import java.io.File;
  * 在线程池中下载时候 要传入的IMAGE的值
  */
 public class LOAD_IMAGEPAGE {
-    private ImageView img;
+    private LinearLayout imgBody;
     private String LruchTag;
 
     public File getDefaultFile() {
@@ -50,17 +50,18 @@ public class LOAD_IMAGEPAGE {
 
     private String postPixt;
 
-    public ImageView getImg() {
-        return img;
+    public LinearLayout getImg() {
+        return this.imgBody;
     }
 
-    public void setImg(ImageView img) {
-        this.img = img;
+    public void setImgBody(LinearLayout _imgBody) {
+        this.imgBody = _imgBody;
     }
 
 
     /**
      * 保存到缓存的
+     *
      * @return
      */
     public String getLruchTag() {
@@ -75,6 +76,7 @@ public class LOAD_IMAGEPAGE {
     /**
      * 获取一个图片的地址  一般的格式为
      * dirs/name.jpg
+     *
      * @return
      */
     public String getImg_url() {
@@ -85,6 +87,7 @@ public class LOAD_IMAGEPAGE {
     /**
      * 设置一个图片的地址 一般格式为
      * dirs/name.jpg
+     *
      * @param img_url
      */
     public void setImg_url(String img_url) {
@@ -96,7 +99,7 @@ public class LOAD_IMAGEPAGE {
      * 清空所有的数据信息
      */
     public void clear() {
-        this.img = null;
+        this.imgBody = null;
         this.img_url = "";
         this.LruchTag = "";
     }

@@ -8,10 +8,10 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
@@ -28,13 +28,13 @@ public class LoginAct extends LazyCatAct {
     private RelativeLayout progressbody;
     private LinearLayout inputBody;
     private EditText inputPhone, inputCode;
+    private String MSG = "LoginAct.java[+]";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        setStatusBar("#e9e9e9");
         layout = findViewById(R.id.activity_login_main);
         inputBody = findViewById(R.id.activity_login_inputbody);
         progressbody = findViewById(R.id.activity_login_progressbody);/**/
@@ -55,6 +55,8 @@ public class LoginAct extends LazyCatAct {
         findViewById(R.id.activity_login_logo).startAnimation(Tools.createOnalpha(3000, false));
         /*设置边框*/
         inputBody.setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff", 10));
+        findViewById(R.id.activity_login_btnLogin).setBackground(Tools.CreateDrawable(1,
+                "#f30d65", "#f30d65", 5));
         init();
 
     }
@@ -67,6 +69,7 @@ public class LoginAct extends LazyCatAct {
             public void onClick(View v) {
                 inputPhone.setVisibility(View.GONE);
                 inputCode.setVisibility(View.GONE);
+                Log.i(MSG, "测量之后的宽度:" + inputBody.getMeasuredWidth());
                 inputAnimation(inputBody, inputBody.getMeasuredWidth(), inputBody
                         .getMeasuredHeight());
             }
@@ -102,7 +105,7 @@ public class LoginAct extends LazyCatAct {
      */
     private void inputAnimation(final View view, float w, float h) {
         AnimatorSet set = new AnimatorSet();
-        final ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, w - 50);
+        final ValueAnimator valueAnimator = ValueAnimator.ofFloat(60, w);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -110,12 +113,13 @@ public class LoginAct extends LazyCatAct {
                 ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view
                         .getLayoutParams();
                 params.leftMargin = (int) value;
+                Log.i(MSG, "距离左边的MARGIN：" + value);
                 params.rightMargin = (int) value;
                 view.setLayoutParams(params);
             }
         });
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(inputBody, "scaleX", 0.2f, 0.5f);
-        set.setDuration(3000);
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, "scaleX", 1f, 0.5f);
+        set.setDuration(1000);
         set.setInterpolator(new AccelerateInterpolator());
         set.playTogether(valueAnimator, objectAnimator);
         set.start();
@@ -131,6 +135,9 @@ public class LoginAct extends LazyCatAct {
                 progressbody.setVisibility(View.VISIBLE);
                 progressAnimation(progressbody);
                 inputBody.setVisibility(View.GONE);
+                /*顺便把猫的LOGO给取消了*/
+                findViewById(R.id.activity_login_logo).startAnimation(Tools.clearOnalpha(1000,
+                        true));
 
 
             }

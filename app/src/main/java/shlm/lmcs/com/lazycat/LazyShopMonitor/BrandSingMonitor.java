@@ -6,6 +6,7 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -34,6 +35,8 @@ public class BrandSingMonitor extends Monitor {
     public Boolean _Static;//是否可以加载信息的状态
     public Boolean Stop = false;//外部调用 是否可以进行加载操作
     public Boolean Runing = false;//外部判断内部是否在刷新操作
+    private LinearLayout backImg;/*背景图片的BODY*/
+    private String MSG = "BrandSingMonitor.java[+]";
     private List<LOAD_IMAGEPAGE> load_imagepages = new ArrayList<LOAD_IMAGEPAGE>();
     private List<Runnable> RunnableList = null;
     private ProgramInterface programInterface;
@@ -77,13 +80,40 @@ public class BrandSingMonitor extends Monitor {
         //开始最基础的整理界面
         this.item.findViewById(R.id.assembly_fragment_main_singleAlphaTitle).setBackground(Tools
                 .CreateDrawable(1, "#000000", "#000000", 50));
+        /*开始整理界面  找到控件信息*/
+        backImg = this.item.findViewById(R.id.assembly_fragment_main_singleBack);/*背景图片*/
     }
 
     /**
      * 开始整理事务
      */
     public void Start(ProgramInterface _programInterface, final Context context) {
+
+        /*加载背景图片*/
+
+        if (this.backImg != null) {
+            ImageView img = new ImageView(this.backImg.getContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout
+                    .LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            img.setLayoutParams(params);
+            img.setScaleType(ImageView.ScaleType.FIT_XY);
+            img.setImageResource(R.drawable.a2343434);
+            this.backImg.addView(img);
+        }
         this.programInterface = _programInterface;
+        /*模拟加载图片*/
+        if (backImg != null) {
+            backImg.setDrawingCacheEnabled(true);/*设置可以读取到图片*/
+            if (backImg.getDrawingCache() != null) {
+                Log.e(MSG, "存在图片数据信息");
+
+
+            } else {
+                Log.e(MSG, "没有图片数据信息");
+
+
+            }
+        }
         Net.doGet(mContext, "http://120.79.63.36/lazyShop/config/main_brand_promotion.xml", new
                 Net.onVisitInterServiceListener() {
             @Override
@@ -138,7 +168,7 @@ public class BrandSingMonitor extends Monitor {
                         } else {
                             load_imagepage.setPostPixt("jpg");
                         }
-                        load_imagepage.setImg((ImageView) item.findViewById(R.id
+                        load_imagepage.setImgBody((LinearLayout) item.findViewById(R.id
                                 .assembly_fragment_main_singleBack));
                         load_imagepages.add(load_imagepage);
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
@@ -153,8 +183,9 @@ public class BrandSingMonitor extends Monitor {
                         load_imagepage.setSaveName("key_big_img.png");
                         load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion
                                 .getBig_img());
-                        ImageView img = item.findViewById(R.id.assembly_fragment_main_singleBigImg);
-                        load_imagepage.setImg(img);
+                        LinearLayout img = item.findViewById(R.id
+                                .assembly_fragment_main_singleBigImg);
+                        load_imagepage.setImgBody(img);
                         load_imagepages.add(load_imagepage);//添加一个元素
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_shop_a_img)) {
@@ -175,9 +206,9 @@ public class BrandSingMonitor extends Monitor {
                         load_imagepage.setDefaultFile(mContext.getFilesDir());
                         /*设置缓存的Tag*/
                         load_imagepage.setLruchTag(Tools.getRandString());
-                        ImageView img = item.findViewById(R.id
+                        LinearLayout img = item.findViewById(R.id
                                 .assembly_fragment_main_singleShopaImage);
-                        load_imagepage.setImg(img);
+                        load_imagepage.setImgBody(img);
                         load_imagepages.add(load_imagepage);//添加一个元素
 
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
@@ -195,11 +226,11 @@ public class BrandSingMonitor extends Monitor {
                         /*设置要访问的文件名称*/
                         load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion
                                 .getShop_b_img());
-                        ImageView img = item.findViewById(R.id
+                        LinearLayout img = item.findViewById(R.id
                                 .assembly_fragment_main_singleShopbImage);
                         /*设置一个TAG用来缓存图片*/
                         load_imagepage.setLruchTag(Tools.getRandString());
-                        load_imagepage.setImg(img);
+                        load_imagepage.setImgBody(img);
                         load_imagepages.add(load_imagepage);//添加一个元素
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
                             .key_shop_c_img)) {
@@ -219,11 +250,11 @@ public class BrandSingMonitor extends Monitor {
                         load_imagepage.setImg_url(XmlTagValuesFactory.XMLtagMainBrandPromotion
                                 .getShop_c_img());
                         /*设置对应的图片的View*/
-                        ImageView img = item.findViewById(R.id
+                        LinearLayout img = item.findViewById(R.id
                                 .assembly_fragment_main_singleShopcImage);
                         /*设置缓存的Tag表示*/
                         load_imagepage.setLruchTag(Tools.getRandString());
-                        load_imagepage.setImg(img);
+                        load_imagepage.setImgBody(img);
                         /*数组添加一个数据*/
                         load_imagepages.add(load_imagepage);//添加一个元素
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
@@ -327,6 +358,23 @@ public class BrandSingMonitor extends Monitor {
      */
 
     class Page {
+
+    }
+
+    /*暂时停止加载等的活动*/
+    public void pause() {
+        /*清空背景图片 减少缓存*/
+        if (backImg != null) {
+            if (backImg.getChildAt(0) != null) {
+                /*背景图片存在的话*/
+                backImg.removeAllViews();//清空内存
+            } else {
+
+            }
+        } else {
+            Log.e(MSG, "图片已经被清空");
+        }
+
     }
 
 }

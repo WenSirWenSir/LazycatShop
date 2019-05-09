@@ -72,16 +72,18 @@ public class lazyCatLogAct extends LazyCatAct {
                 ImageCache imageCache = new ImageCache(getApplicationContext());
                 imageCache.saveImage(load_imagepage.getLruchTag(), bm);
                 bm = null;
-                img.setImageBitmap(imageCache.getImage(load_imagepage.getLruchTag()));
-                System.gc();
+
+
+                final Bitmap bitmap = imageCache.getImage(load_imagepage.getLruchTag());
+                //img.setImageBitmap(bitmap);
             }
 
             @Override
             public void onFaile(String msg) {
-
             }
         });
 
 
     }
+
 }

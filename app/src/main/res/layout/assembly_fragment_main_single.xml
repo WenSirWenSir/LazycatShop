@@ -5,15 +5,12 @@
 
     <!--背景底图-->
     <LinearLayout
+        android:id="@+id/assembly_fragment_main_singleBack"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="270dp"
+        android:orientation="vertical"
+        >
 
-        <ImageView
-            android:id="@+id/assembly_fragment_main_singleBack"
-            android:layout_width="match_parent"
-            android:layout_height="270dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/sdf987656" />
     </LinearLayout>
 
     <LinearLayout
@@ -108,8 +105,7 @@
                 android:paddingRight="5dp"
                 android:text="沙宣750毫升洗发露"
                 android:textColor="#ffffff"
-                android:textSize="10sp"
-                 />
+                android:textSize="10sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -140,6 +136,7 @@
                         android:textColor="@color/colorPrice"
                         android:textSize="12dp"
                         android:textStyle="bold" />
+
                     <shlm.lmcs.com.lazycat.LazyShopView.PriceNumberView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
