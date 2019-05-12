@@ -27,6 +27,7 @@ import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.BrandSingMonitor;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.MerchantMonitor;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.Monitor;
+import shlm.lmcs.com.lazycat.LazyShopMonitor.MonitorStatic;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.NewShopinMonitor;
 import shlm.lmcs.com.lazycat.LazyShopPage.LocalMonitorPage;
 import shlm.lmcs.com.lazycat.R;
@@ -116,7 +117,7 @@ public class Mainfrg extends LazyCatFragment {
         LinearLayout merchantLayout = item.findViewById(R.id.fragment_main_merchant);
         View merchantView = inflater.inflate(R.layout.assembly_fragment_main_erpromotion, null);
         merchantLayout.addView(merchantView);/*添加View*/
-        MerchantMonitor merchantMonitor = new MerchantMonitor(merchantView, getContext());
+        final MerchantMonitor merchantMonitor = new MerchantMonitor(merchantView, getContext());
         merchantMonitor.Start();
         /*创建商家促销管理者*/
         merchantMonitor.SaveTag(LocalMonitorPage.MONITOR_MERCHANT);
@@ -230,6 +231,24 @@ public class Mainfrg extends LazyCatFragment {
                         /*正在显示*/
                         Monitor monitor = (Monitor) i.getChildAt(y).getTag();
                         if (monitor != null) {
+                            switch (monitor.GetTag()) {
+                                case LocalMonitorPage.MONITOR_MERCHANT:
+                                    MerchantMonitor mm = (MerchantMonitor) monitor;
+                                    switch (mm.getStatic()) {
+                                        case MonitorStatic.CLEAR_DONE:
+                                            /*已经被清空 要求重新再次加载*/
+                                            mm.reStart();
+                                            break;
+                                        case MonitorStatic.LOAD_IN:
+                                            /*正在加载 不进行重复加载*/
+                                            break;
+                                    }
+                            }
+
+                        }
+
+                        /**/
+                        if (monitor != null) {
                             /*获取到了数据信息*/
                             if (monitor.GetTag() == LocalMonitorPage.MONITOR_BRANDSING) {
                                 /*品牌促销的界面*/
@@ -254,10 +273,27 @@ public class Mainfrg extends LazyCatFragment {
                         /*不在显示的话 就调用清空*/
                         Monitor monitor = (Monitor) i.getChildAt(y).getTag();
                         if (monitor != null) {
-                            if (monitor.GetTag() == LocalMonitorPage.MONITOR_BRANDSING) {
-                                /*品牌促销*/
-                                BrandSingMonitor bsm = (BrandSingMonitor) monitor;
-                                bsm.pause();
+
+                            switch (monitor.GetTag()) {
+                                case LocalMonitorPage.MONITOR_BRANDSING:
+                                    /*品牌促销*/
+                                    BrandSingMonitor bsm = (BrandSingMonitor) monitor;
+                                    bsm.pause();
+                                    break;
+                                case LocalMonitorPage.MONITOR_MERCHANT:
+                                    MerchantMonitor mm = (MerchantMonitor) monitor;
+                                    switch (mm.getStatic()) {
+                                        case MonitorStatic.CLEAR_DONE:
+                                            /*已经被清空 要求重新再次加载*/
+                                            mm.reStart();
+                                            break;
+                                        case MonitorStatic.LOAD_IN:
+                                            /*正在加载 不进行重复加载*/
+                                            break;
+                                    }
+                                    mm.getStatic();
+                                    mm.clear();
+                                    break;
                             }
 
                         }
