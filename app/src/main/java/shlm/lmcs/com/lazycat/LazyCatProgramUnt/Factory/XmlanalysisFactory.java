@@ -44,8 +44,6 @@ public class XmlanalysisFactory {
                                         pullParser, 0);
                                 break;
                             case XmlPullParser.END_TAG:
-                                Log.e(Config.DEBUG, "XmlanalysisFactory.java[+]Xml解析解析到的结束节点:" +
-                                        pullParser.getName());
                                 _XmlanalysisInterface.onEndTag(pullParser.getName(), pullParser,
                                         0);/*结束标签*/
                                 break;

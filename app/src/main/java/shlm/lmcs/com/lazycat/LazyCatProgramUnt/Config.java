@@ -124,7 +124,8 @@ public class Config {
      * For example, send smsService,user login,get user data,update user data
      */
     public static class HTTP_ADDR {
-        public static String SERVICE = "http://47.102.205.26/";
+        public final static String SERVICE = "http://47.102.205.26/";
+        public final static String CONFIG_XML_SERVICE = SERVICE + "lazyShop/configXml/";
 
         /**
          * get the address of the interface to send SMS captha

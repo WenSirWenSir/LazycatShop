@@ -10,44 +10,151 @@ public class XmlTagValuesFactory {
     /**
      * 首页的新品促销
      */
-    public static class XMLtagMainNewshopIn {
+    public static class XMLKeyMainNewshopIn {
         public static String key_newshopin_title = "newshopin_title";
-        public static String key_newshopin_photoaddr = "newshopin_photoaddr";
+        public static String key_newshopin_title_color = "newshopin_title_color";/*标题的颜色*/
+        public static String key_newshopin_photoaddr = "newshopin_photoaddr";/*图片地址*/
         public static String key_newshopin_text = "newshopin_text";
-        public static String key_values = "values";
+        public static String key_newshopin_text_color = "newshopin_text_color";
+        public static String key_title_color = "title_color";/*控件标题的颜色*/
+        public static String key_text_color = "text_color";/*控件的内容的颜色*/
+        public static String key_status_color = "status_color";/*控件状态的文字颜色*/
+        public static String key_status_back_color = "status_back_color";/*控件的状态背景颜色*/
         public static String key_values_title = "title";
         public static String key_values_text = "text";
         public static String key_values_status = "status";
         public static String key_values_img = "img";
+        public static String key = "values";
 
-        public static String getNewshopin_title() {
-            return newshopin_title;
-        }
-
-        public static void setNewshopin_title(String newshopin_title) {
-            XMLtagMainNewshopIn.newshopin_title = newshopin_title;
-        }
-
-        public static String getNewshopin_text() {
-            return newshopin_text;
-        }
-
-        public static void setNewshopin_text(String newshopin_text) {
-            XMLtagMainNewshopIn.newshopin_text = newshopin_text;
-        }
-
-        public static String getNewshopin_photoaddr() {
-            return newshopin_photoaddr;
-        }
-
-        public static void setNewshopin_photoaddr(String newshopin_photoaddr) {
-            XMLtagMainNewshopIn.newshopin_photoaddr = newshopin_photoaddr;
-        }
-
-        public static String newshopin_title;/*首页新品促销标题*/
-        public static String newshopin_text;/*首页新品促销标语*/
-        public static String newshopin_photoaddr;/*首页新品促销图片地址*/
     }
+
+    /*首页新品促销的商品表格*/
+    public static class XMLValuesMainNewshopIn {
+        public String title;
+        public String title_color;
+        public String text;
+        public String text_color;
+        public String status;
+        public String status_color;
+        public String status_back_color;
+        public String img_url;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getTitle_color() {
+            return title_color;
+        }
+
+        public void setTitle_color(String title_color) {
+            this.title_color = title_color;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        public String getText_color() {
+            return text_color;
+        }
+
+        public void setText_color(String text_color) {
+            this.text_color = text_color;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public String getStatus_color() {
+            return status_color;
+        }
+
+        public void setStatus_color(String status_color) {
+            this.status_color = status_color;
+        }
+
+        public String getStatus_back_color() {
+            return status_back_color;
+        }
+
+        public void setStatus_back_color(String status_back_color) {
+            this.status_back_color = status_back_color;
+        }
+
+        public String getImg_url() {
+            return img_url;
+        }
+
+        public void setImg_url(String img_url) {
+            this.img_url = img_url;
+        }
+    }
+
+
+    /*首页新品促销的初始化表格*/
+    public class XMLInitMainNewshopIn {
+        public String getBody_title() {
+            return body_title;
+        }
+
+        public void setBody_title(String body_title) {
+            this.body_title = body_title;
+        }
+
+        public String getBody_title_color() {
+            return body_title_color;
+        }
+
+        public void setBody_title_color(String body_title_color) {
+            this.body_title_color = body_title_color;
+        }
+
+        public String getBody_text() {
+            return body_text;
+        }
+
+        public void setBody_text(String body_text) {
+            this.body_text = body_text;
+        }
+
+        public String getBody_text_color() {
+            return body_text_color;
+        }
+
+        public void setBody_text_color(String body_text_color) {
+            this.body_text_color = body_text_color;
+        }
+
+        public String getPhoto_addr() {
+            return photo_addr;
+        }
+
+        public void setPhoto_addr(String photo_addr) {
+            this.photo_addr = photo_addr;
+        }
+
+        public String body_title;
+        public String body_title_color;
+        public String body_text;
+        public String body_text_color;
+        public String photo_addr;
+
+    }
+
 
     /**
      * 首页的经销商管理的界面

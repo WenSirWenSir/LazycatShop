@@ -117,8 +117,10 @@ public class Mainfrg extends LazyCatFragment {
         LinearLayout merchantLayout = item.findViewById(R.id.fragment_main_merchant);
         View merchantView = inflater.inflate(R.layout.assembly_fragment_main_erpromotion, null);
         merchantLayout.addView(merchantView);/*添加View*/
-        final MerchantMonitor merchantMonitor = new MerchantMonitor(merchantView, getContext());
-        merchantMonitor.Start();
+        MerchantMonitor merchantMonitor = new MerchantMonitor(merchantView, getContext());
+        if (merchantMonitor.getStatic() == MonitorStatic.NOT_LOAD) {
+            merchantMonitor.Start();
+        }
         /*创建商家促销管理者*/
         merchantMonitor.SaveTag(LocalMonitorPage.MONITOR_MERCHANT);
         merchantLayout.setTag(merchantMonitor);
@@ -135,7 +137,8 @@ public class Mainfrg extends LazyCatFragment {
         View newShopinView = inflater.inflate(R.layout.assembly_fragment_main_newshopin, null);
         newShopin.setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff", 10));
         newShopin.addView(newShopinView);
-        NewShopinMonitor newShopinMonitor = new NewShopinMonitor(newShopinView, getContext());
+        NewShopinMonitor newShopinMonitor = new NewShopinMonitor(newShopinView, getContext(),
+                Config.HTTP_ADDR.CONFIG_XML_SERVICE + "newshopin.xml");
         newShopinMonitor.Start();
 
         /*</新品上架促销>*/
