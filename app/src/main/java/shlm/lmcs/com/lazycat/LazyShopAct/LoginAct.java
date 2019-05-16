@@ -8,6 +8,8 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
@@ -27,8 +30,16 @@ public class LoginAct extends LazyCatAct {
     private RelativeLayout layout;
     private RelativeLayout progressbody;
     private LinearLayout inputBody;
-    private EditText inputPhone, inputCode;
+    private EditText inputPhone;
     private String MSG = "LoginAct.java[+]";
+    private TextView showPhone;
+    private TextView btnCodeGo;
+    private LinearLayout btnCodeDel;
+    private RelativeLayout inputCodeBack;
+    private TextView btnSendCode;
+    private LinearLayout inputCodeBody;
+    private Boolean SendCodeOk = false;
+    private String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +50,9 @@ public class LoginAct extends LazyCatAct {
         inputBody = findViewById(R.id.activity_login_inputbody);
         progressbody = findViewById(R.id.activity_login_progressbody);/**/
         inputPhone = findViewById(R.id.activity_login_inputphone);/*输入手机号码*/
-        inputCode = findViewById(R.id.activity_login_inputcode);/*验证码*/
         Typeface typeface = Typeface.createFromAsset(getApplication().getAssets(), "font/price" +
                 ".ttf");
         inputPhone.setTypeface(typeface);/*设置字体*/
-        inputCode.setTypeface(typeface);/*设置字体*/
         layout.post(new Runnable() {
             @Override
             public void run() {
@@ -51,12 +60,22 @@ public class LoginAct extends LazyCatAct {
                 animation.start();
             }
         });
+        showPhone = findViewById(R.id.activity_login_showphoneTitle);/*展示用户输入的手机号码*/
+        showPhone.setText("152" + " " + "0603" + getResources().getString(R.string.space) + "6936");
+        btnCodeGo = findViewById(R.id.activity_login_btnCodeGo);/*输入完验证码之后的点击按钮*/
         /*实现logo逐渐显示*/
-        findViewById(R.id.activity_login_logo).startAnimation(Tools.createOnalpha(3000, false));
+        findViewById(R.id.activity_login_logo).startAnimation(Tools.createOnalpha(1000, false));
         /*设置边框*/
         inputBody.setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff", 10));
-        findViewById(R.id.activity_login_btnLogin).setBackground(Tools.CreateDrawable(1,
-                "#f30d65", "#f30d65", 5));
+        /*设置边框*/
+        btnCodeGo.setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff", 10));
+        btnCodeDel = findViewById(R.id.activity_login_btnCodeDel);/*删除一个验证码数字*/
+        /*设置边框*/
+        btnCodeDel.setBackground(Tools.CreateDrawable(1, "#c6c6c6", "#c6c6c6", 10));
+        inputCodeBack = findViewById(R.id.activity_login_inputCodeBackBody);/*输入框的背景边框*/
+        inputCodeBody = findViewById(R.id.activity_login_inputCodeBody);/*输入验证码的界面*/
+        btnSendCode = findViewById(R.id.activity_login_btnSendCode);/*按钮点击发送验证码*/
+        Tools.clearFocusable(inputPhone);/*失去焦点*/
         init();
 
     }
@@ -64,16 +83,6 @@ public class LoginAct extends LazyCatAct {
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
         /*登录*/
-        findViewById(R.id.activity_login_btnLogin).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inputPhone.setVisibility(View.GONE);
-                inputCode.setVisibility(View.GONE);
-                Log.i(MSG, "测量之后的宽度:" + inputBody.getMeasuredWidth());
-                inputAnimation(inputBody, inputBody.getMeasuredWidth(), inputBody
-                        .getMeasuredHeight());
-            }
-        });
         /*退出*/
         findViewById(R.id.activity_login_btnBack).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,22 +90,314 @@ public class LoginAct extends LazyCatAct {
                 finish();
             }
         });
-        /*判断是否清空*/
-        inputCode.setOnTouchListener(new View.OnTouchListener() {
+        btnSendCode.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (inputCode.getText().toString().trim().equals("输入验证码")) inputCode.setText("");
-                return false;
+            public void onClick(View v) {
+                TextView tv = (TextView) v;
+                tv.setText("请输入发送至该手机号的短信验证码");
+                SendCodeOk = true;
             }
         });
         /*判断是否清空*/
         inputPhone.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (inputPhone.getText().toString().trim().equals("手机号")) inputPhone.setText("");
+                if (inputPhone.getText().toString().trim().equals("点击输入手机号码")) {
+                    inputPhone.setText("");
+                    Tools.getFocusable(inputPhone);
+                }
+
                 return false;
             }
         });
+
+        inputPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 11) {
+                    phone = s.toString().trim();/*手机号码*/
+                    inputPhone.setVisibility(View.GONE);
+                    Tools.clearFocusable(inputPhone);
+                    Tools.hideKeyboard(inputPhone);
+                    inputCodeBack.setVisibility(View.VISIBLE);
+                    /*开始显示输入验证码的界面*/
+                    inputCodeBody.setVisibility(View.VISIBLE);
+                    inputCodeBody.setAnimation(Tools.createOnalpha(1000, true));
+                }
+
+            }
+        });
+
+
+        /**
+         * 开始监听输入验证码的监听
+         */
+
+        LinearLayout inputcode_first = findViewById(R.id.activity_login_inputCodeNumber_frist);
+        /*第一排*/
+        inputcode_first.getChildAt(0).setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff",
+                5));/*设置边框*/
+        inputcode_first.getChildAt(0).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tv = (TextView) v;
+                final Animator aii = Tools.createRoundAnimation(tv,200);
+                tv.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        aii.start();
+                    }
+                });
+                /*判断是不是第一次输入*/
+                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
+                    btnSendCode.setText("");
+                }
+                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                    btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
+                }
+                Log.i(MSG, "" + tv.getText().toString());
+
+            }
+        });
+        inputcode_first.getChildAt(1).setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff",
+                5));/*设置边框*/
+
+        inputcode_first.getChildAt(1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tv = (TextView) v;
+                final Animator aii = Tools.createRoundAnimation(tv,200);
+                tv.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        aii.start();
+                    }
+                });
+                /*判断是不是第一次输入*/
+                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
+                    btnSendCode.setText("");
+                }
+                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                    btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
+                }
+                Log.i(MSG, "" + tv.getText().toString());
+
+            }
+        });
+        inputcode_first.getChildAt(2).setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff",
+                5));/*设置边框*/
+        inputcode_first.getChildAt(2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tv = (TextView) v;
+                final Animator aii = Tools.createRoundAnimation(tv,200);
+                tv.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        aii.start();
+                    }
+                });
+                /*判断是不是第一次输入*/
+                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
+                    btnSendCode.setText("");
+                }
+                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                    btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
+                }
+                Log.i(MSG, "" + tv.getText().toString());
+
+            }
+        });
+        /**
+         * 第二排的输入验证码的控件的初始化和监听事件
+         */
+        LinearLayout inputcode_second = findViewById(R.id.activity_login_inputCodeNumber_second);
+        /*第二排*/
+        inputcode_second.getChildAt(0).setBackground(Tools.CreateDrawable(1, "#ffffff",
+                "#ffffff", 5));/*设置边框*/
+        inputcode_second.getChildAt(0).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tv = (TextView) v;
+                final Animator aii = Tools.createRoundAnimation(tv,200);
+                tv.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        aii.start();
+                    }
+                });
+                /*判断是不是第一次输入*/
+                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
+                    btnSendCode.setText("");
+                }
+                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                    btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
+                }
+                Log.i(MSG, "" + tv.getText().toString());
+
+            }
+        });
+        inputcode_second.getChildAt(1).setBackground(Tools.CreateDrawable(1, "#ffffff",
+                "#ffffff", 5));/*设置边框*/
+
+        inputcode_second.getChildAt(1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tv = (TextView) v;
+                final Animator aii = Tools.createRoundAnimation(tv,200);
+                tv.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        aii.start();
+                    }
+                });
+                /*判断是不是第一次输入*/
+                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
+                    btnSendCode.setText("");
+                }
+                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                    btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
+                }
+                Log.i(MSG, "" + tv.getText().toString());
+
+            }
+        });
+        inputcode_second.getChildAt(2).setBackground(Tools.CreateDrawable(1, "#ffffff",
+                "#ffffff", 5));/*设置边框*/
+        inputcode_second.getChildAt(2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tv = (TextView) v;
+                final Animator aii = Tools.createRoundAnimation(tv,200);
+                tv.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        aii.start();
+                    }
+                });
+                /*判断是不是第一次输入*/
+                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
+                    btnSendCode.setText("");
+                }
+                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                    btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
+                }
+                Log.i(MSG, "" + tv.getText().toString());
+
+            }
+        });
+        /**
+         * 第三排的输入验证码的键盘初始化和监听
+         */
+        LinearLayout inputcode_three = findViewById(R.id.activity_login_inputCodeNumber_three);
+        /*第三排*/
+        inputcode_three.getChildAt(0).setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff",
+                5));/*设置边框*/
+        inputcode_three.getChildAt(0).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tv = (TextView) v;
+                final Animator aii = Tools.createRoundAnimation(tv,200);
+                tv.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        aii.start();
+                    }
+                });
+                /*判断是不是第一次输入*/
+                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
+                    btnSendCode.setText("");
+                }
+                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                    btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
+                }
+                Log.i(MSG, "" + tv.getText().toString());
+
+            }
+        });
+        inputcode_three.getChildAt(1).setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff",
+                5));/*设置边框*/
+
+        inputcode_three.getChildAt(1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tv = (TextView) v;
+                final Animator aii = Tools.createRoundAnimation(tv,200);
+                tv.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        aii.start();
+                    }
+                });
+                /*判断是不是第一次输入*/
+                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
+                    btnSendCode.setText("");
+                }
+                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                    btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
+                }
+                Log.i(MSG, "" + tv.getText().toString());
+
+            }
+        });
+        inputcode_three.getChildAt(2).setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff",
+                5));/*设置边框*/
+        inputcode_three.getChildAt(2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tv = (TextView) v;
+                final Animator aii = Tools.createRoundAnimation(tv,200);
+                tv.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        aii.start();
+                    }
+                });
+                /*判断是不是第一次输入*/
+                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
+                    btnSendCode.setText("");
+                }
+                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                    btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
+                }
+                Log.i(MSG, "" + tv.getText().toString());
+            }
+        });
+
+        /**
+         * 第四排输入验证码的只有一个数字0的监听和初始化
+         */
+        /*第四排*/
+        LinearLayout inputcode_four = findViewById(R.id.activity_login_inputCodeNumber_four);
+        inputcode_four.getChildAt(0).setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff",
+                5));/*设置边框*/
+        inputcode_four.getChildAt(0).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tv = (TextView) v;
+                final Animator aii = Tools.createRoundAnimation(tv,200);
+                tv.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        aii.start();
+                    }
+                });
+                Log.i(MSG, "" + tv.getText().toString());
+
+            }
+        });
+
+
     }
 
 

@@ -3,6 +3,7 @@ package shlm.lmcs.com.lazycat.LazyShopAct;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.graphics.drawable.VectorDrawableCompat;
@@ -184,5 +185,10 @@ public class MainAct extends LazyCatAct {
             ft.hide(usercneterfrg);
         }
         ft.commit();
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        super.startActivityForResult(intent, requestCode);
     }
 }

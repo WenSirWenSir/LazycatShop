@@ -42,7 +42,7 @@ public class SearchAct extends LazyCatAct {
                 "#ffffff", 10));
         btn_search = findViewById(R.id.assembly_head_searchTitle);
         SearchlogListview = findViewById(R.id.activity_search_listview);
-        Tools.getFoucus(input);
+        Tools.getFocusable(input);
 
         init();
     }

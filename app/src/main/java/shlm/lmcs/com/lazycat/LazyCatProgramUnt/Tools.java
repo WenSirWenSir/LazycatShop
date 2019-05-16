@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -100,7 +101,9 @@ public class Tools {
      *
      * @param view
      */
-    public static void getFoucus(View view) {
+    public static void getFocusable(View view) {
+        view.setFocusable(true);
+        view.setFocusableInTouchMode(true);
         view.requestFocus();
     }
 
@@ -115,6 +118,42 @@ public class Tools {
         bitmap.compress(tag, 100, bao);
         InputStream is = new ByteArrayInputStream(bao.toByteArray());
         return is;
+    }
+
+
+    /**
+     * 隐藏软键盘
+     *
+     * @param view
+     */
+    public static void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context
+                .INPUT_METHOD_SERVICE);/*获取服务*/
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    /**
+     *
+     */
+    public static void showKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context
+                .INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            view.requestFocus();
+            imm.showSoftInput(view, 0);
+        }
+    }
+
+    /**
+     * 使得控件失去焦点
+     *
+     * @param view
+     */
+    public static void clearFocusable(View view) {
+        view.clearFocus();
+        view.setFocusable(false);
     }
 
 
