@@ -1,26 +1,35 @@
 package shlm.lmcs.com.lazycat.LazyShopFrg;
 
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import org.xmlpull.v1.XmlPullParser;
+
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.LazyCatFragment;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WEB_VALUES_ACT;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlanalysisFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.RefreshScrollView;
 import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
@@ -38,7 +47,13 @@ public class Mainfrg extends LazyCatFragment {
     private LayoutInflater inflater;
     private RefreshScrollView _RefreshScrollView;
     private static final int GONE_HEADE_IMG = 0;
+    private String MSG = "Mainfrg.java[+]";
     private Timer _GoneHeadimg;
+    private XmlTagValuesFactory.XMLTagMainNavValues navPage = new XmlTagValuesFactory
+            .XMLTagMainNavValues();
+    private ArrayList<XmlTagValuesFactory.XMLTagMainNavValues> nav_list = new
+            ArrayList<XmlTagValuesFactory.XMLTagMainNavValues>();
+    private View _navaBody;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -64,13 +79,6 @@ public class Mainfrg extends LazyCatFragment {
                 getResources().getString(R.color.ThemeColor), "#ffffff", 10));
         item.findViewById(R.id.assembly_head_input).setFocusable(false);
         init(item);
-        Tools.getMemorySize(getContext(), new ProgramInterface.onMemorySize() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onGet(int max, float total, float free) {
-                Log.i(Config.DEBUG, "最大使用内存:" + max + "合计分配内存:" + total + "剩余内存:" + free);
-            }
-        });
         /*获取输入框的文字进行动画处理*/
         item.findViewById(R.id.assembly_head_input).startAnimation(Tools.createOnalpha(1000, true));
         return item;
@@ -78,6 +86,24 @@ public class Mainfrg extends LazyCatFragment {
 
     @SuppressLint({"NewApi", "ResourceType", "LongLogTag"})
     private void init(View item) {
+        Net.doGet(getContext(), Config.HTTP_ADDR.getMainFragmentConfigXml(), new Net
+                .onVisitInterServiceListener() {
+            @Override
+            public void onSucess(String tOrgin) {
+                Log.i(MSG, "获取到的数据信息为:" + tOrgin.toString());
+                HandlerXml(tOrgin);
+            }
+
+            @Override
+            public void onNotConnect() {
+
+            }
+
+            @Override
+            public void onFail(String tOrgin) {
+
+            }
+        });
         inflater = LayoutInflater.from(getContext());//初始化inflater
 
         /*横向的广告图片的布局*/
@@ -88,17 +114,6 @@ public class Mainfrg extends LazyCatFragment {
         /*横向动画开始*/
         DisplayMetrics matrix = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(matrix);
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, matrix.widthPixels);
-        valueAnimator.setDuration(2000);
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                ViewGroup.LayoutParams params = horizontaladv_body.getLayoutParams();
-                params.width = (int) animation.getAnimatedValue();
-                horizontaladv_body.setLayoutParams(params);
-            }
-        });
-        valueAnimator.start();
         /**
          * 尝试加载
          */
@@ -150,7 +165,7 @@ public class Mainfrg extends LazyCatFragment {
          */
         /*<导航界面的管理>*/
         LinearLayout navA_body = item.findViewById(R.id.fragment_main_navA_body);
-        View _navaBody = inflater.inflate(R.layout.assembly_fragment_main_nava, null);
+        _navaBody = inflater.inflate(R.layout.assembly_fragment_main_nava, null);
         navA_body.addView(_navaBody);
         /*</首页的新品上架的管理>*/
         /**
@@ -334,6 +349,158 @@ public class Mainfrg extends LazyCatFragment {
                 LazyCatFragmetStartAct(SearchAct.class);
             }
         });
+
+    }
+
+
+    /**
+     * 处理XML数据信息开始整理界面
+     *
+     * @param tOrgin
+     */
+    private void HandlerXml(String tOrgin) {
+        if (!TextUtils.isEmpty(tOrgin)) {
+            XmlanalysisFactory xsf = new XmlanalysisFactory(tOrgin);
+            xsf.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
+                @Override
+                public void onFaile() {
+
+                }
+
+                @Override
+                public void onStartDocument() {
+
+                }
+
+                @Override
+                public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
+                    try {
+                        if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml.key_nav_body)) {
+                            /*重新创建一个表格*/
+                            navPage = new XmlTagValuesFactory.XMLTagMainNavValues();
+                        }
+                        if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml.key_nav_ico_ico)) {
+                            if (navPage != null) {
+                                /*标题图片*/
+                                navPage.setNav_ico(pullParser.nextText());
+                            }
+                        }
+                        if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml.key_nav_ico_color)) {
+                            if (navPage != null) {
+                                /*标题颜色*/
+                                navPage.setNav_color(pullParser.nextText());
+                            }
+                        }
+                        if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml.key_nav_ico_auto_link)) {
+                            if (navPage != null) {
+                                /*链接的地址*/
+                                navPage.setNav_link_url(pullParser.nextText());
+                            }
+                        }
+                        if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml.key_nav_ico_title)) {
+                            if (navPage != null) {
+                                /*标题*/
+                                navPage.setNav_title(pullParser.nextText());
+                            }
+                        }
+                        if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml.key_nav_ico_static)) {
+                            if (navPage != null) {
+                                /*状态*/
+                                navPage.setNav_static(pullParser.nextText());
+                            }
+                        }
+                        if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml
+                                .key_nav_ico_static_titleColor)) {
+                            if (navPage != null) {
+                                /*状态的颜色*/
+                                navPage.setNav_static_titleColor(pullParser.nextText());
+                            }
+                        }
+                        if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml
+                                .key_nav_ico_static_backColor)) {
+                            if (navPage != null) {
+                                /*状态的背景颜色*/
+                                navPage.setNav_static_backColor(pullParser.nextText());
+                            }
+                        }
+                    } catch (Exception e) {
+                        Log.e(MSG, "错误信息:" + e.getMessage());
+                    }
+
+
+                }
+
+                @Override
+                public void onEndTag(String tag, XmlPullParser pullParser, Integer id) {
+                    if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml.key_nav_body)) {
+                        nav_list.add(navPage);/*加入一个新的图标*/
+                        navPage = null;/*清空*/
+                    }
+
+                }
+
+                @Override
+                public void onEndDocument() {
+                    for (int i = 0; i < nav_list.size(); i++) {
+                        Log.i(MSG, "[" + i + "]标题" + nav_list.get(i).getNav_link_url());
+                    }
+                    /**
+                     * 开始整理nav导航图标
+                     */
+                    HandlerNav(nav_list, _navaBody);
+                }
+            });
+        }
+    }
+
+
+    /**
+     * 开始整理导航界面
+     *
+     * @param list
+     * @param view
+     */
+    @SuppressLint("NewApi")
+    private void HandlerNav(ArrayList<XmlTagValuesFactory.XMLTagMainNavValues> list, View view) {
+        TextView first_view = view.findViewById(R.id.assembly_fragment_main_nava_fristTitle);
+        TextView first_static = view.findViewById(R.id.assembly_fragment_main_nava_fristStatic);
+        RelativeLayout firstBody = view.findViewById(R.id.assembly_fragment_main_nav_firstBody);
+        /*第一个导航的body*/
+        firstBody.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RelativeLayout rl = (RelativeLayout) v;
+                XmlTagValuesFactory.XMLTagMainNavValues nv = (XmlTagValuesFactory
+                        .XMLTagMainNavValues) v.getTag();
+                if (nv == null) {
+                    Log.i(MSG, "打开WebService窗口失败,为空");
+
+                } else {
+                    WEB_VALUES_ACT web_values_act = new WEB_VALUES_ACT(nv.getNav_link_url());
+                    if (nv.getNav_link_url() != null && !TextUtils.isEmpty(nv.getNav_link_url())) {
+                        LazyCatFragmentStartWevact(web_values_act);
+                    }
+                }
+            }
+        });
+        /*第一个标题*/
+        if (list.get(0) != null) {
+            first_view.setText(list.get(0).getNav_title());/*设置文字*/
+            first_view.setTextColor(Color.parseColor(list.get(0).getNav_color().trim()));
+            /*设置颜色*/
+
+            first_static.setText(list.get(0).getNav_static().trim());/*设置状态*/
+            first_static.setTextColor(Color.parseColor(list.get(0).getNav_static_titleColor().trim()));
+            /*设置状态文字的颜色*/
+            first_static.setBackgroundColor(Color.parseColor(list.get(0).getNav_static_backColor
+                    ().trim()));/*设置状态文字的背景颜色*/
+
+            firstBody.setTag(list.get(0));
+            Log.e(MSG, "请求的地址:" + list.get(0).getNav_link_url());
+        }
+        else{
+            Log.e(MSG,"请求地址:" + list.get(0).getNav_link_url());
+        }
 
     }
 }

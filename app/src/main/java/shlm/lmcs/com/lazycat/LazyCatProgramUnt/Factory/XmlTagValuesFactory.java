@@ -6,6 +6,91 @@ package shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory;
  */
 public class XmlTagValuesFactory {
 
+    public static class XMLKeyMainXml {
+        public final static String key_only_code = "only_code";/*唯一的代码更新*/
+        public final static String key_photo_addr = "photo_addr";/*图片地址*/
+        public final static String key_adver_head = "adver_head";/*广告图片*/
+        public final static String key_adver_head_first = "first";/*第一个广告图片*/
+        public final static String key_adver_head_second = "second";/*第二个产品图片*/
+        public final static String key_adver_head_three = "three";/*第三个产品图片*/
+        public final static String key_nav_ico = "nav_ico";/*导航的xml参数*/
+        public final static String key_nav_body = "nav_xml";/*单个导航*/
+        public final static String key_nav_ico_ico = "ico";/*导航的参数*/
+        public final static String key_nav_ico_title = "title";/*导航参数*/
+        public final static String key_nav_ico_color = "color";/*导航参数*/
+        public final static String key_nav_ico_auto_link = "auto_link";/*导航参数链接地址*/
+        public final static String key_nav_ico_static = "static";/*导航图标的状态*/
+        public final static String key_nav_ico_static_titleColor = "static_titleColor";/*状态的颜色*/
+        public final static String key_nav_ico_static_backColor = "static_backColor";/*状态的背景*/
+
+    }
+
+    public static class XMLTagMainNavValues {
+        public String Nav_ico;
+        public String Nav_title;
+        public String Nav_color;
+        public String Nav_link_url;
+        public String Nav_static_titleColor;
+        public String Nav_static_backColor;
+
+        public String getNav_static_titleColor() {
+            return Nav_static_titleColor;
+        }
+
+        public void setNav_static_titleColor(String nav_static_titleColor) {
+            Nav_static_titleColor = nav_static_titleColor;
+        }
+
+        public String getNav_static_backColor() {
+            return Nav_static_backColor;
+        }
+
+        public void setNav_static_backColor(String nav_static_backColor) {
+            Nav_static_backColor = nav_static_backColor;
+        }
+
+        public String getNav_static() {
+            return Nav_static;
+        }
+
+        public void setNav_static(String nav_static) {
+            Nav_static = nav_static;
+        }
+
+        public String Nav_static;
+
+        public String getNav_ico() {
+            return Nav_ico;
+        }
+
+        public void setNav_ico(String nav_ico) {
+            Nav_ico = nav_ico;
+        }
+
+        public String getNav_title() {
+            return Nav_title;
+        }
+
+        public void setNav_title(String nav_title) {
+            Nav_title = nav_title;
+        }
+
+        public String getNav_color() {
+            return Nav_color;
+        }
+
+        public void setNav_color(String nav_color) {
+            Nav_color = nav_color;
+        }
+
+        public String getNav_link_url() {
+            return Nav_link_url;
+        }
+
+        public void setNav_link_url(String nav_link_url) {
+            Nav_link_url = nav_link_url;
+        }
+    }
 
     /**
      * 首页的新品促销

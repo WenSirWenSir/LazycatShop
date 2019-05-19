@@ -158,13 +158,14 @@ public class Config {
 
         /**
          * 获取经销商促销的地址
+         *
          * @return
          */
         public static String getMerchantMonitorAddr() {
             return HTTP_ADDR.SERVICE + "/lazyShop/configXml/merchant.xml";/**/
         }
 
-        public static String getNewshopInUrl(){
+        public static String getNewshopInUrl() {
             return HTTP_ADDR.SERVICE + "/lazyShop/configXml/newshopin.xml";
         }
 
@@ -180,6 +181,15 @@ public class Config {
 
         public static String getallAddr() {
             return HTTP_ADDR.SERVICE + "user/user_init.php";
+        }
+
+
+        /**
+         * 获取首页的ConfigXml
+         * @return
+         */
+        public static String getMainFragmentConfigXml() {
+            return HTTP_ADDR.SERVICE + "/lazyShop/configXml/mainConfig.xml";
         }
     }
 

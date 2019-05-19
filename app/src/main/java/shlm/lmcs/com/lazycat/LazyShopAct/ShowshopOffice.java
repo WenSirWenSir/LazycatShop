@@ -8,11 +8,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,15 +37,21 @@ public class ShowshopOffice extends LazyCatAct {
     private TextView btn_select_add;
     private LinearLayout body_addordel;
     private TextView historicePrice;
+    private RelativeLayout btnShopcart;
     private ImageView countDownadavert;
     private LinearLayout select_numberBody;
+    private ListView shopCartListView;
+    private LinearLayout showShoplistBody;
     private RelativeLayout shopCartnumberBody;
     private TextView btnAccount;
     private TextView select_number;
     private TextView shopCartNumber;
+    private LinearLayout hideShopBody;
     private TextView ReplayPrice;//还需要多少金额开始送
+    private int window_height;/*屏幕的高度*/
     private final static int MSG_COUNT_DOWN_ADAVERT = 0;
     private final static int MSG_CLEAR_COUNT_DOWN_ADAVERT = 1;
+    private DisplayMetrics metrics;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -131,13 +140,41 @@ public class ShowshopOffice extends LazyCatAct {
         ReplayPrice = findViewById(R.id.activity_showshopoffice_Repayprice);
         /*订购按钮*/
         btnAccount = findViewById(R.id.activity_showshopoffice_btnAccount);
+        /*显示商品列表的body*/
+        showShoplistBody = findViewById(R.id.activity_showshopoffice_showshoplistBody);
+        /*购物车的ListView*/
+        shopCartListView = findViewById(R.id.activity_showshopoffice_shopcartList);
+        /*遮物布局*/
+        hideShopBody = findViewById(R.id.activity_showshopoffice_hideShopBody);
+        /*购物车图标按钮*/
+        btnShopcart = findViewById(R.id.activity_showshopoffice_btnShopcart);
+        /*尝试加载*/
+        shopCartAdapter adapter = new shopCartAdapter();
+        shopCartListView.setAdapter(adapter);
         /*图片包裹*/
         Tools.setMidcourtLine(historicePrice);
         init();
         /*count down advert*/
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void init() {
+        /*购物车点击监听*/
+        btnShopcart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showShoplist();
+            }
+        });
+
+        /*遮物布局监听*/
+        hideShopBody.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                showShoplist();
+                return false;
+            }
+        });
         /*设置边框的圆角*/
         ReplayPrice.setBackground(Tools.CreateDrawable(1, getResources().getString(R.color
                 .ThemeColor), getResources().getString(R.color.ThemeColor), 5));
@@ -148,23 +185,24 @@ public class ShowshopOffice extends LazyCatAct {
         btnAccount.setTextColor(Color.parseColor("#ffffff"));
         /*首先隐藏购物车的显示数量*/
         shopCartnumberBody.setVisibility(View.GONE);
-        DisplayMetrics metrics = new DisplayMetrics();/*获取屏幕矩阵*/
+        metrics = new DisplayMetrics();/*获取屏幕矩阵*/
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         /*重新计算图片的高度实现开场动画*/
         final ViewGroup.LayoutParams photoParams = photo.getLayoutParams();
+        window_height = metrics.heightPixels;
         photoParams.height = metrics.heightPixels;
         photoParams.width = metrics.widthPixels;
         photo.setLayoutParams(photoParams);
 
         /*图片边框动画*/
-        ValueAnimator anim = ValueAnimator.ofInt(metrics.heightPixels, metrics.heightPixels * 8
-                / 16);
+        ValueAnimator anim = ValueAnimator.ofInt(metrics.heightPixels, metrics.heightPixels * 8 /
+                16);
         anim.setDuration(1000);
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 ViewGroup.LayoutParams params = photo.getLayoutParams();
-                Log.e(Config.DEBUG,"ShowshopOffice.java[+]改变的高度值:" + animation.getAnimatedValue());
+                Log.e(Config.DEBUG, "ShowshopOffice.java[+]改变的高度值:" + animation.getAnimatedValue());
                 params.height = (int) animation.getAnimatedValue();
                 photo.setLayoutParams(params);
             }
@@ -240,5 +278,76 @@ public class ShowshopOffice extends LazyCatAct {
         });
 
 
+    }
+
+    /**
+     * 展示购物车的产品
+     */
+
+    private void showShoplist() {
+        if (hideShopBody.getVisibility() == View.VISIBLE ) {
+
+            /*动画隐藏购物车显示*/
+            ValueAnimator valueAnimator  = ValueAnimator.ofInt((int) (window_height / 2.5),0);
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    int height = (int) animation.getAnimatedValue();
+                    ViewGroup.LayoutParams params = showShoplistBody.getLayoutParams();/*获取布局*/
+                    params.height = height;
+                    showShoplistBody.setLayoutParams(params);
+                }
+            });
+            valueAnimator.setDuration(500);
+            valueAnimator.start();
+            //控件显示就隐藏
+            hideShopBody.setVisibility(View.GONE);
+
+        } else {
+            hideShopBody.setVisibility(View.VISIBLE);
+            //没有显示就显示
+            //创建属性动画 改变高度
+            ValueAnimator valueAnimator = ValueAnimator.ofInt(0, (int) (window_height / 2.5));
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    int height = (int) animation.getAnimatedValue();
+                    ViewGroup.LayoutParams params = showShoplistBody.getLayoutParams();/*获取布局*/
+                    params.height = height;
+                    showShoplistBody.setLayoutParams(params);
+                }
+            });
+            valueAnimator.setDuration(500);
+            valueAnimator.start();
+        }
+
+
+
+    }
+
+
+    class shopCartAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return 30;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView title = new TextView(getApplicationContext());
+            title.setText(position + "");
+            return title;
+        }
     }
 }

@@ -18,8 +18,10 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
@@ -29,7 +31,6 @@ import shlm.lmcs.com.lazycat.R;
 public class LoginAct extends LazyCatAct {
     private RelativeLayout layout;
     private RelativeLayout progressbody;
-    private LinearLayout inputBody;
     private EditText inputPhone;
     private String MSG = "LoginAct.java[+]";
     private TextView showPhone;
@@ -38,21 +39,21 @@ public class LoginAct extends LazyCatAct {
     private RelativeLayout inputCodeBack;
     private TextView btnSendCode;
     private LinearLayout inputCodeBody;
-    private Boolean SendCodeOk = false;
     private String phone;
+    private ProgressBar sendCodeProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        setStatusBar("#e9e9e9");
+        setTransparentBar();
         layout = findViewById(R.id.activity_login_main);
-        inputBody = findViewById(R.id.activity_login_inputbody);
         progressbody = findViewById(R.id.activity_login_progressbody);/**/
         inputPhone = findViewById(R.id.activity_login_inputphone);/*输入手机号码*/
         Typeface typeface = Typeface.createFromAsset(getApplication().getAssets(), "font/price" +
                 ".ttf");
         inputPhone.setTypeface(typeface);/*设置字体*/
+        inputPhone.setBackground(Tools.CreateDrawable(1, "#999999", "#ffffff", 10));
         layout.post(new Runnable() {
             @Override
             public void run() {
@@ -66,8 +67,6 @@ public class LoginAct extends LazyCatAct {
         /*实现logo逐渐显示*/
         findViewById(R.id.activity_login_logo).startAnimation(Tools.createOnalpha(1000, false));
         /*设置边框*/
-        inputBody.setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff", 10));
-        /*设置边框*/
         btnCodeGo.setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff", 10));
         btnCodeDel = findViewById(R.id.activity_login_btnCodeDel);/*删除一个验证码数字*/
         /*设置边框*/
@@ -75,6 +74,7 @@ public class LoginAct extends LazyCatAct {
         inputCodeBack = findViewById(R.id.activity_login_inputCodeBackBody);/*输入框的背景边框*/
         inputCodeBody = findViewById(R.id.activity_login_inputCodeBody);/*输入验证码的界面*/
         btnSendCode = findViewById(R.id.activity_login_btnSendCode);/*按钮点击发送验证码*/
+        sendCodeProgressBar = findViewById(R.id.activity_login_sendCodeProgressBar);/*发送短信验证码的等待图标*/
         Tools.clearFocusable(inputPhone);/*失去焦点*/
         init();
 
@@ -94,15 +94,14 @@ public class LoginAct extends LazyCatAct {
             @Override
             public void onClick(View v) {
                 TextView tv = (TextView) v;
-                tv.setText("请输入发送至该手机号的短信验证码");
-                SendCodeOk = true;
+                sendCodeProgressBar.setVisibility(View.VISIBLE);
             }
         });
         /*判断是否清空*/
         inputPhone.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (inputPhone.getText().toString().trim().equals("点击输入手机号码")) {
+                if (inputPhone.getText().toString().trim().equals("手机号/登录名称")) {
                     inputPhone.setText("");
                     Tools.getFocusable(inputPhone);
                 }
@@ -124,9 +123,11 @@ public class LoginAct extends LazyCatAct {
 
             @Override
             public void afterTextChanged(Editable s) {
+                phone = s.toString().trim();/*手机号码*/
                 if (s.length() == 11) {
-                    phone = s.toString().trim();/*手机号码*/
-                    inputPhone.setVisibility(View.GONE);
+                    String showPhoneStart = phone.substring(0, phone.length() - 8);
+                    String showPhoneEnd = phone.substring(phone.length() - 4, phone.length());
+                    showPhone.setText(showPhoneStart + " **** " + showPhoneEnd);
                     Tools.clearFocusable(inputPhone);
                     Tools.hideKeyboard(inputPhone);
                     inputCodeBack.setVisibility(View.VISIBLE);
@@ -134,7 +135,6 @@ public class LoginAct extends LazyCatAct {
                     inputCodeBody.setVisibility(View.VISIBLE);
                     inputCodeBody.setAnimation(Tools.createOnalpha(1000, true));
                 }
-
             }
         });
 
@@ -151,7 +151,7 @@ public class LoginAct extends LazyCatAct {
             @Override
             public void onClick(View v) {
                 TextView tv = (TextView) v;
-                final Animator aii = Tools.createRoundAnimation(tv,200);
+                final Animator aii = Tools.createRoundAnimation(tv, 200);
                 tv.post(new Runnable() {
                     @Override
                     public void run() {
@@ -159,10 +159,7 @@ public class LoginAct extends LazyCatAct {
                     }
                 });
                 /*判断是不是第一次输入*/
-                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
-                    btnSendCode.setText("");
-                }
-                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                if (btnSendCode.getText().length() < 6) {
                     btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
                 }
                 Log.i(MSG, "" + tv.getText().toString());
@@ -176,7 +173,7 @@ public class LoginAct extends LazyCatAct {
             @Override
             public void onClick(View v) {
                 TextView tv = (TextView) v;
-                final Animator aii = Tools.createRoundAnimation(tv,200);
+                final Animator aii = Tools.createRoundAnimation(tv, 200);
                 tv.post(new Runnable() {
                     @Override
                     public void run() {
@@ -184,10 +181,7 @@ public class LoginAct extends LazyCatAct {
                     }
                 });
                 /*判断是不是第一次输入*/
-                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
-                    btnSendCode.setText("");
-                }
-                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                if (btnSendCode.getText().length() < 6) {
                     btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
                 }
                 Log.i(MSG, "" + tv.getText().toString());
@@ -200,7 +194,7 @@ public class LoginAct extends LazyCatAct {
             @Override
             public void onClick(View v) {
                 TextView tv = (TextView) v;
-                final Animator aii = Tools.createRoundAnimation(tv,200);
+                final Animator aii = Tools.createRoundAnimation(tv, 200);
                 tv.post(new Runnable() {
                     @Override
                     public void run() {
@@ -208,10 +202,7 @@ public class LoginAct extends LazyCatAct {
                     }
                 });
                 /*判断是不是第一次输入*/
-                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
-                    btnSendCode.setText("");
-                }
-                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                if (btnSendCode.getText().length() < 6) {
                     btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
                 }
                 Log.i(MSG, "" + tv.getText().toString());
@@ -229,7 +220,7 @@ public class LoginAct extends LazyCatAct {
             @Override
             public void onClick(View v) {
                 TextView tv = (TextView) v;
-                final Animator aii = Tools.createRoundAnimation(tv,200);
+                final Animator aii = Tools.createRoundAnimation(tv, 200);
                 tv.post(new Runnable() {
                     @Override
                     public void run() {
@@ -237,10 +228,7 @@ public class LoginAct extends LazyCatAct {
                     }
                 });
                 /*判断是不是第一次输入*/
-                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
-                    btnSendCode.setText("");
-                }
-                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                if (btnSendCode.getText().length() < 6) {
                     btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
                 }
                 Log.i(MSG, "" + tv.getText().toString());
@@ -254,7 +242,7 @@ public class LoginAct extends LazyCatAct {
             @Override
             public void onClick(View v) {
                 TextView tv = (TextView) v;
-                final Animator aii = Tools.createRoundAnimation(tv,200);
+                final Animator aii = Tools.createRoundAnimation(tv, 200);
                 tv.post(new Runnable() {
                     @Override
                     public void run() {
@@ -262,10 +250,7 @@ public class LoginAct extends LazyCatAct {
                     }
                 });
                 /*判断是不是第一次输入*/
-                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
-                    btnSendCode.setText("");
-                }
-                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                if (btnSendCode.getText().length() < 6) {
                     btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
                 }
                 Log.i(MSG, "" + tv.getText().toString());
@@ -278,7 +263,7 @@ public class LoginAct extends LazyCatAct {
             @Override
             public void onClick(View v) {
                 TextView tv = (TextView) v;
-                final Animator aii = Tools.createRoundAnimation(tv,200);
+                final Animator aii = Tools.createRoundAnimation(tv, 200);
                 tv.post(new Runnable() {
                     @Override
                     public void run() {
@@ -286,10 +271,7 @@ public class LoginAct extends LazyCatAct {
                     }
                 });
                 /*判断是不是第一次输入*/
-                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
-                    btnSendCode.setText("");
-                }
-                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                if (btnSendCode.getText().length() < 6) {
                     btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
                 }
                 Log.i(MSG, "" + tv.getText().toString());
@@ -307,7 +289,7 @@ public class LoginAct extends LazyCatAct {
             @Override
             public void onClick(View v) {
                 TextView tv = (TextView) v;
-                final Animator aii = Tools.createRoundAnimation(tv,200);
+                final Animator aii = Tools.createRoundAnimation(tv, 200);
                 tv.post(new Runnable() {
                     @Override
                     public void run() {
@@ -315,10 +297,7 @@ public class LoginAct extends LazyCatAct {
                     }
                 });
                 /*判断是不是第一次输入*/
-                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
-                    btnSendCode.setText("");
-                }
-                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                if (btnSendCode.getText().length() < 6) {
                     btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
                 }
                 Log.i(MSG, "" + tv.getText().toString());
@@ -332,7 +311,7 @@ public class LoginAct extends LazyCatAct {
             @Override
             public void onClick(View v) {
                 TextView tv = (TextView) v;
-                final Animator aii = Tools.createRoundAnimation(tv,200);
+                final Animator aii = Tools.createRoundAnimation(tv, 200);
                 tv.post(new Runnable() {
                     @Override
                     public void run() {
@@ -340,10 +319,7 @@ public class LoginAct extends LazyCatAct {
                     }
                 });
                 /*判断是不是第一次输入*/
-                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
-                    btnSendCode.setText("");
-                }
-                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                if (btnSendCode.getText().length() < 6) {
                     btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
                 }
                 Log.i(MSG, "" + tv.getText().toString());
@@ -356,7 +332,7 @@ public class LoginAct extends LazyCatAct {
             @Override
             public void onClick(View v) {
                 TextView tv = (TextView) v;
-                final Animator aii = Tools.createRoundAnimation(tv,200);
+                final Animator aii = Tools.createRoundAnimation(tv, 200);
                 tv.post(new Runnable() {
                     @Override
                     public void run() {
@@ -364,10 +340,7 @@ public class LoginAct extends LazyCatAct {
                     }
                 });
                 /*判断是不是第一次输入*/
-                if(btnSendCode.getText().toString().trim().equals("请输入发送至该手机号的短信验证码")){
-                    btnSendCode.setText("");
-                }
-                if(SendCodeOk && btnSendCode.getText().length() < 6){
+                if (btnSendCode.getText().length() < 6) {
                     btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
                 }
                 Log.i(MSG, "" + tv.getText().toString());
@@ -385,7 +358,7 @@ public class LoginAct extends LazyCatAct {
             @Override
             public void onClick(View v) {
                 TextView tv = (TextView) v;
-                final Animator aii = Tools.createRoundAnimation(tv,200);
+                final Animator aii = Tools.createRoundAnimation(tv, 200);
                 tv.post(new Runnable() {
                     @Override
                     public void run() {
@@ -398,6 +371,52 @@ public class LoginAct extends LazyCatAct {
         });
 
 
+        /**
+         * 设置删除一位验证码
+         */
+        btnCodeDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Animator btnDelAnimator = Tools.createRoundAnimation(btnCodeDel, 200);
+                btnCodeDel.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        btnDelAnimator.start();
+                    }
+                });
+                String code = btnSendCode.getText().toString();/*获取验证码*/
+                if(code.length() == 0){
+
+                }
+                else{
+                    String new_code = code.substring(0, code.length() - 1);
+                    btnSendCode.setText(new_code);
+                }
+
+            }
+        });
+        /**
+         * 确定并开始验证
+         */
+        btnCodeGo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Animator btnCodeGoAnimator = Tools.createRoundAnimation(btnCodeGo, 200);
+                btnCodeGo.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        btnCodeGoAnimator.start();
+                    }
+                });
+                if (btnSendCode.getText().length() < 6) {
+                    /*没有输入验证码*/
+                    Toast.makeText(getApplicationContext(), "验证码长度不同,或者你并没有输入验证码", Toast
+                            .LENGTH_SHORT).show();
+                } else {
+
+                }
+            }
+        });
     }
 
 
@@ -435,7 +454,6 @@ public class LoginAct extends LazyCatAct {
                 /*显示加载进度*/
                 progressbody.setVisibility(View.VISIBLE);
                 progressAnimation(progressbody);
-                inputBody.setVisibility(View.GONE);
                 /*顺便把猫的LOGO给取消了*/
                 findViewById(R.id.activity_login_logo).startAnimation(Tools.clearOnalpha(1000,
                         true));
