@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.graphics.drawable.VectorDrawableCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -25,6 +26,7 @@ public class MainAct extends LazyCatAct {
     private Mainfrg mainfrg;
     private Deliveryfrg deliveryfrg;
     private UserCenterfrg usercneterfrg;
+    private String MSG = "MainAct.java[+]";
     private final static int ICO_FRAGMENT_MAIN = 0;
     private final static int ICO_FRAGMENT_DELIVERY = 1;
     private final static int ICO_FRAGMENT_USERCENTER = 2;
@@ -38,9 +40,8 @@ public class MainAct extends LazyCatAct {
 
     @SuppressLint({"ResourceType", "NewApi"})
     private void init() {
-        setTransparentBar();
         setBackStatic(true);
-
+        setStatusBar("#ffffff");
         //尝试加载Fragment
         ft = this.getFragmentManager().beginTransaction();
         mainfrg = new Mainfrg();
@@ -130,7 +131,11 @@ public class MainAct extends LazyCatAct {
         rl.post(new Runnable() {
             @Override
             public void run() {
-                animation.start();
+                if (animation == null) {
+                    Log.e(MSG,"导航没有动画");
+                } else {
+                    animation.start();
+                }
             }
         });
         VectorDrawableCompat vectorDrawableCompat = VectorDrawableCompat.create(getResources(),

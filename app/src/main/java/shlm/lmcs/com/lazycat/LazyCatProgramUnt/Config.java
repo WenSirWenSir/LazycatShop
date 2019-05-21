@@ -189,7 +189,7 @@ public class Config {
          * @return
          */
         public static String getMainFragmentConfigXml() {
-            return HTTP_ADDR.SERVICE + "/lazyShop/configXml/mainConfig.xml";
+            return HTTP_ADDR.SERVICE + "/lazyShop/configXml/mainConfig.php";
         }
     }
 

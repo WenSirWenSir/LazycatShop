@@ -49,6 +49,8 @@ public class Mainfrg extends LazyCatFragment {
     private static final int GONE_HEADE_IMG = 0;
     private String MSG = "Mainfrg.java[+]";
     private Timer _GoneHeadimg;
+    private String Search_input_line_color;/*输入框线条颜色*/
+    private String Search_input_back_color;/*输入框背景颜色*/
     private XmlTagValuesFactory.XMLTagMainNavValues navPage = new XmlTagValuesFactory
             .XMLTagMainNavValues();
     private ArrayList<XmlTagValuesFactory.XMLTagMainNavValues> nav_list = new
@@ -75,23 +77,19 @@ public class Mainfrg extends LazyCatFragment {
             savedInstanceState) {
         View item = inflater.inflate(R.layout.fragment_main, null);
         //初始化一个背景样式
-        item.findViewById(R.id.assembly_head_input).setBackground(Tools.CreateDrawable(3,
-                getResources().getString(R.color.ThemeColor), "#ffffff", 10));
         item.findViewById(R.id.assembly_head_input).setFocusable(false);
         init(item);
-        /*获取输入框的文字进行动画处理*/
-        item.findViewById(R.id.assembly_head_input).startAnimation(Tools.createOnalpha(1000, true));
         return item;
     }
 
     @SuppressLint({"NewApi", "ResourceType", "LongLogTag"})
-    private void init(View item) {
+    private void init(final View item) {
         Net.doGet(getContext(), Config.HTTP_ADDR.getMainFragmentConfigXml(), new Net
                 .onVisitInterServiceListener() {
             @Override
             public void onSucess(String tOrgin) {
                 Log.i(MSG, "获取到的数据信息为:" + tOrgin.toString());
-                HandlerXml(tOrgin);
+                HandlerXml(tOrgin, item);
             }
 
             @Override
@@ -358,7 +356,7 @@ public class Mainfrg extends LazyCatFragment {
      *
      * @param tOrgin
      */
-    private void HandlerXml(String tOrgin) {
+    private void HandlerXml(String tOrgin, final View item) {
         if (!TextUtils.isEmpty(tOrgin)) {
             XmlanalysisFactory xsf = new XmlanalysisFactory(tOrgin);
             xsf.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
@@ -372,6 +370,7 @@ public class Mainfrg extends LazyCatFragment {
 
                 }
 
+                @SuppressLint("NewApi")
                 @Override
                 public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
                     try {
@@ -423,6 +422,55 @@ public class Mainfrg extends LazyCatFragment {
                                 navPage.setNav_static_backColor(pullParser.nextText());
                             }
                         }
+
+                        if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml
+                                .key_nav_ico_auto_link_titleColor)) {
+                            if (navPage != null) {
+                                /*webview的标题文字颜色*/
+                                navPage.setAuto_link_titleColor(pullParser.nextText());
+                            }
+                        }
+
+                        if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml
+                                .key_nav_ico_auto_link_titleBackColor)) {
+                            if (navPage != null) {
+                                /*webview的标题背景颜色*/
+                                navPage.setAuto_link_titleBackColor(pullParser.nextText());
+                            }
+                        }
+                        if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml
+                                .key_nav_ico_auto_link_staticColor)) {
+                            if (navPage != null) {
+                                /*webview的状态栏颜色*/
+                                navPage.setAuto_link_staticColor(pullParser.nextText());
+                            }
+                        }
+
+
+                        /*改变状态栏的颜色*/
+                        if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml.key_main_static_color)) {
+                            setStatusBar(pullParser.nextText().trim());
+                        }
+
+                        /*更换搜索框的背景颜色*/
+                        if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml
+                                .key_main_searchBody_BackColor)) {
+                            item.findViewById(R.id.fragment_main_head).setBackgroundColor(Color
+                                    .parseColor(pullParser.nextText().trim()));
+
+                        }
+
+                        /*更换输入框背景颜色*/
+                        if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml
+                                .key_main_searchBody_inputBackColor)) {
+                            /*保存值*/
+                            Search_input_back_color = pullParser.nextText();
+                        }
+                        /*更换输入框背景颜色*/
+                        if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml
+                                .key_main_searchBody_inputLineColor)) {
+                            Search_input_line_color = pullParser.nextText();
+                        }
                     } catch (Exception e) {
                         Log.e(MSG, "错误信息:" + e.getMessage());
                     }
@@ -439,8 +487,22 @@ public class Mainfrg extends LazyCatFragment {
 
                 }
 
+                @SuppressLint("NewApi")
                 @Override
                 public void onEndDocument() {
+                    /*处理信息的梳理的标签*/
+                    item.findViewById(R.id.assembly_head_howmessageNumber).setBackground(Tools
+                            .CreateDrawable(1, "#ffffff", "#ffffff", 50));
+                    /*处理搜索框的背景*/
+                    if (!TextUtils.isEmpty(Search_input_line_color) && !TextUtils.isEmpty
+                            (Search_input_back_color)) {
+                        item.findViewById(R.id.assembly_head_input).setBackground(Tools
+                                .CreateDrawable(1, Search_input_back_color.trim(),
+                                        Search_input_line_color.trim(), 50));
+
+                    } else {
+                        Toast.makeText(getContext(), "123", Toast.LENGTH_SHORT).show();
+                    }
                     for (int i = 0; i < nav_list.size(); i++) {
                         Log.i(MSG, "[" + i + "]标题" + nav_list.get(i).getNav_link_url());
                     }
@@ -477,6 +539,10 @@ public class Mainfrg extends LazyCatFragment {
 
                 } else {
                     WEB_VALUES_ACT web_values_act = new WEB_VALUES_ACT(nv.getNav_link_url());
+                    web_values_act.set_StaticColor(nv.getAuto_link_staticColor().trim());/*状态栏颜色*/
+                    web_values_act.set_TitleBackColor(nv.getAuto_link_titleBackColor().trim());
+                    /*标题背景颜色*/
+                    web_values_act.set_TitleColor(nv.getAuto_link_titleColor().trim());/*标题文字颜色*/
                     if (nv.getNav_link_url() != null && !TextUtils.isEmpty(nv.getNav_link_url())) {
                         LazyCatFragmentStartWevact(web_values_act);
                     }
@@ -490,16 +556,16 @@ public class Mainfrg extends LazyCatFragment {
             /*设置颜色*/
 
             first_static.setText(list.get(0).getNav_static().trim());/*设置状态*/
-            first_static.setTextColor(Color.parseColor(list.get(0).getNav_static_titleColor().trim()));
+            first_static.setTextColor(Color.parseColor(list.get(0).getNav_static_titleColor()
+                    .trim()));
             /*设置状态文字的颜色*/
             first_static.setBackgroundColor(Color.parseColor(list.get(0).getNav_static_backColor
                     ().trim()));/*设置状态文字的背景颜色*/
 
             firstBody.setTag(list.get(0));
             Log.e(MSG, "请求的地址:" + list.get(0).getNav_link_url());
-        }
-        else{
-            Log.e(MSG,"请求地址:" + list.get(0).getNav_link_url());
+        } else {
+            Log.e(MSG, "请求地址:" + list.get(0).getNav_link_url());
         }
 
     }

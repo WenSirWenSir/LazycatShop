@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><resources>    <declare-styleable name="mArcViewpage">        <attr name="arcHeight" format="integer" /><!--控件的高度-->        <attr name="arcColor" format="color" /><!--控件的颜色-->    </declare-styleable></resources>

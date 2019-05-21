@@ -22,7 +22,23 @@ public class XmlTagValuesFactory {
         public final static String key_nav_ico_static = "static";/*导航图标的状态*/
         public final static String key_nav_ico_static_titleColor = "static_titleColor";/*状态的颜色*/
         public final static String key_nav_ico_static_backColor = "static_backColor";/*状态的背景*/
+        public final static String key_nav_ico_auto_link_titleColor = "auto_link_titleColor";
+        /*打开webview的字体颜色*/
+        public final static String key_nav_ico_auto_link_titleBackColor =
+                "auto_link_titleBackColor";/*打开webview的标题背景颜色*/
+        public final static String key_nav_ico_auto_link_staticColor = "auto_link_staticColor";
+        /*打开的webview的状态栏颜色*/
+        /*更换状态颜色*/
+        public final static String key_main_static_color = "static_color";
+        /*更换搜索框的背景颜色*/
+        public final static String key_main_searchBody_BackColor = "searchbody_backcolor";
 
+        /*搜索框文字颜色*/
+        public final static String key_main_searchBody_inputColor = "searchbody_inputcolor";
+        /*搜索框文字背景颜色*/
+        public final static String key_main_searchBody_inputBackColor = "searchbody_inputbackcolor";
+        /*搜索框线条颜色*/
+        public final static String key_main_searchBody_inputLineColor = "searchbody_inputlinecolor";
     }
 
     public static class XMLTagMainNavValues {
@@ -32,6 +48,44 @@ public class XmlTagValuesFactory {
         public String Nav_link_url;
         public String Nav_static_titleColor;
         public String Nav_static_backColor;
+        /*状态栏颜色*/
+        public String Main_static_color;
+        /*搜索框背景颜色*/
+        public String Main_searchback_color;
+        /*输入框文字颜色*/
+        public String Main_input_color;
+        /*输入框背景颜色*/
+        public String Main_inputback_color;
+        /*输入框线条颜色*/
+        public String Main_input_line_color;
+
+        public String getAuto_link_titleColor() {
+            return Auto_link_titleColor;
+        }
+
+        public void setAuto_link_titleColor(String auto_link_titleColor) {
+            Auto_link_titleColor = auto_link_titleColor;
+        }
+
+        public String getAuto_link_titleBackColor() {
+            return Auto_link_titleBackColor;
+        }
+
+        public void setAuto_link_titleBackColor(String auto_link_titleBackColor) {
+            Auto_link_titleBackColor = auto_link_titleBackColor;
+        }
+
+        public String getAuto_link_staticColor() {
+            return Auto_link_staticColor;
+        }
+
+        public void setAuto_link_staticColor(String auto_link_staticColor) {
+            Auto_link_staticColor = auto_link_staticColor;
+        }
+
+        public String Auto_link_titleColor;/*webview标题文字颜色*/
+        public String Auto_link_titleBackColor;/*webview标题背景颜色*/
+        public String Auto_link_staticColor;/*webview状态栏颜色*/
 
         public String getNav_static_titleColor() {
             return Nav_static_titleColor;

@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.ImageView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,7 +22,7 @@ import shlm.lmcs.com.lazycat.LazyShopAct.MainAct;
 public class lazyCatLogAct extends LazyCatAct {
     private Handler handler;
     private WaitDialog.RefreshDialog refreshDialog;
-    private ImageView img;
+    //private ImageView img;
 
     @SuppressLint({"HandlerLeak", "StaticFieldLeak"})
     @Override
@@ -40,7 +39,7 @@ public class lazyCatLogAct extends LazyCatAct {
         };
         setContentView(R.layout.activity_lazy_cat_log);
         /*ICO*/
-        img = findViewById(R.id.activity_lazy_log_image);
+//        img = findViewById(R.id.activity_lazy_log_image);
         /*设置导航栏透明*/
         setHideNav();
         //初始化稍等的表格  判断网络是否要更新文件
