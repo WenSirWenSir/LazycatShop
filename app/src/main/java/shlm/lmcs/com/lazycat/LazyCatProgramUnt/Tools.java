@@ -932,4 +932,16 @@ public class Tools {
         Bitmap able = FastBlur.doBlur(overlay, (int) radius, true);
         view.setImageBitmap(able);
     }
+
+
+    /**
+     * 转换过为屏幕参数
+     *
+     * @return
+     */
+    public static int dp2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+
+    }
 }
