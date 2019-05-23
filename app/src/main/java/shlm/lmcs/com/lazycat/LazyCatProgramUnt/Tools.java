@@ -158,6 +158,17 @@ public class Tools {
 
 
     /**
+     * 判断是否可以整除
+     *
+     * @param n
+     * @param i
+     */
+    public static int excat(int n, int i) {
+        return  n % i;
+    }
+
+
+    /**
      * Determines whether the file exists
      *
      * @param tPath file addrs

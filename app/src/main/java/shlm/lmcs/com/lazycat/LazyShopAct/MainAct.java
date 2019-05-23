@@ -87,7 +87,7 @@ public class MainAct extends LazyCatAct {
                 setStatusBar("#f30d88");
                 Animator animation = Tools.createRoundAnimation(btn_usercenter, 200);
                 setIcoNavColor(rl, R.drawable.ico_usercontent, animation);
-                LazyCatActStartActivity(LoginAct.class, false);
+                //LazyCatActStartActivity(LoginAct.class, false);
             }
         });
     }
@@ -132,7 +132,7 @@ public class MainAct extends LazyCatAct {
             @Override
             public void run() {
                 if (animation == null) {
-                    Log.e(MSG,"导航没有动画");
+                    Log.e(MSG, "导航没有动画");
                 } else {
                     animation.start();
                 }

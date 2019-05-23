@@ -1,10 +1,29 @@
 package shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory;
 
 
+import java.util.ArrayList;
+
 /**
  * XML对应的数据解析
  */
 public class XmlTagValuesFactory {
+
+
+    /*用户界面的xmlTag*/
+    public static class XMLKeyUserPageXml {
+        /*卡片*/
+        public final static String key_card = "card";
+        /*卡片标题*/
+        public final static String key_card_title = "card_title";
+        /*卡片的按钮ITEM*/
+        public final static String key_card_item = "item";
+        /*卡片的按钮的标题*/
+        public final static String key_card_item_title = "title";
+        /*卡片的按钮的颜色*/
+        public final static String key_card_item_titlecolor = "title_color";
+        /*卡片的按钮的图片地址*/
+        public final static String key_card_item_imgurl = "img_url";
+    }
 
     public static class XMLKeyMainXml {
         public final static String key_only_code = "only_code";/*唯一的代码更新*/
@@ -165,6 +184,68 @@ public class XmlTagValuesFactory {
         public static String key_values_img = "img";
         public static String key = "values";
 
+    }
+
+
+    /*用户界面的卡片*/
+    public static class XMLValuesUserpageCard {
+        public String card_title;
+
+        public String getCard_title() {
+            return card_title;
+        }
+
+        public void setCard_title(String card_title) {
+            this.card_title = card_title;
+        }
+
+        public ArrayList<XMLValuesUserpageBtnItem> getList() {
+            return list;
+        }
+
+        public void addList(XMLValuesUserpageBtnItem item) {
+            if (list != null) {
+                list.add(item);
+            } else {
+            }
+        }
+
+        /*存储Item的数量*/
+        public ArrayList<XmlTagValuesFactory.XMLValuesUserpageBtnItem> list = new
+                ArrayList<XmlTagValuesFactory.XMLValuesUserpageBtnItem>();
+
+
+    }
+
+    public static class XMLValuesUserpageBtnItem {
+        public String title;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getTitle_color() {
+            return title_color;
+        }
+
+        public void setTitle_color(String title_color) {
+            this.title_color = title_color;
+        }
+
+        public String getImg_url() {
+            return img_url;
+        }
+
+        public void setImg_url(String img_url) {
+            this.img_url = img_url;
+        }
+
+        public String title_color;
+        public String img_url;
     }
 
     /*首页新品促销的商品表格*/
