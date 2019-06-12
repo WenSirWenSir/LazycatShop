@@ -1,6 +1,7 @@
 package shlm.lmcs.com.lazycat.LazyShopAct;
 
 import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.FragmentLR;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Deliveryfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Mainfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.UserCenterfrg;
@@ -26,6 +28,9 @@ public class MainAct extends LazyCatAct {
     private Mainfrg mainfrg;
     private Deliveryfrg deliveryfrg;
     private UserCenterfrg usercneterfrg;
+    private FragmentLR frameLayout;
+    private int lr_downX;/*滑动定点*/
+    private int lr_countX;/*滑动距离*/
     private String MSG = "MainAct.java[+]";
     private final static int ICO_FRAGMENT_MAIN = 0;
     private final static int ICO_FRAGMENT_DELIVERY = 1;
@@ -38,14 +43,101 @@ public class MainAct extends LazyCatAct {
         super.onCreate(savedInstanceState);
     }
 
-    @SuppressLint({"ResourceType", "NewApi"})
+    @SuppressLint({"ResourceType", "NewApi", "ClickableViewAccessibility"})
     private void init() {
         setBackStatic(true);
         setStatusBar("#ffffff");
         //尝试加载Fragment
         ft = this.getFragmentManager().beginTransaction();
         mainfrg = new Mainfrg();
+        frameLayout = findViewById(R.id.activity_main_Framelayout);/*管理控件*/
+        /*设置监听器*/
+        frameLayout.SetListener(new FragmentLR.Listener() {
+            @Override
+            public void onScrollLeft(int moveCount) {
+                FragmentLR.LayoutParams params = (FragmentLR.LayoutParams) frameLayout.getChildAt
+                        (0).getLayoutParams();
+                /*隐藏销售商品的窗口*/
+                ValueAnimator anim = ValueAnimator.ofInt(frameLayout.getWidth(), 0);
+                anim.setDuration(1000);
+                anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        FragmentLR.LayoutParams ps = (FragmentLR.LayoutParams) frameLayout
+                                .getChildAt(0).getLayoutParams();
+                        ps.width = (int) animation.getAnimatedValue();
+                        frameLayout.getChildAt(0).setLayoutParams(ps);
+                    }
+                });
+               // anim.start();
+                anim.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onScrollRight(int moveCount) {
+                FragmentLR.LayoutParams params = (FragmentLR.LayoutParams) frameLayout.getChildAt
+                        (0).getLayoutParams();
+                /*隐藏销售商品的窗口*/
+                ValueAnimator anim = ValueAnimator.ofInt(0, frameLayout.getWidth());
+                anim.setDuration(1000);
+                anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        FragmentLR.LayoutParams ps = (FragmentLR.LayoutParams) frameLayout
+                                .getChildAt(0).getLayoutParams();
+                        ps.width = (int) animation.getAnimatedValue();
+                        frameLayout.getChildAt(0).setLayoutParams(ps);
+                    }
+                });
+
+                anim.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        /*停止*/
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+                //anim.start();
+
+            }
+        });
         ft.add(R.id.activity_main_Framelayout, mainfrg);
+
         ft.commit();
         //找寻对于的ID号码
         btn_main = findViewById(R.id.activity_main_btn_IcoMain);//主界面

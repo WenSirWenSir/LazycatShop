@@ -45,6 +45,7 @@ import shlm.lmcs.com.lazycat.R;
 public class Mainfrg extends LazyCatFragment {
     private LinearLayout horizontaladv_body;
     private LayoutInflater inflater;
+    private RelativeLayout big_body;/*最外层的布局 用来切换外卖使用*/
     private RefreshScrollView _RefreshScrollView;
     private static final int GONE_HEADE_IMG = 0;
     private String MSG = "Mainfrg.java[+]";
@@ -56,6 +57,7 @@ public class Mainfrg extends LazyCatFragment {
     private ArrayList<XmlTagValuesFactory.XMLTagMainNavValues> nav_list = new
             ArrayList<XmlTagValuesFactory.XMLTagMainNavValues>();
     private View _navaBody;
+    private int window_width;/*屏幕的宽度*/
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -78,6 +80,7 @@ public class Mainfrg extends LazyCatFragment {
         View item = inflater.inflate(R.layout.fragment_main, null);
         //初始化一个背景样式
         item.findViewById(R.id.assembly_head_input).setFocusable(false);
+        big_body = item.findViewById(R.id.fragment_main_bigBody);/*最外层布局*/
         init(item);
         return item;
     }
@@ -190,6 +193,8 @@ public class Mainfrg extends LazyCatFragment {
         brandSingMonitor.SaveTag(LocalMonitorPage.MONITOR_BRANDSING);/*标识管理者的名字*/
         layout.setTag(brandSingMonitor);/*保存管理者*/
         /*</品牌促销的界面管理>*/
+        _RefreshScrollView.setCanListenMoveLeft(true);
+        _RefreshScrollView.setCanListenMoveRight(true);
         _RefreshScrollView.SetLinstener(new RefreshScrollView.RefreshScrollViewListener() {
             @Override
             public void onRefresh() {
@@ -333,6 +338,16 @@ public class Mainfrg extends LazyCatFragment {
 
             @Override
             public void onScrollDistance(int distance) {
+
+            }
+
+            @Override
+            public void onScrollToleft(int _moveCount) {
+            }
+
+            @Override
+            public void onScrollToRight(int _moveCount) {
+                /*右向滑动*/
 
             }
         });
@@ -536,7 +551,6 @@ public class Mainfrg extends LazyCatFragment {
                         .XMLTagMainNavValues) v.getTag();
                 if (nv == null) {
                     Log.i(MSG, "打开WebService窗口失败,为空");
-
                 } else {
                     WEB_VALUES_ACT web_values_act = new WEB_VALUES_ACT(nv.getNav_link_url());
                     web_values_act.set_StaticColor(nv.getAuto_link_staticColor().trim());/*状态栏颜色*/

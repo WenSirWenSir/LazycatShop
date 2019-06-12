@@ -58,6 +58,9 @@ import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.WebServiceAct;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WEB_VALUES_ACT;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WINDOW_PAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XMLUserAddr;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.FastBlur;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
@@ -164,7 +167,19 @@ public class Tools {
      * @param i
      */
     public static int excat(int n, int i) {
-        return  n % i;
+        return n % i;
+    }
+
+    /**
+     * 打开一个WEB的浏览网页的窗口
+     *
+     * @param _web_values_act
+     */
+    public static void createWebWindow(WEB_VALUES_ACT _web_values_act, Context _context) {
+        Intent intent = new Intent();
+        intent.setClass(_context.getApplicationContext(), WebServiceAct.class);
+        intent.putExtra(WINDOW_PAGE.RESULT_WEBVIEW, _web_values_act);
+        _context.getApplicationContext().startActivity(intent);
     }
 
 

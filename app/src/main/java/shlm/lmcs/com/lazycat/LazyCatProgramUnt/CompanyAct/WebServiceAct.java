@@ -44,7 +44,6 @@ public class WebServiceAct extends LazyCatAct {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-
             if (web_values_act != null) {
                 Button bt = (Button) item.getChildAt(0);
                 bt.setText(msg.obj.toString());
@@ -60,6 +59,7 @@ public class WebServiceAct extends LazyCatAct {
     @SuppressLint({"LongLogTag", "SetJavaScriptEnabled", "JavascriptInterface"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        refreshDialog = new WaitDialog.RefreshDialog(WebServiceAct.this);
         //获取构造数据信息
         web_values_act = (WEB_VALUES_ACT) getIntent().getSerializableExtra(WINDOW_PAGE
                 .RESULT_WEBVIEW);
@@ -122,18 +122,23 @@ public class WebServiceAct extends LazyCatAct {
                 @Override
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
                     /*开始加载信息*/
-                    refreshDialog = new WaitDialog.RefreshDialog(WebServiceAct.this);
                     WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
                     wait_itme_dialogpage.setView(R.layout.item_wait);
                     wait_itme_dialogpage.setImg(R.id.item_wait_img);
-                    refreshDialog.Init(wait_itme_dialogpage);
-                    refreshDialog.showRefreshDialog("", false);
+                    if (refreshDialog != null) {
+                        refreshDialog.Init(wait_itme_dialogpage);
+                        refreshDialog.showRefreshDialog("", false);
+                    }
+
                 }
 
                 @Override
                 public void onPageFinished(WebView view, String url) {
                     Log.i(MSG, "网页加载完成");
-                    refreshDialog.dismiss();
+                    if (refreshDialog != null) {
+                        refreshDialog.dismiss();
+                        refreshDialog = null;
+                    }
                 }
             });
         } else {

@@ -26,6 +26,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
  */
 @SuppressLint("LongLogTag")
 public class RefreshScrollView extends ScrollView {
+    private String MSG = "RefreshScrollView.java[+]";
     private int ViewWidth;//宽度
     private LinearLayout layout;
     private int _scrollY;//滑动的距离
@@ -35,6 +36,8 @@ public class RefreshScrollView extends ScrollView {
     private ImageCache imageCache;
     private int _downY;//记录距离
     private int _downH;//记录高度
+    private int lr_downCount;/*左右滑动的距离*/
+    private int lr_downX;/*左右滑动记录点下的位置*/
     private boolean b_down;
     private int viewHeight;//可以刷新的高度
     private boolean onGetHeadimg = false;
@@ -45,6 +48,8 @@ public class RefreshScrollView extends ScrollView {
     private RefreshScrollViewListener _RefreshScrollViewListener;//滑动监听对象
     private int RefershLog = 0;
     private int RefershImg = 0;
+    private Boolean _CanListenMoveLeft = null;
+    private Boolean _CanListenMoveRight = null;
 
     public RefreshScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -151,10 +156,15 @@ public class RefreshScrollView extends ScrollView {
                 onStopHandle = false;
             }
             _downY = (int) ev.getY();
+            lr_downX = (int) ev.getX();
             total_distance = 0;
             //按下鼠标
         }
         if (ev.getAction() == MotionEvent.ACTION_MOVE) {
+            /*记录X轴的坐标*/
+            lr_downCount = (int) ((ev.getX() - lr_downX) * 1 / 2);
+            Log.i(MSG, "滑动的距离" + lr_downCount);
+
             //鼠标移动
             if (_scrollY == 0) {
                 //可以进行下拉刷新  在顶部位置
@@ -288,6 +298,17 @@ public class RefreshScrollView extends ScrollView {
     }
 
 
+    /*是否可以调用左向滑动的监听器*/
+    public void setCanListenMoveLeft(boolean b) {
+        this._CanListenMoveLeft = b;
+    }
+
+    /*是否可以调用左向滑动的监听器*/
+    public void setCanListenMoveRight(boolean b) {
+        this._CanListenMoveRight = b;
+    }
+
+
     /**
      * 监听
      */
@@ -310,6 +331,10 @@ public class RefreshScrollView extends ScrollView {
         void onloadMessage();//加载广告
 
         void onScrollDistance(int distance);//滑动的距离
+
+        void onScrollToleft(int _moveCount);/*向左滑动*/
+
+        void onScrollToRight(int _moveCount);/*向右滑动*/
     }
 
     @Override
