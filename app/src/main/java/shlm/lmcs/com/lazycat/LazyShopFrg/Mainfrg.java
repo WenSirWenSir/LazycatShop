@@ -12,10 +12,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -25,12 +28,14 @@ import java.util.TimerTask;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.LazyCatFragment;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WEB_VALUES_ACT;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlanalysisFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.ArcView;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.RefreshScrollView;
 import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.BrandSingMonitor;
@@ -52,6 +57,7 @@ public class Mainfrg extends LazyCatFragment {
     private Timer _GoneHeadimg;
     private String Search_input_line_color;/*输入框线条颜色*/
     private String Search_input_back_color;/*输入框背景颜色*/
+    private ArcView arcView;/*主页的拱形*/
     private XmlTagValuesFactory.XMLTagMainNavValues navPage = new XmlTagValuesFactory
             .XMLTagMainNavValues();
     private ArrayList<XmlTagValuesFactory.XMLTagMainNavValues> nav_list = new
@@ -81,8 +87,10 @@ public class Mainfrg extends LazyCatFragment {
         //初始化一个背景样式
         item.findViewById(R.id.assembly_head_input).setFocusable(false);
         big_body = item.findViewById(R.id.fragment_main_bigBody);/*最外层布局*/
+        arcView = item.findViewById(R.id.fragment_main_arcView);
         init(item);
         return item;
+
     }
 
     @SuppressLint({"NewApi", "ResourceType", "LongLogTag"})
@@ -112,6 +120,11 @@ public class Mainfrg extends LazyCatFragment {
         final View horizontaladv_view = inflater.inflate(R.layout
                 .assembly_fragment_main_horizontaladv, null);
         horizontaladv_body.addView(horizontaladv_view);
+
+        ImageView bigImg = horizontaladv_view.findViewById(R.id
+                .assembly_fragment_main_horizontaladv_img);
+        Glide.with(getContext()).load
+                ("http://120.79.63.36/collection/lybh/photos/6901826889012.png").into(bigImg);
         /*横向动画开始*/
         DisplayMetrics matrix = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(matrix);
@@ -193,6 +206,11 @@ public class Mainfrg extends LazyCatFragment {
         brandSingMonitor.SaveTag(LocalMonitorPage.MONITOR_BRANDSING);/*标识管理者的名字*/
         layout.setTag(brandSingMonitor);/*保存管理者*/
         /*</品牌促销的界面管理>*/
+
+
+        /**
+         * 滑动监听器 用来处理各个界面的管理
+         */
         _RefreshScrollView.setCanListenMoveLeft(true);
         _RefreshScrollView.setCanListenMoveRight(true);
         _RefreshScrollView.SetLinstener(new RefreshScrollView.RefreshScrollViewListener() {
@@ -245,6 +263,9 @@ public class Mainfrg extends LazyCatFragment {
 
             @Override
             public void onScrollStop() {
+
+
+                /*停止刷新*/
                 LinearLayout i = (LinearLayout) _RefreshScrollView.getChildAt(0);
                 Rect rect = new Rect();
                 for (int y = 0; y < i.getChildCount(); y++) {
@@ -519,7 +540,7 @@ public class Mainfrg extends LazyCatFragment {
                         Toast.makeText(getContext(), "123", Toast.LENGTH_SHORT).show();
                     }
                     for (int i = 0; i < nav_list.size(); i++) {
-                        Log.i(MSG, "[" + i + "]标题" + nav_list.get(i).getNav_link_url());
+                        Log.i(MSG, "[" + i + "]导航标题" + nav_list.get(i).getNav_title());
                     }
                     /**
                      * 开始整理nav导航图标
@@ -542,11 +563,29 @@ public class Mainfrg extends LazyCatFragment {
         TextView first_view = view.findViewById(R.id.assembly_fragment_main_nava_fristTitle);
         TextView first_static = view.findViewById(R.id.assembly_fragment_main_nava_fristStatic);
         RelativeLayout firstBody = view.findViewById(R.id.assembly_fragment_main_nav_firstBody);
+        /*第二个导航的控件信息*/
+
+        TextView second_view = view.findViewById(R.id.assembly_fragment_main_nava_secondTitle);
+        TextView second_static = view.findViewById(R.id.assembly_fragment_main_nava_secondStatic);
+        RelativeLayout secondBody = view.findViewById(R.id.assembly_fragment_main_nav_secondBody);
+
+        /*第三个导航栏的控件信息*/
+        TextView three_view = view.findViewById(R.id.assembly_fragment_main_nava_threeTitle);
+        TextView three_static = view.findViewById(R.id.assembly_fragment_main_nava_threeStatic);
+        RelativeLayout threeBody = view.findViewById(R.id.assembly_fragment_main_nava_threeBody);
+
+
+        /*第四个导航的控件信息*/
+
+        TextView four_view = view.findViewById(R.id.assembly_fragment_main_nava_fourTitle);
+        TextView four_static = view.findViewById(R.id.assembly_fragment_main_nava_fourStatic);
+        RelativeLayout fourBody = view.findViewById(R.id.assembly_fragment_main_nava_fourBody);
+
+
         /*第一个导航的body*/
         firstBody.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RelativeLayout rl = (RelativeLayout) v;
                 XmlTagValuesFactory.XMLTagMainNavValues nv = (XmlTagValuesFactory
                         .XMLTagMainNavValues) v.getTag();
                 if (nv == null) {
@@ -563,12 +602,76 @@ public class Mainfrg extends LazyCatFragment {
                 }
             }
         });
+
+        /*第二个导航的BODY点击事件*/
+        secondBody.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                XmlTagValuesFactory.XMLTagMainNavValues nv = (XmlTagValuesFactory
+                        .XMLTagMainNavValues) v.getTag();
+                if (nv == null) {
+                    Log.i(MSG, "导航2的点击TAG为NULL");
+                } else {
+                    WEB_VALUES_ACT web_values_act = new WEB_VALUES_ACT(nv.getNav_link_url());
+                    web_values_act.set_StaticColor(nv.getAuto_link_staticColor().trim());
+                    web_values_act.set_TitleBackColor(nv.getAuto_link_titleBackColor().trim());
+                    web_values_act.set_TitleColor(nv.getAuto_link_titleColor().trim());
+
+                    if (nv.getNav_link_url() != null && !TextUtils.isEmpty(nv.getNav_link_url())) {
+                        LazyCatFragmentStartWevact(web_values_act);
+                    }
+                }
+            }
+        });
+        /*第三个导航栏的点击事件*/
+        threeBody.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                XmlTagValuesFactory.XMLTagMainNavValues nv = (XmlTagValuesFactory
+                        .XMLTagMainNavValues) v.getTag();
+                if (nv == null) {
+                    Log.i(MSG, "导航3的点击TAG为NULL");
+                } else {
+                    WEB_VALUES_ACT web_values_act = new WEB_VALUES_ACT(nv.getNav_link_url());
+                    web_values_act.set_StaticColor(nv.getAuto_link_staticColor().trim());
+                    web_values_act.set_TitleBackColor(nv.getAuto_link_titleBackColor().trim());
+                    web_values_act.set_TitleColor(nv.getAuto_link_titleColor().trim());
+
+                    if (nv.getNav_link_url() != null && !TextUtils.isEmpty(nv.getNav_link_url())) {
+                        LazyCatFragmentStartWevact(web_values_act);
+                    }
+                }
+            }
+        });
+
+        /*第四个导航的点击事件*/
+        fourBody.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                XmlTagValuesFactory.XMLTagMainNavValues nv = (XmlTagValuesFactory
+                        .XMLTagMainNavValues) v.getTag();
+                if (nv == null) {
+                    Log.i(MSG, "导航4的点击TAG为NULL");
+                } else {
+                    WEB_VALUES_ACT web_values_act = new WEB_VALUES_ACT(nv.getNav_link_url());
+                    web_values_act.set_StaticColor(nv.getAuto_link_staticColor().trim());
+                    web_values_act.set_TitleBackColor(nv.getAuto_link_titleBackColor().trim());
+                    web_values_act.set_TitleColor(nv.getAuto_link_titleColor().trim());
+
+                    if (nv.getNav_link_url() != null && !TextUtils.isEmpty(nv.getNav_link_url())) {
+                        LazyCatFragmentStartWevact(web_values_act);
+
+                    }
+                }
+            }
+        });
         /*第一个标题*/
+        Log.i(MSG, "导航的LIST数量为:" + list.size());
         if (list.get(0) != null) {
-            first_view.setText(list.get(0).getNav_title());/*设置文字*/
+            firstBody.setTag(list.get(0));
+            first_view.setText(list.get(0).getNav_title().trim());/*设置文字*/
             first_view.setTextColor(Color.parseColor(list.get(0).getNav_color().trim()));
             /*设置颜色*/
-
             first_static.setText(list.get(0).getNav_static().trim());/*设置状态*/
             first_static.setTextColor(Color.parseColor(list.get(0).getNav_static_titleColor()
                     .trim()));
@@ -576,11 +679,50 @@ public class Mainfrg extends LazyCatFragment {
             first_static.setBackgroundColor(Color.parseColor(list.get(0).getNav_static_backColor
                     ().trim()));/*设置状态文字的背景颜色*/
 
-            firstBody.setTag(list.get(0));
-            Log.e(MSG, "请求的地址:" + list.get(0).getNav_link_url());
+            Log.e(MSG, "导航1点击进入的地址:" + list.get(0).getNav_link_url());
         } else {
-            Log.e(MSG, "请求地址:" + list.get(0).getNav_link_url());
+            Log.e(MSG, "导航1点击进入的地址:" + list.get(0).getNav_link_url());
         }
 
+
+        /*设置第二个标题的参数*/
+        if (list.get(1) != null) {
+            secondBody.setTag(list.get(1));
+            second_view.setText(list.get(1).getNav_title().trim());
+            second_view.setTextColor(Color.parseColor(list.get(1).getNav_color().trim()));
+            /*设置状态*/
+            second_static.setText(list.get(1).getNav_static().trim());
+            second_static.setTextColor(Color.parseColor(list.get(1).getNav_static_titleColor()
+                    .trim()));
+            second_static.setBackgroundColor(Color.parseColor(list.get(1).getNav_static_backColor
+                    ().trim()));
+        } else {
+            Log.i(MSG, "导航栏2的数据为空");
+        }
+        /*设置第三个标题的参数*/
+        if (list.get(2) != null) {
+            threeBody.setTag(list.get(2));
+            three_view.setText(list.get(2).getNav_title().trim());
+            three_view.setTextColor(Color.parseColor(list.get(2).getNav_color().trim()));
+            three_static.setText(list.get(2).getNav_static().trim());
+            three_static.setTextColor(Color.parseColor(list.get(2).getNav_static_titleColor()
+                    .trim()));
+            three_static.setBackgroundColor(Color.parseColor(list.get(2).getNav_static_backColor
+                    ().trim()));
+        } else {
+            Log.i(MSG, "导航栏3的数据为空");
+        }
+        /*设置第四个导航的参数*/
+        if (list.get(3) != null) {
+            fourBody.setTag(list.get(3));
+            TextUnt.with(four_view).setText(list.get(3).getNav_static().trim()).setTextColor(list
+                    .get(3).getNav_color().trim());
+            four_static.setText(list.get(3).getNav_static().trim());
+            four_static.setTextColor(Color.parseColor(list.get(3).getNav_static_titleColor().trim
+                    ()));
+            four_static.setBackgroundColor(Color.parseColor(list.get(3).getNav_static_backColor()
+                    .trim()));
+
+        }
     }
 }

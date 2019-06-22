@@ -1,0 +1,1 @@
+package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools;import android.widget.TextView;/** * 文字处理 */public class TextUnt {    public static handlerText with(TextView tv) {        handlerText handlerText = new handlerText();        return handlerText.get(tv);    }}

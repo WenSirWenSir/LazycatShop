@@ -328,7 +328,6 @@ public class Tools {
         }
     }
 
-
     /**
      * change the background lines and background color
      */

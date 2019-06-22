@@ -26,13 +26,31 @@ import shlm.lmcs.com.lazycat.R;
 
 /**
  * 主界面品牌管理者
+ * <p>
+ * 共计三个管理方法
+ *
+ * <p>
+ * getStatic [获取当前的处理状态
+ * <p>
+ * setStatic [设置当前的状态
+ * <p>
+ * pause [停止当前的所有事物
+ * <p>
+ * stop [停止当前的所有事物
+ * <p>
+ * Start [启动管理者
+ * <p>
+ * reStart [重新加载
+ * <p>
+ * setCantload [不允许加载
  */
 @SuppressLint("LongLogTag")
 public class BrandSingMonitor extends Monitor {
     private View item;
     private Context mContext;
     private Boolean is;
-    public Boolean _Static;//是否可以加载信息的状态
+
+    private int _Static;/*当前的状态*/
     public Boolean Stop = false;//外部调用 是否可以进行加载操作
     public Boolean Runing = false;//外部判断内部是否在刷新操作
     private LinearLayout backImg;/*背景图片的BODY*/
@@ -44,11 +62,43 @@ public class BrandSingMonitor extends Monitor {
 
 
     /**
+     * 设置状态
+     *
+     * @param _setStatic
+     */
+    public void setStatic(int _setStatic) {
+        this._Static = _setStatic;/**/
+    }
+
+    /**
+     * 设置该模块不准加载
+     */
+    public void setCantload() {
+        this._Static = Monitor.IN_CANTLOAD;
+    }
+
+    /*暂时停止加载等的活动*/
+    public void pause() {
+        this._Static = Monitor.IN_PAUSE;
+        /*清空背景图片 减少缓存*/
+        if (backImg != null) {
+            if (backImg.getChildAt(0) != null) {
+                /*背景图片存在的话*/
+                backImg.removeAllViews();//清空内存
+            } else {
+
+            }
+        } else {
+            Log.e(MSG, "图片已经被清空");
+        }
+    }
+
+    /**
      * 判断状态  加载完成 或者 没有加载完成
      *
      * @return
      */
-    public Boolean GetStatic() {
+    public int GetStatic() {
         return _Static;
     }
 
@@ -56,6 +106,7 @@ public class BrandSingMonitor extends Monitor {
      * 立即停止加载
      */
     public void Stop() {
+        this._Static = Monitor.IN_STOP;
 
     }
 
@@ -63,7 +114,7 @@ public class BrandSingMonitor extends Monitor {
      * 重新开始加载
      */
     public void ReStart(Context context) {
-
+        this._Static = Monitor.IN_RESTART;
         /*判断线程元素是否还存在*/
         if (RunnableList != null) {
             /*启动管理*/
@@ -87,10 +138,14 @@ public class BrandSingMonitor extends Monitor {
     /**
      * 开始整理事务
      */
+    @SuppressLint("NewApi")
     public void Start(ProgramInterface _programInterface, final Context context) {
-
+        /**
+         * 判断当前的状态
+         */
         /*加载背景图片*/
-
+        TextView _static = item.findViewById(R.id.assembly_fragment_main_singleFirstStatic);
+        _static.setBackground(Tools.CreateDrawable(1, "#f30d65", "#f30d65", 50));
         if (this.backImg != null) {
             ImageView img = new ImageView(this.backImg.getContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout
@@ -151,6 +206,7 @@ public class BrandSingMonitor extends Monitor {
 
             }
 
+            @SuppressLint("NewApi")
             @Override
             public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
                 //开始解析数据
@@ -209,6 +265,9 @@ public class BrandSingMonitor extends Monitor {
                         LinearLayout img = item.findViewById(R.id
                                 .assembly_fragment_main_singleShopaImage);
                         load_imagepage.setImgBody(img);
+
+                        /*设置状态边框*/
+
                         load_imagepages.add(load_imagepage);//添加一个元素
 
                     } else if (tag.equals(XmlTagValuesFactory.XMLtagMainBrandPromotion
@@ -334,11 +393,11 @@ public class BrandSingMonitor extends Monitor {
                      * 设置商品的标题
                      */
                     shop_a_title.setText(XmlTagValuesFactory.XMLtagMainBrandPromotion
-                            .getShop_a_title());
+                            .getShop_a_title().trim());
                     shop_b_title.setText(XmlTagValuesFactory.XMLtagMainBrandPromotion
-                            .getShop_b_title());
+                            .getShop_b_title().trim());
                     shop_c_title.setText(XmlTagValuesFactory.XMLtagMainBrandPromotion
-                            .getShop_c_title());
+                            .getShop_c_title().trim());
 
                     ThreadFactory threadFactory = new ThreadFactory();
                     RunnableList = new ArrayList<>();
@@ -361,20 +420,5 @@ public class BrandSingMonitor extends Monitor {
 
     }
 
-    /*暂时停止加载等的活动*/
-    public void pause() {
-        /*清空背景图片 减少缓存*/
-        if (backImg != null) {
-            if (backImg.getChildAt(0) != null) {
-                /*背景图片存在的话*/
-                backImg.removeAllViews();//清空内存
-            } else {
-
-            }
-        } else {
-            Log.e(MSG, "图片已经被清空");
-        }
-
-    }
 
 }
