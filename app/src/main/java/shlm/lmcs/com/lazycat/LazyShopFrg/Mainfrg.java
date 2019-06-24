@@ -123,8 +123,8 @@ public class Mainfrg extends LazyCatFragment {
 
         ImageView bigImg = horizontaladv_view.findViewById(R.id
                 .assembly_fragment_main_horizontaladv_img);
-        Glide.with(getContext()).load
-                ("http://120.79.63.36/collection/lybh/photos/6901826889012.png").into(bigImg);
+        Glide.with(getContext()).load("http://120.79.63.36/collection/lybh/photos/1231321.png")
+                .into(bigImg);
         /*横向动画开始*/
         DisplayMetrics matrix = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(matrix);
@@ -562,6 +562,7 @@ public class Mainfrg extends LazyCatFragment {
     private void HandlerNav(ArrayList<XmlTagValuesFactory.XMLTagMainNavValues> list, View view) {
         TextView first_view = view.findViewById(R.id.assembly_fragment_main_nava_fristTitle);
         TextView first_static = view.findViewById(R.id.assembly_fragment_main_nava_fristStatic);
+        ImageView first_img = view.findViewById(R.id.assembly_fragment_main_nava_fristImg);
         RelativeLayout firstBody = view.findViewById(R.id.assembly_fragment_main_nav_firstBody);
         /*第二个导航的控件信息*/
 
@@ -676,10 +677,15 @@ public class Mainfrg extends LazyCatFragment {
             first_static.setTextColor(Color.parseColor(list.get(0).getNav_static_titleColor()
                     .trim()));
             /*设置状态文字的颜色*/
+
+
             first_static.setBackgroundColor(Color.parseColor(list.get(0).getNav_static_backColor
                     ().trim()));/*设置状态文字的背景颜色*/
+            /*加载导航的图片*
 
-            Log.e(MSG, "导航1点击进入的地址:" + list.get(0).getNav_link_url());
+             */
+            Glide.with(getContext()).load(list.get(0).getNav_ico().trim()).into(first_img);
+            Log.e(MSG, "导航1要加载ICO的地址:" + list.get(0).getNav_ico());
         } else {
             Log.e(MSG, "导航1点击进入的地址:" + list.get(0).getNav_link_url());
         }
