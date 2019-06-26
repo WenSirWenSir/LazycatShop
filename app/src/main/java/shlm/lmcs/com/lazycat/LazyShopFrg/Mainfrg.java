@@ -410,6 +410,13 @@ public class Mainfrg extends LazyCatFragment {
                 @Override
                 public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
                     try {
+
+                        if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml.key_nav_arcview)) {
+                            /*设置拱形的颜色*/
+                            String arcColor = pullParser.nextText().trim();
+                            Log.i(MSG, "拱形的颜色为:"+arcColor);
+                            arcView.setBackGroundColor(arcColor);
+                        }
                         if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml.key_nav_body)) {
                             /*重新创建一个表格*/
                             navPage = new XmlTagValuesFactory.XMLTagMainNavValues();
@@ -581,6 +588,7 @@ public class Mainfrg extends LazyCatFragment {
         TextView four_view = view.findViewById(R.id.assembly_fragment_main_nava_fourTitle);
         TextView four_static = view.findViewById(R.id.assembly_fragment_main_nava_fourStatic);
         RelativeLayout fourBody = view.findViewById(R.id.assembly_fragment_main_nava_fourBody);
+        ImageView four_img = view.findViewById(R.id.assembly_fragment_main_nava_fourImg);
 
 
         /*第一个导航的body*/
@@ -721,8 +729,12 @@ public class Mainfrg extends LazyCatFragment {
         /*设置第四个导航的参数*/
         if (list.get(3) != null) {
             fourBody.setTag(list.get(3));
-            TextUnt.with(four_view).setText(list.get(3).getNav_static().trim()).setTextColor(list
+            TextUnt.with(four_view).setText(list.get(3).getNav_title().trim()).setTextColor(list
                     .get(3).getNav_color().trim());
+            /*判断是否有图片*/
+            if (!list.get(3).getNav_ico().trim().equals("") && list.get(3).getNav_ico() != null) {
+                Glide.with(getContext()).load(list.get(3).getNav_ico().trim()).into(four_img);
+            }
             four_static.setText(list.get(3).getNav_static().trim());
             four_static.setTextColor(Color.parseColor(list.get(3).getNav_static_titleColor().trim
                     ()));

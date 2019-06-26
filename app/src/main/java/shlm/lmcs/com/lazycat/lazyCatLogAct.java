@@ -17,6 +17,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.ImageMonitor;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.LazyShopAct.MainAct;
+import shlm.lmcs.com.lazycat.LazyShopAct.PromotionAct;
 
 
 public class lazyCatLogAct extends LazyCatAct {
@@ -33,7 +34,13 @@ public class lazyCatLogAct extends LazyCatAct {
             public void handleMessage(Message msg) {
                 //refreshDialog.dismiss();
                 //进入主界面
-                LazyCatActStartActivity(MainAct.class, true);
+                if (true) {
+                    LazyCatActStartActivity(PromotionAct.class, true);
+                } else {
+                    LazyCatActStartActivity(MainAct.class, true);
+
+                }
+
                 super.handleMessage(msg);
             }
         };
@@ -55,7 +62,7 @@ public class lazyCatLogAct extends LazyCatAct {
             public void run() {
                 handler.sendMessage(new Message());
             }
-        }, 3000);
+        }, 2000);
         setStatusBar("#f30d88");
         /*尝试加载图片管理者*/
         ImageMonitor imageMonitor = new ImageMonitor(getApplicationContext());

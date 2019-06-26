@@ -26,6 +26,7 @@ public class XmlTagValuesFactory {
     }
 
     public static class XMLKeyMainXml {
+        public final static String key_nav_arcview = "arc_background";/*拱形的颜色*/
         public final static String key_only_code = "only_code";/*唯一的代码更新*/
         public final static String key_photo_addr = "photo_addr";/*图片地址*/
         public final static String key_adver_head = "adver_head";/*广告图片*/

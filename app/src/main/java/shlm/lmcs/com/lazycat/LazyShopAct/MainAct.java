@@ -69,7 +69,7 @@ public class MainAct extends LazyCatAct {
                         frameLayout.getChildAt(0).setLayoutParams(ps);
                     }
                 });
-               // anim.start();
+                // anim.start();
                 anim.addListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
@@ -166,7 +166,6 @@ public class MainAct extends LazyCatAct {
                 showFragment(ICO_FRAGMENT_DELIVERY);
                 RelativeLayout rl = (RelativeLayout) v;
                 Animator animation = Tools.createRoundAnimation(btn_delivery, 200);
-                setIcoNavColor(rl, R.drawable.ico_freight, animation);
             }
         });
         btn_usercenter.setOnClickListener(new View.OnClickListener() {
@@ -178,7 +177,6 @@ public class MainAct extends LazyCatAct {
                 showFragment(ICO_FRAGMENT_USERCENTER);
                 setStatusBar("#f30d88");
                 Animator animation = Tools.createRoundAnimation(btn_usercenter, 200);
-                setIcoNavColor(rl, R.drawable.ico_usercontent, animation);
                 //LazyCatActStartActivity(LoginAct.class, false);
             }
         });
@@ -190,9 +188,9 @@ public class MainAct extends LazyCatAct {
      */
     @SuppressLint("ResourceType")
     private void ClearallIcoBackground() {
-        ImageView btn_mainImg = (ImageView) btn_main.getChildAt(0);//第0号的位置就是Image
-        TextView btn_mainTv = (TextView) btn_main.getChildAt(1);
-        btn_mainTv.setTextColor(Color.parseColor("#bfbfbf"));
+//        ImageView btn_mainImg = (ImageView) btn_main.getChildAt(0);//第0号的位置就是Image
+        //TextView btn_mainTv = (TextView) btn_main.getChildAt(1);
+       // btn_mainTv.setTextColor(Color.parseColor("#bfbfbf"));
         ImageView btn_deliveryImg = (ImageView) btn_delivery.getChildAt(0);
         TextView btn_deliveryTv = (TextView) btn_delivery.getChildAt(1);
         btn_deliveryTv.setTextColor(Color.parseColor("#bfbfbf"));
@@ -203,17 +201,9 @@ public class MainAct extends LazyCatAct {
         VectorDrawableCompat btn_mainImgVD = VectorDrawableCompat.create(getResources(), R
                 .drawable.ico_btn_main, getTheme());
         btn_mainImgVD.setTint(Color.parseColor("#bfbfbf"));
-        btn_mainImg.setImageDrawable(btn_mainImgVD);
+        //btn_mainImg.setImageDrawable(btn_mainImgVD);
         //设置默认的第二个导航的颜色
-        VectorDrawableCompat btn_deilveryImgVD = VectorDrawableCompat.create(getResources(), R
-                .drawable.ico_freight, getTheme());
-        btn_deilveryImgVD.setTint(Color.parseColor("#bfbfbf"));
-        btn_deliveryImg.setImageDrawable(btn_deilveryImgVD);
         //设置默认的第三个导航的颜色
-        VectorDrawableCompat btn_usercenterImgVD = VectorDrawableCompat.create(getResources(), R
-                .drawable.ico_usercontent, getTheme());
-        btn_usercenterImgVD.setTint(Color.parseColor("#bfbfbf"));
-        btn_usercenterImg.setImageDrawable(btn_usercenterImgVD);
     }
 
     @SuppressLint("ResourceType")
