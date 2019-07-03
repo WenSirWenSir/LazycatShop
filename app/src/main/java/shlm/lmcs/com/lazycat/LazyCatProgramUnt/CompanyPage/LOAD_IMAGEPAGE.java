@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import java.io.File;
 
 /**
- * ÔÚÏß³Ì³ØÖĞÏÂÔØÊ±ºò Òª´«ÈëµÄIMAGEµÄÖµ
+ * åœ¨çº¿ç¨‹æ± ä¸­ä¸‹è½½æ—¶å€™ è¦ä¼ å…¥çš„IMAGEçš„å€¼
  */
 public class LOAD_IMAGEPAGE {
     private LinearLayout imgBody;
@@ -20,7 +20,7 @@ public class LOAD_IMAGEPAGE {
         this.defaultFile = defaultFile;
     }
 
-    private File defaultFile;//Ä¬ÈÏµÄÍ¼Æ¬»º´æÂ·¾¶
+    private File defaultFile;//é»˜è®¤çš„å›¾ç‰‡ç¼“å­˜è·¯å¾„
 
     private String img_url;
 
@@ -30,7 +30,7 @@ public class LOAD_IMAGEPAGE {
 
 
     /**
-     * ±£´æµ½±¾µØµÄÍ¼Æ¬Ãû×Ö ±ØĞë¼Óºó×ºÃû×Ö
+     * ä¿å­˜åˆ°æœ¬åœ°çš„å›¾ç‰‡åå­— å¿…é¡»åŠ åç¼€åå­—
      *
      * @param saveName
      */
@@ -60,7 +60,7 @@ public class LOAD_IMAGEPAGE {
 
 
     /**
-     * ±£´æµ½»º´æµÄ
+     * ä¿å­˜åˆ°ç¼“å­˜çš„
      *
      * @return
      */
@@ -74,7 +74,7 @@ public class LOAD_IMAGEPAGE {
 
 
     /**
-     * »ñÈ¡Ò»¸öÍ¼Æ¬µÄµØÖ·  Ò»°ãµÄ¸ñÊ½Îª
+     * è·å–ä¸€ä¸ªå›¾ç‰‡çš„åœ°å€  ä¸€èˆ¬çš„æ ¼å¼ä¸º
      * dirs/name.jpg
      *
      * @return
@@ -85,7 +85,7 @@ public class LOAD_IMAGEPAGE {
 
 
     /**
-     * ÉèÖÃÒ»¸öÍ¼Æ¬µÄµØÖ· Ò»°ã¸ñÊ½Îª
+     * è®¾ç½®ä¸€ä¸ªå›¾ç‰‡çš„åœ°å€ ä¸€èˆ¬æ ¼å¼ä¸º
      * dirs/name.jpg
      *
      * @param img_url
@@ -96,7 +96,7 @@ public class LOAD_IMAGEPAGE {
 
 
     /**
-     * Çå¿ÕËùÓĞµÄÊı¾İĞÅÏ¢
+     * æ¸…ç©ºæ‰€æœ‰çš„æ•°æ®ä¿¡æ¯
      */
     public void clear() {
         this.imgBody = null;

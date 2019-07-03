@@ -1,5 +1,7 @@
 package shlm.lmcs.com.lazycat.LazyCatProgramUnt;
 
+import android.text.TextUtils;
+
 public class Config {
 
     public static final String DEBUG = "LazyCatProgramUnt";
@@ -124,8 +126,17 @@ public class Config {
      * For example, send smsService,user login,get user data,update user data
      */
     public static class HTTP_ADDR {
-        public final static String SERVICE = "http://47.102.205.26/";
+
+        public static String SERVICE = "http://47.102.205.26";
         public final static String CONFIG_XML_SERVICE = SERVICE + "lazyShop/configXml/";
+
+        public static void setAddr(String addr) {
+            if (!TextUtils.isEmpty(addr)) {
+                SERVICE += addr;
+
+            }
+
+        }
 
         /**
          * get the address of the interface to send SMS captha
@@ -183,9 +194,9 @@ public class Config {
             return HTTP_ADDR.SERVICE + "user/user_init.php";
         }
 
-
         /**
          * 获取首页的ConfigXml
+         *
          * @return
          */
         public static String getMainFragmentConfigXml() {

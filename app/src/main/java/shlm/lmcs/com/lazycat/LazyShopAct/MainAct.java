@@ -192,11 +192,7 @@ public class MainAct extends LazyCatAct {
         //TextView btn_mainTv = (TextView) btn_main.getChildAt(1);
        // btn_mainTv.setTextColor(Color.parseColor("#bfbfbf"));
         ImageView btn_deliveryImg = (ImageView) btn_delivery.getChildAt(0);
-        TextView btn_deliveryTv = (TextView) btn_delivery.getChildAt(1);
-        btn_deliveryTv.setTextColor(Color.parseColor("#bfbfbf"));
         ImageView btn_usercenterImg = (ImageView) btn_usercenter.getChildAt(0);
-        TextView btn_usercenterTv = (TextView) btn_usercenter.getChildAt(1);
-        btn_usercenterTv.setTextColor(Color.parseColor("#bfbfbf"));
         //设置默认的第一个导航的颜色
         VectorDrawableCompat btn_mainImgVD = VectorDrawableCompat.create(getResources(), R
                 .drawable.ico_btn_main, getTheme());

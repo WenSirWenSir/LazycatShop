@@ -301,7 +301,6 @@ public class LoginAct extends LazyCatAct {
                     btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
                 }
                 Log.i(MSG, "" + tv.getText().toString());
-
             }
         });
         inputcode_three.getChildAt(1).setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff",
@@ -385,10 +384,9 @@ public class LoginAct extends LazyCatAct {
                     }
                 });
                 String code = btnSendCode.getText().toString();/*获取验证码*/
-                if(code.length() == 0){
+                if (code.length() == 0) {
 
-                }
-                else{
+                } else {
                     String new_code = code.substring(0, code.length() - 1);
                     btnSendCode.setText(new_code);
                 }

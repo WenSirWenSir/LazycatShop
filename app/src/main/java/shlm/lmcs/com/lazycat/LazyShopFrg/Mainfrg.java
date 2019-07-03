@@ -18,6 +18,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
 import com.bumptech.glide.Glide;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -38,6 +42,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.ArcView;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.RefreshScrollView;
 import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
+import shlm.lmcs.com.lazycat.LazyShopInterface.LocationMapListener;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.BrandSingMonitor;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.MerchantMonitor;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.Monitor;
@@ -48,11 +53,23 @@ import shlm.lmcs.com.lazycat.R;
 
 @SuppressLint("HandlerLeak")
 public class Mainfrg extends LazyCatFragment {
+
+    /**
+     * 百度定位模块
+     */
+    private LocationClient locationClient;/*接口*/
+    private LocationClientOption locationClientOption;/*参数*/
+    private LocationMapListener locationListener;/*回调接口*/
+    private View item;
+    /**
+     *
+     */
     private LinearLayout horizontaladv_body;
     private LayoutInflater inflater;
     private RelativeLayout big_body;/*最外层的布局 用来切换外卖使用*/
     private RefreshScrollView _RefreshScrollView;
     private static final int GONE_HEADE_IMG = 0;
+    private LinearLayout body;
     private String MSG = "Mainfrg.java[+]";
     private Timer _GoneHeadimg;
     private String Search_input_line_color;/*输入框线条颜色*/
@@ -83,11 +100,37 @@ public class Mainfrg extends LazyCatFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
-        View item = inflater.inflate(R.layout.fragment_main, null);
+        /*确定用户的物理地址*/
+        SDKInitializer.initialize(getActivity().getApplicationContext());
+        item = inflater.inflate(R.layout.fragment_main, null);
+        body = item.findViewById(R.id.fragment_main_body);/*主要的布局*/
+        body.setVisibility(View.GONE);/*先隐藏起来*/
         //初始化一个背景样式
         item.findViewById(R.id.assembly_head_input).setFocusable(false);
         big_body = item.findViewById(R.id.fragment_main_bigBody);/*最外层布局*/
         arcView = item.findViewById(R.id.fragment_main_arcView);
+        locationClientOption = new LocationClientOption();
+        locationClient = new LocationClient(getActivity().getApplicationContext());
+        locationListener = new LocationMapListener();
+        locationClientOption.setOpenGps(true);
+        locationClientOption.setIsNeedAddress(true);
+        locationClientOption.setIsNeedLocationDescribe(true);
+        locationClientOption.setOpenAutoNotifyMode();/*设置自动回调*/
+        locationClient.setLocOption(locationClientOption);
+        locationClient.registerLocationListener(locationListener);
+        /*设置监听*/
+        locationListener.setOnReceiveLocationListener(new LocationMapListener
+                .onReceiveLocationListener() {
+            @Override
+            public void onHasAddr(BDLocation bdLocation) {
+                if (item != null) {
+                    init(item);
+                } else {
+                    /*如果是空 就不要显示界面了*/
+                }
+            }
+        });
+        locationClient.start();
         init(item);
         return item;
 
@@ -95,6 +138,8 @@ public class Mainfrg extends LazyCatFragment {
 
     @SuppressLint({"NewApi", "ResourceType", "LongLogTag"})
     private void init(final View item) {
+        /*开启界面*/
+        body.setVisibility(View.VISIBLE);
         Net.doGet(getContext(), Config.HTTP_ADDR.getMainFragmentConfigXml(), new Net
                 .onVisitInterServiceListener() {
             @Override
@@ -414,7 +459,7 @@ public class Mainfrg extends LazyCatFragment {
                         if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml.key_nav_arcview)) {
                             /*设置拱形的颜色*/
                             String arcColor = pullParser.nextText().trim();
-                            Log.i(MSG, "拱形的颜色为:"+arcColor);
+                            Log.i(MSG, "拱形的颜色为:" + arcColor);
                             arcView.setBackGroundColor(arcColor);
                         }
                         if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml.key_nav_body)) {
@@ -743,4 +788,5 @@ public class Mainfrg extends LazyCatFragment {
 
         }
     }
+
 }
