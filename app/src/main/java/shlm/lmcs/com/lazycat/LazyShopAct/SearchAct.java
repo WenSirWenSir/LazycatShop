@@ -29,7 +29,6 @@ public class SearchAct extends LazyCatAct {
     private AutoLineLayout searchLog;
     private EditText input;
     private ListView SearchlogListview;
-    private TextView btn_search;
 
     @SuppressLint({"NewApi", "ResourceType"})
     @Override
@@ -37,13 +36,11 @@ public class SearchAct extends LazyCatAct {
         setContentView(R.layout.activity_search);
         setTransparentBar();
         super.onCreate(savedInstanceState);
-        input = findViewById(R.id.assembly_head_input);
+        input = findViewById(R.id.assembly_head_editText);
         input.setBackground(Tools.CreateDrawable(3, getResources().getString(R.color.ThemeColor),
                 "#ffffff", 10));
-        btn_search = findViewById(R.id.assembly_head_searchTitle);
         SearchlogListview = findViewById(R.id.activity_search_listview);
         Tools.getFocusable(input);
-
         init();
     }
 
@@ -91,20 +88,6 @@ public class SearchAct extends LazyCatAct {
                     findViewById(R.id.activity_search_RefreshScrollView).setVisibility(View.GONE);
                 }
                 //执行动画
-                if (TextUtils.isEmpty(s.toString())) {
-                    /*输入框的数据为空*/
-                    btn_search.clearAnimation();
-                    /*逐渐隐藏动画*/
-                    btn_search.startAnimation(Tools.clearOnalpha(1000, false));
-                    btn_search.setVisibility(View.GONE);
-                    /*listView不显示*/
-                } else if (btn_search.getVisibility() != View.VISIBLE) {
-                    //不在显示
-                    btn_search.clearAnimation();
-                    btn_search.setVisibility(View.VISIBLE);
-                    btn_search.clearAnimation();
-                    btn_search.startAnimation(Tools.createOnalpha(1000, false));
-                }
             }
         });
 
@@ -113,13 +96,6 @@ public class SearchAct extends LazyCatAct {
          * 点击搜索框的监听事件
          */
 
-        btn_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
         ArrayList<String> text_list = new ArrayList<>();
         text_list.add("流浪地球");
         text_list.add("逍遥散人");

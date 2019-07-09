@@ -574,4 +574,67 @@ public class XmlTagValuesFactory {
 
 
     }
+
+
+    /**
+     * 配置文件的初始化界面的XML数据
+     */
+    public static class XmlInitPage {
+        public final static String key_windowcolor = "WindowColor";
+        public final static String key_searchbackground = "SearchBackground";
+        public final static String key_searchbodycolor = "SearchBodyColor";
+        public final static String key_searchlinecolor = "SearchLineColor";
+        public final static String key_howmessagenumber = "HowMessageNumber";
+        public static String WindowColor;
+        public static String SearchBackground;
+        public static String SearchBodyColor;
+        public static String SearchLineColor;
+        public static String HowMessageNumber;
+        public static String getHowMessageNumber() {
+            return HowMessageNumber;
+        }
+
+        public static void setHowMessageNumber(String howMessageNumber) {
+            HowMessageNumber = howMessageNumber;
+        }
+
+        public void ClearValues() {
+            this.WindowColor = "";
+            this.SearchBackground = "";
+            this.SearchBodyColor = "";
+            this.SearchLineColor = "";
+        }
+
+        public static String getWindowColor() {
+            return WindowColor;
+        }
+
+        public static void setWindowColor(String windowColor) {
+            WindowColor = windowColor;
+        }
+
+        public static String getSearchBackground() {
+            return SearchBackground;
+        }
+
+        public static void setSearchBackground(String searchBackground) {
+            SearchBackground = searchBackground;
+        }
+
+        public static String getSearchBodyColor() {
+            return SearchBodyColor;
+        }
+
+        public static void setSearchBodyColor(String searchBodyColor) {
+            SearchBodyColor = searchBodyColor;
+        }
+
+        public static String getSearchLineColor() {
+            return SearchLineColor;
+        }
+
+        public static void setSearchLineColor(String searchLineColor) {
+            SearchLineColor = searchLineColor;
+        }
+    }
 }

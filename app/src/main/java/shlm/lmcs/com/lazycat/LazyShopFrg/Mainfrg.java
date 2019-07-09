@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -61,6 +62,7 @@ public class Mainfrg extends LazyCatFragment {
     private LocationClientOption locationClientOption;/*参数*/
     private LocationMapListener locationListener;/*回调接口*/
     private View item;
+
     /**
      *
      */
@@ -80,6 +82,7 @@ public class Mainfrg extends LazyCatFragment {
     private ArrayList<XmlTagValuesFactory.XMLTagMainNavValues> nav_list = new
             ArrayList<XmlTagValuesFactory.XMLTagMainNavValues>();
     private View _navaBody;
+    private View SearchViewBody;/*搜索框的父窗口布局*/
     private int window_width;/*屏幕的宽度*/
     private Handler handler = new Handler() {
         @Override
@@ -98,15 +101,16 @@ public class Mainfrg extends LazyCatFragment {
 
     @SuppressLint({"ResourceType", "NewApi"})
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         /*确定用户的物理地址*/
         SDKInitializer.initialize(getActivity().getApplicationContext());
         item = inflater.inflate(R.layout.fragment_main, null);
         body = item.findViewById(R.id.fragment_main_body);/*主要的布局*/
         body.setVisibility(View.GONE);/*先隐藏起来*/
+        SearchViewBody = item.findViewById(R.id.fragment_main_head);/*搜索框的父布局*/
         //初始化一个背景样式
-        item.findViewById(R.id.assembly_head_input).setFocusable(false);
+        item.findViewById(R.id.assembly_head_editText).setFocusable(false);
         big_body = item.findViewById(R.id.fragment_main_bigBody);/*最外层布局*/
         arcView = item.findViewById(R.id.fragment_main_arcView);
         locationClientOption = new LocationClientOption();
@@ -118,29 +122,170 @@ public class Mainfrg extends LazyCatFragment {
         locationClientOption.setOpenAutoNotifyMode();/*设置自动回调*/
         locationClient.setLocOption(locationClientOption);
         locationClient.registerLocationListener(locationListener);
+        InitPageXml();
         /*设置监听*/
         locationListener.setOnReceiveLocationListener(new LocationMapListener
                 .onReceiveLocationListener() {
             @Override
             public void onHasAddr(BDLocation bdLocation) {
-                if (item != null) {
+                if (bdLocation.hasAddr()) {
+                    /*存在地址信息*/
                     init(item);
-                } else {
-                    /*如果是空 就不要显示界面了*/
+                    /*设置地址标题*/
+                    TextView addr_title = SearchViewBody.findViewById(R.id.assembly_head_addrTitle);
+                    addr_title.setText(bdLocation.getStreet().trim());
+                    Toast.makeText(getActivity(),bdLocation.getStreet().trim(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), bdLocation.getDistrict(), Toast.LENGTH_SHORT)
+                            .show();
                 }
+            }
+
+            @Override
+            public void onNotAddr(BDLocation bdLocation) {
+                /*没有地址信息*/
+                body.setVisibility(View.VISIBLE);
+                body.removeAllViews();
+                View item_noservice = inflater.inflate(R.layout.item_noservice, null);
+                body.addView(item_noservice);
+                Log.e(MSG, "没有地址信息");
+                TextView addr_title = SearchViewBody.findViewById(R.id.assembly_head_addrTitle);
+                addr_title.setText("定位失败");
+
             }
         });
         locationClient.start();
-        init(item);
         return item;
 
+    }
+
+
+    /**
+     * 初始化设置边框等界面
+     */
+    @SuppressLint("NewApi")
+    private void InitPageXml() {
+
+        Net.doGet(getContext(), Config.HTTP_ADDR.getInitMainXmlConfig(), new Net
+                .onVisitInterServiceListener() {
+            @Override
+            public void onSucess(String tOrgin) {
+                Log.i(MSG, "调试输出:" + tOrgin);
+                XmlanalysisFactory xmlTools = new XmlanalysisFactory(tOrgin);
+                xmlTools.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
+                    @Override
+                    public void onFaile() {
+
+                    }
+
+                    @Override
+                    public void onStartDocument() {
+
+                    }
+
+                    @Override
+                    public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
+                        try {
+
+                            /**
+                             * 获取搜索的父窗口的背景颜色
+                             */
+                            if (tag.equals(XmlTagValuesFactory.XmlInitPage.key_searchbackground)) {
+                                XmlTagValuesFactory.XmlInitPage.setSearchBackground(pullParser
+                                        .nextText().trim());
+                            }
+
+
+                            /**
+                             * 获取状态栏颜色
+                             */
+                            if (tag.equals(XmlTagValuesFactory.XmlInitPage.key_windowcolor)) {
+                                XmlTagValuesFactory.XmlInitPage.setWindowColor(pullParser
+                                        .nextText().trim());
+                            }
+
+                            /**
+                             * 获取搜索栏的线条的颜色
+                             */
+
+                            if (tag.equals(XmlTagValuesFactory.XmlInitPage.key_searchlinecolor)) {
+                                XmlTagValuesFactory.XmlInitPage.setSearchLineColor(pullParser
+                                        .nextText().trim());
+                            }
+
+                            /**
+                             * 获取搜索栏的背景颜色
+                             */
+
+                            if (tag.equals(XmlTagValuesFactory.XmlInitPage.key_searchbodycolor)) {
+                                XmlTagValuesFactory.XmlInitPage.setSearchBodyColor(pullParser
+                                        .nextText().trim());
+                            }
+
+                            /**
+                             * 获取系统通知的数量
+                             */
+
+                            if (tag.equals(XmlTagValuesFactory.XmlInitPage.key_howmessagenumber)) {
+                                XmlTagValuesFactory.XmlInitPage.setHowMessageNumber(pullParser
+                                        .nextText().trim());
+
+                            }
+                        } catch (Exception e) {
+                            Log.e(MSG, "错误信息:" + e.getMessage());
+                        }
+
+                    }
+
+                    @Override
+                    public void onEndTag(String tag, XmlPullParser pullParser, Integer id) {
+
+                    }
+
+                    @Override
+                    public void onEndDocument() {
+                        setStatusBar(XmlTagValuesFactory.XmlInitPage.getWindowColor());
+                        /*设置搜索框的线条和背景颜色*/
+                        EditText editText = SearchViewBody.findViewById(R.id
+                                .assembly_head_editText);
+                        editText.setBackground(Tools.CreateDrawable(1, XmlTagValuesFactory
+                                .XmlInitPage.getSearchLineColor(), XmlTagValuesFactory
+                                .XmlInitPage.getSearchBodyColor(), 10));
+                        /*设置父窗口背景的颜色*/
+                        SearchViewBody.setBackgroundColor(Color.parseColor(XmlTagValuesFactory
+                                .XmlInitPage.getSearchBackground()));
+                        /*系统信息数量*/
+                        TextView howMessage = SearchViewBody.findViewById(R.id
+                                .assembly_head_howmessageNumber);
+                        /*设置通知图标的圆圈的颜色*/
+                        howMessage.setBackground(Tools.CreateDrawable(1, XmlTagValuesFactory
+                                .XmlInitPage.getHowMessageNumber(), XmlTagValuesFactory
+                                .XmlInitPage.getHowMessageNumber(), 50));
+                        /*处理系统信息数量*/
+
+
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onNotConnect() {
+
+            }
+
+            @Override
+            public void onFail(String tOrgin) {
+
+            }
+        });
     }
 
     @SuppressLint({"NewApi", "ResourceType", "LongLogTag"})
     private void init(final View item) {
         /*开启界面*/
         body.setVisibility(View.VISIBLE);
-        Net.doGet(getContext(), Config.HTTP_ADDR.getMainFragmentConfigXml(), new Net
+        Net.doGet(getContext(), Config.HTTP_ADDR.getInitMainXmlConfig(), new Net
                 .onVisitInterServiceListener() {
             @Override
             public void onSucess(String tOrgin) {
@@ -422,7 +567,8 @@ public class Mainfrg extends LazyCatFragment {
         /**
          * 实现点击搜索框进入搜索界面
          */
-        item.findViewById(R.id.assembly_head_input).setOnClickListener(new View.OnClickListener() {
+        item.findViewById(R.id.assembly_head_editText).setOnClickListener(new View
+                .OnClickListener() {
             @Override
             public void onClick(View v) {
                 LazyCatFragmetStartAct(SearchAct.class);
@@ -455,6 +601,7 @@ public class Mainfrg extends LazyCatFragment {
                 @Override
                 public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
                     try {
+
 
                         if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml.key_nav_arcview)) {
                             /*设置拱形的颜色*/
@@ -584,7 +731,7 @@ public class Mainfrg extends LazyCatFragment {
                     /*处理搜索框的背景*/
                     if (!TextUtils.isEmpty(Search_input_line_color) && !TextUtils.isEmpty
                             (Search_input_back_color)) {
-                        item.findViewById(R.id.assembly_head_input).setBackground(Tools
+                        item.findViewById(R.id.assembly_head_editText).setBackground(Tools
                                 .CreateDrawable(1, Search_input_back_color.trim(),
                                         Search_input_line_color.trim(), 50));
 
@@ -788,5 +935,6 @@ public class Mainfrg extends LazyCatFragment {
 
         }
     }
+
 
 }

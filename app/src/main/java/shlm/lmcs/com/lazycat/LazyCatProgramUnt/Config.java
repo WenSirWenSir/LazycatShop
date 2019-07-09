@@ -127,7 +127,7 @@ public class Config {
      */
     public static class HTTP_ADDR {
 
-        public static String SERVICE = "http://47.102.205.26";
+        public static String SERVICE = "http://120.79.63.36";
         public final static String CONFIG_XML_SERVICE = SERVICE + "lazyShop/configXml/";
 
         public static void setAddr(String addr) {
@@ -195,12 +195,12 @@ public class Config {
         }
 
         /**
-         * 获取首页的ConfigXml
+         * 获取初始化的xml配置文件
          *
          * @return
          */
-        public static String getMainFragmentConfigXml() {
-            return HTTP_ADDR.SERVICE + "/lazyShop/configXml/mainConfig.php";
+        public static String getInitMainXmlConfig() {
+            return HTTP_ADDR.SERVICE + "/lazyShop/Config/Init.xml";
         }
     }
 
