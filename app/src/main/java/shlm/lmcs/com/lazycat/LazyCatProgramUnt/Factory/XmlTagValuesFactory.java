@@ -571,10 +571,7 @@ public class XmlTagValuesFactory {
         public static String shop_a_price;
         public static String shop_b_price;
         public static String shop_c_price;
-
-
     }
-
 
     /**
      * 配置文件的初始化界面的XML数据
@@ -590,6 +587,7 @@ public class XmlTagValuesFactory {
         public static String SearchBodyColor;
         public static String SearchLineColor;
         public static String HowMessageNumber;
+
         public static String getHowMessageNumber() {
             return HowMessageNumber;
         }

@@ -23,6 +23,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
@@ -968,5 +969,19 @@ public class Tools {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);
 
+    }
+
+
+    /**
+     * 设置一个SVG的颜色
+     * @param _context
+     * @param _id 设置的图片ID
+     * @param _color 设置颜色
+     */
+    public static VectorDrawableCompat setSvgColor(Context _context, int _id, String _color) {
+        VectorDrawableCompat data = VectorDrawableCompat.create(_context.getResources(), _id,
+                _context.getTheme());
+        data.setTint(Color.parseColor(_color.trim()));
+        return data;
     }
 }

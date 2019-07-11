@@ -30,6 +30,7 @@ public class MainAct extends LazyCatAct {
     private UserCenterfrg usercneterfrg;
     private FragmentLR frameLayout;
     private int lr_downX;/*滑动定点*/
+    private boolean is_main, is_cart, is_user;/*判断是哪个导航被点击*/
     private int lr_countX;/*滑动距离*/
     private String MSG = "MainAct.java[+]";
     private final static int ICO_FRAGMENT_MAIN = 0;
@@ -149,10 +150,35 @@ public class MainAct extends LazyCatAct {
                 hideFragment();
                 showFragment(ICO_FRAGMENT_MAIN);
                 ClearallIcoBackground();
-                RelativeLayout rl = (RelativeLayout) v;
-                Animator animation = Tools.createRoundAnimation(btn_main, 200);
-                setIcoNavColor(rl, R.drawable.ico_btn_main, animation);
-                LazyCatActStartActivity(ShowshopOffice.class, false);
+                final RelativeLayout rl = (RelativeLayout) v;
+                rl.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Animator an = Tools.createRoundAnimation(rl, 600);
+                        an.start();
+                    }
+                });
+                /*修改导航*/
+                ImageView img = (ImageView) btn_main.getChildAt(0);
+                img.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.main,
+                        "#f30d66"));
+                TextView title = (TextView) rl.getChildAt(1);
+                title.setTextColor(Color.parseColor("#f30d66"));
+                /*开始隐藏其它的导航*/
+                ImageView cart = (ImageView) btn_delivery.getChildAt(0);
+                cart.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.cart,
+                        "#a9a9a9"));
+                TextView cart_title = (TextView) btn_delivery.getChildAt(1);
+                cart_title.setTextColor(Color.parseColor("#a9a9a9"));
+                /*用户自己的界面*/
+                ImageView user = (ImageView) btn_usercenter.getChildAt(0);
+                TextView user_title = (TextView) btn_usercenter.getChildAt(1);
+                user_title.setTextColor(Color.parseColor("#a9a9a9"));
+                user.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.user,
+                        "#a9a9a9"));
+
+
+                //LazyCatActStartActivity(ShowshopOffice.class, false);
                 //LazyCatActStartActivity(UploadApp.class, false);
 
             }
@@ -164,20 +190,63 @@ public class MainAct extends LazyCatAct {
                 ClearallIcoBackground();
                 hideFragment();
                 showFragment(ICO_FRAGMENT_DELIVERY);
-                RelativeLayout rl = (RelativeLayout) v;
-                Animator animation = Tools.createRoundAnimation(btn_delivery, 200);
+                final RelativeLayout rl = (RelativeLayout) v;
+                rl.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Animator an = Tools.createRoundAnimation(rl, 600);
+                        an.start();
+                    }
+                });
+                ImageView img = (ImageView) rl.getChildAt(0);
+                img.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.cart,
+                        "#f30d66"));
+                /*隐藏其它的界面*/
+                TextView title = (TextView) rl.getChildAt(1);
+                title.setTextColor(Color.parseColor("#f30d66"));
+                ImageView main = (ImageView) btn_main.getChildAt(0);
+                main.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.main,
+                        "#a9a9a9"));
+                TextView main_title = (TextView) btn_main.getChildAt(1);
+                main_title.setTextColor(Color.parseColor("#a9a9a9"));
+                ImageView user = (ImageView) btn_usercenter.getChildAt(0);
+                user.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.user,
+                        "#a9a9a9"));
+                TextView user_title = (TextView) btn_main.getChildAt(1);
+                user_title.setTextColor(Color.parseColor("#a9a9a9"));
             }
         });
         btn_usercenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ClearallIcoBackground();
-                RelativeLayout rl = (RelativeLayout) v;
+                final RelativeLayout rl = (RelativeLayout) v;
                 hideFragment();
                 showFragment(ICO_FRAGMENT_USERCENTER);
                 setStatusBar("#f30d88");
-                Animator animation = Tools.createRoundAnimation(btn_usercenter, 200);
-                //LazyCatActStartActivity(LoginAct.class, false);
+                rl.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Animator an = Tools.createRoundAnimation(rl, 600);
+                        an.start();
+                    }
+                });
+                ImageView img = (ImageView) rl.getChildAt(0);
+                TextView title = (TextView) rl.getChildAt(1);
+                title.setTextColor(Color.parseColor("#f30d66"));
+                img.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.user,
+                        "#f30d66"));
+                ImageView main = (ImageView) btn_main.getChildAt(0);
+                main.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.main,
+                        "#a9a9a9"));
+                TextView main_title = (TextView) btn_main.getChildAt(1);
+                main_title.setTextColor(Color.parseColor("#a9a9a9"));
+                ImageView cart = (ImageView) btn_delivery.getChildAt(0);
+                cart.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.cart,
+                        "#a9a9a9"));
+                TextView cart_title = (TextView) btn_delivery.getChildAt(1);
+                cart_title.setTextColor(Color.parseColor("#a9a9a9"));
+                LazyCatActStartActivity(LoginAct.class, false);
             }
         });
     }
@@ -190,7 +259,7 @@ public class MainAct extends LazyCatAct {
     private void ClearallIcoBackground() {
 //        ImageView btn_mainImg = (ImageView) btn_main.getChildAt(0);//第0号的位置就是Image
         //TextView btn_mainTv = (TextView) btn_main.getChildAt(1);
-       // btn_mainTv.setTextColor(Color.parseColor("#bfbfbf"));
+        // btn_mainTv.setTextColor(Color.parseColor("#bfbfbf"));
         ImageView btn_deliveryImg = (ImageView) btn_delivery.getChildAt(0);
         ImageView btn_usercenterImg = (ImageView) btn_usercenter.getChildAt(0);
         //设置默认的第一个导航的颜色
