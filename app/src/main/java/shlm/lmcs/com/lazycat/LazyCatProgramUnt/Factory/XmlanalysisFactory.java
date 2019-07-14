@@ -37,7 +37,7 @@ public class XmlanalysisFactory {
                     while (eventType != XmlPullParser.END_DOCUMENT) {
                         switch (eventType) {
                             case XmlPullParser.START_DOCUMENT:
-                                _XmlanalysisInterface.onStartDocument();/*文档开始的处理事件*/
+                                _XmlanalysisInterface.onStartDocument(pullParser.getName());/*文档开始的处理事件*/
                                 break;
                             case XmlPullParser.START_TAG:
                                 _XmlanalysisInterface.onStartTag(pullParser.getName(),
@@ -73,7 +73,7 @@ public class XmlanalysisFactory {
     public interface XmlanalysisInterface {
         void onFaile();
 
-        void onStartDocument();//文档开始
+        void onStartDocument(String tag);//文档开始
 
         void onStartTag(String tag, XmlPullParser pullParser, Integer id);//开始解析节点
 

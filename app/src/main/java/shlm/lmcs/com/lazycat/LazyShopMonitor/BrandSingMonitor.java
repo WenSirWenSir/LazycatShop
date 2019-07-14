@@ -201,7 +201,7 @@ public class BrandSingMonitor extends Monitor {
             }
 
             @Override
-            public void onStartDocument() {
+            public void onStartDocument(String tag) {
                 //开始解析文档
 
             }

@@ -2,9 +2,20 @@ package shlm.lmcs.com.lazycat.LazyCatProgramUnt;
 
 import android.text.TextUtils;
 
+import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
+
 public class Config {
 
     public static final String DEBUG = "LazyCatProgramUnt";
+
+
+    /**
+     * 网络访问key
+     */
+    public static class HttpAction {
+        public static final String ACTION_ADDR = "addrs";
+
+    }
 
     /**
      * 访问用户数据的时候  用到的关于用户返回的状态和标识符
@@ -201,6 +212,30 @@ public class Config {
          */
         public static String getInitMainXmlConfig() {
             return HTTP_ADDR.SERVICE + "/lazyShop/Config/Init.xml";
+        }
+
+        /**
+         * 判断该地址是否开通服务
+         *
+         * @return
+         */
+        public static String getIsServiceIn() {
+            return HTTP_ADDR.SERVICE + "/lazyShop/tools/isAddrInService.php";
+        }
+    }
+
+
+    /**
+     * 有服务器地址的调用方法
+     */
+
+    public static class SERVICE_API {
+        public static String getInitMainXml() {
+            if (!TextUtils.isEmpty(LocalValues.ADDR_SERVICE)) {
+                return "http://" + LocalValues.ADDR_SERVICE + "/webdata/ConfigXml/InitMainConfig.php";
+            } else {
+                return "";
+            }
         }
     }
 

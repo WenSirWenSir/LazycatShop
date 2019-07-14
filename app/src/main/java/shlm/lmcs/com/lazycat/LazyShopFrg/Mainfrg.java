@@ -32,9 +32,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.LazyCatFragment;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WEB_VALUES_ACT;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlanalysisFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
@@ -50,6 +52,7 @@ import shlm.lmcs.com.lazycat.LazyShopMonitor.Monitor;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.MonitorStatic;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.NewShopinMonitor;
 import shlm.lmcs.com.lazycat.LazyShopPage.LocalMonitorPage;
+import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
 
 @SuppressLint("HandlerLeak")
@@ -64,8 +67,15 @@ public class Mainfrg extends LazyCatFragment {
     private View item;
 
     /**
-     *
+     * DIALOG
      */
+    private WaitDialog.RefreshDialog refreshDialog = null;
+
+    /**
+     * 存在服务器参数表格
+     */
+
+    private XmlTagValuesFactory.XmlServiceInitBtn xmlServiceInitBtn;
     private LinearLayout horizontaladv_body;
     private LayoutInflater inflater;
     private RelativeLayout big_body;/*最外层的布局 用来切换外卖使用*/
@@ -122,6 +132,17 @@ public class Mainfrg extends LazyCatFragment {
         locationClientOption.setOpenAutoNotifyMode();/*设置自动回调*/
         locationClient.setLocOption(locationClientOption);
         locationClient.registerLocationListener(locationListener);
+
+        /**
+         * 初始化 DIALOG
+         */
+        refreshDialog = new WaitDialog.RefreshDialog(getActivity());
+        WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+        wait_itme_dialogpage.setImg(R.id.item_wait_img);
+        wait_itme_dialogpage.setView(R.layout.item_wait);
+        wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+        refreshDialog.Init(wait_itme_dialogpage);
+        refreshDialog.showRefreshDialog("定位中...", false);
         InitPageXml();
         /*设置监听*/
         locationListener.setOnReceiveLocationListener(new LocationMapListener
@@ -133,23 +154,31 @@ public class Mainfrg extends LazyCatFragment {
                     init(item);
                     /*设置地址标题*/
                     TextView addr_title = SearchViewBody.findViewById(R.id.assembly_head_addrTitle);
-                    addr_title.setText(bdLocation.getStreet().trim());
-                    Toast.makeText(getActivity(),bdLocation.getStreet().trim(),Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getActivity(), bdLocation.getDistrict(), Toast.LENGTH_SHORT)
-                            .show();
+
+                    String City = bdLocation.getCity();/*获取城市信息*/
+                    String District = bdLocation.getDistrict();/*获取地区信息  用县区作为搜索条件*/
+                    addr_title.setText(District + bdLocation.getStreet().trim());
+                    /**
+                     * 判断该地址是否在配送范围之内
+                     */
+                    getServiceAddr(District);
+                    refreshDialog.dismiss();
                 }
             }
 
             @Override
             public void onNotAddr(BDLocation bdLocation) {
                 /*没有地址信息*/
-                body.setVisibility(View.VISIBLE);
-                body.removeAllViews();
-                View item_noservice = inflater.inflate(R.layout.item_noservice, null);
-                body.addView(item_noservice);
-                Log.e(MSG, "没有地址信息");
+                init(item);
+                getServiceAddr("上杭县");
+                refreshDialog.dismiss();
+                //body.setVisibility(View.VISIBLE);
+                //body.removeAllViews();
+                //View item_noservice = inflater.inflate(R.layout.item_noservice, null);
+                //body.addView(item_noservice);
+                //Log.e(MSG, "没有地址信息");
                 TextView addr_title = SearchViewBody.findViewById(R.id.assembly_head_addrTitle);
-                addr_title.setText("定位失败");
+                addr_title.setText("上杭县上杭大道");
 
             }
         });
@@ -160,11 +189,157 @@ public class Mainfrg extends LazyCatFragment {
 
 
     /**
+     * 判断该地址是否开通服务
+     */
+    @SuppressLint("NewApi")
+    private void getServiceAddr(String Districe) {
+        Net.doGet(getContext(), Config.HTTP_ADDR.getIsServiceIn(), new Net
+                .onVisitInterServiceListener() {
+            @Override
+            public void onSucess(String tOrgin) {
+                if (!TextUtils.isEmpty(tOrgin)) {
+                    /*不是为空的话 就去访问网络*/
+                    LocalValues.ADDR_SERVICE = tOrgin.trim();
+                    InitMain();
+                } else {
+                    /*没有地址  没有开放*/
+
+                }
+                Log.i(MSG, tOrgin.trim());
+            }
+
+            @Override
+            public void onNotConnect() {
+
+            }
+
+            @Override
+            public void onFail(String tOrgin) {
+
+            }
+        }, Config.HttpAction.ACTION_ADDR, Districe);
+    }
+
+
+    /**
+     * 该地区服务器开放 整理界面
+     */
+    @SuppressLint("NewApi")
+    private void InitMain() {
+        if (!TextUtils.isEmpty(LocalValues.ADDR_SERVICE)) {
+            /*存在地址 开始访问*/
+            Net.doGet(getContext(), Config.SERVICE_API.getInitMainXml(), new Net
+                    .onVisitInterServiceListener() {
+                @Override
+                public void onSucess(String tOrgin) {
+                    /*开始处理数据*/
+
+                    XmlanalysisFactory xml = new XmlanalysisFactory(tOrgin.trim());
+                    xml.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
+                        @Override
+                        public void onFaile() {
+
+                        }
+
+                        @Override
+                        public void onStartDocument(String tag) {
+
+                        }
+
+                        @Override
+                        public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
+                            try {
+
+                                /**
+                                 * 判断文档开头
+                                 */
+                                if (tag.equals(XmlTagValuesFactory.ActionServiceNavBtn
+                                        .ACTION_XML_START)) {
+                                    xmlServiceInitBtn = XmlTagValuesFactory
+                                            .getXmlServiceInitBtnInstance();
+                                }
+                                /*判断是否是第一个的按钮的标题*/
+                                if (tag.equals(XmlTagValuesFactory.ActionServiceNavBtn
+                                        .ACTION_FIRST_BTN_TITLE)) {
+                                    xmlServiceInitBtn.setFirst_btn_title(pullParser.nextText());
+                                }
+                                /*判断是否为第一个按钮的图片*/
+                                if (tag.equals(XmlTagValuesFactory.ActionServiceNavBtn
+                                        .ACTION_FIRST_BTN_IMG)) {
+                                    xmlServiceInitBtn.setFirst_btn_img(pullParser.nextText());
+                                }
+                                /*判断是否为第一个按钮的状态*/
+                                if (tag.equals(XmlTagValuesFactory.ActionServiceNavBtn
+                                        .ACTION_FIRST_BTN_STATUS)) {
+                                    xmlServiceInitBtn.setFirst_btn_status(pullParser.nextText());
+                                }
+                                /*判断是否为第一个按钮的链接地址*/
+                                if (tag.equals(XmlTagValuesFactory.ActionServiceNavBtn
+                                        .ACTION_FIRST_BTN_URL)) {
+                                    xmlServiceInitBtn.setFirst_btn_url(pullParser.nextText());
+                                }
+
+                            } catch (Exception e) {
+                                Log.i(MSG, "处理界面的参数的错误");
+                            }
+
+                        }
+
+                        @Override
+                        public void onEndTag(String tag, XmlPullParser pullParser, Integer id) {
+                            if(tag.equals(XmlTagValuesFactory.ActionServiceNavBtn.ACTION_XML_START)){
+                                //已经结束  调试输出
+
+                                /**
+                                 * 导航栏 参数提交  把数据交给要处理的窗口的模块
+                                 */
+                                Log.i(MSG,"第一个按钮的标题" + xmlServiceInitBtn.getFirst_btn_title());
+                                Log.i(MSG,"第二个按钮的标题" + xmlServiceInitBtn.getSecond_btn_title());
+                                Log.i(MSG,"第三个按钮的标题" + xmlServiceInitBtn.getThree_btn_title());
+                                Log.i(MSG,"第四个按钮的标题" + xmlServiceInitBtn.getFour_btn_title());
+
+                            }
+                            if(tag.equals(XmlTagValuesFactory.ActionServiceInitFillet.ACTION_XML_START)){
+                                /**
+                                 * ARCView 和圆角矩形的参数 提交要处理的窗口模块
+                                 */
+                            }
+                            if(tag.equals(XmlTagValuesFactory.ActionServiceBusinessPromotion.ACTION_BUSINESSPROMOTION_START)){
+
+                            }
+                        }
+
+                        @Override
+                        public void onEndDocument() {
+
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onNotConnect() {
+
+                }
+
+                @Override
+                public void onFail(String tOrgin) {
+
+                }
+            });
+        } else {
+
+        }
+
+
+    }
+
+
+    /**
      * 初始化设置边框等界面
      */
     @SuppressLint("NewApi")
     private void InitPageXml() {
-
         Net.doGet(getContext(), Config.HTTP_ADDR.getInitMainXmlConfig(), new Net
                 .onVisitInterServiceListener() {
             @Override
@@ -178,7 +353,7 @@ public class Mainfrg extends LazyCatFragment {
                     }
 
                     @Override
-                    public void onStartDocument() {
+                    public void onStartDocument(String tag) {
 
                     }
 
@@ -230,6 +405,14 @@ public class Mainfrg extends LazyCatFragment {
                                         .nextText().trim());
 
                             }
+
+                            /**
+                             * 获取热搜的标题
+                             */
+                            if (tag.equals(XmlTagValuesFactory.XmlInitPage.key_searchkeyword)) {
+                                XmlTagValuesFactory.XmlInitPage.setSearchKeyWord(pullParser
+                                        .nextText().trim());
+                            }
                         } catch (Exception e) {
                             Log.e(MSG, "错误信息:" + e.getMessage());
                         }
@@ -261,6 +444,10 @@ public class Mainfrg extends LazyCatFragment {
                                 .XmlInitPage.getHowMessageNumber(), XmlTagValuesFactory
                                 .XmlInitPage.getHowMessageNumber(), 50));
                         /*处理系统信息数量*/
+                        /*设置热搜*/
+                        EditText SearchEditView = SearchViewBody.findViewById(R.id
+                                .assembly_head_editText);/*热搜输入框*/
+                        SearchEditView.setText(XmlTagValuesFactory.XmlInitPage.getSearchKeyWord());
 
 
                     }
@@ -593,7 +780,7 @@ public class Mainfrg extends LazyCatFragment {
                 }
 
                 @Override
-                public void onStartDocument() {
+                public void onStartDocument(String tag) {
 
                 }
 

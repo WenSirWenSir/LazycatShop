@@ -1,7 +1,6 @@
 package shlm.lmcs.com.lazycat.LazyShopAct;
 
 import android.animation.Animator;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -40,6 +39,7 @@ public class MainAct extends LazyCatAct {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
+
         init();
         super.onCreate(savedInstanceState);
     }
@@ -53,97 +53,21 @@ public class MainAct extends LazyCatAct {
         mainfrg = new Mainfrg();
         frameLayout = findViewById(R.id.activity_main_Framelayout);/*管理控件*/
         /*设置监听器*/
-        frameLayout.SetListener(new FragmentLR.Listener() {
-            @Override
-            public void onScrollLeft(int moveCount) {
-                FragmentLR.LayoutParams params = (FragmentLR.LayoutParams) frameLayout.getChildAt
-                        (0).getLayoutParams();
-                /*隐藏销售商品的窗口*/
-                ValueAnimator anim = ValueAnimator.ofInt(frameLayout.getWidth(), 0);
-                anim.setDuration(1000);
-                anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        FragmentLR.LayoutParams ps = (FragmentLR.LayoutParams) frameLayout
-                                .getChildAt(0).getLayoutParams();
-                        ps.width = (int) animation.getAnimatedValue();
-                        frameLayout.getChildAt(0).setLayoutParams(ps);
-                    }
-                });
-                // anim.start();
-                anim.addListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onScrollRight(int moveCount) {
-                FragmentLR.LayoutParams params = (FragmentLR.LayoutParams) frameLayout.getChildAt
-                        (0).getLayoutParams();
-                /*隐藏销售商品的窗口*/
-                ValueAnimator anim = ValueAnimator.ofInt(0, frameLayout.getWidth());
-                anim.setDuration(1000);
-                anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        FragmentLR.LayoutParams ps = (FragmentLR.LayoutParams) frameLayout
-                                .getChildAt(0).getLayoutParams();
-                        ps.width = (int) animation.getAnimatedValue();
-                        frameLayout.getChildAt(0).setLayoutParams(ps);
-                    }
-                });
-
-                anim.addListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        /*停止*/
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {
-
-                    }
-                });
-                //anim.start();
-
-            }
-        });
         ft.add(R.id.activity_main_Framelayout, mainfrg);
-
         ft.commit();
+
+        /*获取定位的DIALOG*/
         //找寻对于的ID号码
         btn_main = findViewById(R.id.activity_main_btn_IcoMain);//主界面
         btn_delivery = findViewById(R.id.activity_main_btn_IcoDelivery);//配送界面
         btn_usercenter = findViewById(R.id.activity_main_btn_IcoUserCenter);//个人中心
+        /**
+         * 设置初始化的界面
+         */
+        ImageView InitImg = (ImageView) btn_main.getChildAt(0);
+        InitImg.setImageDrawable(Tools.setSvgColor(getApplicationContext(),R.drawable.main,"#f30d66"));
+        TextView InitTitle = (TextView) btn_main.getChildAt(1);
+        InitTitle.setTextColor(Color.parseColor("#f30d66"));
         btn_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,7 +103,7 @@ public class MainAct extends LazyCatAct {
 
 
                 //LazyCatActStartActivity(ShowshopOffice.class, false);
-                //LazyCatActStartActivity(UploadApp.class, false);
+                LazyCatActStartActivity(UploadApp.class, false);
 
             }
         });

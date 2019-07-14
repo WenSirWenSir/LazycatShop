@@ -66,7 +66,7 @@ public class WaitDialog {
             if (tv == null) {
                 //没有标题 就不要设置
             } else {
-                tv.setText(msg.toString().trim());
+                tv.setText(msg.trim());
 
             }
             params.gravity = Gravity.CENTER;

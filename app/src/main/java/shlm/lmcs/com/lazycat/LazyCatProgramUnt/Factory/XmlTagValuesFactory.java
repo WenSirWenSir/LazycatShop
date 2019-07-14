@@ -1,13 +1,501 @@
 package shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory;
 
 
+import android.graphics.Color;
+
 import java.util.ArrayList;
 
 /**
  * XML对应的数据解析
  */
 public class XmlTagValuesFactory {
+    static XmlServiceInitFillet xmlServiceInitFillet = new XmlServiceInitFillet();/*圆角矩形和*/
+    static XmlServiceInitBtn xmlServiceInitBtn = new XmlServiceInitBtn();/*首页的按钮参数信息*/
 
+    /**
+     * 获取拱形和圆角矩形的参数
+     *
+     * @return
+     */
+    public static XmlServiceInitFillet getXmlServiceInitPageInstance() {
+        return xmlServiceInitFillet;
+    }
+
+    public static XmlServiceInitBtn getXmlServiceInitBtnInstance() {
+        return xmlServiceInitBtn;
+    }
+
+
+    /**
+     * 存在地区的服务器的数据圆角矩形和ArcView的ACTION
+     */
+    public static class ActionServiceInitFillet {
+        public static String ACTION_XML_START = "init_fillet";
+        public static String ACTION_STATIC = "";
+    }
+
+    /**
+     * 存在地区的服务的首页导航按钮的参数信息ACTION
+     */
+    public static class ActionServiceNavBtn {
+        public static String ACTION_XML_START = "init_btns";
+        public static String ACTION_XML_STATUS = "init_btns_status";/*View的状态  0 为显示  1为不显示*/
+        public static String ACTION_FIRST_BTN = "nav_first_btn";
+        public static String ACTION_FIRST_BTN_TITLE = "first_btn_title";
+        public static String ACTION_FIRST_BTN_STATUS = "first_btn_status";
+        public static String ACTION_FIRST_BTN_IMG = "first_btn_img";
+        public static String ACTION_FIRST_BTN_URL = "first_btn_url";
+
+        /**
+         * 第二个按钮的ACTION
+         */
+        public static String ACTION_SECOND_BTN = "nav_second_btn";
+        public static String ACTION_SECOND_BTN_TITLE = "second_btn_title";
+        public static String ACTION_SECOND_BTN_STATUS = "second_btn_status";
+        public static String ACTION_SECOND_BTN_IMG = "second_btn_img";
+        public static String ACTION_SECOND_BTN_URL = "second_btn_url";
+        /**
+         * 第三个按钮的ACTION
+         */
+        public static String ACTION_THREE_BTN = "nav_three_btn";
+        public static String ACTION_THREE_BTN_TITLE = "three_btn_title";
+        public static String ACTION_THREE_BTN_STATUS = "three_btn_status";
+        public static String ACTION_THREE_BTN_IMG = "three_btn_img";
+        public static String ACTION_THREE_BTN_URL = "three_btn_url";
+        /**
+         * 第四个按钮的ACTION
+         */
+        public static String ACTION_FOUR_BTN = "nav_four_btn";
+        public static String ACTION_FOUR_BTN_TITLE = "four_btn_title";
+        public static String ACTION_FOUR_BTN_STATUS = "four_btn_status";
+        public static String ACTION_FOUR_BTN_IMG = "four_btn_img";
+        public static String ACTION_FOUR_BTN_URL = "four_btn_url";
+    }
+
+
+    /**
+     * 存在地区的服务的首页商家促销的参数信息ACTION
+     */
+    public static class ActionServiceBusinessPromotion {
+        public static String ACTION_XML_START = "init_business_promotion";
+        /**
+         * 第一个商家促销的界面
+         */
+        public static String ACTION_FIRST_BUSINESSPROMOTION_TITLE =
+                "first_business_promotion_title";
+        public static String ACTION_FIRST_BUSINESSPROMOTION_IMG = "first_business_promotion_img";
+        public static String ACTION_FIRST_BUSINESSPROMOTION_URL = "first_business_promotion_url";
+        public static String ACTION_FIRST_BUSINESSPROMOTION_STATUS =
+                "first_business_promotion_status";
+
+        /**
+         * 第二个商家促销的界面
+         */
+
+        public static String ACTION_SECOND_BUSINESSPROMOTION_TITLE =
+                "second_business_promotion_title";
+        public static String ACTION_SECOND_BUSINESSPROMOTION_IMG = "second_business_promotion_img";
+        public static String ACTION_SECOND_BUSINESSPROMOTION_URL = "second_business_promotion_url";
+        public static String ACTION_SECOND_BUSINESSPROMOTION_STATUS =
+                "second_business_prmotion_status";
+
+        /**
+         * 第三个商家促销的界面
+         */
+
+        public static String ACTION_THREE_BUSINESSPROMOTION_TITLE =
+                "three_business_promotion_title";
+        public static String ACTION_THREE_BUSINESSPROMOTION_IMG = "three_business_promotion_img";
+        public static String ACTION_THREE_BUSINESSPROMOTION_URL = "three_business_promotion_url";
+        public static String ACTION_THREE_BUSINESSPROMOTION_STATUS =
+                "three_business_promotion_status";
+
+        /**
+         * 第四个商家促销的界面
+         */
+        public static String ACTION_FOUR_BUSINESSPROMOTION_TITLE = "four_business_promotion_title";
+        public static String ACTION_FOUR_BUSINESSPROMOTION_IMG = "four_business_promotion_img";
+        public static String ACTION_FOUR_BUSINESSPROMOTION_URL = "four_business_promotion_url";
+        public static String ACTION_FOUR_BUSINESSPROMOTION_STATUS =
+                "four_business_promotion_status";
+    }
+
+
+    /**
+     * 数据分割----------------------------------------------------------------------
+     */
+
+
+    /**
+     * 存在服务器地址的  商家促销的初始化信息表格
+     */
+    public static class XmlServiceInitBusinessPromotion {
+        /**
+         * 第一个商家的View参数
+         */
+        String first_business_promotion_title;
+        String first_business_promotion_img;
+        String first_business_promotion_url;
+        String first_business_promotion_status;
+        /**
+         * 第二个商家的View参数
+         */
+        String second_business_promotion_title;
+        String second_business_promotion_img;
+        String second_business_promotion_url;
+        String second_business_promotion_status;
+        /**
+         * 第三个商家的View参数
+         */
+        String three_business_promotion_title;
+        String three_business_promotion_img;
+        String three_business_promotion_url;
+        String three_business_promotion_status;
+
+        /**
+         * 第四个商家的View参数
+         */
+        String four_business_promotion_title;
+        String four_business_promotion_img;
+        String four_business_promotion_url;
+        String four_business_promotion_status;
+
+        public String getFirst_business_promotion_title() {
+            return first_business_promotion_title;
+        }
+
+        public void setFirst_business_promotion_title(String first_business_promotion_title) {
+            this.first_business_promotion_title = first_business_promotion_title;
+        }
+
+        public String getFirst_business_promotion_img() {
+            return first_business_promotion_img;
+        }
+
+        public void setFirst_business_promotion_img(String first_business_promotion_img) {
+            this.first_business_promotion_img = first_business_promotion_img;
+        }
+
+        public String getFirst_business_promotion_url() {
+            return first_business_promotion_url;
+        }
+
+        public void setFirst_business_promotion_url(String first_business_promotion_url) {
+            this.first_business_promotion_url = first_business_promotion_url;
+        }
+
+        public String getFirst_business_promotion_status() {
+            return first_business_promotion_status;
+        }
+
+        public void setFirst_business_promotion_status(String first_business_promotion_status) {
+            this.first_business_promotion_status = first_business_promotion_status;
+        }
+
+        public String getSecond_business_promotion_title() {
+            return second_business_promotion_title;
+        }
+
+        public void setSecond_business_promotion_title(String second_business_promotion_title) {
+            this.second_business_promotion_title = second_business_promotion_title;
+        }
+
+        public String getSecond_business_promotion_img() {
+            return second_business_promotion_img;
+        }
+
+        public void setSecond_business_promotion_img(String second_business_promotion_img) {
+            this.second_business_promotion_img = second_business_promotion_img;
+        }
+
+        public String getSecond_business_promotion_url() {
+            return second_business_promotion_url;
+        }
+
+        public void setSecond_business_promotion_url(String second_business_promotion_url) {
+            this.second_business_promotion_url = second_business_promotion_url;
+        }
+
+        public String getSecond_business_promotion_status() {
+            return second_business_promotion_status;
+        }
+
+        public void setSecond_business_promotion_status(String second_business_promotion_status) {
+            this.second_business_promotion_status = second_business_promotion_status;
+        }
+
+        public String getThree_business_promotion_title() {
+            return three_business_promotion_title;
+        }
+
+        public void setThree_business_promotion_title(String three_business_promotion_title) {
+            this.three_business_promotion_title = three_business_promotion_title;
+        }
+
+        public String getThree_business_promotion_img() {
+            return three_business_promotion_img;
+        }
+
+        public void setThree_business_promotion_img(String three_business_promotion_img) {
+            this.three_business_promotion_img = three_business_promotion_img;
+        }
+
+        public String getThree_business_promotion_url() {
+            return three_business_promotion_url;
+        }
+
+        public void setThree_business_promotion_url(String three_business_promotion_url) {
+            this.three_business_promotion_url = three_business_promotion_url;
+        }
+
+        public String getThree_business_promotion_status() {
+            return three_business_promotion_status;
+        }
+
+        public void setThree_business_promotion_status(String three_business_promotion_status) {
+            this.three_business_promotion_status = three_business_promotion_status;
+        }
+
+        public String getFour_business_promotion_title() {
+            return four_business_promotion_title;
+        }
+
+        public void setFour_business_promotion_title(String four_business_promotion_title) {
+            this.four_business_promotion_title = four_business_promotion_title;
+        }
+
+        public String getFour_business_promotion_img() {
+            return four_business_promotion_img;
+        }
+
+        public void setFour_business_promotion_img(String four_business_promotion_img) {
+            this.four_business_promotion_img = four_business_promotion_img;
+        }
+
+        public String getFour_business_promotion_url() {
+            return four_business_promotion_url;
+        }
+
+        public void setFour_business_promotion_url(String four_business_promotion_url) {
+            this.four_business_promotion_url = four_business_promotion_url;
+        }
+
+        public String getFour_business_promotion_status() {
+            return four_business_promotion_status;
+        }
+
+        public void setFour_business_promotion_status(String four_business_promotion_status) {
+            this.four_business_promotion_status = four_business_promotion_status;
+        }
+
+
+    }
+
+    /**
+     * 存在服务器地址的  首页按钮的初始化的信息表格
+     */
+    public static class XmlServiceInitBtn {
+        /**
+         * 第一个按钮的参数
+         */
+        String first_btn_title;
+        String first_btn_img;
+        String first_btn_status;
+        String first_btn_url;
+
+        /**
+         * 第二个按钮的参数
+         */
+        String second_btn_title;
+        String second_btn_img;
+        String second_btn_status;
+        String second_btn_url;
+        /**
+         * 第三个按钮的参数
+         */
+        String three_btn_title;
+        String three_btn_img;
+        String three_btn_status;
+        String three_btn_url;
+
+        /**
+         * 第四个按钮的参数
+         */
+        String four_btn_title;
+        String four_btn_img;
+        String four_btn_status;
+        String four_btn_url;
+
+        public String getFirst_btn_title() {
+            return first_btn_title;
+        }
+
+        public void setFirst_btn_title(String fisrt_btn_title) {
+            this.first_btn_title = fisrt_btn_title;
+        }
+
+        public String getFirst_btn_img() {
+            return first_btn_img;
+        }
+
+        public void setFirst_btn_img(String first_btn_img) {
+            this.first_btn_img = first_btn_img;
+        }
+
+        public String getFirst_btn_status() {
+            return first_btn_status;
+        }
+
+        public void setFirst_btn_status(String first_btn_status) {
+            this.first_btn_status = first_btn_status;
+        }
+
+        public String getFirst_btn_url() {
+            return first_btn_url;
+        }
+
+        public void setFirst_btn_url(String first_btn_url) {
+            this.first_btn_url = first_btn_url;
+        }
+
+        public String getSecond_btn_title() {
+            return second_btn_title;
+        }
+
+        public void setSecond_btn_title(String second_btn_title) {
+            this.second_btn_title = second_btn_title;
+        }
+
+        public String getSecond_btn_img() {
+            return second_btn_img;
+        }
+
+        public void setSecond_btn_img(String second_btn_img) {
+            this.second_btn_img = second_btn_img;
+        }
+
+        public String getSecond_btn_status() {
+            return second_btn_status;
+        }
+
+        public void setSecond_btn_status(String second_btn_status) {
+            this.second_btn_status = second_btn_status;
+        }
+
+        public String getSecond_btn_url() {
+            return second_btn_url;
+        }
+
+        public void setSecond_btn_url(String second_btn_url) {
+            this.second_btn_url = second_btn_url;
+        }
+
+        public String getThree_btn_title() {
+            return three_btn_title;
+        }
+
+        public void setThree_btn_title(String three_btn_title) {
+            this.three_btn_title = three_btn_title;
+        }
+
+        public String getThree_btn_img() {
+            return three_btn_img;
+        }
+
+        public void setThree_btn_img(String three_btn_img) {
+            this.three_btn_img = three_btn_img;
+        }
+
+        public String getThree_btn_status() {
+            return three_btn_status;
+        }
+
+        public void setThree_btn_status(String three_btn_status) {
+            this.three_btn_status = three_btn_status;
+        }
+
+        public String getThree_btn_url() {
+            return three_btn_url;
+        }
+
+        public void setThree_btn_url(String three_btn_url) {
+            this.three_btn_url = three_btn_url;
+        }
+
+        public String getFour_btn_title() {
+            return four_btn_title;
+        }
+
+        public void setFour_btn_title(String four_btn_title) {
+            this.four_btn_title = four_btn_title;
+        }
+
+        public String getFour_btn_img() {
+            return four_btn_img;
+        }
+
+        public void setFour_btn_img(String four_btn_img) {
+            this.four_btn_img = four_btn_img;
+        }
+
+        public String getFour_btn_status() {
+            return four_btn_status;
+        }
+
+        public void setFour_btn_status(String four_btn_status) {
+            this.four_btn_status = four_btn_status;
+        }
+
+        public String getFour_btn_url() {
+            return four_btn_url;
+        }
+
+        public void setFour_btn_url(String four_btn_url) {
+            this.four_btn_url = four_btn_url;
+        }
+
+
+    }
+
+
+    /**
+     * 存在地区呢服务器的数据初始化
+     */
+    public static class XmlServiceInitFillet {
+        /**
+         * 关键的参数
+         */
+        int arcViewColor;/*拱形的颜色*/
+        String fillet_img;/*圆角矩形的图片地址*/
+        String fillet_url;/*圆角矩形的关联地址*/
+
+
+        public String getFillet_url() {
+            return fillet_url;
+        }
+
+        public void setFillet_url(String fillet_url) {
+            this.fillet_url = fillet_url;
+        }
+
+        public String getFillet_img() {
+            return fillet_img;
+        }
+
+        public void setFillet_img(String fillet_img) {
+            this.fillet_img = fillet_img;
+        }
+
+
+        public int getArcViewColor() {
+            return arcViewColor;
+        }
+
+        public void setArcViewColor(String arcViewColor) {
+            this.arcViewColor = Color.parseColor(arcViewColor.trim());
+        }
+
+    }
 
     /*用户界面的xmlTag*/
     public static class XMLKeyUserPageXml {
@@ -582,11 +1070,22 @@ public class XmlTagValuesFactory {
         public final static String key_searchbodycolor = "SearchBodyColor";
         public final static String key_searchlinecolor = "SearchLineColor";
         public final static String key_howmessagenumber = "HowMessageNumber";
+        public final static String key_searchkeyword = "SearchKeyWord";/*首页热搜*/
         public static String WindowColor;
         public static String SearchBackground;
         public static String SearchBodyColor;
         public static String SearchLineColor;
         public static String HowMessageNumber;
+
+        public static String getSearchKeyWord() {
+            return SearchKeyWord;
+        }
+
+        public static void setSearchKeyWord(String searchKeyWord) {
+            SearchKeyWord = searchKeyWord;
+        }
+
+        public static String SearchKeyWord;/*首页热搜*/
 
         public static String getHowMessageNumber() {
             return HowMessageNumber;

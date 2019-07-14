@@ -91,7 +91,7 @@ public class NewShopinMonitor extends Monitor {
             }
 
             @Override
-            public void onStartDocument() {
+            public void onStartDocument(String tag) {
 
             }
 
