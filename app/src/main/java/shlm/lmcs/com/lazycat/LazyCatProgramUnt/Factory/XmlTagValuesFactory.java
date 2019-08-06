@@ -1,7 +1,7 @@
 package shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory;
 
 
-import android.graphics.Color;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -9,35 +9,38 @@ import java.util.ArrayList;
  * XML对应的数据解析
  */
 public class XmlTagValuesFactory {
-    static XmlServiceInitFillet xmlServiceInitFillet = new XmlServiceInitFillet();/*圆角矩形和*/
-    static XmlServiceInitBtn xmlServiceInitBtn = new XmlServiceInitBtn();/*首页的按钮参数信息*/
+    static String MSG = "XmlTagValuesFactory.java[+]";
+    static Init_filletValues init_filletValues = new Init_filletValues();/*圆角矩形和*/
+    static Init_btnValues init_btnValues = new Init_btnValues();/*首页的按钮参数信息*/
+
 
     /**
      * 获取拱形和圆角矩形的参数
      *
      * @return
      */
-    public static XmlServiceInitFillet getXmlServiceInitPageInstance() {
-        return xmlServiceInitFillet;
+    public static Init_filletValues getXmlServiceInitPageInstance() {
+        return init_filletValues;
     }
 
-    public static XmlServiceInitBtn getXmlServiceInitBtnInstance() {
-        return xmlServiceInitBtn;
+    public static Init_btnValues getXmlServiceInitBtnInstance() {
+        return init_btnValues;
     }
 
 
     /**
      * 存在地区的服务器的数据圆角矩形和ArcView的ACTION
      */
-    public static class ActionServiceInitFillet {
+    public static class Init_fillet {
         public static String ACTION_XML_START = "init_fillet";
         public static String ACTION_STATIC = "";
+        public static String ACTION_ARC_VIEW = "arcView";
     }
 
     /**
      * 存在地区的服务的首页导航按钮的参数信息ACTION
      */
-    public static class ActionServiceNavBtn {
+    public static class init_btns {
         public static String ACTION_XML_START = "init_btns";
         public static String ACTION_XML_STATUS = "init_btns_status";/*View的状态  0 为显示  1为不显示*/
         public static String ACTION_FIRST_BTN = "nav_first_btn";
@@ -45,7 +48,9 @@ public class XmlTagValuesFactory {
         public static String ACTION_FIRST_BTN_STATUS = "first_btn_status";
         public static String ACTION_FIRST_BTN_IMG = "first_btn_img";
         public static String ACTION_FIRST_BTN_URL = "first_btn_url";
-
+        public static String ACTION_FIRST_BTN_TEXTCOLOR = "first_btn_titleColor";
+        public static String ACTION_FIRST_BTN_STATUSBACKGROUND = "first_btn_status_background";
+        public static String ACTION_FIRST_BTN_STATUSCOLOR = "first_btn_statusColor";
         /**
          * 第二个按钮的ACTION
          */
@@ -54,6 +59,9 @@ public class XmlTagValuesFactory {
         public static String ACTION_SECOND_BTN_STATUS = "second_btn_status";
         public static String ACTION_SECOND_BTN_IMG = "second_btn_img";
         public static String ACTION_SECOND_BTN_URL = "second_btn_url";
+        public static String ACTION_SECOND_BTN_TEXTCOLOR = "second_btn_titleColor";
+        public static String ACTION_SECOND_BTN_STATUSBACKGROUND = "second_btn_status_background";
+        public static String ACTION_SECOND_BTN_STATUSCOLOR = "second_btn_statusColor";
         /**
          * 第三个按钮的ACTION
          */
@@ -62,6 +70,9 @@ public class XmlTagValuesFactory {
         public static String ACTION_THREE_BTN_STATUS = "three_btn_status";
         public static String ACTION_THREE_BTN_IMG = "three_btn_img";
         public static String ACTION_THREE_BTN_URL = "three_btn_url";
+        public static String ACTION_THREE_BTN_TEXTCOLOR = "three_btn_titleColor";
+        public static String ACTION_THREE_BTN_STATUSBACKGROUND = "three_btn_status_background";
+        public static String ACTION_THREE_BTN_STATUSCOLOR = "three_btn_statusColor";
         /**
          * 第四个按钮的ACTION
          */
@@ -70,14 +81,66 @@ public class XmlTagValuesFactory {
         public static String ACTION_FOUR_BTN_STATUS = "four_btn_status";
         public static String ACTION_FOUR_BTN_IMG = "four_btn_img";
         public static String ACTION_FOUR_BTN_URL = "four_btn_url";
+        public static String ACTION_FOUR_BTN_TEXTCOLOR = "four_btn_titleColor";
+        public static String ACTION_FOUR_BTN_STATUSBACKGROUND = "four_btn_status_background";
+        public static String ACTION_FOUR_BTN_STATUSCOLOR = "four_btn_statusColor";
+
+        /**
+         * 第五个按钮的ACTION
+         */
+        public static String ACTION_FIVE_BTN = "nav_five_btn";
+        public static String ACTION_FIVE_BTN_TITLE = "five_btn_title";
+        public static String ACTION_FIVE_BTN_STATUS = "five_btn_status";
+        public static String ACTION_FIVE_BTN_IMG = "five_btn_img";
+        public static String ACTION_FIVE_BTN_URL = "five_btn_url";
+        public static String ACTION_FIVE_BTN_TEXTCOLOR = "five_btn_titleColor";
+        public static String ACTION_FIVE_BTN_STATUSBACKGROUND = "five_btn_status_background";
+        public static String ACTION_FIVE_BTN_STATUSCOLOR = "five_btn_statusColor";
+
+        /**
+         * 第六个按钮的ACTION
+         */
+        public static String ACTION_SIX_BTN = "nav_six_btn";
+        public static String ACTION_SIX_BTN_TITLE = "six_btn_title";
+        public static String ACTION_SIX_BTN_STATUS = "six_btn_status";
+        public static String ACTION_SIX_BTN_IMG = "six_btn_img";
+        public static String ACTION_SIX_BTN_URL = "six_btn_url";
+        public static String ACTION_SIX_BTN_TEXTCOLOR = "six_btn_titleColor";
+        public static String ACTION_SIX_BTN_STATUSBACKGROUND = "six_btn_status_background";
+        public static String ACTION_SIX_BTN_STATUSCOLOR = "six_btn_statusColor";
+
+        /**
+         * 第七个按钮的ACTION
+         */
+        public static String ACTION_SEVEN_BTN = "nav_seven_btn";
+        public static String ACTION_SEVENT_TITLE = "seven_btn_title";
+        public static String ACTION_SEVENT_STATUS = "seven_btn_status";
+        public static String ACTION_SEVENT_IMG = "seven_btn_img";
+        public static String ACTION_SEVENT_URL = "seven_btn_url";
+        public static String ACTION_SEVENT_TEXTCOLOR = "seven_btn_titleColor";
+        public static String ACTION_SEVENT_STATUSBACKGROUND = "seven_btn_status_background";
+        public static String ACTION_SEVENT_STATUSCOLOR = "seven_btn_statusColor";
+        /**
+         * 第八个按钮的ACTION
+         */
+
+        public static String ACTION_EIGHT_BTN = "nav_eight_btn";
+        public static String ACTION_EIGHT_TITLE = "eight_btn_title";
+        public static String ACTION_EIGHT_STATUS = "eight_btn_status";
+        public static String ACTION_EIGHT_IMG = "eight_btn_img";
+        public static String ACTION_EIGHT_URL = "eight_btn_url";
+        public static String ACTION_EIGHT_TEXTCOLOR = "eight_btn_titleColor";
+        public static String ACTION_EIGHT_STATUSBACKGROUND = "eight_btn_status_background";
+        public static String ACTION_EIGHT_STATUSCOLOR = "eight_btn_statusColor";
     }
 
 
     /**
      * 存在地区的服务的首页商家促销的参数信息ACTION
      */
-    public static class ActionServiceBusinessPromotion {
+    public static class init_business_promotion {
         public static String ACTION_XML_START = "init_business_promotion";
+        public static String ACTION_PROMOTION_STATUS = "init_business_promotion_status";
         /**
          * 第一个商家促销的界面
          */
@@ -294,7 +357,7 @@ public class XmlTagValuesFactory {
     /**
      * 存在服务器地址的  首页按钮的初始化的信息表格
      */
-    public static class XmlServiceInitBtn {
+    public static class Init_btnValues {
         /**
          * 第一个按钮的参数
          */
@@ -302,6 +365,9 @@ public class XmlTagValuesFactory {
         String first_btn_img;
         String first_btn_status;
         String first_btn_url;
+        String first_btn_titleColor;
+        String first_btn_status_textColor;
+        String first_btn_status_background;
 
         /**
          * 第二个按钮的参数
@@ -310,6 +376,9 @@ public class XmlTagValuesFactory {
         String second_btn_img;
         String second_btn_status;
         String second_btn_url;
+        String second_btn_titleColor;
+        String second_btn_status_textColor;
+        String second_btn_status_background;
         /**
          * 第三个按钮的参数
          */
@@ -317,6 +386,9 @@ public class XmlTagValuesFactory {
         String three_btn_img;
         String three_btn_status;
         String three_btn_url;
+        String three_btn_titleColor;
+        String three_btn_status_textColor;
+        String three_btn_status_background;
 
         /**
          * 第四个按钮的参数
@@ -325,6 +397,384 @@ public class XmlTagValuesFactory {
         String four_btn_img;
         String four_btn_status;
         String four_btn_url;
+        String four_btn_titleColor;
+        String four_btn_status_textColor;
+        String four_btn_status_background;
+
+        /**
+         * 第五个按钮的参数
+         */
+        String five_btn_title;
+        String five_btn_img;
+        String five_btn_status;
+        String five_btn_url;
+        String five_btn_titleColor;
+        String five_btn_status_textColor;
+        String five_btn_status_background;
+
+        /**
+         * 第六个按钮的参数
+         */
+
+        String six_btn_title;
+        String six_btn_img;
+        String six_btn_status;
+        String six_btn_url;
+        String six_btn_titleColor;
+        String six_btn_status_textColor;
+        String six_btn_status_background;
+
+        /**
+         * 第七的按钮的参数
+         */
+
+        String seven_btn_title;
+        String seven_btn_img;
+        String seven_btn_status;
+        String seven_btn_url;
+        String seven_btn_titleColor;
+        String seven_btn_status_textColor;
+        String seven_btn_status_backgrond;
+
+        /**
+         * 第八个按钮的参数
+         */
+
+        String eight_btn_title;
+        String eight_btn_img;
+        String eight_btn_status;
+        String eight_btn_url;
+        String eight_btn_titleColor;
+        String eight_btn_status_textColor;
+        String eight_btn_status_background;
+
+        public String getFive_btn_title() {
+            return five_btn_title;
+        }
+
+        public void setFive_btn_title(String five_btn_title) {
+            this.five_btn_title = five_btn_title;
+        }
+
+        public String getFive_btn_img() {
+            return five_btn_img;
+        }
+
+        public void setFive_btn_img(String five_btn_img) {
+            this.five_btn_img = five_btn_img;
+        }
+
+        public String getFive_btn_status() {
+            return five_btn_status;
+        }
+
+        public void setFive_btn_status(String five_btn_status) {
+            this.five_btn_status = five_btn_status;
+        }
+
+        public String getFive_btn_url() {
+            return five_btn_url;
+        }
+
+        public void setFive_btn_url(String five_btn_url) {
+            this.five_btn_url = five_btn_url;
+        }
+
+        public String getFive_btn_titleColor() {
+            return five_btn_titleColor;
+        }
+
+        public void setFive_btn_titleColor(String five_btn_titleColor) {
+            this.five_btn_titleColor = five_btn_titleColor;
+        }
+
+        public String getFive_btn_status_textColor() {
+            return five_btn_status_textColor;
+        }
+
+        public void setFive_btn_status_textColor(String five_btn_status_textColor) {
+            this.five_btn_status_textColor = five_btn_status_textColor;
+        }
+
+        public String getFive_btn_status_background() {
+            return five_btn_status_background;
+        }
+
+        public void setFive_btn_status_background(String five_btn_status_background) {
+            this.five_btn_status_background = five_btn_status_background;
+        }
+
+        public String getSix_btn_title() {
+            return six_btn_title;
+        }
+
+        public void setSix_btn_title(String six_btn_title) {
+            this.six_btn_title = six_btn_title;
+        }
+
+        public String getSix_btn_img() {
+            return six_btn_img;
+        }
+
+        public void setSix_btn_img(String six_btn_img) {
+            this.six_btn_img = six_btn_img;
+        }
+
+        public String getSix_btn_status() {
+            return six_btn_status;
+        }
+
+        public void setSix_btn_status(String six_btn_status) {
+            this.six_btn_status = six_btn_status;
+        }
+
+        public String getSix_btn_url() {
+            return six_btn_url;
+        }
+
+        public void setSix_btn_url(String six_btn_url) {
+            this.six_btn_url = six_btn_url;
+        }
+
+        public String getSix_btn_titleColor() {
+            return six_btn_titleColor;
+        }
+
+        public void setSix_btn_titleColor(String six_btn_titleColor) {
+            this.six_btn_titleColor = six_btn_titleColor;
+        }
+
+        public String getSix_btn_status_textColor() {
+            return six_btn_status_textColor;
+        }
+
+        public void setSix_btn_status_textColor(String six_btn_status_textColor) {
+            this.six_btn_status_textColor = six_btn_status_textColor;
+        }
+
+        public String getSix_btn_status_background() {
+            return six_btn_status_background;
+        }
+
+        public void setSix_btn_status_background(String six_btn_status_background) {
+            this.six_btn_status_background = six_btn_status_background;
+        }
+
+        public String getSeven_btn_title() {
+            return seven_btn_title;
+        }
+
+        public void setSeven_btn_title(String seven_btn_title) {
+            this.seven_btn_title = seven_btn_title;
+        }
+
+        public String getSeven_btn_img() {
+            return seven_btn_img;
+        }
+
+        public void setSeven_btn_img(String seven_btn_img) {
+            this.seven_btn_img = seven_btn_img;
+        }
+
+        public String getSeven_btn_status() {
+            return seven_btn_status;
+        }
+
+        public void setSeven_btn_status(String seven_btn_status) {
+            this.seven_btn_status = seven_btn_status;
+        }
+
+        public String getSeven_btn_url() {
+            return seven_btn_url;
+        }
+
+        public void setSeven_btn_url(String seven_btn_url) {
+            this.seven_btn_url = seven_btn_url;
+        }
+
+        public String getSeven_btn_titleColor() {
+            return seven_btn_titleColor;
+        }
+
+        public void setSeven_btn_titleColor(String seven_btn_titleColor) {
+            this.seven_btn_titleColor = seven_btn_titleColor;
+        }
+
+        public String getSeven_btn_status_textColor() {
+            return seven_btn_status_textColor;
+        }
+
+        public void setSeven_btn_status_textColor(String seven_btn_status_textColor) {
+            this.seven_btn_status_textColor = seven_btn_status_textColor;
+        }
+
+        public String getSeven_btn_status_backgrond() {
+            return seven_btn_status_backgrond;
+        }
+
+        public void setSeven_btn_status_backgrond(String seven_btn_status_backgrond) {
+            this.seven_btn_status_backgrond = seven_btn_status_backgrond;
+        }
+
+        public String getEight_btn_title() {
+            return eight_btn_title;
+        }
+
+        public void setEight_btn_title(String eight_btn_title) {
+            this.eight_btn_title = eight_btn_title;
+        }
+
+        public String getEight_btn_img() {
+            return eight_btn_img;
+        }
+
+        public void setEight_btn_img(String eight_btn_img) {
+            this.eight_btn_img = eight_btn_img;
+        }
+
+        public String getEight_btn_status() {
+            return eight_btn_status;
+        }
+
+        public void setEight_btn_status(String eight_btn_status) {
+            this.eight_btn_status = eight_btn_status;
+        }
+
+        public String getEight_btn_url() {
+            return eight_btn_url;
+        }
+
+        public void setEight_btn_url(String eight_btn_url) {
+            this.eight_btn_url = eight_btn_url;
+        }
+
+        public String getEight_btn_titleColor() {
+            return eight_btn_titleColor;
+        }
+
+        public void setEight_btn_titleColor(String eight_btn_titleColor) {
+            this.eight_btn_titleColor = eight_btn_titleColor;
+        }
+
+        public String getEight_btn_status_textColor() {
+            return eight_btn_status_textColor;
+        }
+
+        public void setEight_btn_status_textColor(String eight_btn_status_textColor) {
+            this.eight_btn_status_textColor = eight_btn_status_textColor;
+        }
+
+        public String getEight_btn_status_background() {
+            return eight_btn_status_background;
+        }
+
+        public void setEight_btn_status_background(String eight_btn_status_background) {
+            this.eight_btn_status_background = eight_btn_status_background;
+        }
+
+
+
+
+
+
+
+
+
+        public String getFirst_btn_titleColor() {
+            return first_btn_titleColor;
+        }
+
+        public void setFirst_btn_titleColor(String first_btn_titleColor) {
+            this.first_btn_titleColor = first_btn_titleColor;
+        }
+
+        public String getFirst_btn_status_textColor() {
+            return first_btn_status_textColor;
+        }
+
+        public void setFirst_btn_status_textColor(String first_btn_status_textColor) {
+            this.first_btn_status_textColor = first_btn_status_textColor;
+        }
+
+        public String getFirst_btn_status_background() {
+            return first_btn_status_background;
+        }
+
+        public void setFirst_btn_status_background(String first_btn_status_background) {
+            this.first_btn_status_background = first_btn_status_background;
+        }
+
+        public String getSecond_btn_titleColor() {
+            return second_btn_titleColor;
+        }
+
+        public void setSecond_btn_titleColor(String second_btn_titleColor) {
+            this.second_btn_titleColor = second_btn_titleColor;
+        }
+
+        public String getSecond_btn_status_textColor() {
+            return second_btn_status_textColor;
+        }
+
+        public void setSecond_btn_status_textColor(String second_btn_status_textColor) {
+            this.second_btn_status_textColor = second_btn_status_textColor;
+        }
+
+        public String getSecond_btn_status_background() {
+            return second_btn_status_background;
+        }
+
+        public void setSecond_btn_status_background(String second_btn_status_background) {
+            this.second_btn_status_background = second_btn_status_background;
+        }
+
+        public String getThree_btn_titleColor() {
+            return three_btn_titleColor;
+        }
+
+        public void setThree_btn_titleColor(String three_btn_titleColor) {
+            this.three_btn_titleColor = three_btn_titleColor;
+        }
+
+        public String getThree_btn_status_textColor() {
+            return three_btn_status_textColor;
+        }
+
+        public void setThree_btn_status_textColor(String three_btn_status_textColor) {
+            this.three_btn_status_textColor = three_btn_status_textColor;
+        }
+
+        public String getThree_btn_status_background() {
+            return three_btn_status_background;
+        }
+
+        public void setThree_btn_status_background(String three_btn_status_background) {
+            this.three_btn_status_background = three_btn_status_background;
+        }
+
+        public String getFour_btn_titleColor() {
+            return four_btn_titleColor;
+        }
+
+        public void setFour_btn_titleColor(String four_btn_titleColor) {
+            this.four_btn_titleColor = four_btn_titleColor;
+        }
+
+        public String getFour_btn_status_textColor() {
+            return four_btn_status_textColor;
+        }
+
+        public void setFour_btn_status_textColor(String four_btn_status_textColor) {
+            this.four_btn_status_textColor = four_btn_status_textColor;
+        }
+
+        public String getFour_btn_status_background() {
+            return four_btn_status_background;
+        }
+
+        public void setFour_btn_status_background(String four_btn_status_background) {
+            this.four_btn_status_background = four_btn_status_background;
+        }
 
         public String getFirst_btn_title() {
             return first_btn_title;
@@ -461,11 +911,11 @@ public class XmlTagValuesFactory {
     /**
      * 存在地区呢服务器的数据初始化
      */
-    public static class XmlServiceInitFillet {
+    public static class Init_filletValues {
         /**
          * 关键的参数
          */
-        int arcViewColor;/*拱形的颜色*/
+        String arcViewColor;/*拱形的颜色*/
         String fillet_img;/*圆角矩形的图片地址*/
         String fillet_url;/*圆角矩形的关联地址*/
 
@@ -487,12 +937,13 @@ public class XmlTagValuesFactory {
         }
 
 
-        public int getArcViewColor() {
+        public String getArcViewColor() {
             return arcViewColor;
         }
 
         public void setArcViewColor(String arcViewColor) {
-            this.arcViewColor = Color.parseColor(arcViewColor.trim());
+            Log.i(MSG, "设置的首页初始化的arcView的颜色为:" + arcViewColor);
+            this.arcViewColor = arcViewColor.trim();
         }
 
     }

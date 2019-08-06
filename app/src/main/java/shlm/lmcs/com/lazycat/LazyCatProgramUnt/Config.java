@@ -237,6 +237,15 @@ public class Config {
                 return "";
             }
         }
+
+        public static String getInitUserpageXml(){
+            if(!TextUtils.isEmpty(LocalValues.ADDR_SERVICE)){
+                return "http://" + LocalValues.ADDR_SERVICE+"/webdata/ConfigXml/InitUserpageConfig.php";
+            }
+            else{
+                return "";
+            }
+        }
     }
 
     /**

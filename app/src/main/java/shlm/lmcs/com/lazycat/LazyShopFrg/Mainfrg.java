@@ -52,6 +52,7 @@ import shlm.lmcs.com.lazycat.LazyShopMonitor.Monitor;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.MonitorStatic;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.NewShopinMonitor;
 import shlm.lmcs.com.lazycat.LazyShopPage.LocalMonitorPage;
+import shlm.lmcs.com.lazycat.LazyShopPage.LocalShopModuleValuepage;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
 
@@ -75,7 +76,17 @@ public class Mainfrg extends LazyCatFragment {
      * 存在服务器参数表格
      */
 
-    private XmlTagValuesFactory.XmlServiceInitBtn xmlServiceInitBtn;
+    private XmlTagValuesFactory.Init_btnValues init_btnValues;
+    private XmlTagValuesFactory.Init_filletValues init_filletValues;
+
+
+
+    /*首页首先展示的模块的数量 不要浪费了CPU*/
+    private int showModue = 3;/*显示3个*/
+    /**
+     * 模块数据存储
+     */
+    private LocalShopModuleValuepage.BusinessPromotionValues businessPromotionValues;
     private LinearLayout horizontaladv_body;
     private LayoutInflater inflater;
     private RelativeLayout big_body;/*最外层的布局 用来切换外卖使用*/
@@ -83,6 +94,7 @@ public class Mainfrg extends LazyCatFragment {
     private static final int GONE_HEADE_IMG = 0;
     private LinearLayout body;
     private String MSG = "Mainfrg.java[+]";
+    private String LOCAL_MSG = "LocalServiceMainFrg.java[+]";
     private Timer _GoneHeadimg;
     private String Search_input_line_color;/*输入框线条颜色*/
     private String Search_input_back_color;/*输入框背景颜色*/
@@ -123,6 +135,7 @@ public class Mainfrg extends LazyCatFragment {
         item.findViewById(R.id.assembly_head_editText).setFocusable(false);
         big_body = item.findViewById(R.id.fragment_main_bigBody);/*最外层布局*/
         arcView = item.findViewById(R.id.fragment_main_arcView);
+        arcView.setBackGroundColor("#e9e9e9");
         locationClientOption = new LocationClientOption();
         locationClient = new LocationClient(getActivity().getApplicationContext());
         locationListener = new LocationMapListener();
@@ -198,11 +211,15 @@ public class Mainfrg extends LazyCatFragment {
             @Override
             public void onSucess(String tOrgin) {
                 if (!TextUtils.isEmpty(tOrgin)) {
+                    /*调试输出*/
+                    Log.i(MSG, "地区服务器地址:" + tOrgin.trim());
                     /*不是为空的话 就去访问网络*/
                     LocalValues.ADDR_SERVICE = tOrgin.trim();
                     InitMain();
                 } else {
                     /*没有地址  没有开放*/
+
+                    Log.i(MSG, "该地区服务器地址没开放");
 
                 }
                 Log.i(MSG, tOrgin.trim());
@@ -226,6 +243,8 @@ public class Mainfrg extends LazyCatFragment {
      */
     @SuppressLint("NewApi")
     private void InitMain() {
+
+        /*开始整理地区服务器*/
         if (!TextUtils.isEmpty(LocalValues.ADDR_SERVICE)) {
             /*存在地址 开始访问*/
             Net.doGet(getContext(), Config.SERVICE_API.getInitMainXml(), new Net
@@ -233,7 +252,7 @@ public class Mainfrg extends LazyCatFragment {
                 @Override
                 public void onSucess(String tOrgin) {
                     /*开始处理数据*/
-
+                    Log.i(LOCAL_MSG, "首页初始化数据:" + tOrgin.trim());
                     XmlanalysisFactory xml = new XmlanalysisFactory(tOrgin.trim());
                     xml.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
                         @Override
@@ -249,36 +268,392 @@ public class Mainfrg extends LazyCatFragment {
                         @Override
                         public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
                             try {
-
                                 /**
-                                 * 判断文档开头
+                                 * 判断文档开头  获取对应的方法
                                  */
-                                if (tag.equals(XmlTagValuesFactory.ActionServiceNavBtn
-                                        .ACTION_XML_START)) {
-                                    xmlServiceInitBtn = XmlTagValuesFactory
+                                if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_XML_START)) {
+                                    init_btnValues = XmlTagValuesFactory
                                             .getXmlServiceInitBtnInstance();
                                 }
-                                /*判断是否是第一个的按钮的标题*/
-                                if (tag.equals(XmlTagValuesFactory.ActionServiceNavBtn
-                                        .ACTION_FIRST_BTN_TITLE)) {
-                                    xmlServiceInitBtn.setFirst_btn_title(pullParser.nextText());
-                                }
-                                /*判断是否为第一个按钮的图片*/
-                                if (tag.equals(XmlTagValuesFactory.ActionServiceNavBtn
-                                        .ACTION_FIRST_BTN_IMG)) {
-                                    xmlServiceInitBtn.setFirst_btn_img(pullParser.nextText());
-                                }
-                                /*判断是否为第一个按钮的状态*/
-                                if (tag.equals(XmlTagValuesFactory.ActionServiceNavBtn
-                                        .ACTION_FIRST_BTN_STATUS)) {
-                                    xmlServiceInitBtn.setFirst_btn_status(pullParser.nextText());
-                                }
-                                /*判断是否为第一个按钮的链接地址*/
-                                if (tag.equals(XmlTagValuesFactory.ActionServiceNavBtn
-                                        .ACTION_FIRST_BTN_URL)) {
-                                    xmlServiceInitBtn.setFirst_btn_url(pullParser.nextText());
+                                /**
+                                 * 判断文档的开头 获取对应的方法
+                                 */
+                                if (tag.equals(XmlTagValuesFactory.Init_fillet.ACTION_XML_START)) {
+                                    if (init_filletValues == null) {
+                                        /*获取对象*/
+                                        init_filletValues = XmlTagValuesFactory
+                                                .getXmlServiceInitPageInstance();
+                                    }
                                 }
 
+                                /*判断是否是拱形界面的颜色*/
+                                if (tag.equals(XmlTagValuesFactory.Init_fillet.ACTION_ARC_VIEW)) {
+                                    if (init_filletValues != null) {
+                                        init_filletValues.setArcViewColor(pullParser.nextText()
+                                                .trim());
+                                    }
+                                }
+
+                                /**
+                                 * 获取第一个按钮的值
+                                 */
+                                /*判断是否是第一个的按钮的标题*/
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_FIRST_BTN_TITLE)) {
+                                    init_btnValues.setFirst_btn_title(pullParser.nextText().trim());
+                                }
+                                /*判断是否为第一个按钮的图片*/
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_FIRST_BTN_IMG)) {
+                                    init_btnValues.setFirst_btn_img(pullParser.nextText().trim());
+                                }
+                                /*判断是否为第一个按钮的状态*/
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_FIRST_BTN_STATUS)) {
+                                    init_btnValues.setFirst_btn_status(pullParser.nextText().trim
+                                            ());
+                                }
+                                /*判断是否为第一个按钮的链接地址*/
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_FIRST_BTN_URL)) {
+                                    init_btnValues.setFirst_btn_url(pullParser.nextText().trim());
+                                }
+                                /*是否为第一个按钮的标题的颜色*/
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_FIRST_BTN_TEXTCOLOR)) {
+                                    init_btnValues.setFirst_btn_titleColor(pullParser.nextText()
+                                            .trim());
+                                }
+                                /*判断是否为第一个按钮的状态的背景颜色*/
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_FIRST_BTN_STATUSBACKGROUND)) {
+                                    init_btnValues.setFirst_btn_status_background(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_FIRST_BTN_STATUSCOLOR)) {
+                                    init_btnValues.setFirst_btn_status_textColor(pullParser
+                                            .nextText().trim());
+                                }
+
+                                /***
+                                 * 初始化第二个按钮的值
+                                 */
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_SECOND_BTN_TITLE)) {
+                                    init_btnValues.setSecond_btn_title(pullParser.nextText().trim
+                                            ());
+                                }
+
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_SECOND_BTN_STATUS)) {
+                                    init_btnValues.setSecond_btn_status(pullParser.nextText()
+                                            .trim());
+                                }
+
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_SECOND_BTN_IMG)) {
+                                    init_btnValues.setSecond_btn_img(pullParser.nextText().trim());
+                                }
+
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_SECOND_BTN_URL)) {
+                                    init_btnValues.setSecond_btn_url(pullParser.nextText().trim());
+                                }
+
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_SECOND_BTN_STATUSBACKGROUND)) {
+                                    init_btnValues.setSecond_btn_status_background(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_SECOND_BTN_TEXTCOLOR)) {
+                                    init_btnValues.setSecond_btn_titleColor(pullParser.nextText()
+                                            .trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_SECOND_BTN_STATUSCOLOR)) {
+                                    init_btnValues.setSecond_btn_status_textColor(pullParser
+                                            .nextText().trim());
+                                }
+
+                                /**
+                                 * 初始化第三个按钮的值
+                                 */
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_THREE_BTN_TITLE)) {
+                                    init_btnValues.setThree_btn_title(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_THREE_BTN_STATUS)) {
+                                    init_btnValues.setThree_btn_status(pullParser.nextText().trim
+                                            ());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_THREE_BTN_IMG)) {
+                                    init_btnValues.setThree_btn_img(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_THREE_BTN_URL)) {
+                                    init_btnValues.setThree_btn_url(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_THREE_BTN_STATUSBACKGROUND)) {
+                                    init_btnValues.setThree_btn_status_background(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_THREE_BTN_STATUSCOLOR)) {
+                                    init_btnValues.setThree_btn_status_textColor(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_THREE_BTN_TEXTCOLOR)) {
+                                    init_btnValues.setThree_btn_titleColor(pullParser.nextText()
+                                            .trim());
+                                }
+                                /**
+                                 * 初始化第四个按钮的值
+                                 *
+                                 */
+
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_FOUR_BTN_TITLE)) {
+                                    init_btnValues.setFour_btn_title(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_FOUR_BTN_STATUS)) {
+                                    init_btnValues.setFour_btn_status(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_FOUR_BTN_URL)) {
+                                    init_btnValues.setFour_btn_url(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_FOUR_BTN_IMG)) {
+                                    init_btnValues.setFour_btn_img(pullParser.nextText().trim());
+                                }
+
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_FOUR_BTN_STATUSBACKGROUND)) {
+                                    init_btnValues.setFour_btn_status_background(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_FOUR_BTN_STATUSCOLOR)) {
+                                    init_btnValues.setFour_btn_status_textColor(pullParser
+                                            .nextText().trim());
+                                }
+
+
+                                /**
+                                 * 第五个按钮的值
+                                 */
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_FIVE_BTN_TITLE)) {
+                                    init_btnValues.setFive_btn_title(pullParser.nextText().trim());
+                                }
+
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_FIVE_BTN_STATUS)) {
+                                    init_btnValues.setFive_btn_status(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_FIVE_BTN_IMG)) {
+                                    init_btnValues.setFive_btn_img(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_FIVE_BTN_URL)) {
+                                    init_btnValues.setFive_btn_url(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_FIVE_BTN_STATUSCOLOR)) {
+                                    init_btnValues.setFive_btn_status_textColor(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_FIVE_BTN_STATUSBACKGROUND)) {
+                                    init_btnValues.setFive_btn_status_background(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_FIVE_BTN_TEXTCOLOR)) {
+                                    init_btnValues.setFive_btn_titleColor(pullParser.nextText()
+                                            .trim());
+                                }
+
+
+                                /**
+                                 * 第六个按钮的参数
+                                 */
+
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_SIX_BTN_TITLE)) {
+                                    init_btnValues.setSix_btn_title(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_SIX_BTN_IMG)) {
+                                    init_btnValues.setSix_btn_img(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_SIX_BTN_STATUS)) {
+                                    init_btnValues.setSix_btn_status(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_SIX_BTN_STATUSCOLOR)) {
+                                    init_btnValues.setSix_btn_status_textColor(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_SIX_BTN_URL)) {
+                                    init_btnValues.setSix_btn_url(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_SIX_BTN_STATUSBACKGROUND)) {
+                                    init_btnValues.setSix_btn_status_background(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_SIX_BTN_TEXTCOLOR)) {
+                                    init_btnValues.setSix_btn_titleColor(pullParser.nextText()
+                                            .trim());
+                                }
+
+                                /**
+                                 * 第七个按钮的参数
+                                 */
+                                if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_SEVENT_TITLE)) {
+                                    init_btnValues.setSeven_btn_title(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_SEVENT_STATUS)) {
+                                    init_btnValues.setSeven_btn_status(pullParser.nextText().trim
+                                            ());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_SEVENT_STATUSBACKGROUND)) {
+                                    init_btnValues.setSeven_btn_status_backgrond(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_SEVENT_STATUSCOLOR)) {
+                                    init_btnValues.setSeven_btn_status_textColor(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_SEVENT_TEXTCOLOR)) {
+                                    init_btnValues.setSeven_btn_titleColor(pullParser.nextText()
+                                            .trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_SEVENT_IMG)) {
+                                    init_btnValues.setSeven_btn_img(pullParser.nextText());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_SEVENT_URL)) {
+                                    init_btnValues.setSeven_btn_url(pullParser.nextText().trim());
+                                }
+                                /**
+                                 * 第八个按钮的参数
+                                 */
+                                if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_EIGHT_IMG)) {
+                                    init_btnValues.setEight_btn_img(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_EIGHT_STATUS)) {
+                                    init_btnValues.setEight_btn_status(pullParser.nextText().trim
+                                            ());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_EIGHT_STATUSBACKGROUND)) {
+                                    init_btnValues.setEight_btn_status_background(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_EIGHT_STATUSCOLOR)) {
+                                    init_btnValues.setEight_btn_status_textColor(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns
+                                        .ACTION_EIGHT_TEXTCOLOR)) {
+                                    init_btnValues.setEight_btn_titleColor(pullParser.nextText()
+                                            .trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_EIGHT_TITLE)) {
+                                    init_btnValues.setEight_btn_title(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_EIGHT_URL)) {
+                                    init_btnValues.setEight_btn_url(pullParser.nextText().trim());
+                                }
+
+                                /**
+                                 * 判断模块开始  就要初始化模块数据表
+                                 */
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_XML_START)) {
+                                    /*到达解析头部  开始获取句柄*/
+                                    businessPromotionValues = LocalShopModuleValuepage.GetBusinessPromotionInstance();
+                                }
+                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_PROMOTION_STATUS)){
+                                    if(pullParser.nextText().trim().equals("0")){
+                                        businessPromotionValues.setStatus(false);
+                                    }
+                                    else{
+                                        businessPromotionValues.setStatus(true);
+                                    }
+                                }
+                                /**
+                                 * 第一个ITEM的值
+                                 */
+                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FIRST_BUSINESSPROMOTION_TITLE)){
+                                    businessPromotionValues.setFirst_item_title(pullParser.nextText().trim());
+                                }
+                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FIRST_BUSINESSPROMOTION_IMG)){
+                                    businessPromotionValues.setFirst_item_img(pullParser.nextText().trim());
+                                }
+                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FIRST_BUSINESSPROMOTION_STATUS)){
+                                    businessPromotionValues.setFirst_item_status(pullParser.nextText().trim());
+                                }
+                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FIRST_BUSINESSPROMOTION_URL)){
+                                    businessPromotionValues.setFirst_item_url(pullParser.nextText().trim());
+                                }
+
+                                /**
+                                 * 第二个ITEM的值
+                                 */
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_SECOND_BUSINESSPROMOTION_TITLE)) {
+                                    businessPromotionValues.setSecond_item_title(pullParser.nextText().trim());
+                                }
+                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_SECOND_BUSINESSPROMOTION_IMG)){
+                                    businessPromotionValues.setSecond_item_img(pullParser.nextText().trim());
+                                }
+                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_SECOND_BUSINESSPROMOTION_STATUS)){
+                                    businessPromotionValues.setSecond_item_status(pullParser.nextText().trim());
+                                }
+                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_SECOND_BUSINESSPROMOTION_URL)){
+                                    businessPromotionValues.setSecond_item_url(pullParser.nextText().trim());
+                                }
+                                /**
+                                 * 第三个ITEM的值
+                                 */
+                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_THREE_BUSINESSPROMOTION_TITLE)){
+                                    businessPromotionValues.setThree_item_title(pullParser.nextText().trim());
+                                }
+                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_THREE_BUSINESSPROMOTION_IMG)){
+                                    businessPromotionValues.setThree_item_img(pullParser.nextText().trim());
+                                }
+                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_THREE_BUSINESSPROMOTION_STATUS)){
+                                    businessPromotionValues.setThree_item_status(pullParser.nextText().trim());
+                                }
+                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_THREE_BUSINESSPROMOTION_URL)){
+                                    businessPromotionValues.setThree_item_url(pullParser.nextText());
+                                }
+
+                                /**
+                                 * 第四个ITEM的值
+                                 */
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FOUR_BUSINESSPROMOTION_TITLE)) {
+                                    businessPromotionValues.setFour_item_title(pullParser.nextText().trim());
+                                }
+                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FOUR_BUSINESSPROMOTION_IMG)){
+                                    businessPromotionValues.setFour_item_img(pullParser.nextText().trim());
+                                }
+                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FOUR_BUSINESSPROMOTION_STATUS)){
+                                    businessPromotionValues.setFour_item_status(pullParser.nextText().trim());
+                                }
+                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FOUR_BUSINESSPROMOTION_URL)){
+                                    businessPromotionValues.setFour_item_url(pullParser.nextText().trim());
+                                }
                             } catch (Exception e) {
                                 Log.i(MSG, "处理界面的参数的错误");
                             }
@@ -287,24 +662,40 @@ public class Mainfrg extends LazyCatFragment {
 
                         @Override
                         public void onEndTag(String tag, XmlPullParser pullParser, Integer id) {
-                            if(tag.equals(XmlTagValuesFactory.ActionServiceNavBtn.ACTION_XML_START)){
+                            if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_XML_START)) {
                                 //已经结束  调试输出
+                            }
+
+                            /*判断这个布局是否可以显示*/
+                            if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_XML_START)){
+                                /*判断这个模块是否可以加载 如果不可以 就不用去加载该模块*/
+                                if(businessPromotionValues.getStatus()){
+                                    Toast.makeText(getContext(),"不能显示",Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+
+                                    /**
+                                     * 商品促销管理者  
+                                     */
+                                    if(showModue > 1){
+                                        showModue --;
+                                        LinearLayout body = item.findViewById(R.id.fragment_main_moduleBody);
+                                        View merchaView = inflater.inflate(R.layout.assembly_fragment_main_erpromotion,null);
+                                        body.addView(merchaView);
+                                    }
+                                    else{
+
+                                    }
+                                }
+                            }
+
+                            if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_XML_START)) {
 
                                 /**
-                                 * 导航栏 参数提交  把数据交给要处理的窗口的模块
+                                 * 刷新第一个按钮的参数
                                  */
-                                Log.i(MSG,"第一个按钮的标题" + xmlServiceInitBtn.getFirst_btn_title());
-                                Log.i(MSG,"第二个按钮的标题" + xmlServiceInitBtn.getSecond_btn_title());
-                                Log.i(MSG,"第三个按钮的标题" + xmlServiceInitBtn.getThree_btn_title());
-                                Log.i(MSG,"第四个按钮的标题" + xmlServiceInitBtn.getFour_btn_title());
 
-                            }
-                            if(tag.equals(XmlTagValuesFactory.ActionServiceInitFillet.ACTION_XML_START)){
-                                /**
-                                 * ARCView 和圆角矩形的参数 提交要处理的窗口模块
-                                 */
-                            }
-                            if(tag.equals(XmlTagValuesFactory.ActionServiceBusinessPromotion.ACTION_BUSINESSPROMOTION_START)){
+                                HandlerNav(init_btnValues, _navaBody);
 
                             }
                         }
@@ -513,24 +904,6 @@ public class Mainfrg extends LazyCatFragment {
         _RefreshScrollView.SetHeadView(_layout, 200, R.id.layoutmore_progressbar, R.id
                 .layoutmore_headimg);
 
-        /**
-         * 华丽分割线
-         * ========================================================
-         */
-        /*<首页的商家促销的界面管理>*/
-
-        /*找到展示的界面的父布局*/
-        LinearLayout merchantLayout = item.findViewById(R.id.fragment_main_merchant);
-        View merchantView = inflater.inflate(R.layout.assembly_fragment_main_erpromotion, null);
-        merchantLayout.addView(merchantView);/*添加View*/
-        MerchantMonitor merchantMonitor = new MerchantMonitor(merchantView, getContext());
-        if (merchantMonitor.getStatic() == MonitorStatic.NOT_LOAD) {
-            merchantMonitor.Start();
-        }
-        /*创建商家促销管理者*/
-        merchantMonitor.SaveTag(LocalMonitorPage.MONITOR_MERCHANT);
-        merchantLayout.setTag(merchantMonitor);
-        /*</首页的商家促销的界面管理>*/
 
         /**
          * 华丽分割线
@@ -794,7 +1167,7 @@ public class Mainfrg extends LazyCatFragment {
                             /*设置拱形的颜色*/
                             String arcColor = pullParser.nextText().trim();
                             Log.i(MSG, "拱形的颜色为:" + arcColor);
-                            arcView.setBackGroundColor(arcColor);
+                            //arcView.setBackGroundColor(arcColor);
                         }
                         if (tag.equals(XmlTagValuesFactory.XMLKeyMainXml.key_nav_body)) {
                             /*重新创建一个表格*/
@@ -931,7 +1304,6 @@ public class Mainfrg extends LazyCatFragment {
                     /**
                      * 开始整理nav导航图标
                      */
-                    HandlerNav(nav_list, _navaBody);
                 }
             });
         }
@@ -941,11 +1313,11 @@ public class Mainfrg extends LazyCatFragment {
     /**
      * 开始整理导航界面
      *
-     * @param list
+     * @param _init_btnvalues 整理好的数据
      * @param view
      */
     @SuppressLint("NewApi")
-    private void HandlerNav(ArrayList<XmlTagValuesFactory.XMLTagMainNavValues> list, View view) {
+    private void HandlerNav(XmlTagValuesFactory.Init_btnValues _init_btnvalues, View view) {
         TextView first_view = view.findViewById(R.id.assembly_fragment_main_nava_fristTitle);
         TextView first_static = view.findViewById(R.id.assembly_fragment_main_nava_fristStatic);
         ImageView first_img = view.findViewById(R.id.assembly_fragment_main_nava_fristImg);
@@ -954,6 +1326,7 @@ public class Mainfrg extends LazyCatFragment {
 
         TextView second_view = view.findViewById(R.id.assembly_fragment_main_nava_secondTitle);
         TextView second_static = view.findViewById(R.id.assembly_fragment_main_nava_secondStatic);
+        ImageView second_img = view.findViewById(R.id.assembly_fragment_main_nava_secondImg);
         RelativeLayout secondBody = view.findViewById(R.id.assembly_fragment_main_nav_secondBody);
 
         /*第三个导航栏的控件信息*/
@@ -969,7 +1342,23 @@ public class Mainfrg extends LazyCatFragment {
         RelativeLayout fourBody = view.findViewById(R.id.assembly_fragment_main_nava_fourBody);
         ImageView four_img = view.findViewById(R.id.assembly_fragment_main_nava_fourImg);
 
+        /*第五个导航的控件信息*/
+        TextView five_view = view.findViewById(R.id.assembly_fragment_main_nava_fiveTitle);
+        TextView five_static = view.findViewById(R.id.assembly_fragment_main_nava_fiveStatic);
+        ImageView five_img = view.findViewById(R.id.assembly_fragment_main_nava_fiveImg);
 
+        /*第六个导航控件信息*/
+        TextView six_view = view.findViewById(R.id.assembly_fragment_main_nava_sixTitle);
+        TextView six_static = view.findViewById(R.id.assembly_fragment_main_nava_sixStatic);
+        ImageView six_img = view.findViewById(R.id.assembly_fragment_main_nava_sixImg);
+        /*第七个导航控件信息*/
+        TextView seven_view = view.findViewById(R.id.assembly_fragment_main_nava_eventTitle);
+        TextView seven_static = view.findViewById(R.id.assembly_fragment_main_nava_eventStatic);
+        ImageView seven_img = view.findViewById(R.id.assembly_fragment_main_nava_eventImg);
+        /*第八个导航控件*/
+        TextView eight_view = view.findViewById(R.id.assembly_fragment_main_nava_eighthTitle);
+        TextView eight_static = view.findViewById(R.id.assembly_fragment_main_nava_eighthStatic);
+        ImageView eight_img = view.findViewById(R.id.assembly_fragment_main_nava_eighthImg);
         /*第一个导航的body*/
         firstBody.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1054,74 +1443,133 @@ public class Mainfrg extends LazyCatFragment {
             }
         });
         /*第一个标题*/
-        Log.i(MSG, "导航的LIST数量为:" + list.size());
-        if (list.get(0) != null) {
-            firstBody.setTag(list.get(0));
-            first_view.setText(list.get(0).getNav_title().trim());/*设置文字*/
-            first_view.setTextColor(Color.parseColor(list.get(0).getNav_color().trim()));
-            /*设置颜色*/
-            first_static.setText(list.get(0).getNav_static().trim());/*设置状态*/
-            first_static.setTextColor(Color.parseColor(list.get(0).getNav_static_titleColor()
-                    .trim()));
-            /*设置状态文字的颜色*/
+        firstBody.setTag(_init_btnvalues);
+        TextUnt.with(first_view).setText(_init_btnvalues.getFirst_btn_title()).setTextColor
+                (_init_btnvalues.getFirst_btn_titleColor());
+        Glide.with(getContext()).load(_init_btnvalues.getFirst_btn_img().trim()).into(first_img);
+        /*设置状态颜色*/
+        /*没有状态就设置成透明的*/
 
+        if (TextUtils.isEmpty(_init_btnvalues.getFirst_btn_status().trim())) {
+            first_static.setVisibility(View.GONE);
 
-            first_static.setBackgroundColor(Color.parseColor(list.get(0).getNav_static_backColor
-                    ().trim()));/*设置状态文字的背景颜色*/
-            /*加载导航的图片*
-
-             */
-            Glide.with(getContext()).load(list.get(0).getNav_ico().trim()).into(first_img);
-            Log.e(MSG, "导航1要加载ICO的地址:" + list.get(0).getNav_ico());
         } else {
-            Log.e(MSG, "导航1点击进入的地址:" + list.get(0).getNav_link_url());
+            TextUnt.with(first_static).setText(_init_btnvalues.getFirst_btn_status())
+                    .setTextColor(_init_btnvalues.getFirst_btn_status_textColor());
+            first_static.setBackgroundColor(Color.parseColor(_init_btnvalues
+                    .getFirst_btn_status_background()));/*设置状态文字的背景颜色*/
         }
-
 
         /*设置第二个标题的参数*/
-        if (list.get(1) != null) {
-            secondBody.setTag(list.get(1));
-            second_view.setText(list.get(1).getNav_title().trim());
-            second_view.setTextColor(Color.parseColor(list.get(1).getNav_color().trim()));
-            /*设置状态*/
-            second_static.setText(list.get(1).getNav_static().trim());
-            second_static.setTextColor(Color.parseColor(list.get(1).getNav_static_titleColor()
-                    .trim()));
-            second_static.setBackgroundColor(Color.parseColor(list.get(1).getNav_static_backColor
-                    ().trim()));
-        } else {
-            Log.i(MSG, "导航栏2的数据为空");
-        }
-        /*设置第三个标题的参数*/
-        if (list.get(2) != null) {
-            threeBody.setTag(list.get(2));
-            three_view.setText(list.get(2).getNav_title().trim());
-            three_view.setTextColor(Color.parseColor(list.get(2).getNav_color().trim()));
-            three_static.setText(list.get(2).getNav_static().trim());
-            three_static.setTextColor(Color.parseColor(list.get(2).getNav_static_titleColor()
-                    .trim()));
-            three_static.setBackgroundColor(Color.parseColor(list.get(2).getNav_static_backColor
-                    ().trim()));
-        } else {
-            Log.i(MSG, "导航栏3的数据为空");
-        }
-        /*设置第四个导航的参数*/
-        if (list.get(3) != null) {
-            fourBody.setTag(list.get(3));
-            TextUnt.with(four_view).setText(list.get(3).getNav_title().trim()).setTextColor(list
-                    .get(3).getNav_color().trim());
-            /*判断是否有图片*/
-            if (!list.get(3).getNav_ico().trim().equals("") && list.get(3).getNav_ico() != null) {
-                Glide.with(getContext()).load(list.get(3).getNav_ico().trim()).into(four_img);
-            }
-            four_static.setText(list.get(3).getNav_static().trim());
-            four_static.setTextColor(Color.parseColor(list.get(3).getNav_static_titleColor().trim
-                    ()));
-            four_static.setBackgroundColor(Color.parseColor(list.get(3).getNav_static_backColor()
-                    .trim()));
+        secondBody.setTag(_init_btnvalues);
+        Glide.with(getContext()).load(_init_btnvalues.getSecond_btn_img()).into(second_img);
+        TextUnt.with(second_view).setText(_init_btnvalues.getSecond_btn_title()).setTextColor
+                (_init_btnvalues.getFirst_btn_titleColor());
+        /*设置状态颜色*/
+        /*没有状态就设置成透明的*/
 
+        if (TextUtils.isEmpty(_init_btnvalues.getSecond_btn_status().trim())) {
+            second_static.setVisibility(View.GONE);
+        } else {
+            TextUnt.with(second_static).setText(_init_btnvalues.getSecond_btn_status())
+                    .setTextColor(_init_btnvalues.getSecond_btn_status_textColor());
+            second_static.setBackgroundColor(Color.parseColor(_init_btnvalues
+                    .getSecond_btn_status_background()));
+        }
+
+        /*设置第三个标题的参数*/
+        threeBody.setTag(_init_btnvalues);
+        TextUnt.with(three_view).setText(_init_btnvalues.getThree_btn_title()).setTextColor
+                (_init_btnvalues.getThree_btn_titleColor());
+
+        /*没有状态就设置成透明的*/
+
+        if (TextUtils.isEmpty(_init_btnvalues.getThree_btn_status().trim())) {
+            first_static.setVisibility(View.GONE);
+        } else {
+            TextUnt.with(three_static).setText(_init_btnvalues.getThree_btn_status())
+                    .setTextColor(_init_btnvalues.getThree_btn_status_textColor());
+            three_static.setBackgroundColor(Color.parseColor(_init_btnvalues
+                    .getThree_btn_status_background()));
+        }
+
+
+        /*设置第四个导航的参数*/
+        fourBody.setTag(_init_btnvalues);
+        TextUnt.with(four_view).setText(_init_btnvalues.getFour_btn_title()).setTextColor
+                (_init_btnvalues.getFour_btn_titleColor());
+        /*判断是否有图片*/
+        Glide.with(getContext()).load(_init_btnvalues.getFour_btn_img().trim()).into(four_img);
+
+        /*没有状态就设置成透明的*/
+        if (TextUtils.isEmpty(_init_btnvalues.getFour_btn_status().trim())) {
+            four_static.setVisibility(View.GONE);
+        } else {
+            TextUnt.with(four_static).setText(_init_btnvalues.getFour_btn_status()).setTextColor
+                    (_init_btnvalues.getFour_btn_status_textColor());
+
+            four_static.setBackgroundColor(Color.parseColor(_init_btnvalues
+                    .getFour_btn_status_background()));
+        }
+
+        /*设置第五个导航的参数*/
+        TextUnt.with(five_view).setText(_init_btnvalues.getFive_btn_title()).setTextColor
+                (_init_btnvalues.getFive_btn_titleColor());
+        Glide.with(getContext()).load(_init_btnvalues.getFive_btn_img().trim()).into(five_img);
+        /*没有状态就设置成透明的*/
+        if (TextUtils.isEmpty(_init_btnvalues.getFive_btn_status().trim())) {
+            five_static.setVisibility(View.GONE);
+        } else {
+            TextUnt.with(five_static).setText(_init_btnvalues.getFive_btn_status()).setTextColor
+                    (_init_btnvalues.getFive_btn_status_textColor());
+            five_static.setBackgroundColor(Color.parseColor(_init_btnvalues
+                    .getFive_btn_status_background()));
+        }
+
+        /*设置第六个导航的参数*/
+        TextUnt.with(six_view).setText(_init_btnvalues.getSix_btn_title()).setTextColor
+                (_init_btnvalues.getSix_btn_titleColor());
+        Glide.with(getContext()).load(_init_btnvalues.getSix_btn_img().trim()).into(six_img);
+        /*没有状态就设置成透明的*/
+        if (TextUtils.isEmpty(_init_btnvalues.getSix_btn_status().trim())) {
+            six_static.setVisibility(View.GONE);
+        } else {
+            TextUnt.with(six_static).setText(_init_btnvalues.getSix_btn_status()).setTextColor
+                    (_init_btnvalues.getSix_btn_status_textColor());
+            six_static.setBackgroundColor(Color.parseColor(_init_btnvalues
+                    .getSix_btn_status_background()));
+        }
+        /*设置第七个导航的参数*/
+        TextUnt.with(seven_view).setText(_init_btnvalues.getSeven_btn_title()).setTextColor
+                (_init_btnvalues.getSeven_btn_titleColor());
+        Glide.with(getContext()).load(_init_btnvalues.getSeven_btn_img().trim()).into(seven_img);
+        /*没有状态就设置成透明的*/
+        if (TextUtils.isEmpty(_init_btnvalues.getSeven_btn_status().trim())) {
+            seven_static.setVisibility(View.GONE);
+        } else {
+            TextUnt.with(seven_static).setText(_init_btnvalues.getSeven_btn_status())
+                    .setTextColor(_init_btnvalues.getSeven_btn_status_textColor());
+            seven_static.setBackgroundColor(Color.parseColor(_init_btnvalues
+                    .getSeven_btn_status_backgrond()));
+        }
+        /*设置第八个导航的参数*/
+        TextUnt.with(eight_view).setText(_init_btnvalues.getEight_btn_title()).setTextColor
+                (_init_btnvalues.getEight_btn_titleColor());
+        /*如果存在图片就获取图片*/
+        if (!TextUtils.isEmpty(_init_btnvalues.getEight_btn_img().trim())) {
+            Glide.with(getContext()).load(_init_btnvalues.getEight_btn_img().trim()).into
+                    (eight_img);
+        } else {
+            /*加载默认图片*/
+        }
+        /*没有状态就设置成透明的*/
+        if (TextUtils.isEmpty(_init_btnvalues.getEight_btn_status().trim())) {
+            eight_static.setVisibility(View.GONE);
+        } else {
+            TextUnt.with(eight_static).setText(_init_btnvalues.getEight_btn_status())
+                    .setTextColor(_init_btnvalues.getEight_btn_status_textColor());
+            eight_static.setBackgroundColor(Color.parseColor(_init_btnvalues
+                    .getEight_btn_status_background()));
         }
     }
-
-
 }
