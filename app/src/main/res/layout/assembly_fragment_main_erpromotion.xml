@@ -17,6 +17,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
             android:paddingLeft="15dp"
+            android:id="@+id/assembly_fragment_main_erpromotion_Title"
             android:text="商家促销 给您更低！"
             android:textColor="#000000"
             android:textSize="17dp"

@@ -53,6 +53,7 @@ import shlm.lmcs.com.lazycat.LazyShopMonitor.MonitorStatic;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.NewShopinMonitor;
 import shlm.lmcs.com.lazycat.LazyShopPage.LocalMonitorPage;
 import shlm.lmcs.com.lazycat.LazyShopPage.LocalShopModuleValuepage;
+import shlm.lmcs.com.lazycat.LazyShopTools.LocalMonitorHandler;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
 
@@ -78,7 +79,6 @@ public class Mainfrg extends LazyCatFragment {
 
     private XmlTagValuesFactory.Init_btnValues init_btnValues;
     private XmlTagValuesFactory.Init_filletValues init_filletValues;
-
 
 
     /*首页首先展示的模块的数量 不要浪费了CPU*/
@@ -579,81 +579,214 @@ public class Mainfrg extends LazyCatFragment {
 
                                 /**
                                  * 判断模块开始  就要初始化模块数据表
+                                 *
+                                 * 初始化商家促销的参数信息
                                  */
-                                if (tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_XML_START)) {
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_XML_START)) {
                                     /*到达解析头部  开始获取句柄*/
-                                    businessPromotionValues = LocalShopModuleValuepage.GetBusinessPromotionInstance();
+                                    businessPromotionValues = LocalShopModuleValuepage
+                                            .GetBusinessPromotionInstance();
                                 }
-                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_PROMOTION_STATUS)){
-                                    if(pullParser.nextText().trim().equals("0")){
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_PROMOTION_STATUS)) {
+                                    if (pullParser.nextText().trim().equals("0")) {
                                         businessPromotionValues.setStatus(false);
-                                    }
-                                    else{
+                                    } else {
                                         businessPromotionValues.setStatus(true);
                                     }
+                                }
+
+                                /**
+                                 * 初始化标题和其他的VALUE
+                                 */
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_TITLE)) {
+                                    businessPromotionValues.setTitle(pullParser.nextText().trim()
+                                    );/*标题*/
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_TITLE_COLOR)) {
+                                    businessPromotionValues.setTitle_color(pullParser.nextText()
+                                            .trim());
                                 }
                                 /**
                                  * 第一个ITEM的值
                                  */
-                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FIRST_BUSINESSPROMOTION_TITLE)){
-                                    businessPromotionValues.setFirst_item_title(pullParser.nextText().trim());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FIRST_BUSINESSPROMOTION_TITLE)) {
+                                    businessPromotionValues.setFirst_item_title(pullParser
+                                            .nextText().trim());
                                 }
-                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FIRST_BUSINESSPROMOTION_IMG)){
-                                    businessPromotionValues.setFirst_item_img(pullParser.nextText().trim());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FIRST_BUSINESSPROMOTION_IMG)) {
+                                    businessPromotionValues.setFirst_item_img(pullParser.nextText
+                                            ().trim());
                                 }
-                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FIRST_BUSINESSPROMOTION_STATUS)){
-                                    businessPromotionValues.setFirst_item_status(pullParser.nextText().trim());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FIRST_BUSINESSPROMOTION_STATUS)) {
+                                    businessPromotionValues.setFirst_item_status(pullParser
+                                            .nextText().trim());
                                 }
-                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FIRST_BUSINESSPROMOTION_URL)){
-                                    businessPromotionValues.setFirst_item_url(pullParser.nextText().trim());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FIRST_BUSINESSPROMOTION_URL)) {
+                                    businessPromotionValues.setFirst_item_url(pullParser.nextText
+                                            ().trim());
                                 }
+
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FIRST_BUSINESSPROMOTION_STATUS_COLOR)) {
+                                    businessPromotionValues.setFirst_item_status_color(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FIRST_BUSINESSPROMOTION_STATUS_BACKGROUND)) {
+                                    businessPromotionValues.setFirst_item_status_background
+                                            (pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FIRST_BUSINESSPROMOTION_TITLE_COLOR)) {
+                                    businessPromotionValues.setFirst_item_title_color(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FIRST_BUSINESSPROMOTION_TEXT)) {
+                                    businessPromotionValues.setFirst_item_text(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FIRST_BUSINESSPROMOTION_TEXT_COLOR)) {
+                                    businessPromotionValues.setFirst_item_text_color(pullParser
+                                            .nextText().trim());
+                                }
+
 
                                 /**
                                  * 第二个ITEM的值
                                  */
-                                if (tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_SECOND_BUSINESSPROMOTION_TITLE)) {
-                                    businessPromotionValues.setSecond_item_title(pullParser.nextText().trim());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_SECOND_BUSINESSPROMOTION_TITLE)) {
+                                    businessPromotionValues.setSecond_item_title(pullParser
+                                            .nextText().trim());
                                 }
-                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_SECOND_BUSINESSPROMOTION_IMG)){
-                                    businessPromotionValues.setSecond_item_img(pullParser.nextText().trim());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_SECOND_BUSINESSPROMOTION_IMG)) {
+                                    businessPromotionValues.setSecond_item_img(pullParser
+                                            .nextText().trim());
                                 }
-                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_SECOND_BUSINESSPROMOTION_STATUS)){
-                                    businessPromotionValues.setSecond_item_status(pullParser.nextText().trim());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_SECOND_BUSINESSPROMOTION_STATUS)) {
+                                    businessPromotionValues.setSecond_item_status(pullParser
+                                            .nextText().trim());
                                 }
-                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_SECOND_BUSINESSPROMOTION_URL)){
-                                    businessPromotionValues.setSecond_item_url(pullParser.nextText().trim());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_SECOND_BUSINESSPROMOTION_URL)) {
+                                    businessPromotionValues.setSecond_item_url(pullParser
+                                            .nextText().trim());
+                                }
+
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_SECOND_BUSINESSPROMOTION_STATUS_COLOR)) {
+                                    businessPromotionValues.setSecond_item_status_color
+                                            (pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_SECOND_BUSINESSPROMOTION_STATUS_BACKGROUND)) {
+                                    businessPromotionValues.setSecond_item_status_background
+                                            (pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_SECOND_BUSINESSPROMOTION_TITLE_COLOR)) {
+                                    businessPromotionValues.setSecond_item_title_color(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_SECOND_BUSINESSPROMOTION_TEXT)) {
+                                    businessPromotionValues.setSecond_item_text(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_SECOND_BUSINESSPROMOTION_TEXT_COLOR)) {
+                                    businessPromotionValues.setSecond_item_text_color(pullParser
+                                            .nextText().trim());
                                 }
                                 /**
                                  * 第三个ITEM的值
                                  */
-                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_THREE_BUSINESSPROMOTION_TITLE)){
-                                    businessPromotionValues.setThree_item_title(pullParser.nextText().trim());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_THREE_BUSINESSPROMOTION_TITLE)) {
+                                    businessPromotionValues.setThree_item_title(pullParser
+                                            .nextText().trim());
                                 }
-                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_THREE_BUSINESSPROMOTION_IMG)){
-                                    businessPromotionValues.setThree_item_img(pullParser.nextText().trim());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_THREE_BUSINESSPROMOTION_TITLE_COLOR)) {
+                                    businessPromotionValues.setThree_item_title_color(pullParser
+                                            .nextText().trim());
                                 }
-                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_THREE_BUSINESSPROMOTION_STATUS)){
-                                    businessPromotionValues.setThree_item_status(pullParser.nextText().trim());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_THREE_BUSINESSPROMOTION_IMG)) {
+                                    businessPromotionValues.setThree_item_img(pullParser.nextText
+                                            ().trim());
                                 }
-                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_THREE_BUSINESSPROMOTION_URL)){
-                                    businessPromotionValues.setThree_item_url(pullParser.nextText());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_THREE_BUSINESSPROMOTION_STATUS)) {
+                                    businessPromotionValues.setThree_item_status(pullParser
+                                            .nextText().trim());
                                 }
-
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_THREE_BUSINESSPROMOTION_STATUS_BACKGROUND)) {
+                                    businessPromotionValues.setThree_item_status_background
+                                            (pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_THREE_BUSINESSPROMOTION_STATUS_COLOR)) {
+                                    businessPromotionValues.setThree_item_status_color(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_THREE_BUSINESSPROMOTION_TEXT)) {
+                                    businessPromotionValues.setThree_item_text(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_THREE_BUSINESSPROMOTION_TEXT_COLOR)) {
+                                    businessPromotionValues.setThree_item_text_color(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_THREE_BUSINESSPROMOTION_URL)) {
+                                    businessPromotionValues.setThree_item_url(pullParser.nextText
+                                            ());
+                                }
                                 /**
                                  * 第四个ITEM的值
+                                 *
                                  */
-                                if (tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FOUR_BUSINESSPROMOTION_TITLE)) {
-                                    businessPromotionValues.setFour_item_title(pullParser.nextText().trim());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FOUR_BUSINESSPROMOTION_TITLE)) {
+                                    businessPromotionValues.setFour_item_title(pullParser
+                                            .nextText().trim());
                                 }
-                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FOUR_BUSINESSPROMOTION_IMG)){
-                                    businessPromotionValues.setFour_item_img(pullParser.nextText().trim());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FOUR_BUSINESSPROMOTION_IMG)) {
+                                    businessPromotionValues.setFour_item_img(pullParser.nextText
+                                            ().trim());
                                 }
-                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FOUR_BUSINESSPROMOTION_STATUS)){
-                                    businessPromotionValues.setFour_item_status(pullParser.nextText().trim());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FOUR_BUSINESSPROMOTION_STATUS)) {
+                                    businessPromotionValues.setFour_item_status(pullParser
+                                            .nextText().trim());
                                 }
-                                if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FOUR_BUSINESSPROMOTION_URL)){
-                                    businessPromotionValues.setFour_item_url(pullParser.nextText().trim());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FOUR_BUSINESSPROMOTION_URL)) {
+                                    businessPromotionValues.setFour_item_url(pullParser.nextText
+                                            ().trim());
                                 }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FOUR_BUSINESSPROMOTION_TITLE_COLOR)){
+                                    businessPromotionValues.setFour_item_title_color(pullParser.nextText().trim());
+                                }
+
+
                             } catch (Exception e) {
                                 Log.i(MSG, "处理界面的参数的错误");
                             }
@@ -667,24 +800,35 @@ public class Mainfrg extends LazyCatFragment {
                             }
 
                             /*判断这个布局是否可以显示*/
-                            if(tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_XML_START)){
+                            if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                    .ACTION_XML_START)) {
                                 /*判断这个模块是否可以加载 如果不可以 就不用去加载该模块*/
-                                if(businessPromotionValues.getStatus()){
-                                    Toast.makeText(getContext(),"不能显示",Toast.LENGTH_SHORT).show();
-                                }
-                                else{
-
+                                if (businessPromotionValues.getStatus()) {
+                                    Toast.makeText(getContext(), "不能显示", Toast.LENGTH_SHORT).show();
+                                } else {
                                     /**
                                      * 商品促销管理者  
                                      */
-                                    if(showModue > 1){
-                                        showModue --;
-                                        LinearLayout body = item.findViewById(R.id.fragment_main_moduleBody);
-                                        View merchaView = inflater.inflate(R.layout.assembly_fragment_main_erpromotion,null);
+                                    if (showModue > 1) {
+                                        /**
+                                         * 允许可以显示的模块中
+                                         */
+                                        showModue--;
+                                        LinearLayout body = item.findViewById(R.id
+                                                .fragment_main_moduleBody);
+                                        View merchaView = inflater.inflate(R.layout
+                                                .assembly_fragment_main_erpromotion, null);
                                         body.addView(merchaView);
-                                    }
-                                    else{
-
+                                        LocalMonitorHandler.HandlerBusiness handlerBusiness =
+                                                LocalMonitorHandler.getHandlerBusinessAdapter();
+                                        Log.i(MSG, "标题为: " + businessPromotionValues.getTitle());
+                                        handlerBusiness.Instance(merchaView,
+                                                businessPromotionValues);/*设置基本参数*/
+                                        handlerBusiness.Start();
+                                    } else {
+                                        /**
+                                         * 已经显示完毕 就不要加载  放入LIST中 由ScrollView的监听调用
+                                         */
                                     }
                                 }
                             }

@@ -141,6 +141,8 @@ public class XmlTagValuesFactory {
     public static class init_business_promotion {
         public static String ACTION_XML_START = "init_business_promotion";
         public static String ACTION_PROMOTION_STATUS = "init_business_promotion_status";
+        public static String ACTION_TITLE = "init_business_promotion_title";
+        public static String ACTION_TITLE_COLOR = "init_business_promotion_title_color";
         /**
          * 第一个商家促销的界面
          */
@@ -150,6 +152,16 @@ public class XmlTagValuesFactory {
         public static String ACTION_FIRST_BUSINESSPROMOTION_URL = "first_business_promotion_url";
         public static String ACTION_FIRST_BUSINESSPROMOTION_STATUS =
                 "first_business_promotion_status";
+        public static String ACTION_FIRST_BUSINESSPROMOTION_STATUS_COLOR =
+                "first_business_promotion_status_color";
+        public static String ACTION_FIRST_BUSINESSPROMOTION_STATUS_BACKGROUND =
+                "first_business_promotion_status_background";
+
+        public static String ACTION_FIRST_BUSINESSPROMOTION_TITLE_COLOR =
+                "first_business_promotion_title_color";
+        public static String ACTION_FIRST_BUSINESSPROMOTION_TEXT = "first_business_promotion_text";
+        public static String ACTION_FIRST_BUSINESSPROMOTION_TEXT_COLOR =
+                "first_business_promotion_text_color";
 
         /**
          * 第二个商家促销的界面
@@ -160,7 +172,17 @@ public class XmlTagValuesFactory {
         public static String ACTION_SECOND_BUSINESSPROMOTION_IMG = "second_business_promotion_img";
         public static String ACTION_SECOND_BUSINESSPROMOTION_URL = "second_business_promotion_url";
         public static String ACTION_SECOND_BUSINESSPROMOTION_STATUS =
-                "second_business_prmotion_status";
+                "second_business_promotion_status";
+        public static String ACTION_SECOND_BUSINESSPROMOTION_STATUS_COLOR =
+                "second_business_promotion_status_color";
+        public static String ACTION_SECOND_BUSINESSPROMOTION_STATUS_BACKGROUND =
+                "second_business_promotion_status_background";
+        public static String ACTION_SECOND_BUSINESSPROMOTION_TITLE_COLOR =
+                "second_business_promotion_title_color";
+        public static String ACTION_SECOND_BUSINESSPROMOTION_TEXT =
+                "second_business_promotion_text";
+        public static String ACTION_SECOND_BUSINESSPROMOTION_TEXT_COLOR =
+                "second_business_promotion_text_color";
 
         /**
          * 第三个商家促销的界面
@@ -172,6 +194,15 @@ public class XmlTagValuesFactory {
         public static String ACTION_THREE_BUSINESSPROMOTION_URL = "three_business_promotion_url";
         public static String ACTION_THREE_BUSINESSPROMOTION_STATUS =
                 "three_business_promotion_status";
+        public static String ACTION_THREE_BUSINESSPROMOTION_STATUS_COLOR =
+                "three_business_promotion_status_color";
+        public static String ACTION_THREE_BUSINESSPROMOTION_STATUS_BACKGROUND =
+                "three_business_promotion_status_background";
+        public static String ACTION_THREE_BUSINESSPROMOTION_TITLE_COLOR =
+                "three_business_promotion_title_color";
+        public static String ACTION_THREE_BUSINESSPROMOTION_TEXT = "three_business_promotion_text";
+        public static String ACTION_THREE_BUSINESSPROMOTION_TEXT_COLOR =
+                "three_business_promotion_text_color";
 
         /**
          * 第四个商家促销的界面
@@ -179,8 +210,18 @@ public class XmlTagValuesFactory {
         public static String ACTION_FOUR_BUSINESSPROMOTION_TITLE = "four_business_promotion_title";
         public static String ACTION_FOUR_BUSINESSPROMOTION_IMG = "four_business_promotion_img";
         public static String ACTION_FOUR_BUSINESSPROMOTION_URL = "four_business_promotion_url";
+
         public static String ACTION_FOUR_BUSINESSPROMOTION_STATUS =
                 "four_business_promotion_status";
+        public static String ACTION_FOUR_BUSINESSPROMOTION_STATUS_COLOR =
+                "four_business_promotion_status_color";
+        public static String ACTION_FOUR_BUSINESSPROMOTION_STATUS_BACKGROUND =
+                "four_business_promotion_status_background";
+        public static String ACTION_FOUR_BUSINESSPROMOTION_TITLE_COLOR =
+                "four_business_promotion_title_color";
+        public static String ACTION_FOUR_BUSINESSPROMOTION_TEXT = "four_business_promotion_text";
+        public static String ACTION_FOUR_BUSINESSPROMOTION_TEXT_COLOR =
+                "four_business_promotion_text_color";
     }
 
 
@@ -671,13 +712,6 @@ public class XmlTagValuesFactory {
         public void setEight_btn_status_background(String eight_btn_status_background) {
             this.eight_btn_status_background = eight_btn_status_background;
         }
-
-
-
-
-
-
-
 
 
         public String getFirst_btn_titleColor() {
