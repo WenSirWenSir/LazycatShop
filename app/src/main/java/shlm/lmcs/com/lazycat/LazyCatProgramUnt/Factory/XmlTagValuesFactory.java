@@ -228,7 +228,55 @@ public class XmlTagValuesFactory {
     /**
      * 数据分割----------------------------------------------------------------------
      */
+    public static class NewShop {
+        public static String ACTION_XML_START = "init_new_shop";
+        public static String ACTION_XML_TITLE = "new_shop_title";
+        public static String ACTION_XML_TITLE_COLOR = "new_shop_title_color";
+        public static String ACTION_XML_TEXT = "new_shop_text";
+        public static String ACTION_XML_TEXT_COLOR = "new_shop_text_color";
+        public static String ACTION_XML_STATUS = "new_shop_status";
 
+        /**
+         * 第一个Item的值
+         */
+        public static String ACTION_FIRST_SHOP_TITLE = "first_new_shop_title";
+        public static String ACTION_FIRST_SHOP_TITLE_COLOR = "first_new_shop_title_color";
+        public static String ACTION_FIRST_SHOP_TEXT = "first_new_shop_text";
+        public static String ACTION_FIRST_SHOP_TEXT_COLOR = "first_new_shop_text_color";
+        public static String ACTION_FIRST_SHOP_STATUS = "first_new_shop_status";
+        public static String ACTION_FIRST_SHOP_STATUS_COLOR = "first_new_shop_status_color";
+        public static String ACTION_FIRST_SHOP_STATUS_BACKGROUND = "first_new_shop_status_background";
+        public static String ACTION_FIRST_SHOP_IMG  ="first_new_shop_img";
+        public static String ACTION_FIRST_SHOP_URL = "first_new_shop_url";
+
+        /**
+         * 第二个Item的值
+         */
+
+
+        public static String ACTION_SECOND_SHOP_TITLE = "second_new_shop_title";
+        public static String ACTION_SECOND_SHOP_TITLE_COLOR = "second_new_shop_title_color";
+        public static String ACTION_SECOND_SHOP_TEXT = "second_new_shop_text";
+        public static String ACTION_SECOND_SHOP_TEXT_COLOR = "second_new_shop_text_color";
+        public static String ACTION_SECOND_SHOP_STATUS = "second_new_shop_status";
+        public static String ACTION_SECOND_SHOP_STATUS_COLOR = "second_new_shop_status_color";
+        public static String ACTION_SECOND_SHOP_STATUS_BACKGROUND = "second_new_shop_status_background";
+        public static String ACTION_SECOND_SHOP_IMG = "second_new_shop_img";
+        public static String ACTION_SECOND_SHOP_URL = "second_new_shop_url";
+        /**
+         * 第三个Item的值
+         */
+
+        public static String ACTION_THREE_SHOP_TITLE = "three_new_shop_title";
+        public static String ACTION_THREE_SHOP_TITLE_COLOR = "three_new_shop_title_color";
+        public static String ACTION_THREE_SHOP_TEXT = "three_new_shop_text";
+        public static String ACTION_THREE_SHOP_TEXT_COLOR = "three_new_shop_text_color";
+        public static String ACTION_THREE_SHOP_STATUS = "three_new_shop_status";
+        public static String ACTION_THREE_SHOP_STATUS_COLOR = "three_new_shop_status_color";
+        public static String ACTION_THREE_SHOP_STATUS_BACKGROUND = "three_new_shop_status_background";
+        public static String ACTION_THREE_SHOP_IMG = "three_new_shop_img";
+        public static String ACTION_THREE_SHOP_URL = "three_new_shop_url";
+    }
 
     /**
      * 存在服务器地址的  商家促销的初始化信息表格

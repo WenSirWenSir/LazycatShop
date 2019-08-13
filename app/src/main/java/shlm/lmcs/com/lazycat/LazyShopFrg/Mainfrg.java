@@ -50,7 +50,6 @@ import shlm.lmcs.com.lazycat.LazyShopMonitor.BrandSingMonitor;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.MerchantMonitor;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.Monitor;
 import shlm.lmcs.com.lazycat.LazyShopMonitor.MonitorStatic;
-import shlm.lmcs.com.lazycat.LazyShopMonitor.NewShopinMonitor;
 import shlm.lmcs.com.lazycat.LazyShopPage.LocalMonitorPage;
 import shlm.lmcs.com.lazycat.LazyShopPage.LocalShopModuleValuepage;
 import shlm.lmcs.com.lazycat.LazyShopTools.LocalMonitorHandler;
@@ -86,9 +85,11 @@ public class Mainfrg extends LazyCatFragment {
     /**
      * 模块数据存储
      */
-    private LocalShopModuleValuepage.BusinessPromotionValues businessPromotionValues;
+    private LocalShopModuleValuepage.BusinessPromotionValues businessPromotionValues;/*商家促销的句柄*/
+    private LocalShopModuleValuepage.NewShopValues newShopValues;/*新品上架的句柄*/
     private LinearLayout horizontaladv_body;
     private LayoutInflater inflater;
+    private LinearLayout module_body;/*设置模块的布局*/
     private RelativeLayout big_body;/*最外层的布局 用来切换外卖使用*/
     private RefreshScrollView _RefreshScrollView;
     private static final int GONE_HEADE_IMG = 0;
@@ -129,6 +130,7 @@ public class Mainfrg extends LazyCatFragment {
         SDKInitializer.initialize(getActivity().getApplicationContext());
         item = inflater.inflate(R.layout.fragment_main, null);
         body = item.findViewById(R.id.fragment_main_body);/*主要的布局*/
+        module_body = item.findViewById(R.id.fragment_main_module_body);/*显示模块的布局*/
         body.setVisibility(View.GONE);/*先隐藏起来*/
         SearchViewBody = item.findViewById(R.id.fragment_main_head);/*搜索框的父布局*/
         //初始化一个背景样式
@@ -782,11 +784,210 @@ public class Mainfrg extends LazyCatFragment {
                                     businessPromotionValues.setFour_item_url(pullParser.nextText
                                             ().trim());
                                 }
-                                if (tag.equals(XmlTagValuesFactory.init_business_promotion.ACTION_FOUR_BUSINESSPROMOTION_TITLE_COLOR)){
-                                    businessPromotionValues.setFour_item_title_color(pullParser.nextText().trim());
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FOUR_BUSINESSPROMOTION_TITLE_COLOR)) {
+                                    businessPromotionValues.setFour_item_title_color(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FOUR_BUSINESSPROMOTION_TITLE_COLOR)) {
+                                    businessPromotionValues.setFour_item_title_color(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FOUR_BUSINESSPROMOTION_STATUS_BACKGROUND)) {
+                                    businessPromotionValues.setFour_item_status_bakcground
+                                            (pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FOUR_BUSINESSPROMOTION_STATUS_COLOR)) {
+                                    businessPromotionValues.setFour_item_status_bakcground
+                                            (pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FOUR_BUSINESSPROMOTION_TEXT)) {
+                                    businessPromotionValues.setFour_item_text(pullParser.nextText
+                                            ().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.init_business_promotion
+                                        .ACTION_FOUR_BUSINESSPROMOTION_TEXT_COLOR)) {
+                                    businessPromotionValues.setFour_item_text_color(pullParser
+                                            .nextText().trim());
                                 }
 
 
+                                /**
+                                 * 开始处理新品上架的处理信息
+                                 */
+
+                                if (tag.equals(XmlTagValuesFactory.NewShop.ACTION_XML_START)) {
+                                    /*获取句柄*/
+                                    newShopValues = LocalShopModuleValuepage
+                                            .getNewShopValuesInstance();
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop.ACTION_XML_TITLE)) {
+                                    newShopValues.setTitle(pullParser.nextText());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_XML_TITLE_COLOR)) {
+                                    newShopValues.setTitle_color(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop.ACTION_XML_TEXT)) {
+                                    newShopValues.setText(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop.ACTION_XML_TEXT_COLOR)) {
+                                    newShopValues.setText_color(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop.ACTION_XML_STATUS)) {
+                                    if (pullParser.nextText().trim().equals("0")) {
+                                        newShopValues.setStatus(true);
+                                    } else {
+                                        newShopValues.setStatus(false);
+                                    }
+                                }
+
+
+                                /**
+                                 * 第一个Item的Values值
+                                 */
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_FIRST_SHOP_TITLE)) {
+                                    newShopValues.setFirst_new_shop_title(pullParser.nextText()
+                                            .trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_FIRST_SHOP_TITLE_COLOR)) {
+                                    newShopValues.setFirst_new_shop_title_color(pullParser
+                                            .nextText().trim());
+                                }
+
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_FIRST_SHOP_STATUS)) {
+                                    newShopValues.setFirst_new_shop_status(pullParser.nextText()
+                                            .trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_FIRST_SHOP_STATUS_BACKGROUND)) {
+                                    newShopValues.setFirst_new_shop_status_background(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_FIRST_SHOP_STATUS_COLOR)) {
+                                    newShopValues.setFirst_new_shop_title_color(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop.ACTION_FIRST_SHOP_IMG)) {
+                                    newShopValues.setFirst_new_shop_img(pullParser.nextText()
+                                            .trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop.ACTION_FIRST_SHOP_URL)) {
+                                    newShopValues.setFirst_new_shop_url(pullParser.nextText()
+                                            .trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_FIRST_SHOP_TEXT)) {
+                                    newShopValues.setFirst_new_shop_text(pullParser.nextText()
+                                            .trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_FIRST_SHOP_TEXT_COLOR)) {
+                                    newShopValues.setFirst_new_shop_text_color(pullParser
+                                            .nextText().trim());
+                                }
+
+                                /**
+                                 * 第二个Item的Valeus
+                                 */
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_SECOND_SHOP_TITLE)) {
+                                    newShopValues.setSecond_new_shop_title(pullParser.nextText()
+                                            .trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_SECOND_SHOP_TITLE_COLOR)) {
+                                    newShopValues.setSecond_new_shop_title_color(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_SECOND_SHOP_STATUS)) {
+                                    newShopValues.setSecond_new_shop_status(pullParser.nextText()
+                                            .trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_SECOND_SHOP_STATUS_COLOR)) {
+                                    newShopValues.setSecond_new_shop_status_color(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_SECOND_SHOP_STATUS_BACKGROUND)) {
+                                    newShopValues.setSecond_new_shop_status_background(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_SECOND_SHOP_TEXT)) {
+                                    newShopValues.setSecond_new_shop_text(pullParser.nextText()
+                                            .trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_SECOND_SHOP_TEXT_COLOR)) {
+                                    newShopValues.setSecond_new_shop_text_color(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_SECOND_SHOP_IMG)) {
+                                    newShopValues.setSecond_new_shop_img(pullParser.nextText()
+                                            .trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_SECOND_SHOP_URL)) {
+                                    newShopValues.setSecond_new_shop_url(pullParser.nextText()
+                                            .trim());
+                                }
+
+                                /**
+                                 * 设置第三个Item的Values
+                                 */
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_THREE_SHOP_TITLE)) {
+                                    newShopValues.setThree_new_shop_title(pullParser.nextText()
+                                            .trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_THREE_SHOP_TITLE_COLOR)) {
+                                    newShopValues.setThree_new_shop_title_color(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_THREE_SHOP_TEXT)) {
+                                    newShopValues.setThree_new_shop_text(pullParser.nextText()
+                                            .trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_THREE_SHOP_TEXT_COLOR)) {
+                                    newShopValues.setThree_new_shop_text_color(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_THREE_SHOP_STATUS)) {
+                                    newShopValues.setThree_new_shop_status(pullParser.nextText()
+                                            .trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_THREE_SHOP_STATUS_COLOR)) {
+                                    newShopValues.setThree_new_shop_status_color(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop
+                                        .ACTION_THREE_SHOP_STATUS_BACKGROUND)) {
+                                    newShopValues.setThree_new_shop_status_background(pullParser
+                                            .nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop.ACTION_THREE_SHOP_IMG)) {
+                                    newShopValues.setThree_new_shop_img(pullParser.nextText().trim());
+                                }
+                                if (tag.equals(XmlTagValuesFactory.NewShop.ACTION_THREE_SHOP_URL)) {
+                                    newShopValues.setThree_new_shop_url(pullParser.nextText().trim());
+                                }
                             } catch (Exception e) {
                                 Log.i(MSG, "处理界面的参数的错误");
                             }
@@ -814,17 +1015,16 @@ public class Mainfrg extends LazyCatFragment {
                                          * 允许可以显示的模块中
                                          */
                                         showModue--;
-                                        LinearLayout body = item.findViewById(R.id
-                                                .fragment_main_moduleBody);
                                         View merchaView = inflater.inflate(R.layout
                                                 .assembly_fragment_main_erpromotion, null);
-                                        body.addView(merchaView);
+                                        module_body.addView(merchaView);
                                         LocalMonitorHandler.HandlerBusiness handlerBusiness =
                                                 LocalMonitorHandler.getHandlerBusinessAdapter();
                                         Log.i(MSG, "标题为: " + businessPromotionValues.getTitle());
-                                        handlerBusiness.Instance(merchaView,
+                                        handlerBusiness.Instance(getActivity().getApplicationContext(),merchaView,
                                                 businessPromotionValues);/*设置基本参数*/
                                         handlerBusiness.Start();
+                                        merchaView.setTag(handlerBusiness);
                                     } else {
                                         /**
                                          * 已经显示完毕 就不要加载  放入LIST中 由ScrollView的监听调用
@@ -833,6 +1033,26 @@ public class Mainfrg extends LazyCatFragment {
                                 }
                             }
 
+
+                            /**
+                             * 新品上架
+                             */
+                            if (tag.equals(XmlTagValuesFactory.NewShop.ACTION_XML_START)) {
+                                /*判断是否可以显示*/
+                                if (newShopValues.getStatus()) {
+                                    Log.i(MSG, "新品上架的View可以被显示");
+                                    View newShopView = inflater.inflate(R.layout
+                                            .assembly_fragment_main_newshopin, null);
+                                    module_body.addView(newShopView);
+                                    LocalMonitorHandler.HandlerNewShop handlerNewShop =
+                                            LocalMonitorHandler.getHandlerNewShopAdapter();
+                                    handlerNewShop.Instance(getActivity().getApplicationContext(),newShopView, newShopValues);
+                                    handlerNewShop.Start();
+                                    newShopView.setTag(handlerNewShop);
+                                } else {
+                                    Log.i(MSG, "新品上架的View不可以被显示");
+                                }
+                            }
                             if (tag.equals(XmlTagValuesFactory.init_btns.ACTION_XML_START)) {
 
                                 /**
@@ -1047,24 +1267,6 @@ public class Mainfrg extends LazyCatFragment {
         LinearLayout _layout = item.findViewById(R.id.fragment_main_layoutmore);
         _RefreshScrollView.SetHeadView(_layout, 200, R.id.layoutmore_progressbar, R.id
                 .layoutmore_headimg);
-
-
-        /**
-         * 华丽分割线
-         * ========================================================
-         */
-
-        /*<新品上架促销>*/
-
-        LinearLayout newShopin = item.findViewById(R.id.fragment_main_newShopin);
-        View newShopinView = inflater.inflate(R.layout.assembly_fragment_main_newshopin, null);
-        newShopin.setBackground(Tools.CreateDrawable(1, "#ffffff", "#ffffff", 10));
-        newShopin.addView(newShopinView);
-        NewShopinMonitor newShopinMonitor = new NewShopinMonitor(newShopinView, getContext(),
-                Config.HTTP_ADDR.CONFIG_XML_SERVICE + "newshopin.xml");
-        newShopinMonitor.Start();
-
-        /*</新品上架促销>*/
 
 
         /**
