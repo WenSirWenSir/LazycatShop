@@ -140,6 +140,8 @@ public class Config {
 
         public static String SERVICE = "http://120.79.63.36";
         public final static String CONFIG_XML_SERVICE = SERVICE + "lazyShop/configXml/";
+        public final static String CONFIG_GET_SHOPVALUES_SERVICE = SERVICE + "/webdata/ShopOffice/getshop.php";
+        public final static String PHOTOS_ADDR = "http://120.79.63.36/zzbj/photos/SHOP_DATABASE/";
 
         public static void setAddr(String addr) {
             if (!TextUtils.isEmpty(addr)) {
@@ -161,7 +163,7 @@ public class Config {
             return HTTP_ADDR.SERVICE + "reg/register.php";
         }
 
-        public static String PHOTO_SERVICE_ADDR = "http://120.79.63.36/photo/";
+        public static String PHOTO_SERVICE_ADDR = "http://120.79.63.36/zzbj/photos/SHOP_DATABASE/";
 
         /**
          * 获取检查验证码的地址
@@ -232,17 +234,18 @@ public class Config {
     public static class SERVICE_API {
         public static String getInitMainXml() {
             if (!TextUtils.isEmpty(LocalValues.ADDR_SERVICE)) {
-                return "http://" + LocalValues.ADDR_SERVICE + "/webdata/ConfigXml/InitMainConfig.php";
+                return "http://" + LocalValues.ADDR_SERVICE + "/webdata/ConfigXml/InitMainConfig" +
+                        ".php";
             } else {
                 return "";
             }
         }
 
-        public static String getInitUserpageXml(){
-            if(!TextUtils.isEmpty(LocalValues.ADDR_SERVICE)){
-                return "http://" + LocalValues.ADDR_SERVICE+"/webdata/ConfigXml/InitUserpageConfig.php";
-            }
-            else{
+        public static String getInitUserpageXml() {
+            if (!TextUtils.isEmpty(LocalValues.ADDR_SERVICE)) {
+                return "http://" + LocalValues.ADDR_SERVICE +
+                        "/webdata/ConfigXml/InitUserpageConfig.php";
+            } else {
                 return "";
             }
         }
@@ -266,10 +269,11 @@ public class Config {
      * the values use to get the data for android window
      */
     public static class Windows {
-
-
         public static final int GET_WINDOW_HEIGHT = 1;
         public static final int GET_WINDOW_WIDHT = 2;
+
+        public static final String GET_WINDOW_VALUE_SHOP_MESSAGE = "title";
+        public static final String GET_WINDOW_VALUE_SHOP_ACTION = "action";
 
     }
 

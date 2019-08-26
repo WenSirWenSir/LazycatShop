@@ -169,7 +169,6 @@ public class Mainfrg extends LazyCatFragment {
                     init(item);
                     /*设置地址标题*/
                     TextView addr_title = SearchViewBody.findViewById(R.id.assembly_head_addrTitle);
-
                     String City = bdLocation.getCity();/*获取城市信息*/
                     String District = bdLocation.getDistrict();/*获取地区信息  用县区作为搜索条件*/
                     addr_title.setText(District + bdLocation.getStreet().trim());
@@ -208,15 +207,32 @@ public class Mainfrg extends LazyCatFragment {
      */
     @SuppressLint("NewApi")
     private void getServiceAddr(String Districe) {
+        locationClient.stop();/*禁止多次去访问地址*/
         Net.doGet(getContext(), Config.HTTP_ADDR.getIsServiceIn(), new Net
                 .onVisitInterServiceListener() {
             @Override
-            public void onSucess(String tOrgin) {
+            public WaitDialog.RefreshDialog onStartLoad() {/*初始化一个DIALOG*/
+                final WaitDialog.RefreshDialog refreshDialog = new WaitDialog.RefreshDialog(getActivity());
+                WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+                wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                wait_itme_dialogpage.setView(R.layout.item_wait);
+                wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+                refreshDialog.Init(wait_itme_dialogpage);
+                refreshDialog.showRefreshDialog("加载中...", false);
+                return refreshDialog;
+            }
+
+            @Override
+            public void onSucess(String tOrgin,final WaitDialog.RefreshDialog _RefreshDialog) {
                 if (!TextUtils.isEmpty(tOrgin)) {
                     /*调试输出*/
                     Log.i(MSG, "地区服务器地址:" + tOrgin.trim());
                     /*不是为空的话 就去访问网络*/
                     LocalValues.ADDR_SERVICE = tOrgin.trim();
+                    Toast.makeText(getContext(), "服务器地址:" + tOrgin.trim(), Toast.LENGTH_SHORT)
+                            .show();
+
+
                     InitMain();
                 } else {
                     /*没有地址  没有开放*/
@@ -252,7 +268,20 @@ public class Mainfrg extends LazyCatFragment {
             Net.doGet(getContext(), Config.SERVICE_API.getInitMainXml(), new Net
                     .onVisitInterServiceListener() {
                 @Override
-                public void onSucess(String tOrgin) {
+                public WaitDialog.RefreshDialog onStartLoad() {
+                    /*初始化一个DIALOG*/
+                    final WaitDialog.RefreshDialog refreshDialog = new WaitDialog.RefreshDialog(getActivity());
+                    WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+                    wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                    wait_itme_dialogpage.setView(R.layout.item_wait);
+                    wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+                    refreshDialog.Init(wait_itme_dialogpage);
+                    refreshDialog.showRefreshDialog("加载中...", false);
+                    return refreshDialog;
+                }
+
+                @Override
+                public void onSucess(String tOrgin,final WaitDialog.RefreshDialog _RefreshDialog) {
                     /*开始处理数据*/
                     Log.i(LOCAL_MSG, "首页初始化数据:" + tOrgin.trim());
                     XmlanalysisFactory xml = new XmlanalysisFactory(tOrgin.trim());
@@ -983,10 +1012,12 @@ public class Mainfrg extends LazyCatFragment {
                                             .nextText().trim());
                                 }
                                 if (tag.equals(XmlTagValuesFactory.NewShop.ACTION_THREE_SHOP_IMG)) {
-                                    newShopValues.setThree_new_shop_img(pullParser.nextText().trim());
+                                    newShopValues.setThree_new_shop_img(pullParser.nextText()
+                                            .trim());
                                 }
                                 if (tag.equals(XmlTagValuesFactory.NewShop.ACTION_THREE_SHOP_URL)) {
-                                    newShopValues.setThree_new_shop_url(pullParser.nextText().trim());
+                                    newShopValues.setThree_new_shop_url(pullParser.nextText()
+                                            .trim());
                                 }
                             } catch (Exception e) {
                                 Log.i(MSG, "处理界面的参数的错误");
@@ -1021,7 +1052,8 @@ public class Mainfrg extends LazyCatFragment {
                                         LocalMonitorHandler.HandlerBusiness handlerBusiness =
                                                 LocalMonitorHandler.getHandlerBusinessAdapter();
                                         Log.i(MSG, "标题为: " + businessPromotionValues.getTitle());
-                                        handlerBusiness.Instance(getActivity().getApplicationContext(),merchaView,
+                                        handlerBusiness.Instance(getActivity()
+                                                .getApplicationContext(), merchaView,
                                                 businessPromotionValues);/*设置基本参数*/
                                         handlerBusiness.Start();
                                         merchaView.setTag(handlerBusiness);
@@ -1046,7 +1078,8 @@ public class Mainfrg extends LazyCatFragment {
                                     module_body.addView(newShopView);
                                     LocalMonitorHandler.HandlerNewShop handlerNewShop =
                                             LocalMonitorHandler.getHandlerNewShopAdapter();
-                                    handlerNewShop.Instance(getActivity().getApplicationContext(),newShopView, newShopValues);
+                                    handlerNewShop.Instance(getActivity().getApplicationContext()
+                                            , newShopView, newShopValues);
                                     handlerNewShop.Start();
                                     newShopView.setTag(handlerNewShop);
                                 } else {
@@ -1098,7 +1131,20 @@ public class Mainfrg extends LazyCatFragment {
         Net.doGet(getContext(), Config.HTTP_ADDR.getInitMainXmlConfig(), new Net
                 .onVisitInterServiceListener() {
             @Override
-            public void onSucess(String tOrgin) {
+            public WaitDialog.RefreshDialog onStartLoad() {
+                /*初始化一个DIALOG*/
+                final WaitDialog.RefreshDialog refreshDialog = new WaitDialog.RefreshDialog(getActivity());
+                WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+                wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                wait_itme_dialogpage.setView(R.layout.item_wait);
+                wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+                refreshDialog.Init(wait_itme_dialogpage);
+                refreshDialog.showRefreshDialog("加载中...", false);
+                return refreshDialog;
+            }
+
+            @Override
+            public void onSucess(String tOrgin,final WaitDialog.RefreshDialog _RefreshDialog) {
                 Log.i(MSG, "调试输出:" + tOrgin);
                 XmlanalysisFactory xmlTools = new XmlanalysisFactory(tOrgin);
                 xmlTools.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
@@ -1229,8 +1275,22 @@ public class Mainfrg extends LazyCatFragment {
         body.setVisibility(View.VISIBLE);
         Net.doGet(getContext(), Config.HTTP_ADDR.getInitMainXmlConfig(), new Net
                 .onVisitInterServiceListener() {
+
             @Override
-            public void onSucess(String tOrgin) {
+            public WaitDialog.RefreshDialog onStartLoad() {
+                /*初始化一个DIALOG*/
+                final WaitDialog.RefreshDialog refreshDialog = new WaitDialog.RefreshDialog(getActivity());
+                WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+                wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                wait_itme_dialogpage.setView(R.layout.item_wait);
+                wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+                refreshDialog.Init(wait_itme_dialogpage);
+                refreshDialog.showRefreshDialog("加载中...", false);
+                return refreshDialog;
+            }
+
+            @Override
+            public void onSucess(String tOrgin,WaitDialog.RefreshDialog _RefreshDialog) {
                 Log.i(MSG, "获取到的数据信息为:" + tOrgin.toString());
                 HandlerXml(tOrgin, item);
             }

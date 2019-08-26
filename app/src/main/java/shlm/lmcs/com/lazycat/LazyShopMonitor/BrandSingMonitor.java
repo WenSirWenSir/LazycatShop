@@ -20,7 +20,6 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.ThreadFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlanalysisFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.R;
 
@@ -169,7 +168,7 @@ public class BrandSingMonitor extends Monitor {
 
             }
         }
-        Net.doGet(mContext, "http://120.79.63.36/lazyShop/config/main_brand_promotion.xml", new
+       /* Net.doGet(mContext, "http://120.79.63.36/lazyShop/config/main_brand_promotion.xml", new
                 Net.onVisitInterServiceListener() {
             @Override
             public void onSucess(String tOrgin) {
@@ -188,7 +187,7 @@ public class BrandSingMonitor extends Monitor {
                 programInterface.onFaile("", 0);
 
             }
-        });
+        });*/
 
     }
 

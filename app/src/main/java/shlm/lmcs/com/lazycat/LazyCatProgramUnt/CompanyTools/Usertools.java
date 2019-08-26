@@ -3,7 +3,6 @@ package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.InputStream;
@@ -14,6 +13,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.USER_KEY_PAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XMLUserAddr;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XML_PAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
@@ -29,8 +29,13 @@ public class Usertools {
         String token = Tools.gettoKen(mContext, USER_KEY_PAGE.KEY_TOKEN);
         String phone = Tools.gettoKen(mContext, USER_KEY_PAGE.KEY_USERPHONE);
         Net.doGet(mContext, Config.HTTP_ADDR.getUser_init(), new Net.onVisitInterServiceListener() {
-            @Override
-            public void onSucess(String tOrgin) {
+                    @Override
+                    public WaitDialog.RefreshDialog onStartLoad() {
+                        return null;
+                    }
+
+                    @Override
+            public void onSucess(String tOrgin,final WaitDialog.RefreshDialog _RefreshDialog) {
                 if (programInterface != null) {
                     programInterface.onSucess(tOrgin, 0);
                 }
@@ -173,7 +178,7 @@ public class Usertools {
                 .addGrandsonNode(Config.HttpMethodUserAction.KEY_ADDR_USER_YEAR, year);
         ArrayList<XML_PAGE> list = new ArrayList<XML_PAGE>();
         list.add(xml_page);
-        Net.doPostXml(mContext, xmlBuilder.getXmlString(list), Config.HTTP_ADDR.getUser_init(),
+       /* Net.doPostXml(mContext, xmlBuilder.getXmlString(list), Config.HTTP_ADDR.getUser_init(),
                 new ProgramInterface() {
             @SuppressLint("LongLogTag")
             @Override
@@ -197,7 +202,7 @@ public class Usertools {
                 }
 
             }
-        });
+        });*/
 
 
     }

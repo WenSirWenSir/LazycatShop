@@ -14,8 +14,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.FragmentLR;
+import shlm.lmcs.com.lazycat.LazyShopFrg.Classifyfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Deliveryfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Mainfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.UserCenterfrg;
@@ -23,8 +26,9 @@ import shlm.lmcs.com.lazycat.R;
 
 public class MainAct extends LazyCatAct {
     private FragmentTransaction ft;
-    private RelativeLayout btn_main, btn_delivery, btn_usercenter;
+    private RelativeLayout btn_main, btn_delivery, btn_usercenter, btn_classify;
     private Mainfrg mainfrg;
+    private Classifyfrg classifyfrg;
     private Deliveryfrg deliveryfrg;
     private UserCenterfrg usercneterfrg;
     private FragmentLR frameLayout;
@@ -35,6 +39,7 @@ public class MainAct extends LazyCatAct {
     private final static int ICO_FRAGMENT_MAIN = 0;
     private final static int ICO_FRAGMENT_DELIVERY = 1;
     private final static int ICO_FRAGMENT_USERCENTER = 2;
+    private final static int ICO_FRAGMENT_CLASSIFY = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +65,14 @@ public class MainAct extends LazyCatAct {
         //找寻对于的ID号码
         btn_main = findViewById(R.id.activity_main_btn_IcoMain);//主界面
         btn_delivery = findViewById(R.id.activity_main_btn_IcoDelivery);//配送界面
+        btn_classify = findViewById(R.id.activity_main_btn_IcoClassify);//分类界面
         btn_usercenter = findViewById(R.id.activity_main_btn_IcoUserCenter);//个人中心
         /**
          * 设置初始化的界面
          */
         ImageView InitImg = (ImageView) btn_main.getChildAt(0);
-        InitImg.setImageDrawable(Tools.setSvgColor(getApplicationContext(),R.drawable.main,"#f30d66"));
+        InitImg.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.main,
+                "#f30d66"));
         TextView InitTitle = (TextView) btn_main.getChildAt(1);
         InitTitle.setTextColor(Color.parseColor("#f30d66"));
         btn_main.setOnClickListener(new View.OnClickListener() {
@@ -100,10 +107,16 @@ public class MainAct extends LazyCatAct {
                 user_title.setTextColor(Color.parseColor("#a9a9a9"));
                 user.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.user,
                         "#a9a9a9"));
-
-
+                LazyCatStartActivityWithBundler(ShowshopOffice.class, false, Config.Windows
+                        .GET_WINDOW_VALUE_SHOP_MESSAGE, "海天味极鲜", Config.Windows
+                        .GET_WINDOW_VALUE_SHOP_ACTION, "2");
+                TextView classify_title = (TextView) btn_classify.getChildAt(1);
+                TextUnt.with(classify_title).setTextColor("#a9a9a9");
+                ImageView classify_img = (ImageView) btn_classify.getChildAt(0);
+                classify_img.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R
+                        .drawable.ico_type, "#a9a9a9"));
                 //LazyCatActStartActivity(ShowshopOffice.class, false);
-                LazyCatActStartActivity(UploadApp.class, false);
+                //LazyCatActStartActivity(UploadApp.class, false);
 
             }
         });
@@ -136,8 +149,55 @@ public class MainAct extends LazyCatAct {
                 ImageView user = (ImageView) btn_usercenter.getChildAt(0);
                 user.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.user,
                         "#a9a9a9"));
-                TextView user_title = (TextView) btn_main.getChildAt(1);
+                TextView user_title = (TextView) btn_usercenter.getChildAt(1);
                 user_title.setTextColor(Color.parseColor("#a9a9a9"));
+
+                TextView classify_title = (TextView) btn_classify.getChildAt(1);
+                TextUnt.with(classify_title).setTextColor("#a9a9a9");
+                ImageView classify_img = (ImageView) btn_classify.getChildAt(0);
+                classify_img.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R
+                        .drawable.ico_type, "#a9a9a9"));
+            }
+        });
+        btn_classify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClearallIcoBackground();
+                hideFragment();
+                showFragment(ICO_FRAGMENT_CLASSIFY);
+                final RelativeLayout rl = (RelativeLayout) v;
+                rl.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Animator an = Tools.createRoundAnimation(rl, 600);
+                        an.start();
+                    }
+                });
+                ImageView img = (ImageView) rl.getChildAt(0);
+                img.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable
+                        .ico_type, "#f30d66"));
+                /*隐藏其它的界面*/
+                TextView title = (TextView) rl.getChildAt(1);
+                title.setTextColor(Color.parseColor("#f30d66"));
+                /**
+                 * 处理其他的导航键
+                 */
+                ImageView main = (ImageView) btn_main.getChildAt(0);
+                main.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.main,
+                        "#a9a9a9"));
+                TextView main_title = (TextView) btn_main.getChildAt(1);
+                main_title.setTextColor(Color.parseColor("#a9a9a9"));
+                ImageView user = (ImageView) btn_usercenter.getChildAt(0);
+                user.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.user,
+                        "#a9a9a9"));
+                TextView user_title = (TextView) btn_usercenter.getChildAt(1);
+                user_title.setTextColor(Color.parseColor("#a9a9a9"));
+                TextView delivery_title = (TextView) btn_delivery.getChildAt(1);
+                TextUnt.with(delivery_title).setTextColor("#a9a9a9");
+                ImageView delivery_img = (ImageView) btn_delivery.getChildAt(0);
+                delivery_img.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R
+                        .drawable.cart, "#a9a9a9"));
+
             }
         });
         btn_usercenter.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +231,11 @@ public class MainAct extends LazyCatAct {
                 TextView cart_title = (TextView) btn_delivery.getChildAt(1);
                 cart_title.setTextColor(Color.parseColor("#a9a9a9"));
                 LazyCatActStartActivity(LoginAct.class, false);
+                TextView classify_title = (TextView) btn_classify.getChildAt(1);
+                TextUnt.with(classify_title).setTextColor("#a9a9a9");
+                ImageView classify_img = (ImageView) btn_classify.getChildAt(0);
+                classify_img.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R
+                        .drawable.ico_type, "#a9a9a9"));
             }
         });
     }
@@ -235,6 +300,14 @@ public class MainAct extends LazyCatAct {
                 } else {
                     deliveryfrg = new Deliveryfrg();
                     ft.add(R.id.activity_main_Framelayout, deliveryfrg);
+                }
+                break;
+            case ICO_FRAGMENT_CLASSIFY:
+                if (classifyfrg != null) {
+                    ft.show(classifyfrg);
+                } else {
+                    classifyfrg = new Classifyfrg();
+                    ft.add(R.id.activity_main_Framelayout, classifyfrg);
                 }
                 break;
             case ICO_FRAGMENT_USERCENTER:

@@ -20,6 +20,7 @@ import java.util.Map;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.LOAD_IMAGEPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.ImageCache;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 
 /**
@@ -30,6 +31,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
  */
 @SuppressLint("LongLogTag")
 public class Net {
+    private String MSG = "Net.java[+]";
     private String tUrl = "";
     private StringBuffer mKvsBuffer = new StringBuffer();
     private Net.onVisitInterServiceListener mOnVisitInterServiceListener;
@@ -43,8 +45,8 @@ public class Net {
      * @param mOnVisitInterServiceListener 监听回调
      * @param kvs                          参数对,没有就直接用NULL
      */
-    public static void doGet(Context context, String tUrl, final Net.onVisitInterServiceListener
-            mOnVisitInterServiceListener, String... kvs) {
+    public static void doGet(final Context context, String tUrl, final Net
+            .onVisitInterServiceListener mOnVisitInterServiceListener, String... kvs) {
         if (!Tools.isIntentConnect(context)) {
             //网络无连接 就不做什么操作了
             if (mOnVisitInterServiceListener != null) {
@@ -52,6 +54,9 @@ public class Net {
             }
             return;
         } else {
+            final WaitDialog.RefreshDialog refreshDialog = mOnVisitInterServiceListener
+                    .onStartLoad();
+
             final StringBuffer kvsBuffer = new StringBuffer();
             if (kvs != null && kvs.length > 1) {
                 try {
@@ -101,7 +106,7 @@ public class Net {
                 protected void onPostExecute(String s) {
                     if (s != null) {
                         if (mOnVisitInterServiceListener != null) {
-                            mOnVisitInterServiceListener.onSucess(s);
+                            mOnVisitInterServiceListener.onSucess(s, refreshDialog);
                         }
                     } else {
                         if (mOnVisitInterServiceListener != null) {
@@ -115,8 +120,9 @@ public class Net {
     }
 
     public interface onVisitInterServiceListener {
+        WaitDialog.RefreshDialog onStartLoad();/*开始数据访问 并且添加一个等候的DIALOG*/
 
-        void onSucess(String tOrgin);//成功的监听
+        void onSucess(String tOrgin, final WaitDialog.RefreshDialog _rfreshdialog);//成功的监听
 
         void onNotConnect();//网络断开连接
 
@@ -225,23 +231,35 @@ public class Net {
         }
     }
 
-    public static void doPostXml(final Context mContext, final StringBuilder xml, String url,
-                                 final ProgramInterface programInterface) {
+
+    /**
+     * 用POST方式提交XML数据信息
+     *
+     * @param mContext         上下文
+     * @param url              地址
+     * @param programInterface 接口信息
+     * @param xmldata          xml数据
+     */
+    public static void doPostXml(final Context mContext, String url, final ProgramInterface
+            programInterface, final String... xmldata) {
         new AsyncTask<String, Void, String>() {
             @Override
             protected String doInBackground(String... _url) {
                 String _data = null;
                 //构建xml数据信息
-                //StringBuilder xml = new StringBuilder();
-                //xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
-                //xml.append("<body>");
-                //xml.append("<addr_name>翁启鑫</addr_name>");
-                //xml.append("</body>");
+                StringBuilder xml = new StringBuilder();
+                xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
+                xml.append("<body>");
+                Log.i("doPostXml.java[+]", "xml字节对的个数为:" + xml.length());
+                /*处理字符对  用来上传比较长的一些不适合Get包提交的数据信息*/
+                for (int i = 0; i < xmldata.length; i += 2) {
+                    xml.append("<" + xmldata[i] + ">" + xmldata[i + 1] + "</" + xmldata[i] + ">");
+                }
+                xml.append("</body>");
+                Log.i("doPostXml.java[+]", "xml提交数据为:" + xml.toString());
                 try {
                     byte[] xmlbyte = xml.toString().getBytes("UTF-8");
-                    Log.i(Config.DEBUG, "提交XML数据信息" + xml);
                     URL url = new URL(_url[0]);//地址
-                    Log.i(Config.DEBUG, "请求地址:" + url.toString());
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setConnectTimeout(5000);
                     conn.setDoOutput(true);

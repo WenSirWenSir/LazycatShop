@@ -12,7 +12,17 @@ public class XmlTagValuesFactory {
     static String MSG = "XmlTagValuesFactory.java[+]";
     static Init_filletValues init_filletValues = new Init_filletValues();/*圆角矩形和*/
     static Init_btnValues init_btnValues = new Init_btnValues();/*首页的按钮参数信息*/
+    static Shopvalues shopvalues = new Shopvalues();/*商品参数信息*/
 
+
+    /**
+     * 获取商品参数的表格
+     *
+     * @return
+     */
+    public static Shopvalues getShopvaluesInstance() {
+        return shopvalues;
+    }
 
     /**
      * 获取拱形和圆角矩形的参数
@@ -245,8 +255,9 @@ public class XmlTagValuesFactory {
         public static String ACTION_FIRST_SHOP_TEXT_COLOR = "first_new_shop_text_color";
         public static String ACTION_FIRST_SHOP_STATUS = "first_new_shop_status";
         public static String ACTION_FIRST_SHOP_STATUS_COLOR = "first_new_shop_status_color";
-        public static String ACTION_FIRST_SHOP_STATUS_BACKGROUND = "first_new_shop_status_background";
-        public static String ACTION_FIRST_SHOP_IMG  ="first_new_shop_img";
+        public static String ACTION_FIRST_SHOP_STATUS_BACKGROUND =
+                "first_new_shop_status_background";
+        public static String ACTION_FIRST_SHOP_IMG = "first_new_shop_img";
         public static String ACTION_FIRST_SHOP_URL = "first_new_shop_url";
 
         /**
@@ -260,7 +271,8 @@ public class XmlTagValuesFactory {
         public static String ACTION_SECOND_SHOP_TEXT_COLOR = "second_new_shop_text_color";
         public static String ACTION_SECOND_SHOP_STATUS = "second_new_shop_status";
         public static String ACTION_SECOND_SHOP_STATUS_COLOR = "second_new_shop_status_color";
-        public static String ACTION_SECOND_SHOP_STATUS_BACKGROUND = "second_new_shop_status_background";
+        public static String ACTION_SECOND_SHOP_STATUS_BACKGROUND =
+                "second_new_shop_status_background";
         public static String ACTION_SECOND_SHOP_IMG = "second_new_shop_img";
         public static String ACTION_SECOND_SHOP_URL = "second_new_shop_url";
         /**
@@ -273,7 +285,8 @@ public class XmlTagValuesFactory {
         public static String ACTION_THREE_SHOP_TEXT_COLOR = "three_new_shop_text_color";
         public static String ACTION_THREE_SHOP_STATUS = "three_new_shop_status";
         public static String ACTION_THREE_SHOP_STATUS_COLOR = "three_new_shop_status_color";
-        public static String ACTION_THREE_SHOP_STATUS_BACKGROUND = "three_new_shop_status_background";
+        public static String ACTION_THREE_SHOP_STATUS_BACKGROUND =
+                "three_new_shop_status_background";
         public static String ACTION_THREE_SHOP_IMG = "three_new_shop_img";
         public static String ACTION_THREE_SHOP_URL = "three_new_shop_url";
     }
@@ -441,6 +454,196 @@ public class XmlTagValuesFactory {
         }
 
 
+    }
+
+
+    /**
+     * 商品值的ACTION
+     */
+
+    public static class ACTION_SHOPVALUES {
+        public static String ACTION_SHOPVALUES_START = "shop_page";
+        public static String ACTION_SHOPVALUES_TITLE = "shoptitle";
+        public static String ACTION_SHOPVALUES_BARCODE = "barcode";
+        public static String ACTION_SHOPVALUES_SPEC = "spec";
+        public static String ACTION_SHOPVALUES_WEIGHT = "weight";
+        public static String ACTION_SHOPVALUES_COMPANY = "company";
+        public static String ACTION_SHOPVALUES_GRADE = "grade";
+        public static String ACTION_SHOPVALUES_ASCRIPTION = "ascription";
+        public static String ACTION_SHOPVALUES_PD = "pd";
+        public static String ACTION_SHOPVALUES_EXP = "exp";
+        public static String ACTION_SHOPVALUES_INFROM = "infrom";
+        public static String ACTION_SHOPVALUES_ONLYID = "onlyid";
+        public static String ACTION_SHOPVALUES_PRICE = "price";
+        public static String ACTION_SHOPVALUES_STATIC = "static";
+        public static String ACTION_SHOPVALUES_SU = "su";
+        public static String ACTION_SHOPVALUES_TP = "tp";
+        public static String ACTION_SHOPVALUES_BRAND = "brand";
+        public static String ACTION_SHOPVALUES_DLP = "dlp";
+    }
+
+    /**
+     * 商品值列表
+     */
+
+
+    public static class Shopvalues {
+        /**
+         * 所有的参数信息
+         */
+        String title;/*标题*/
+        String barcode;/*条码*/
+        String spec;/*规格*/
+        String weight;/*净重*/
+        String company;/*单位*/
+        String grade;/*等级*/
+        String ascription;/*归属*/
+        String pd;/*生产日期*/
+        String exp;/*保质期*/
+        String infrom;/*原场地*/
+        String onlyid;/*唯一表示符号*/
+        String price;/*零售价*/
+        String _static;/*状态*/
+        String su;/*起订*/
+        String tp;/*批发价格*/
+        String brand;/*品牌*/
+        String dlp;/*虚线的价格*/
+
+        public String getDlp() {
+            return dlp;
+        }
+
+        public void setDlp(String dlp) {
+            this.dlp = dlp;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getBarcode() {
+            return barcode;
+        }
+
+        public void setBarcode(String barcode) {
+            this.barcode = barcode;
+        }
+
+        public String getSpec() {
+            return spec;
+        }
+
+        public void setSpec(String spec) {
+            this.spec = spec;
+        }
+
+        public String getWeight() {
+            return weight;
+        }
+
+        public void setWeight(String weight) {
+            this.weight = weight;
+        }
+
+        public String getCompany() {
+            return company;
+        }
+
+        public void setCompany(String company) {
+            this.company = company;
+        }
+
+        public String getGrade() {
+            return grade;
+        }
+
+        public void setGrade(String grade) {
+            this.grade = grade;
+        }
+
+        public String getAscription() {
+            return ascription;
+        }
+
+        public void setAscription(String ascription) {
+            this.ascription = ascription;
+        }
+
+        public String getPd() {
+            return pd;
+        }
+
+        public void setPd(String pd) {
+            this.pd = pd;
+        }
+
+        public String getExp() {
+            return exp;
+        }
+
+        public void setExp(String exp) {
+            this.exp = exp;
+        }
+
+        public String getInfrom() {
+            return infrom;
+        }
+
+        public void setInfrom(String infrom) {
+            this.infrom = infrom;
+        }
+
+        public String getOnlyid() {
+            return onlyid;
+        }
+
+        public void setOnlyid(String onlyid) {
+            this.onlyid = onlyid;
+        }
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
+        public String get_static() {
+            return _static;
+        }
+
+        public void set_static(String _static) {
+            this._static = _static;
+        }
+
+        public String getSu() {
+            return su;
+        }
+
+        public void setSu(String su) {
+            this.su = su;
+        }
+
+        public String getTp() {
+            return tp;
+        }
+
+        public void setTp(String tp) {
+            this.tp = tp;
+        }
+
+        public String getBrand() {
+            return brand;
+        }
+
+        public void setBrand(String brand) {
+            this.brand = brand;
+        }
     }
 
     /**

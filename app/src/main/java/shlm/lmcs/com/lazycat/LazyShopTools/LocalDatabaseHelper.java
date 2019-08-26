@@ -1,0 +1,1 @@
+package shlm.lmcs.com.lazycat.LazyShopTools;/** * 数据库管理对象集合 */public class LocalDatabaseHelper {}

@@ -16,7 +16,6 @@ import java.util.List;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlanalysisFactory;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalNewshopIn;
 import shlm.lmcs.com.lazycat.R;
 
@@ -60,22 +59,6 @@ public class NewShopinMonitor extends Monitor {
         } else {
             if (!TextUtils.isEmpty(this._url)) {
                 /*准许加载*/
-                Net.doGet(mContext, this._url, new Net.onVisitInterServiceListener() {
-                    @Override
-                    public void onSucess(String tOrgin) {
-                        onXml(tOrgin);
-                    }
-
-                    @Override
-                    public void onNotConnect() {
-
-                    }
-
-                    @Override
-                    public void onFail(String tOrgin) {
-
-                    }
-                });
 
             }
 

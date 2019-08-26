@@ -64,6 +64,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WEB_VALUES_ACT;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WINDOW_PAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XMLUserAddr;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.FastBlur;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 
 
@@ -252,7 +253,12 @@ public class Tools {
         Net.doGet(tContext, Config.HTTP_ADDR.SendVerificationCodeAddr(), new Net
                 .onVisitInterServiceListener() {
             @Override
-            public void onSucess(String tOrgin) {
+            public WaitDialog.RefreshDialog onStartLoad() {
+                return null;
+            }
+
+            @Override
+            public void onSucess(String tOrgin,final WaitDialog.RefreshDialog _RefreshDialog) {
                 JsonEndata jsonEndata = new JsonEndata(tOrgin);
                 if (jsonEndata.getJsonKeyValue(Config.HttpMethodUserAction.KEY_STATUS).equals
                         (Config.HttpMethodUserAction.STATUS_SENDOK)) {
@@ -438,7 +444,13 @@ public class Tools {
         Net.doGet(tContext, Config.HTTP_ADDR.CheckVerificationAddr(), new Net
                 .onVisitInterServiceListener() {
             @Override
-            public void onSucess(String tOrgin) {
+            public WaitDialog.RefreshDialog onStartLoad() {
+                return null;
+
+            }
+
+            @Override
+            public void onSucess(String tOrgin,final WaitDialog.RefreshDialog _RefreshDialog) {
                 if (programInterface != null) {
                     programInterface.onSucess(tOrgin, 0);
 
@@ -971,12 +983,12 @@ public class Tools {
 
     }
 
-
     /**
      * 设置一个SVG的颜色
+     *
      * @param _context
-     * @param _id 设置的图片ID
-     * @param _color 设置颜色
+     * @param _id      设置的图片ID
+     * @param _color   设置颜色
      */
     public static VectorDrawableCompat setSvgColor(Context _context, int _id, String _color) {
         VectorDrawableCompat data = VectorDrawableCompat.create(_context.getResources(), _id,
@@ -984,4 +996,5 @@ public class Tools {
         data.setTint(Color.parseColor(_color.trim()));
         return data;
     }
+
 }
