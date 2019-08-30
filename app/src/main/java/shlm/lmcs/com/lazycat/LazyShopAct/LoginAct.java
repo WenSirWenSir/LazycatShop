@@ -24,7 +24,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.JsonEndata;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
+import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
+import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
 
 @SuppressLint("NewApi")
@@ -125,15 +132,62 @@ public class LoginAct extends LazyCatAct {
             public void afterTextChanged(Editable s) {
                 phone = s.toString().trim();/*手机号码*/
                 if (s.length() == 11) {
-                    String showPhoneStart = phone.substring(0, phone.length() - 8);
-                    String showPhoneEnd = phone.substring(phone.length() - 4, phone.length());
-                    showPhone.setText(showPhoneStart + " **** " + showPhoneEnd);
-                    Tools.clearFocusable(inputPhone);
-                    Tools.hideKeyboard(inputPhone);
-                    inputCodeBack.setVisibility(View.VISIBLE);
-                    /*开始显示输入验证码的界面*/
-                    inputCodeBody.setVisibility(View.VISIBLE);
-                    inputCodeBody.setAnimation(Tools.createOnalpha(1000, true));
+                    /*开始发送验证码*/
+                    Net.doGet(getApplicationContext(), Config.HTTP_ADDR
+                            .CONFIG_CALL_SENDSMS_SERVICE, new Net.onVisitInterServiceListener() {
+                        @Override
+                        public WaitDialog.RefreshDialog onStartLoad() {
+                            /*初始化一个DIALOG*/
+                            final WaitDialog.RefreshDialog refreshDialog = new WaitDialog
+                                    .RefreshDialog(LoginAct.this);
+                            WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+                            wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                            wait_itme_dialogpage.setView(R.layout.item_wait);
+                            wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+                            refreshDialog.Init(wait_itme_dialogpage);
+                            refreshDialog.showRefreshDialog("发送验证码中...", false);
+                            return refreshDialog;
+                        }
+
+                        @Override
+                        public void onSucess(String tOrgin, WaitDialog.RefreshDialog
+                                _rfreshdialog) {
+                            Log.i(MSG, "发送短信获取的数据:" + tOrgin.trim());
+                            JsonEndata jsonEndata = new JsonEndata(tOrgin.trim());
+                            jsonEndata.getJsonKeyValue("return_code");
+                            if (jsonEndata.getJsonKeyValue("return_code").equals("00000")) {
+                                /*发送验证码成功*/
+                                _rfreshdialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "验证码发送成功", Toast
+                                        .LENGTH_SHORT).show();
+                                String showPhoneStart = phone.substring(0, phone.length() - 8);
+                                String showPhoneEnd = phone.substring(phone.length() - 4, phone
+                                        .length());
+                                showPhone.setText(showPhoneStart + " **** " + showPhoneEnd);
+                                Tools.clearFocusable(inputPhone);
+                                Tools.hideKeyboard(inputPhone);
+                                inputCodeBack.setVisibility(View.VISIBLE);
+                                /*开始显示输入验证码的界面*/
+                                inputCodeBody.setVisibility(View.VISIBLE);
+                                inputCodeBody.setAnimation(Tools.createOnalpha(1000, true));
+                            } else {
+                                Toast.makeText(getApplicationContext(), "验证码发送异常,请稍后再试", Toast
+                                        .LENGTH_SHORT).show();
+                                _rfreshdialog.dismiss();
+                            }
+                        }
+
+                        @Override
+                        public void onNotConnect() {
+
+                        }
+
+                        @Override
+                        public void onFail(String tOrgin) {
+
+                        }
+                    }, LocalAction.ACTION_SMS.ACTION_PHONE, phone);
+
                 }
             }
         });
@@ -364,6 +418,11 @@ public class LoginAct extends LazyCatAct {
                         aii.start();
                     }
                 });
+                /*判断是不是第一次输入*/
+                if (btnSendCode.getText().length() < 6) {
+                    btnSendCode.setText(btnSendCode.getText().toString() + tv.getText().toString());
+                }
+                Log.i(MSG, "" + tv.getText().toString());
                 Log.i(MSG, "" + tv.getText().toString());
 
             }
@@ -411,6 +470,62 @@ public class LoginAct extends LazyCatAct {
                     Toast.makeText(getApplicationContext(), "验证码长度不同,或者你并没有输入验证码", Toast
                             .LENGTH_SHORT).show();
                 } else {
+                    /*开始验证输入的验证码*/
+                    Net.doGet(getApplicationContext(), Config.HTTP_ADDR
+                            .CONFIG_LOGIN_CHECK_SERVICE, new Net.onVisitInterServiceListener() {
+                        @Override
+                        public WaitDialog.RefreshDialog onStartLoad() {
+                            /*初始化一个DIALOG*/
+                            final WaitDialog.RefreshDialog refreshDialog = new WaitDialog
+                                    .RefreshDialog(LoginAct.this);
+                            WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+                            wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                            wait_itme_dialogpage.setView(R.layout.item_wait);
+                            wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+                            refreshDialog.Init(wait_itme_dialogpage);
+                            refreshDialog.showRefreshDialog("正在检查验证码...", false);
+                            return refreshDialog;
+                        }
+
+                        @Override
+                        public void onSucess(String tOrgin, WaitDialog.RefreshDialog
+                                _rfreshdialog) {
+                            Log.i(MSG, "检查验证码返回数据:" + tOrgin.trim());
+                            JsonEndata jsonEndata = new JsonEndata(tOrgin);
+                            if (jsonEndata.getJsonKeyValue(LocalAction.ACTION_LOGIN
+                                    .ACTION_STATIC).equals(LocalValues.VALUES_LOGIN.LOGIN_OK)) {
+                                /*登录成功*/
+                                _rfreshdialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "登录成功,欢迎使用", Toast
+                                        .LENGTH_SHORT).show();
+
+                                /*开始保存token*/
+                                Tools.saveToken(getApplicationContext(), LocalAction
+                                        .ACTION_LOCALUSERPAGE.ACTION_USER, phone, LocalAction
+                                        .ACTION_LOCALUSERPAGE.ACTION_TOKEN, jsonEndata
+                                        .getJsonKeyValue(LocalAction.ACTION_LOGIN.ACTION_TOKEN),
+                                        LocalAction.ACTION_USER.ACTION_BUSINESS, jsonEndata
+                                                .getJsonKeyValue(LocalAction.ACTION_USER
+                                                        .ACTION_BUSINESS));
+                            } else {
+                                /*登录失败*/
+                                _rfreshdialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "登录失败,请检查验证码", Toast
+                                        .LENGTH_SHORT).show();
+
+                            }
+                        }
+
+                        @Override
+                        public void onNotConnect() {
+
+                        }
+
+                        @Override
+                        public void onFail(String tOrgin) {
+                        }
+                    }, LocalAction.ACTION_LOGIN.ACTION_PHONE, phone, LocalAction.ACTION_LOGIN
+                            .ACTION_CODE, btnSendCode.getText().toString().trim());
 
                 }
             }

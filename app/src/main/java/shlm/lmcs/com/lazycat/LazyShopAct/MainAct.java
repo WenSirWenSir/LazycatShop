@@ -12,16 +12,23 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.JsonEndata;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.FragmentLR;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Classifyfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Deliveryfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Mainfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.UserCenterfrg;
+import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
+import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
 
 public class MainAct extends LazyCatAct {
@@ -127,6 +134,7 @@ public class MainAct extends LazyCatAct {
                 ClearallIcoBackground();
                 hideFragment();
                 showFragment(ICO_FRAGMENT_DELIVERY);
+                setStatusBar("#f30d88");
                 final RelativeLayout rl = (RelativeLayout) v;
                 rl.post(new Runnable() {
                     @Override
@@ -207,7 +215,7 @@ public class MainAct extends LazyCatAct {
                 final RelativeLayout rl = (RelativeLayout) v;
                 hideFragment();
                 showFragment(ICO_FRAGMENT_USERCENTER);
-                setStatusBar("#f30d88");
+                setStatusBar("#00b3a6");
                 rl.post(new Runnable() {
                     @Override
                     public void run() {
@@ -230,7 +238,65 @@ public class MainAct extends LazyCatAct {
                         "#a9a9a9"));
                 TextView cart_title = (TextView) btn_delivery.getChildAt(1);
                 cart_title.setTextColor(Color.parseColor("#a9a9a9"));
-                LazyCatActStartActivity(LoginAct.class, false);
+
+                if (Tools.gettoKen(getApplicationContext(), LocalAction.ACTION_LOCALUSERPAGE
+                        .ACTION_TOKEN).equals("")) {
+                    LazyCatActStartActivity(LoginAct.class, false);
+                } else {
+
+                    /*开始登录检查*/
+
+                    Net.doGet(getApplicationContext(), Config.HTTP_ADDR
+                            .CONFIG_LOGIN_CHECKTOKEN_SERVICE, new Net.onVisitInterServiceListener
+                            () {
+                        @Override
+                        public WaitDialog.RefreshDialog onStartLoad() {
+                            final WaitDialog.RefreshDialog refreshDialog = new WaitDialog
+                                    .RefreshDialog(MainAct.this);
+                            WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+                            wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                            wait_itme_dialogpage.setView(R.layout.item_wait);
+                            wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+                            refreshDialog.Init(wait_itme_dialogpage);
+                            refreshDialog.showRefreshDialog("请稍后...", false);
+                            return refreshDialog;
+                        }
+
+                        @Override
+                        public void onSucess(String tOrgin, WaitDialog.RefreshDialog
+                                _rfreshdialog) {
+                            Log.i(MSG, "检查TOKEN返回数据:" + tOrgin.trim());
+                            JsonEndata jsonEndata = new JsonEndata(tOrgin.trim());
+                            if (jsonEndata.getJsonKeyValue(LocalAction.ACTION_LOGIN
+                                    .ACTION_STATIC).equals(LocalValues.VALUES_LOGIN.LOGIN_ERROR)) {
+                                /*登录失败*/
+                                Toast.makeText(getApplicationContext(), "登录过期,请重新登录", Toast
+                                        .LENGTH_SHORT).show();
+                                LazyCatActStartActivity(LoginAct.class,false);
+                            } else {
+                                /*登录成功*/
+
+                            }
+                            _rfreshdialog.dismiss();
+
+
+                        }
+
+                        @Override
+                        public void onNotConnect() {
+
+                        }
+
+                        @Override
+                        public void onFail(String tOrgin) {
+
+                        }
+                    }, LocalAction.ACTION_LOGIN.ACTION_PHONE, Tools.gettoKen
+                            (getApplicationContext(), LocalAction.ACTION_LOCALUSERPAGE
+                                    .ACTION_USER), LocalAction.ACTION_LOGIN.ACTION_TOKEN, Tools
+                            .gettoKen(getApplicationContext(), LocalAction.ACTION_LOCALUSERPAGE
+                                    .ACTION_TOKEN));
+                }
                 TextView classify_title = (TextView) btn_classify.getChildAt(1);
                 TextUnt.with(classify_title).setTextColor("#a9a9a9");
                 ImageView classify_img = (ImageView) btn_classify.getChildAt(0);
@@ -332,6 +398,9 @@ public class MainAct extends LazyCatAct {
         }
         if (usercneterfrg != null) {
             ft.hide(usercneterfrg);
+        }
+        if (classifyfrg != null) {
+            ft.hide(classifyfrg);
         }
         ft.commit();
     }

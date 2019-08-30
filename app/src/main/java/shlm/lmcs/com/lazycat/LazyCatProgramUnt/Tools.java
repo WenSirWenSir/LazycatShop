@@ -212,7 +212,7 @@ public class Tools {
      */
     @SuppressLint("LongLogTag")
     public static String gettoKen(Context tContext, String key) {
-        SharedPreferences sharedPreferences = tContext.getSharedPreferences("YazhouUser", 0);
+        SharedPreferences sharedPreferences = tContext.getSharedPreferences("CK_USER", 0);
         try {
             return sharedPreferences.getString(key, "");//如果不存在  就返回一个空字符
         } catch (Exception e) {
@@ -234,9 +234,22 @@ public class Tools {
             sharedPreferences.edit().putString(tdata[0], tdata[1]).commit();
             Log.i(Config.DEBUG, "LeftCompanyProgarm Tools.java[+]保存用户数据成功");
         } catch (Exception e) {
-            Log.e(Config.DEBUG, "LeftCompnayProgram Tools.java[+]" + e.getMessage());
+            Log.e(Config.DEBUG, "LeftCompanyProgram Tools.java[+]" + e.getMessage());
         }
 
+    }
+
+
+    public static void saveToken(Context tContext, String... tData) {
+        SharedPreferences sharedPreferences = tContext.getSharedPreferences("CK_USER", 0);
+        try {
+            for (int i = 0; i < tData.length / 2; i += 2) {
+                sharedPreferences.edit().putString(tData[i], tData[i + 1]).commit();
+            }
+
+        } catch (Exception e) {
+            Log.e(Config.DEBUG, "LeftCompanyProgram Tools.java[+]" + e.getMessage());
+        }
     }
 
     /**
@@ -258,7 +271,7 @@ public class Tools {
             }
 
             @Override
-            public void onSucess(String tOrgin,final WaitDialog.RefreshDialog _RefreshDialog) {
+            public void onSucess(String tOrgin, final WaitDialog.RefreshDialog _RefreshDialog) {
                 JsonEndata jsonEndata = new JsonEndata(tOrgin);
                 if (jsonEndata.getJsonKeyValue(Config.HttpMethodUserAction.KEY_STATUS).equals
                         (Config.HttpMethodUserAction.STATUS_SENDOK)) {
@@ -450,7 +463,7 @@ public class Tools {
             }
 
             @Override
-            public void onSucess(String tOrgin,final WaitDialog.RefreshDialog _RefreshDialog) {
+            public void onSucess(String tOrgin, final WaitDialog.RefreshDialog _RefreshDialog) {
                 if (programInterface != null) {
                     programInterface.onSucess(tOrgin, 0);
 

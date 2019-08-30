@@ -13,6 +13,7 @@ public class XmlTagValuesFactory {
     static Init_filletValues init_filletValues = new Init_filletValues();/*圆角矩形和*/
     static Init_btnValues init_btnValues = new Init_btnValues();/*首页的按钮参数信息*/
     static Shopvalues shopvalues = new Shopvalues();/*商品参数信息*/
+    static Init_UserCenterValues init_userCenterValues = new Init_UserCenterValues();
 
 
     /**
@@ -37,6 +38,95 @@ public class XmlTagValuesFactory {
         return init_btnValues;
     }
 
+    public static Init_UserCenterValues getXmlServiceInitCenterInstance() {
+        return init_userCenterValues;
+
+    }
+
+
+    /**
+     * 初始化用户资料的action
+     */
+    public static class Init_UserCenter {
+        public static String ACTION_STATIC = "";
+        public static String ACTION_NAME = "business_title";/*商户名称*/
+        public static String ACTION_VIP = "business_vip";/*是否为VIP*/
+        public static String ACTION_BALANCE = "business_balance";/*余额*/
+        public static String ACTION_COUPON = "business_coupon";/*抵用券*/
+        public static String ACTION_INTEGRAL = "business_integral";/*积分*/
+        public static String ACTION_RECHARGERECORD = "business_rechargerecord";/*充值记录*/
+        public static String ACTION_IMG = "business_img";/*图片地址*/
+    }
+
+
+    /**
+     * 初始化用户资料的表格
+     */
+    public static class Init_UserCenterValues {
+        String name;
+        String vip;
+        String balance;
+        String coupon;
+        String integral;
+        String rechargerecord;
+        String img;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getVip() {
+            return vip;
+        }
+
+        public void setVip(String vip) {
+            this.vip = vip;
+        }
+
+        public String getBalance() {
+            return balance;
+        }
+
+        public void setBalance(String balance) {
+            this.balance = balance;
+        }
+
+        public String getCoupon() {
+            return coupon;
+        }
+
+        public void setCoupon(String coupon) {
+            this.coupon = coupon;
+        }
+
+        public String getIntegral() {
+            return integral;
+        }
+
+        public void setIntegral(String integral) {
+            this.integral = integral;
+        }
+
+        public String getRechargerecord() {
+            return rechargerecord;
+        }
+
+        public void setRechargerecord(String rechargerecord) {
+            this.rechargerecord = rechargerecord;
+        }
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
+    }
 
     /**
      * 存在地区的服务器的数据圆角矩形和ArcView的ACTION
@@ -46,6 +136,7 @@ public class XmlTagValuesFactory {
         public static String ACTION_STATIC = "";
         public static String ACTION_ARC_VIEW = "arcView";
     }
+
 
     /**
      * 存在地区的服务的首页导航按钮的参数信息ACTION
@@ -481,6 +572,7 @@ public class XmlTagValuesFactory {
         public static String ACTION_SHOPVALUES_BRAND = "brand";
         public static String ACTION_SHOPVALUES_DLP = "dlp";
     }
+
 
     /**
      * 商品值列表
@@ -1190,6 +1282,15 @@ public class XmlTagValuesFactory {
         }
 
 
+    }
+
+
+    /**
+     * 分类商品的TAG
+     */
+    public static class CLASSIFYFRG_TITLE_TAG {
+        public final static String ACTION_ITEM = "item";
+        public final static String ACTION_BODY = "body";
     }
 
 

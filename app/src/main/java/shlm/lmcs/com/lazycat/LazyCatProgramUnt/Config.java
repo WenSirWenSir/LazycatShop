@@ -139,16 +139,25 @@ public class Config {
     public static class HTTP_ADDR {
 
         public static String SERVICE = "http://120.79.63.36";
+        public static String CONFIG_CALL_SENDSMS_SERVICE = SERVICE + "/CK_SERVICE/SendSMS/index"
+                + ".php";
         public final static String CONFIG_XML_SERVICE = SERVICE + "lazyShop/configXml/";
-        public final static String CONFIG_GET_SHOPVALUES_SERVICE = SERVICE + "/webdata/ShopOffice/getshop.php";
+        public final static String CONFIG_GET_SHOPVALUES_SERVICE = SERVICE +
+                "/webdata/ShopOffice/getshop.php";
         public final static String PHOTOS_ADDR = "http://120.79.63.36/zzbj/photos/SHOP_DATABASE/";
+        public final static String CONFIG_LOGIN_CHECK_SERVICE = SERVICE +
+                "/CK_SERVICE/Login/CK_CHECK.php";
+
+        public final static String CONFIG_LOGIN_CHECKTOKEN_SERVICE = SERVICE +
+                "/CK_SERVICE/Login/CK_CHECK_TOKEN.php";
+        public final static String CONFIG_GET_USERVALUES_SERVICE = SERVICE +
+                "/CK_SERVICE/User/initUsercenter.php";
 
         public static void setAddr(String addr) {
             if (!TextUtils.isEmpty(addr)) {
                 SERVICE += addr;
 
             }
-
         }
 
         /**
@@ -234,8 +243,8 @@ public class Config {
     public static class SERVICE_API {
         public static String getInitMainXml() {
             if (!TextUtils.isEmpty(LocalValues.ADDR_SERVICE)) {
-                return "http://" + LocalValues.ADDR_SERVICE + "/webdata/ConfigXml/InitMainConfig" +
-                        ".php";
+                return "http://" + LocalValues.ADDR_SERVICE + "/webdata/ConfigXml/InitMainConfig"
+                        + ".php";
             } else {
                 return "";
             }
