@@ -63,6 +63,10 @@ public class XmlTagValuesFactory {
      * 初始化用户资料的表格
      */
     public static class Init_UserCenterValues {
+
+        public void Clear() {
+        }
+
         String name;
         String vip;
         String balance;
