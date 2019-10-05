@@ -43,6 +43,10 @@ public class XmlTagValuesFactory {
 
     }
 
+    public static class Init_Shopcart {
+        public static String ACTION_USER_STATIC = "static";
+        public static String ACTION_ONE_SHOP_START = "shop";
+    }
 
     /**
      * 初始化用户资料的action
@@ -551,38 +555,9 @@ public class XmlTagValuesFactory {
 
     }
 
-
-    /**
-     * 商品值的ACTION
-     */
-
-    public static class ACTION_SHOPVALUES {
-        public static String ACTION_SHOPVALUES_START = "shop_page";
-        public static String ACTION_SHOPVALUES_TITLE = "shoptitle";
-        public static String ACTION_SHOPVALUES_BARCODE = "barcode";
-        public static String ACTION_SHOPVALUES_SPEC = "spec";
-        public static String ACTION_SHOPVALUES_WEIGHT = "weight";
-        public static String ACTION_SHOPVALUES_COMPANY = "company";
-        public static String ACTION_SHOPVALUES_GRADE = "grade";
-        public static String ACTION_SHOPVALUES_ASCRIPTION = "ascription";
-        public static String ACTION_SHOPVALUES_PD = "pd";
-        public static String ACTION_SHOPVALUES_EXP = "exp";
-        public static String ACTION_SHOPVALUES_INFROM = "infrom";
-        public static String ACTION_SHOPVALUES_ONLYID = "onlyid";
-        public static String ACTION_SHOPVALUES_PRICE = "price";
-        public static String ACTION_SHOPVALUES_STATIC = "static";
-        public static String ACTION_SHOPVALUES_SU = "su";
-        public static String ACTION_SHOPVALUES_TP = "tp";
-        public static String ACTION_SHOPVALUES_BRAND = "brand";
-        public static String ACTION_SHOPVALUES_DLP = "dlp";
-    }
-
-
     /**
      * 商品值列表
      */
-
-
     public static class Shopvalues {
         /**
          * 所有的参数信息
@@ -604,6 +579,16 @@ public class XmlTagValuesFactory {
         String tp;/*批发价格*/
         String brand;/*品牌*/
         String dlp;/*虚线的价格*/
+        String img;/*图片的地址*/
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
+
 
         public String getDlp() {
             return dlp;

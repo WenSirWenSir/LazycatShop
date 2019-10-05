@@ -241,24 +241,29 @@ public class Net {
      * @param xmldata          xml数据
      */
     public static void doPostXml(final Context mContext, String url, final ProgramInterface
-            programInterface, final String... xmldata) {
+            programInterface, final String xmldata) {
+        final WaitDialog.RefreshDialog _refreshDialog;
+        _refreshDialog = programInterface.onStartLoad();
         new AsyncTask<String, Void, String>() {
             @Override
             protected String doInBackground(String... _url) {
+                if(_refreshDialog != null){
+                    _refreshDialog.show();
+                }
                 String _data = null;
                 //构建xml数据信息
-                StringBuilder xml = new StringBuilder();
+                /*StringBuilder xml = new StringBuilder();
                 xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
                 xml.append("<body>");
                 Log.i("doPostXml.java[+]", "xml字节对的个数为:" + xml.length());
-                /*处理字符对  用来上传比较长的一些不适合Get包提交的数据信息*/
+                *//*处理字符对  用来上传比较长的一些不适合Get包提交的数据信息*//*
                 for (int i = 0; i < xmldata.length; i += 2) {
                     xml.append("<" + xmldata[i] + ">" + xmldata[i + 1] + "</" + xmldata[i] + ">");
                 }
                 xml.append("</body>");
-                Log.i("doPostXml.java[+]", "xml提交数据为:" + xml.toString());
+                Log.i("doPostXml.java[+]", "xml提交数据为:" + xml.toString());*/
                 try {
-                    byte[] xmlbyte = xml.toString().getBytes("UTF-8");
+                    byte[] xmlbyte = xmldata.getBytes("UTF-8");
                     URL url = new URL(_url[0]);//地址
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setConnectTimeout(5000);
@@ -311,7 +316,7 @@ public class Net {
                 } else {
                     //开始监听调用
                     if (programInterface != null) {
-                        programInterface.onSucess(s.toString(), 0);
+                        programInterface.onSucess(s.toString(), 0, _refreshDialog);
                     } else {
                         Log.e(Config.DEBUG, "Net.java[+]xml提交数据回调为空");
                     }

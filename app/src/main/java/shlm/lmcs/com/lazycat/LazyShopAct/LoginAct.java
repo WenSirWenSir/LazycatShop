@@ -184,7 +184,6 @@ public class LoginAct extends LazyCatAct {
 
                         @Override
                         public void onFail(String tOrgin) {
-
                         }
                     }, LocalAction.ACTION_SMS.ACTION_PHONE, phone);
 

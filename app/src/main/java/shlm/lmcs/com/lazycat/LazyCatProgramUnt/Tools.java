@@ -450,50 +450,6 @@ public class Tools {
 
 
     /**
-     * 检查验证码是否正确
-     */
-    public static void checkVerficationCode(Context tContext, String phone, String code, final
-    ProgramInterface programInterface) {
-        Net.doGet(tContext, Config.HTTP_ADDR.CheckVerificationAddr(), new Net
-                .onVisitInterServiceListener() {
-            @Override
-            public WaitDialog.RefreshDialog onStartLoad() {
-                return null;
-
-            }
-
-            @Override
-            public void onSucess(String tOrgin, final WaitDialog.RefreshDialog _RefreshDialog) {
-                if (programInterface != null) {
-                    programInterface.onSucess(tOrgin, 0);
-
-                }
-            }
-
-            @Override
-            public void onNotConnect() {
-                if (programInterface != null) {
-                    programInterface.onFaile("", 0);
-                }
-
-
-            }
-
-            @Override
-            public void onFail(String tOrgin) {
-                if (programInterface != null) {
-                    programInterface.onFaile("", 0);
-                }
-
-            }
-        }, Config.HttpMethodUserAction.KEY_ACTION, Config.HttpMethodUserAction
-                .CHECK_VERIFICATION, Config.HttpMethodUserAction.KEY_USER, Tools.getStringMD5
-                (phone), Config.HttpMethodUserAction.KEY_CODE, code);
-
-    }
-
-
-    /**
      * 用户的地址XML解析器
      *
      * @param is

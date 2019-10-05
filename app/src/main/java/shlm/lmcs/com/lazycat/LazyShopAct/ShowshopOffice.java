@@ -31,6 +31,7 @@ import java.util.TimerTask;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.XmlBuilder;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;
@@ -59,7 +60,7 @@ public class ShowshopOffice extends LazyCatAct {
     private TextView SHOP_DLP;/*商品的虚线价格*/
     private TextView SHOP_PD;/*商品的生产日期*/
     private TextView SHOP_EXP;/*商品的保质期*/
-    private TextView SHOP_BRAND;/*商品的品牌*/
+    private TextView SHOP_SPEC;/*商品的品牌*/
     private TextView SHOP_GRADE;/*商品的等级*/
     private TextView SHOP_BARCODE;/*商品的条码*/
     private TextView SHOP_RETAIL;/*商品的零售价格*/
@@ -160,8 +161,8 @@ public class ShowshopOffice extends LazyCatAct {
         SHOP_PD = findViewById(R.id.activity_showshopoffice_pd);
         /*商品的保质期*/
         SHOP_EXP = findViewById(R.id.activity_showshopoffice_exp);
-        /*商品的品牌*/
-        SHOP_BRAND = findViewById(R.id.activity_showshopoffice_brand);
+        /*商品的箱规*/
+        SHOP_SPEC = findViewById(R.id.activity_showshopoffice_spec);
         /*商品的等级*/
         SHOP_GRADE = findViewById(R.id.activity_showshopoffice_grade);
         /*商品的条码*/
@@ -209,32 +210,26 @@ public class ShowshopOffice extends LazyCatAct {
         /*获取界面传值*/
         shopmesage = getBundlerValue(Config.Windows.GET_WINDOW_VALUE_SHOP_MESSAGE);/*商品信息*/
         getshopAction = getBundlerValue(Config.Windows.GET_WINDOW_VALUE_SHOP_ACTION);/*获取方式*/
-        Log.i(MSG, "商品信息:" + shopmesage + "获取商品的方式:" + getshopAction);
+
         /*count down advert*/
         /**
          * 最重要的一步  首先获取到服务器的信息  进行数据的整理和初始化
          */
-        Net.doGet(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GET_SHOPVALUES, new
-                Net.onVisitInterServiceListener() {
-            @Override
-            public WaitDialog.RefreshDialog onStartLoad() {
-                /*初始化一个DIALOG*/
-                final WaitDialog.RefreshDialog refreshDialog = new WaitDialog.RefreshDialog
-                        (ShowshopOffice.this);
-                WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
-                wait_itme_dialogpage.setImg(R.id.item_wait_img);
-                wait_itme_dialogpage.setView(R.layout.item_wait);
-                wait_itme_dialogpage.setCanClose(false);
-                wait_itme_dialogpage.setTitle(R.id.item_wait_title);
-                refreshDialog.Init(wait_itme_dialogpage);
-                refreshDialog.showRefreshDialog("加载中...", false);
-                return refreshDialog;
-            }
+        XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder();
+        xmlInstance.initDom();
+        xmlInstance.setXmlTree(LocalAction.ACTION, getshopAction);
+        xmlInstance.setXmlTree(LocalAction.ACTION_SEARCHKEY.ACTION_KEYWORD, shopmesage);
+        xmlInstance.overDom();
+
+        Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GET_SHOPVALUES,
+                new ProgramInterface() {
+
 
             @Override
-            public void onSucess(String tOrgin, final WaitDialog.RefreshDialog _RefreshDialog) {
-                Log.i(MSG, "商品数据:" + tOrgin.trim());
-                XmlanalysisFactory xml = new XmlanalysisFactory(tOrgin.trim());
+            public void onSucess(String data, int code, final WaitDialog.RefreshDialog
+                    _refreshDialog) {
+                Log.i(MSG, "商品数据:" + data.trim());
+                XmlanalysisFactory xml = new XmlanalysisFactory(data.trim());
                 xml.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
                     @Override
                     public void onFaile() {
@@ -251,99 +246,94 @@ public class ShowshopOffice extends LazyCatAct {
                     public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
                         try {
 
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
-                                    .ACTION_SHOPVALUES_START)) {
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_START)) {
                                 shopvalues = XmlTagValuesFactory.getShopvaluesInstance();
                             }
 
                             /*商品标题*/
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
-                                    .ACTION_SHOPVALUES_TITLE)) {
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_TITLE)) {
                                 shopvalues.setTitle(pullParser.nextText().trim());
                             }
 
                             /*商品条码*/
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES
                                     .ACTION_SHOPVALUES_BARCODE)) {
                                 shopvalues.setBarcode(pullParser.nextText().trim());
                             }
                             /*商品归属*/
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES
                                     .ACTION_SHOPVALUES_ASCRIPTION)) {
                                 shopvalues.setAscription(pullParser.nextText().trim());
                             }
                             /*商品的品牌*/
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
-                                    .ACTION_SHOPVALUES_BRAND)) {
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_BRAND)) {
                                 shopvalues.setBrand(pullParser.nextText().trim());
                             }
 
                             /*商品单位*/
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES
                                     .ACTION_SHOPVALUES_COMPANY)) {
                                 shopvalues.setCompany(pullParser.nextText().trim());
                             }
                             /*商品保质期*/
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
-                                    .ACTION_SHOPVALUES_EXP)) {
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_EXP)) {
                                 shopvalues.setExp(pullParser.nextText().trim());
                             }
 
                             /*商品的归属*/
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
-                                    .ACTION_SHOPVALUES_GRADE)) {
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_GRADE)) {
                                 shopvalues.setGrade(pullParser.nextText().trim());
                             }
 
                             /*商品的产地*/
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES
                                     .ACTION_SHOPVALUES_INFROM)) {
                                 shopvalues.setInfrom(pullParser.nextText().trim());
                             }
                             /*商品唯一标识 */
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES
                                     .ACTION_SHOPVALUES_ONLYID)) {
                                 shopvalues.setOnlyid(pullParser.nextText().trim());
                             }
                             /*商品生产日期*/
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
-                                    .ACTION_SHOPVALUES_PD)) {
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_PD)) {
                                 shopvalues.setPd(pullParser.nextText().trim());
                             }
                             /*商品的终端建议售价*/
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
-                                    .ACTION_SHOPVALUES_PRICE)) {
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_PRICE)) {
                                 shopvalues.setPrice(pullParser.nextText().trim());
                             }
                             /*商品的规格*/
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
-                                    .ACTION_SHOPVALUES_SPEC)) {
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_SPEC)) {
                                 shopvalues.setSpec(pullParser.nextText().trim());
                             }
                             /*商品的状态*/
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES
                                     .ACTION_SHOPVALUES_STATIC)) {
                                 shopvalues.set_static(pullParser.nextText().trim());
                             }
                             /*商品的起订数量*/
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
-                                    .ACTION_SHOPVALUES_SU)) {
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_SU)) {
                                 shopvalues.setSu(pullParser.nextText().trim());
                             }
                             /*商品的批发价格*/
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
-                                    .ACTION_SHOPVALUES_TP)) {
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_TP)) {
                                 shopvalues.setTp(pullParser.nextText().trim());
                             }
+
                             /*商品的净重*/
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES
                                     .ACTION_SHOPVALUES_WEIGHT)) {
                                 shopvalues.setWeight(pullParser.nextText().trim());
                             }
+
                             /*商品的虚线的价格*/
-                            if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
-                                    .ACTION_SHOPVALUES_DLP)) {
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_DLP)) {
                                 shopvalues.setDlp(pullParser.nextText().trim());
+                            }
+                            /*商品的图片地址*/
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_IMG)) {
+                                shopvalues.setImg(pullParser.nextText().trim());
                             }
 
                         } catch (Exception e) {
@@ -354,8 +344,7 @@ public class ShowshopOffice extends LazyCatAct {
 
                     @Override
                     public void onEndTag(String tag, XmlPullParser pullParser, Integer id) {
-                        if (tag.equals(XmlTagValuesFactory.ACTION_SHOPVALUES
-                                .ACTION_SHOPVALUES_START)) {
+                        if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_START)) {
                             /*处理完毕了*/
                             init();
                         }
@@ -364,39 +353,38 @@ public class ShowshopOffice extends LazyCatAct {
 
                     @Override
                     public void onEndDocument() {
+                        /*文档处理完毕 就关闭显示的等待的LOGO*/
+                        _refreshDialog.dismiss();
 
                     }
                 });
             }
 
             @Override
-            public void onNotConnect() {
-
-            }
-
-            @Override
-            public void onFail(String tOrgin) {
-
-            }
-        }, LocalAction.ACTION_HTTP.ACTION_SHOP_GETSHOP_ACTION, LocalAction.ACTION_HTTP
-                .ACTION_SHOP_FOR_NAME, LocalAction.ACTION_HTTP.ACTION_SHOP_SHOPMESSAGE,
-                "洗洁精1.118公斤");
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    private void init() {
-
-        Net.doPostXml(getApplicationContext(), "", new ProgramInterface() {
-            @Override
-            public void onSucess(String data, int code) {
-
+            public WaitDialog.RefreshDialog onStartLoad() {
+                /*初始化一个DIALOG*/
+                final WaitDialog.RefreshDialog refreshDialog = new WaitDialog.RefreshDialog
+                        (ShowshopOffice.this);
+                WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+                wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                wait_itme_dialogpage.setView(R.layout.item_wait);
+                wait_itme_dialogpage.setCanClose(false);
+                wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+                refreshDialog.Init(wait_itme_dialogpage);
+                refreshDialog.showRefreshDialog("加载中...", false);
+                return refreshDialog;
             }
 
             @Override
             public void onFaile(String data, int code) {
 
             }
-        }, "title", "你好全世界", "static", "0", "price", "8.5");
+        }, xmlInstance.getXmlTree().trim());
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void init() {
+
         /*判断网络整理的标题是否为空*/
         Log.i(MSG, "标题为:" + shopvalues.getTitle());
         //添加起订
@@ -422,7 +410,7 @@ public class ShowshopOffice extends LazyCatAct {
         /*设置保质期*/
         TextUnt.with(SHOP_EXP).setText("保质期:" + shopvalues.getExp());
         /*设置品牌*/
-        TextUnt.with(SHOP_BRAND).setText("品牌:" + shopvalues.getBrand());
+        TextUnt.with(SHOP_SPEC).setText("箱规:" + shopvalues.getSpec() + shopvalues.getCompany());
         /*设置等级*/
         TextUnt.with(SHOP_GRADE).setText("等级:" + shopvalues.getGrade());
         /*设置条码*/
@@ -501,8 +489,8 @@ public class ShowshopOffice extends LazyCatAct {
         /**
          *  开始访问网络图片
          */
-        Glide.with(getApplicationContext()).load(Config.HTTP_ADDR.PHOTO_SERVICE_ADDR +
-                "/cuxiao/20190809_a.png").into(photo);
+        Glide.with(getApplicationContext()).load("http://f.freep.cn/583105/SHOP_DATABASE/"+ shopvalues
+                .getImg()).into(photo);
         /*加入购物车的布局*/
         btn_addshopcart.setOnClickListener(new View.OnClickListener() {
             @Override

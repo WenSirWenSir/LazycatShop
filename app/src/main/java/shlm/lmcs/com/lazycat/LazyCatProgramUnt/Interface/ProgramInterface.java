@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.LOAD_IMAGEPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XMLUserAddr;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 
 /**
  * 大家都可以用的接口
@@ -20,7 +21,9 @@ public interface ProgramInterface {
      * @param data
      * @param code
      */
-    public void onSucess(String data, int code);
+    public void onSucess(String data, int code,WaitDialog.RefreshDialog _refreshDialog);
+
+    WaitDialog.RefreshDialog onStartLoad();
 
     public void onFaile(String data, int code);
 

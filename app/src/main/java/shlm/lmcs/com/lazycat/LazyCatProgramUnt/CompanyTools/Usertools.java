@@ -13,7 +13,6 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.USER_KEY_PAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XMLUserAddr;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XML_PAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
@@ -22,45 +21,6 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
  * 公司获取用户的信息资料的操作API
  */
 public class Usertools {
-    /**
-     * 获取用户的所有的资料信息
-     */
-    public static void getUservalues(Context mContext, final ProgramInterface programInterface) {
-        String token = Tools.gettoKen(mContext, USER_KEY_PAGE.KEY_TOKEN);
-        String phone = Tools.gettoKen(mContext, USER_KEY_PAGE.KEY_USERPHONE);
-        Net.doGet(mContext, Config.HTTP_ADDR.getUser_init(), new Net.onVisitInterServiceListener() {
-                    @Override
-                    public WaitDialog.RefreshDialog onStartLoad() {
-                        return null;
-                    }
-
-                    @Override
-            public void onSucess(String tOrgin,final WaitDialog.RefreshDialog _RefreshDialog) {
-                if (programInterface != null) {
-                    programInterface.onSucess(tOrgin, 0);
-                }
-
-            }
-
-            @Override
-            public void onNotConnect() {
-                if (programInterface != null) {
-                    programInterface.onFaile("", 0);
-                }
-
-            }
-
-            @Override
-            public void onFail(String tOrgin) {
-                if (programInterface != null) {
-                    programInterface.onFaile("", 0);
-                }
-
-            }
-        }, Config.HttpMethodUserAction.KEY_ACTION, "" + Config.HttpMethodUserAction.GET_USERVAL,
-                Config.HttpMethodUserAction.KEY_USER, Tools.getStringMD5(phone), Config
-                        .HttpMethodUserAction.KEY_TOKEN, token);
-    }
 
     /**
      * 获取用户的默认地址
@@ -130,7 +90,7 @@ public class Usertools {
             @SuppressLint("LongLogTag")
             @Override
             public void onJson(String origin) {
-                Log.e(Config.DEBUG,"Usertools.java[+]在JSON数据回调中");
+                Log.e(Config.DEBUG, "Usertools.java[+]在JSON数据回调中");
                 if (xmLforUserAllAddr != null) {
                     xmLforUserAllAddr.onJson(origin);
                 }

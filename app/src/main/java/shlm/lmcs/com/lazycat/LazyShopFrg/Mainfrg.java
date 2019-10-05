@@ -37,7 +37,6 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlanalysisFactory;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.ArcView;
@@ -126,6 +125,8 @@ public class Mainfrg extends LazyCatFragment {
             savedInstanceState) {
         /*确定用户的物理地址*/
         SDKInitializer.initialize(getActivity().getApplicationContext());
+        /*设置状态栏颜色*/
+        setStatusBar("#ffffff");
         item = inflater.inflate(R.layout.fragment_main, null);
         body = item.findViewById(R.id.fragment_main_body);/*主要的布局*/
         module_body = item.findViewById(R.id.fragment_main_module_body);/*显示模块的布局*/
@@ -1316,17 +1317,6 @@ public class Mainfrg extends LazyCatFragment {
         layout.addView(mainSingle);
         /*启动品牌的事务管理器*/
         BrandSingMonitor brandSingMonitor = new BrandSingMonitor(mainSingle, getContext());
-        brandSingMonitor.Start(new ProgramInterface() {
-            @Override
-            public void onSucess(String data, int code) {
-                //判断code 如果code正确的话 要设置ScrollView的停止监听tag
-            }
-
-            @Override
-            public void onFaile(String data, int code) {
-
-            }
-        }, getContext());
         brandSingMonitor.SaveTag(LocalMonitorPage.MONITOR_BRANDSING);/*标识管理者的名字*/
         layout.setTag(brandSingMonitor);/*保存管理者*/
         /*</品牌促销的界面管理>*/
@@ -1419,17 +1409,6 @@ public class Mainfrg extends LazyCatFragment {
                             if (monitor.GetTag() == LocalMonitorPage.MONITOR_BRANDSING) {
                                 /*品牌促销的界面*/
                                 BrandSingMonitor bsm = (BrandSingMonitor) monitor;
-                                bsm.Start(new ProgramInterface() {
-                                    @Override
-                                    public void onSucess(String data, int code) {
-
-                                    }
-
-                                    @Override
-                                    public void onFaile(String data, int code) {
-
-                                    }
-                                }, getContext());
 
                             }
                             Toast.makeText(getContext(), "Tag:" + monitor.GetTag(), Toast
