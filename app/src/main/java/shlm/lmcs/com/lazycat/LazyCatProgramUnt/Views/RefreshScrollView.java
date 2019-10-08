@@ -345,7 +345,9 @@ public class RefreshScrollView extends ScrollView {
             if (onStopHandle) {
                 //表示外部已经在处理 不用重复提交
             } else {
-                _RefreshScrollViewListener.onScrollStop();
+                if(_RefreshScrollViewListener != null){
+                    _RefreshScrollViewListener.onScrollStop();
+                }
             }
         }
         return super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX, scrollRangeY,
