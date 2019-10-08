@@ -128,15 +128,16 @@ public class RefreshScrollView extends ScrollView {
         LinearLayout.LayoutParams params = null;
         try {
             params = (LinearLayout.LayoutParams) this.layout.getLayoutParams();
+            if (params != null) {
+                params.width = ViewWidth;
+                params.height = 0;
+                this.layout.setLayoutParams(params);
+                inLoadMessage = false;//可以加载外部信息
+            }
         } catch (Exception e) {
             Log.e(Config.DEBUG, "RefreshScrollView.java[+]" + e.getMessage());
         }
-        if (params != null) {
-            params.width = ViewWidth;
-            params.height = 0;
-            this.layout.setLayoutParams(params);
-            inLoadMessage = false;//可以加载外部信息
-        }
+
     }
 
 

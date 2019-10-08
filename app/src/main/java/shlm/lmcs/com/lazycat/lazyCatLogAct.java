@@ -88,7 +88,7 @@ public class lazyCatLogAct extends LazyCatAct {
         /*找到Ico控件*/
         log_title = findViewById(R.id.activity_lazy_log_title);/*控件图标*/
         log_context = findViewById(R.id.activity_lazy_log_context);/*控件的内容CangKu Service*/
-        TextUnt.with(log_title).setTextColor("#000000").setFontFile(getApplicationContext(),
+        TextUnt.with(log_title).setTextColor("#08c299").setFontFile(getApplicationContext(),
                 "canLogo");
         log_propaganda = findViewById(R.id.activity_lazy_cat_log_Propaganda);
         log_propagandaB = findViewById(R.id.activity_lazy_cat_log_Propaganda_b);

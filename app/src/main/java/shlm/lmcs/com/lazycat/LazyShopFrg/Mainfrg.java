@@ -2,17 +2,23 @@ package shlm.lmcs.com.lazycat.LazyShopFrg;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.LazyCatFragment;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
@@ -21,6 +27,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.RefreshScrollView;
+import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
 import shlm.lmcs.com.lazycat.LazyShopInterface.LocationMapListener;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
@@ -54,11 +61,28 @@ public class Mainfrg extends LazyCatFragment {
      */
     private TextView _headTitle;/*顶部标题*/
     private LinearLayout refreshBody;/*滑动控件的Body*/
+    private LinearLayout _Refreshhead;/*滑动控件的头部的广告*/
 
+    private static final String REFRESH_STOP_MESSAGELOAD = "0";/*停止刷新 隐藏广告*/
     /**
      * 模块数据存储
      */
     private RefreshScrollView _RefreshScrollView;
+
+    /**
+     *
+     */
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.obj.toString()) {
+                case REFRESH_STOP_MESSAGELOAD:
+                    _RefreshScrollView.stopRefresh();
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
 
     @SuppressLint({"ResourceType", "NewApi"})
     @Override
@@ -71,12 +95,37 @@ public class Mainfrg extends LazyCatFragment {
         /*顶部标题*/
         _headTitle = item.findViewById(R.id.fragment_main_headTitle);
         /*处理顶部标题的字体*/
-        TextUnt.with(_headTitle).setFontFile(getContext(), "canLogo");
+        TextUnt.with(_headTitle).setFontFile(getContext(), "canLogo").setTextColor("#08c299");
         /*滑动控件的Body*/
         refreshBody = item.findViewById(R.id.fragment_main_body);
-        for (int i = 0; i < 100; i++) {
-            View item = LayoutInflater.from(getContext()).inflate(R.layout.item_mainshoplist, null);
-            refreshBody.addView(item);
+        /*滑动控件*/
+        _RefreshScrollView = item.findViewById(R.id.fragment_main_refreshScrollview);
+        /*滑动控件的头部广告*/
+        _Refreshhead = item.findViewById(R.id.fragment_main_refreshHead);
+        for (int i = 0; i < 20; i++) {
+            View shopItem = LayoutInflater.from(getContext()).inflate(R.layout.item_mainshoplist,
+                    null);
+            /*进行Item处理监听*/
+            ImageView btnLike = shopItem.findViewById(R.id.item_mainshoplist_btnLike);/*是否喜欢*/
+            /*进行数据判断 用户是否收藏过该商品 如果没有就设置为灰色*/
+            btnLike.setImageResource(R.drawable.ico_nolike);
+            btnLike.setTag(LocalValues.VALUES_SHOPLIKES.SHOP_NO_LIKE);
+            btnLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int tag = (int) v.getTag();
+                    if (tag == LocalValues.VALUES_SHOPLIKES.SHOP_NO_LIKE) {
+                        /*设置为喜欢的图标 并且发送服务器*/
+                        ImageView img = (ImageView) v;
+                        img.setImageResource(R.drawable.ico_like);
+                    } else {
+                        /*设置为不喜欢的图标 并且发送服务器*/
+                        ImageView img = (ImageView) v;
+                        img.setImageResource(R.drawable.ico_nolike);
+                    }
+                }
+            });
+            refreshBody.addView(shopItem);
         }
         //初始化一个背景样式
         locationClientOption = new LocationClientOption();
@@ -141,8 +190,93 @@ public class Mainfrg extends LazyCatFragment {
 */
 
         init(item);
+        listener(item);
         getServiceAddr("上杭县");
         return item;
+
+    }
+
+
+    /**
+     * 控件的监听处理事件
+     *
+     * @param item
+     */
+    private void listener(View item) {
+        item.findViewById(R.id.fragment_main_btnSearchIco).setOnClickListener(new View
+                .OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LazyCatFragmetStartAct(SearchAct.class);
+            }
+        });
+
+
+        _RefreshScrollView.SetLinstener(new RefreshScrollView.RefreshScrollViewListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+
+            @Override
+            public void onRefreshDone() {
+
+            }
+
+            @Override
+            public void onStopRefresh() {
+
+            }
+
+            @Override
+            public void onState(int _static) {
+
+            }
+
+            @Override
+            public void onLoadMore() {
+
+            }
+
+            @Override
+            public void onLoadBottom() {
+                Log.i(MSG, "开始更新数据");
+            }
+
+            @Override
+            public void onScrollStop() {
+
+            }
+
+            @Override
+            public void onloadMessage() {
+                Log.e(MSG, "onRefresh回调");
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Message msg = new Message();
+                        msg.obj = REFRESH_STOP_MESSAGELOAD;
+                        handler.sendMessage(msg);
+                    }
+                }, 3000);
+            }
+
+            @Override
+            public void onScrollDistance(int distance) {
+
+            }
+
+            @Override
+            public void onScrollToleft(int _moveCount) {
+
+            }
+
+            @Override
+            public void onScrollToRight(int _moveCount) {
+
+            }
+        });
 
     }
 
@@ -194,6 +328,10 @@ public class Mainfrg extends LazyCatFragment {
     }
 
     private void init(View item) {
+        /*设置头部广告*/
+        _RefreshScrollView.SetHeadView(_Refreshhead, 150, R.id.fragment_main_Headprogressbar, R
+                .drawable.a1234444);
+
 
     }
 

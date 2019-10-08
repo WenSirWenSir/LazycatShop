@@ -386,14 +386,6 @@ public class SearchAct extends LazyCatAct {
                         /*设置父窗口背景的颜色*/
                         SearchViewBody.setBackgroundColor(Color.parseColor(XmlTagValuesFactory
                                 .XmlInitPage.getSearchBackground()));
-                        /*系统信息数量*/
-                        TextView howMessage = SearchViewBody.findViewById(R.id
-                                .assembly_head_howmessageNumber);
-                        /*设置通知图标的圆圈的颜色*/
-                        howMessage.setBackground(Tools.CreateDrawable(1, XmlTagValuesFactory
-                                .XmlInitPage.getHowMessageNumber(), XmlTagValuesFactory
-                                .XmlInitPage.getHowMessageNumber(), 50));
-                        /*处理系统信息数量*/
                         /*设置热搜*/
                         EditText SearchEditView = SearchViewBody.findViewById(R.id
                                 .assembly_head_editText);/*热搜输入框*/

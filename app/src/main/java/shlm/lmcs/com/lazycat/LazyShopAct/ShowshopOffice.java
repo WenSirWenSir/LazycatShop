@@ -71,6 +71,7 @@ public class ShowshopOffice extends LazyCatAct {
     private LinearLayout select_numberBody;
     private ListView shopCartListView;
     private LinearLayout showShoplistBody;
+    private LinearLayout valuesBody;/*商品参数的Body*/
     private RelativeLayout shopCartnumberBody;
     private RelativeLayout inShowCarPage;/*打开购物车之后 计算价格和优惠*/
     private TextView btnAccount;
@@ -203,6 +204,8 @@ public class ShowshopOffice extends LazyCatAct {
         btnShopcart = findViewById(R.id.activity_showshopoffice_btnShopcart);
         /*显示购物车之后 展示购物车的总计价值和优惠*/
         inShowCarPage = findViewById(R.id.activity_showshopoffice_carpage);
+        /*显示商品的参数的Body*/
+        valuesBody = findViewById(R.id.activity_showshopoffice_valuesBody);
         /*尝试加载*/
         shopCartAdapter adapter = new shopCartAdapter();
         shopCartListView.setAdapter(adapter);
@@ -220,11 +223,8 @@ public class ShowshopOffice extends LazyCatAct {
         xmlInstance.setXmlTree(LocalAction.ACTION, getshopAction);
         xmlInstance.setXmlTree(LocalAction.ACTION_SEARCHKEY.ACTION_KEYWORD, shopmesage);
         xmlInstance.overDom();
-
         Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GET_SHOPVALUES,
                 new ProgramInterface() {
-
-
             @Override
             public void onSucess(String data, int code, final WaitDialog.RefreshDialog
                     _refreshDialog) {
@@ -385,6 +385,9 @@ public class ShowshopOffice extends LazyCatAct {
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
 
+
+        /*设置商品参数的Body的边框*/
+        valuesBody.setBackground(Tools.CreateDrawable(1,"#efefef","#efefef",10));
         /*判断网络整理的标题是否为空*/
         Log.i(MSG, "标题为:" + shopvalues.getTitle());
         //添加起订
@@ -489,8 +492,8 @@ public class ShowshopOffice extends LazyCatAct {
         /**
          *  开始访问网络图片
          */
-        Glide.with(getApplicationContext()).load("http://f.freep.cn/583105/SHOP_DATABASE/"+ shopvalues
-                .getImg()).into(photo);
+        Glide.with(getApplicationContext()).load("http://f.freep.cn/583105/SHOP_DATABASE/" +
+                shopvalues.getImg()).into(photo);
         /*加入购物车的布局*/
         btn_addshopcart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -580,7 +583,7 @@ public class ShowshopOffice extends LazyCatAct {
                     /*判断是否已经满足300元*/
                     if (NE <= 0) {
                         ReplayPrice.setText("订单满足300元,快去结算吧！");
-                        btnAccount.setBackground(Tools.CreateDrawable(1, "#f30d88", "#f30d88", 5));
+                        btnAccount.setBackground(Tools.CreateDrawable(1, "#08c299", "#08c299", 5));
 
                     } else {
                         ReplayPrice.setText("还需要" + NE + "元开始配送,赶紧去添加商品吧!");

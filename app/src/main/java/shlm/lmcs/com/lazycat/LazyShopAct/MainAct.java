@@ -22,6 +22,7 @@ import shlm.lmcs.com.lazycat.LazyShopFrg.Classifyfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Deliveryfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Mainfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.UserCenterfrg;
+import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
 
 public class MainAct extends LazyCatAct {
@@ -92,8 +93,8 @@ public class MainAct extends LazyCatAct {
                 });
                 /*修改导航*/
                 ImageView img = (ImageView) btn_main.getChildAt(0);
-                img.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.btn_main,
-                        "#08c299"));
+                img.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable
+                        .btn_main, "#08c299"));
                 TextView title = (TextView) rl.getChildAt(1);
                 title.setTextColor(Color.parseColor("#08c299"));
                 /*开始隐藏其它的导航*/
@@ -106,11 +107,12 @@ public class MainAct extends LazyCatAct {
                 ImageView user = (ImageView) btn_usercenter.getChildAt(0);
                 TextView user_title = (TextView) btn_usercenter.getChildAt(1);
                 user_title.setTextColor(Color.parseColor("#a9a9a9"));
-                user.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.btn_user,
-                        "#a9a9a9"));
+                user.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable
+                        .btn_user, "#a9a9a9"));
                 LazyCatStartActivityWithBundler(ShowshopOffice.class, false, Config.Windows
-                        .GET_WINDOW_VALUE_SHOP_MESSAGE, "海天味极鲜", Config.Windows
-                        .GET_WINDOW_VALUE_SHOP_ACTION, "2");
+                        .GET_WINDOW_VALUE_SHOP_MESSAGE, "红牛维他命饮料250毫升搭赠装", Config.Windows
+                        .GET_WINDOW_VALUE_SHOP_ACTION, LocalValues.VALUES_SEARCH
+                        .VALUES_TO_SEARCH_SHOPKEYWORD);
                 TextView classify_title = (TextView) btn_classify.getChildAt(1);
                 TextUnt.with(classify_title).setTextColor("#a9a9a9");
                 ImageView classify_img = (ImageView) btn_classify.getChildAt(0);
@@ -143,13 +145,13 @@ public class MainAct extends LazyCatAct {
                 TextView title = (TextView) rl.getChildAt(1);
                 title.setTextColor(Color.parseColor("#08c299"));
                 ImageView main = (ImageView) btn_main.getChildAt(0);
-                main.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.btn_main,
-                        "#a9a9a9"));
+                main.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable
+                        .btn_main, "#a9a9a9"));
                 TextView main_title = (TextView) btn_main.getChildAt(1);
                 main_title.setTextColor(Color.parseColor("#a9a9a9"));
                 ImageView user = (ImageView) btn_usercenter.getChildAt(0);
-                user.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.btn_user,
-                        "#a9a9a9"));
+                user.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable
+                        .btn_user, "#a9a9a9"));
                 TextView user_title = (TextView) btn_usercenter.getChildAt(1);
                 user_title.setTextColor(Color.parseColor("#a9a9a9"));
 
@@ -184,13 +186,13 @@ public class MainAct extends LazyCatAct {
                  * 处理其他的导航键
                  */
                 ImageView main = (ImageView) btn_main.getChildAt(0);
-                main.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.btn_main,
-                        "#a9a9a9"));
+                main.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable
+                        .btn_main, "#a9a9a9"));
                 TextView main_title = (TextView) btn_main.getChildAt(1);
                 main_title.setTextColor(Color.parseColor("#a9a9a9"));
                 ImageView user = (ImageView) btn_usercenter.getChildAt(0);
-                user.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.btn_user,
-                        "#a9a9a9"));
+                user.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable
+                        .btn_user, "#a9a9a9"));
                 TextView user_title = (TextView) btn_usercenter.getChildAt(1);
                 user_title.setTextColor(Color.parseColor("#a9a9a9"));
                 TextView delivery_title = (TextView) btn_delivery.getChildAt(1);
@@ -218,16 +220,16 @@ public class MainAct extends LazyCatAct {
                 ImageView img = (ImageView) rl.getChildAt(0);
                 TextView title = (TextView) rl.getChildAt(1);
                 title.setTextColor(Color.parseColor("#08c299"));
-                img.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.btn_user,
-                        "#08c299"));
+                img.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable
+                        .btn_user, "#08c299"));
                 ImageView main = (ImageView) btn_main.getChildAt(0);
-                main.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.btn_main,
-                        "#a9a9a9"));
+                main.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable
+                        .btn_main, "#a9a9a9"));
                 TextView main_title = (TextView) btn_main.getChildAt(1);
                 main_title.setTextColor(Color.parseColor("#a9a9a9"));
                 ImageView cart = (ImageView) btn_delivery.getChildAt(0);
-                cart.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable.btn_cart,
-                        "#a9a9a9"));
+                cart.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable
+                        .btn_cart, "#a9a9a9"));
                 TextView cart_title = (TextView) btn_delivery.getChildAt(1);
                 cart_title.setTextColor(Color.parseColor("#a9a9a9"));
 
