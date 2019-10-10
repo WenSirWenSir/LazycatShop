@@ -8,23 +8,19 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import org.xmlpull.v1.XmlPullParser;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -50,7 +46,6 @@ public class ShowshopOffice extends LazyCatAct {
     private Boolean isShowCart = false;/*记录是否把cart展开*/
     private String shopmesage;/*关于商品的信息*/
     private String getshopAction;/*获取商品的方式 1条码查找 2 名称查找 3 模糊查找 4 唯一识别号查找*/
-    private LinearLayout btn_addshopcart;
     private ScrollViewBiggerPhoto scrollViewBiggerPhoto;
     private ImageView photo;
     private TextView btn_select_del;
@@ -65,21 +60,16 @@ public class ShowshopOffice extends LazyCatAct {
     private TextView SHOP_BARCODE;/*商品的条码*/
     private TextView SHOP_RETAIL;/*商品的零售价格*/
     private TextView SHOP_SHOWBRAND;/*商品显示的品牌*/
-    private RelativeLayout btnShopcart;
     private XmlTagValuesFactory.Shopvalues shopvalues = null;
     private ImageView countDownadavert;
     private LinearLayout select_numberBody;
-    private ListView shopCartListView;
     private LinearLayout showShoplistBody;
     private LinearLayout valuesBody;/*商品参数的Body*/
-    private RelativeLayout shopCartnumberBody;
     private RelativeLayout inShowCarPage;/*打开购物车之后 计算价格和优惠*/
     private TextView btnAccount;
     private TextView select_number;
-    private TextView shopCartNumber;
     private TextView SHOP_TP;/*显示批发的价格*/
     private LinearLayout hideShopBody;
-    private TextView ReplayPrice;//还需要多少金额开始送
     private Float NE;/*计算还差多少钱可以配送*/
     private Float Total;/*计算总和*/
     private int window_height;/*屏幕的高度*/
@@ -143,13 +133,7 @@ public class ShowshopOffice extends LazyCatAct {
         findViewById(R.id.activity_showshopoffice_progrm_title).setBackground(Tools
                 .CreateDrawable(1, getResources().getString(R.color.ThemeColor), getResources()
                         .getString(R.color.ThemeColor), 5));
-        //找出ViewID
-        btn_addshopcart = findViewById(R.id.activity_showshopoffice_btnAddshopcartBody);
         otherMessage = findViewById(R.id.activity_showshopoffice_otherMessagebody);/*其他一些基本信息的BODY*/
-        /*设置圆角*/
-        findViewById(R.id.activity_showshopoffice_btnAddshopcartBody).setBackground(Tools
-                .CreateDrawable(1, getResources().getString(R.color.ThemeColor), getResources()
-                        .getString(R.color.ThemeColor), 50));
         /*滑动增大图片控件*/
         scrollViewBiggerPhoto = findViewById(R.id.activity_showshopoffice_scrollview);
         /*增加或者减少按钮布局*/
@@ -186,29 +170,18 @@ public class ShowshopOffice extends LazyCatAct {
         btn_select_add = findViewById(R.id.activity_showshopoffice_SeletNumberBtnadd);
         /*获取选择数量*/
         select_number = findViewById(R.id.activity_showshopoffice_SeletNumber);
-        /*购物车数量标志*/
-        shopCartNumber = findViewById(R.id.activity_showshopoffice_shopCartnumber);
-        /*购物车数量边框标志*/
-        shopCartnumberBody = findViewById(R.id.activity_showshopoffice_shopCartnumberBody);
-        /*还需多少金额开始起送*/
-        ReplayPrice = findViewById(R.id.activity_showshopoffice_Repayprice);
         /*订购按钮*/
         btnAccount = findViewById(R.id.activity_showshopoffice_btnAccount);
         /*显示商品列表的body*/
         showShoplistBody = findViewById(R.id.activity_showshopoffice_showshoplistBody);
-        /*购物车的ListView*/
-        shopCartListView = findViewById(R.id.activity_showshopoffice_shopcartList);
         /*遮物布局*/
         hideShopBody = findViewById(R.id.activity_showshopoffice_hideShopBody);
         /*购物车图标按钮*/
-        btnShopcart = findViewById(R.id.activity_showshopoffice_btnShopcart);
         /*显示购物车之后 展示购物车的总计价值和优惠*/
         inShowCarPage = findViewById(R.id.activity_showshopoffice_carpage);
         /*显示商品的参数的Body*/
         valuesBody = findViewById(R.id.activity_showshopoffice_valuesBody);
         /*尝试加载*/
-        shopCartAdapter adapter = new shopCartAdapter();
-        shopCartListView.setAdapter(adapter);
         /*图片包裹*/
         /*获取界面传值*/
         shopmesage = getBundlerValue(Config.Windows.GET_WINDOW_VALUE_SHOP_MESSAGE);/*商品信息*/
@@ -423,30 +396,13 @@ public class ShowshopOffice extends LazyCatAct {
                 .getCompany());
         /*设置要显示的品牌*/
         TextUnt.with(SHOP_SHOWBRAND).setText(shopvalues.getBrand());
-        /*购物车点击监听*/
-        btnShopcart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showShoplist();
-            }
-        });
 
-        /*遮物布局监听*/
-        hideShopBody.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                showShoplist();
-                return false;
-            }
-        });
         /*设置边框的圆角*/
         /*设置订购边框的圆角 订单未满*/
         // btnAccount.setBackground(Tools.CreateDrawable(1, getResources().getString(R.color
         //         .ThemeColor), getResources().getString(R.color.ThemeColor), 5));
         btnAccount.setBackground(Tools.CreateDrawable(1, "#666666", "#666666", 5));
         btnAccount.setTextColor(Color.parseColor("#ffffff"));
-        /*首先隐藏购物车的显示数量*/
-        shopCartnumberBody.setVisibility(View.GONE);
         metrics = new DisplayMetrics();/*获取屏幕矩阵*/
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         /*重新计算图片的高度实现开场动画*/
@@ -495,36 +451,6 @@ public class ShowshopOffice extends LazyCatAct {
         Glide.with(getApplicationContext()).load("http://f.freep.cn/583105/SHOP_DATABASE/" +
                 shopvalues.getImg()).into(photo);
         /*加入购物车的布局*/
-        btn_addshopcart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btn_addshopcart.setVisibility(View.GONE);
-                select_numberBody.setVisibility(View.VISIBLE);
-                select_number.setText(String.valueOf(1));
-                int i = Integer.parseInt(select_number.getText().toString());
-                if (i >= 1) {
-                    if (shopCartNumber.getVisibility() != View.VISIBLE) {
-                        shopCartNumber.setVisibility(View.VISIBLE);
-                    }
-                    shopCartNumber.setText(shopvalues.getSu());
-                    /*字符转浮点数据*/
-                    try {
-                        int su = Integer.parseInt(shopvalues.getSu());
-                        float tp = Float.parseFloat(shopvalues.getTp());
-                        Total = su * tp;
-                        NE = 300 - (su * tp);
-                        btnAccount.setText("结算(" + Total + ")");
-                        ReplayPrice.setText("还需要" + NE + "元开始配送,赶紧去添加商品吧!");
-                    } catch (Exception e) {
-                        Log.e(MSG, "计算总和错误:" + e.getMessage());
-
-                    }
-                    shopCartnumberBody.setVisibility(View.VISIBLE);
-                } else {
-                    shopCartnumberBody.setVisibility(View.GONE);
-                }
-            }
-        });
         /*数量减少*/
         btn_select_del.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -533,11 +459,7 @@ public class ShowshopOffice extends LazyCatAct {
                 i -= 1;
 
                 if (i <= 0) {
-                    select_numberBody.setVisibility(View.GONE);
-                    btn_addshopcart.setVisibility(View.VISIBLE);
-                    shopCartnumberBody.setVisibility(View.GONE);
-                    TextUnt.with(ReplayPrice).setText("还需要300元开始配送,赶紧去添加商品吧！");
-                    btnAccount.setText("结算(0)");
+                    Toast.makeText(getApplicationContext(),"配送的数量不能小于0哦",Toast.LENGTH_SHORT).show();
                 } else {
                     try {
                         int su = Integer.parseInt(shopvalues.getSu());
@@ -545,7 +467,6 @@ public class ShowshopOffice extends LazyCatAct {
                         Total -= su * tp;
                         float total = su * tp;
                         NE += total;
-                        ReplayPrice.setText("还需要" + NE + "元开始配送,赶紧去添加商品吧!");
                         if (NE < 300 && NE >= 0) {
                             /*获取一个数据库管理对象*/
                             btnAccount.setBackground(Tools.CreateDrawable(1, "#666666",
@@ -556,9 +477,7 @@ public class ShowshopOffice extends LazyCatAct {
                         Log.e(MSG, "计算总和错误:" + e.getMessage());
 
                     }
-                    shopCartnumberBody.setVisibility(View.VISIBLE);
                     select_number.setText(String.valueOf(i));
-                    shopCartNumber.setText(String.valueOf(i));
                 }
 
             }
@@ -569,10 +488,6 @@ public class ShowshopOffice extends LazyCatAct {
             public void onClick(View v) {
                 int i = Integer.parseInt(select_number.getText().toString());
                 i += 1;
-                if (shopCartNumber.getVisibility() != View.VISIBLE) {
-                    /*正在显示*/
-                    shopCartNumber.setVisibility(View.VISIBLE);
-                }
                 select_number.setText(String.valueOf(i));
                 try {
                     int su = Integer.parseInt(shopvalues.getSu());
@@ -582,20 +497,15 @@ public class ShowshopOffice extends LazyCatAct {
                     NE -= total;
                     /*判断是否已经满足300元*/
                     if (NE <= 0) {
-                        ReplayPrice.setText("订单满足300元,快去结算吧！");
                         btnAccount.setBackground(Tools.CreateDrawable(1, "#08c299", "#08c299", 5));
 
                     } else {
-                        ReplayPrice.setText("还需要" + NE + "元开始配送,赶紧去添加商品吧!");
                     }
-                    btnAccount.setText("结算(" + Total + ")");
                 } catch (Exception e) {
                     Log.e(MSG, "计算总和错误:" + e.getMessage());
 
                 }
-                shopCartnumberBody.setVisibility(View.VISIBLE);
                 int total = i * (Integer.valueOf(shopvalues.getSu()));
-                shopCartNumber.setText(String.valueOf(total));
             }
         });
 
@@ -655,38 +565,6 @@ public class ShowshopOffice extends LazyCatAct {
         }
 
 
-    }
-
-
-    class shopCartAdapter extends BaseAdapter {
-        private ArrayList<String> dataList = new ArrayList<String>();
-
-        public shopCartAdapter() {
-        }
-
-        @Override
-        public int getCount() {
-            return 30;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return position;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View item = LayoutInflater.from(getApplicationContext()).inflate(R.layout
-                    .item_little_caritem, null);
-            notifyDataSetChanged();
-            /*如果为0就从网络数据中移除该ITEM*/
-            return item;
-        }
     }
 
     @Override
