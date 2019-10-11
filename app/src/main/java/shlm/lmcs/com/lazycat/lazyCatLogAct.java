@@ -17,8 +17,11 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.XmlBuilder;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyShopAct.MainAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.PromotionAct;
+import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
+import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 
 
 public class lazyCatLogAct extends LazyCatAct {
@@ -62,6 +65,18 @@ public class lazyCatLogAct extends LazyCatAct {
         xmlInstance.overDom();
         Log.e(MSG, "行动开始");
         Log.i(MSG, "xml数据信息" + xmlInstance.getXmlTree());
+
+        /**
+         * 第一件事情 检查是否用户登录
+         */
+        if (Tools.gettoKen(getApplicationContext(), LocalAction.ACTION_LOCALUSERPAGE
+                .ACTION_TOKEN).equals("")) {
+            /*没有登录*/
+            LocalValues.isLogin = false;
+        } else {
+            /*登录成功*/
+            LocalValues.isLogin = true;
+        }
         Net.doPostXml(getApplicationContext(), "http://120.79.63.36/CK_SERVICE/Login/login.php",
                 new ProgramInterface() {
 
@@ -113,7 +128,6 @@ public class lazyCatLogAct extends LazyCatAct {
                 handler.sendMessage(new Message());
             }
         }, 3000);
-
 
 
     }

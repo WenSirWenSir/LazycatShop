@@ -128,6 +128,8 @@ public class ShowshopOffice extends LazyCatAct {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_showshopoffice);
         setTransparentBar();
+
+
         /**
          * 设置促销的标题
          */
@@ -366,9 +368,24 @@ public class ShowshopOffice extends LazyCatAct {
         btnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                /**
+                 * 展示给用户重新确认的订单
+                 */
                 AlertDialog.Builder builder = new AlertDialog.Builder(ShowshopOffice.this);
-                builder.setView(LayoutInflater.from(ShowshopOffice.this).inflate(R.layout
-                        .assembly_confirmdeliver, null));
+                View confirmdeliverItem = LayoutInflater.from(ShowshopOffice.this).inflate(R
+                        .layout.assembly_confirmdeliver, null);
+                builder.setView(confirmdeliverItem);
+                TextView deliverShopname = confirmdeliverItem.findViewById(R.id
+                        .assembly_confirmdeliverShopname);
+                /*设置标题*/
+                deliverShopname.setText(shopvalues.getTitle());
+                /*设置图片*/
+                ImageView deliverShopimg = confirmdeliverItem.findViewById(R.id
+                        .assembly_confirmdeliverShopimg);
+                /*设置图片*/
+                Glide.with(getApplicationContext()).load("http://f.freep" + "" + "" +
+                        ".cn/583105/SHOP_DATABASE/" + shopvalues.getImg()).into(deliverShopimg);
                 builder.show();
                 builder.setCancelable(false);
             }
@@ -400,7 +417,12 @@ public class ShowshopOffice extends LazyCatAct {
         /*设置虚线价格*/
         TextUnt.with(SHOP_DLP).setText(shopvalues.getDlp()).setMidcourtLine();
         /*设置批发价格*/
-        TextUnt.with(SHOP_TP).setText(shopvalues.getTp());
+        if(LocalValues.isLogin){
+            TextUnt.with(SHOP_TP).setText(shopvalues.getTp());
+        }
+        else{
+            TextUnt.with(SHOP_TP).setText("**.**");
+        }
         /*设置生产日期*/
         TextUnt.with(SHOP_PD).setText("生产日期:" + shopvalues.getPd());
         /*设置保质期*/
