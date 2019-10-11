@@ -2,12 +2,14 @@ package shlm.lmcs.com.lazycat.LazyShopAct;
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -70,7 +72,6 @@ public class ShowshopOffice extends LazyCatAct {
     private TextView select_number;
     private TextView SHOP_TP;/*显示批发的价格*/
     private LinearLayout hideShopBody;
-    private Float NE;/*计算还差多少钱可以配送*/
     private Float Total;/*计算总和*/
     private int window_height;/*屏幕的高度*/
     private LinearLayout otherMessage;/*显示其他一些的基础的信息的body*/
@@ -320,6 +321,7 @@ public class ShowshopOffice extends LazyCatAct {
                         if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_START)) {
                             /*处理完毕了*/
                             init();
+                            listener();
                         }
 
                     }
@@ -355,24 +357,42 @@ public class ShowshopOffice extends LazyCatAct {
         }, xmlInstance.getXmlTree().trim());
     }
 
+    private void listener() {
+
+        /**
+         * 请求仓库网络发货
+         */
+
+        btnAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ShowshopOffice.this);
+                builder.setView(LayoutInflater.from(ShowshopOffice.this).inflate(R.layout
+                        .assembly_confirmdeliver, null));
+                builder.show();
+                builder.setCancelable(false);
+            }
+        });
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
 
 
         /*设置商品参数的Body的边框*/
-        valuesBody.setBackground(Tools.CreateDrawable(1,"#efefef","#efefef",10));
+        valuesBody.setBackground(Tools.CreateDrawable(1, "#efefef", "#efefef", 10));
         /*判断网络整理的标题是否为空*/
         Log.i(MSG, "标题为:" + shopvalues.getTitle());
         //添加起订
         TextView tp = new TextView(otherMessage.getContext());
-        tp.setBackground(Tools.CreateDrawable(2, "#000000", "#ffffff", 50));
-        tp.setPadding(20, 10, 20, 10);
+        tp.setBackground(Tools.CreateDrawable(2, "#08c299", "#ffffff", 5));
+        tp.setPadding(10, 7, 10, 7);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
                 .WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(15, 0, 0, 0);
         tp.setLayoutParams(params);
         TextUnt.with(tp).setText(shopvalues.getSu() + shopvalues.getCompany() + "起订")
-                .setTextColor("#000000").setTextSize(8);
+                .setTextColor("#08c299").setTextSize(8);
         otherMessage.addView(tp);
 
         /*界面初始化*/
@@ -401,7 +421,7 @@ public class ShowshopOffice extends LazyCatAct {
         /*设置订购边框的圆角 订单未满*/
         // btnAccount.setBackground(Tools.CreateDrawable(1, getResources().getString(R.color
         //         .ThemeColor), getResources().getString(R.color.ThemeColor), 5));
-        btnAccount.setBackground(Tools.CreateDrawable(1, "#666666", "#666666", 5));
+        btnAccount.setBackground(Tools.CreateDrawable(1, "#08c299", "#08c299", 5));
         btnAccount.setTextColor(Color.parseColor("#ffffff"));
         metrics = new DisplayMetrics();/*获取屏幕矩阵*/
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -459,20 +479,14 @@ public class ShowshopOffice extends LazyCatAct {
                 i -= 1;
 
                 if (i <= 0) {
-                    Toast.makeText(getApplicationContext(),"配送的数量不能小于0哦",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "配送的数量不能小于0哦", Toast.LENGTH_SHORT)
+                            .show();
                 } else {
                     try {
                         int su = Integer.parseInt(shopvalues.getSu());
                         float tp = Float.parseFloat(shopvalues.getTp());
                         Total -= su * tp;
                         float total = su * tp;
-                        NE += total;
-                        if (NE < 300 && NE >= 0) {
-                            /*获取一个数据库管理对象*/
-                            btnAccount.setBackground(Tools.CreateDrawable(1, "#666666",
-                                    "#666666", 5));
-                        }
-                        btnAccount.setText("结算(" + Total + ")");
                     } catch (Exception e) {
                         Log.e(MSG, "计算总和错误:" + e.getMessage());
 
@@ -493,14 +507,6 @@ public class ShowshopOffice extends LazyCatAct {
                     int su = Integer.parseInt(shopvalues.getSu());
                     float tp = Float.parseFloat(shopvalues.getTp());
                     Total += su * tp;
-                    float total = su * tp;
-                    NE -= total;
-                    /*判断是否已经满足300元*/
-                    if (NE <= 0) {
-                        btnAccount.setBackground(Tools.CreateDrawable(1, "#08c299", "#08c299", 5));
-
-                    } else {
-                    }
                 } catch (Exception e) {
                     Log.e(MSG, "计算总和错误:" + e.getMessage());
 
