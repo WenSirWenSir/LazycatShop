@@ -1,9 +1,11 @@
 package shlm.lmcs.com.lazycat.LazyShopFrg;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,19 +18,27 @@ import android.widget.TextView;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import org.xmlpull.v1.XmlPullParser;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.LazyCatFragment;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WEB_VALUES_ACT;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlanalysisFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.RefreshScrollView;
 import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
 import shlm.lmcs.com.lazycat.LazyShopInterface.LocationMapListener;
+import shlm.lmcs.com.lazycat.LazyShopPage.LocalPage;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
 
@@ -62,7 +72,9 @@ public class Mainfrg extends LazyCatFragment {
     private TextView _headTitle;/*顶部标题*/
     private LinearLayout refreshBody;/*滑动控件的Body*/
     private LinearLayout _Refreshhead;/*滑动控件的头部的广告*/
-
+    private ImageView bigHead_img;/*头部第一个Img的控件*/
+    private LocalPage.SecondSmallNavAPage secondSmallNavAPage;
+    private ImageView secondNavAimg;/*第二个导航中的第一个子导航的NAV*/
     private static final String REFRESH_STOP_MESSAGELOAD = "0";/*停止刷新 隐藏广告*/
     /**
      * 模块数据存储
@@ -70,8 +82,10 @@ public class Mainfrg extends LazyCatFragment {
     private RefreshScrollView _RefreshScrollView;
 
     /**
-     *
+     * 类的实现
      */
+    private BigheadImg bigheadImg = new BigheadImg();/*存储首页BigHeadImg中的参数*/
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -102,6 +116,10 @@ public class Mainfrg extends LazyCatFragment {
         _RefreshScrollView = item.findViewById(R.id.fragment_main_refreshScrollview);
         /*滑动控件的头部广告*/
         _Refreshhead = item.findViewById(R.id.fragment_main_refreshHead);
+        /*头部第一个Image的广告控件*/
+        bigHead_img = item.findViewById(R.id.fragment_main_bigHeadMsg);
+        /*第二个导航的第一个子导航*/
+        secondNavAimg = item.findViewById(R.id.fragment_main_secondSmallNavAimg);
         for (int i = 0; i < 20; i++) {
             View shopItem = LayoutInflater.from(getContext()).inflate(R.layout.item_mainshoplist,
                     null);
@@ -202,12 +220,33 @@ public class Mainfrg extends LazyCatFragment {
      *
      * @param item
      */
+    @SuppressLint({"NewApi", "ResourceType"})
     private void listener(View item) {
+
+        /**
+         * 搜索ICO点击
+         */
         item.findViewById(R.id.fragment_main_btnSearchIco).setOnClickListener(new View
                 .OnClickListener() {
             @Override
             public void onClick(View v) {
                 LazyCatFragmetStartAct(SearchAct.class);
+            }
+        });
+
+
+        /**
+         * 第二个NAV的第一个图片的点击事件
+         */
+        secondNavAimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WEB_VALUES_ACT web_values_act = new WEB_VALUES_ACT(secondSmallNavAPage
+                        .getSecondSmallAClickUrl());
+                web_values_act.set_StaticColor("#ffffff");
+                web_values_act.set_TitleBackColor("#ffffff");
+                web_values_act.set_TitleColor(getResources().getString(R.color.ThemeColor));
+                LazyCatFragmentStartWevact(web_values_act);
             }
         });
 
@@ -302,10 +341,9 @@ public class Mainfrg extends LazyCatFragment {
                     Log.i(MSG, "地区服务器地址:" + tOrgin.trim());
                     /*不是为空的话 就去访问网络*/
                     LocalValues.ADDR_SERVICE = tOrgin.trim();
-                    InitMain();
+                    getConfigXml();/*获取首页的配置文件*/
                 } else {
                     /*没有地址  没有开放*/
-
                     Log.i(MSG, "该地区服务器地址没开放");
 
                 }
@@ -324,15 +362,227 @@ public class Mainfrg extends LazyCatFragment {
         }, Config.HttpAction.ACTION_ADDR, Districe);
     }
 
-    private void InitMain() {
-    }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void init(View item) {
         /*设置头部广告*/
         _RefreshScrollView.SetHeadView(_Refreshhead, 150, R.id.fragment_main_Headprogressbar, R
                 .drawable.a1234444);
 
+    }
 
+    @SuppressLint("NewApi")
+    private void getConfigXml() {
+        /**
+         * 获取地区服务器关于该地址的首页配置信息
+         * fragment_main_bigHeadMsg
+         */
+        Net.doGet(getContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GET_MAINCONFIGPAGE, new Net
+                .onVisitInterServiceListener() {
+            @Override
+            public WaitDialog.RefreshDialog onStartLoad() {
+                /*初始化一个DIALOG*/
+                final WaitDialog.RefreshDialog refreshDialog = new WaitDialog.RefreshDialog
+                        (getContext());
+                WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+                wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                wait_itme_dialogpage.setView(R.layout.item_wait);
+                wait_itme_dialogpage.setCanClose(false);
+                wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+                refreshDialog.Init(wait_itme_dialogpage);
+                refreshDialog.showRefreshDialog("加载中...", false);
+                return refreshDialog;
+            }
+
+            @Override
+            public void onSucess(String tOrgin, WaitDialog.RefreshDialog _rfreshdialog) {
+                Log.i(MSG, "返回的首页整理的XML信息: " + tOrgin);
+                _rfreshdialog.dismiss();
+                XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(tOrgin.trim());
+                xmlanalysisFactory.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
+                    @Override
+                    public void onFaile() {
+
+                    }
+
+                    @Override
+                    public void onStartDocument(String tag) {
+
+                    }
+
+                    @Override
+                    public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
+                        try {
+                            /*设置点击之后的地址*/
+                            if (tag.equals(bigheadImg.getTAG_ONCLICK_URL())) {
+                                bigheadImg.setOnClick_url(pullParser.nextText().trim());
+                            }
+                            /*设置图片*/
+                            if (tag.equals(bigheadImg.getTAG_SHOW_IMG())) {
+                                bigheadImg.setShowImg(pullParser.nextText().trim());
+                            }
+
+
+                            /**
+                             * 判断是不是SecondSmallNavA
+                             */
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.BEGIN_XML)) {
+                                secondSmallNavAPage = LocalPage.getSecondSmallNavAPageInstance();
+                            }
+                            /*设置第一个NAV的图片*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVA_IMG)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallAimgUrl(pullParser.nextText
+                                            ().trim());
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+
+                            /*设置第一个Nav的图片点击URL*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVA_URL)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallAClickUrl(pullParser
+                                            .nextText().trim());
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+
+                            /*第一个Nav的图片标题*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVA_TITLE)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallAtitle(pullParser.nextText
+                                            ().trim());
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+                            /*第二个Nav的图片介绍*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVA_CONTEXT)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallAcontext(pullParser
+                                            .nextText().trim());
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+
+                            /*第二个Nav的标题的颜色*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVA_TITLECOLOR)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallAtitleColor(pullParser
+                                            .nextText().trim());
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+                            /*第二个Nav的介绍的颜色*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage
+                                    .XML_TAG_NAVA_CONTEXTCOLOR)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallAcontextColor(pullParser
+                                            .nextText().trim());
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+
+                        } catch (Exception e) {
+                            Log.e(MSG, "解析首页整理的XML数据中出错:" + e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onEndTag(String tag, XmlPullParser pullParser, Integer id) {
+
+                    }
+
+                    @Override
+                    public void onEndDocument() {
+                        /**
+                         * 结束完成  开始整理界面
+                         */
+                        InitMainPage();
+
+                    }
+                });
+            }
+
+            @Override
+            public void onNotConnect() {
+
+            }
+
+            @Override
+            public void onFail(String tOrgin) {
+
+            }
+        });
+    }
+
+
+    /**
+     * 处理好XML界面之后 开始整理信息
+     */
+    @SuppressLint("NewApi")
+    private void InitMainPage() {
+        /*加载顶部的第一个Big_headimg*/
+        Glide.with(getContext()).load(bigheadImg.getShowImg()).into(bigHead_img);
+
+
+        /**
+         * 整理第二个图片导航
+         */
+        /*加载第一个图片*/
+        Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallAimgUrl().trim())
+                .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
+                (secondNavAimg);
+        /*第一个图片的标题*/
+        TextView secondNavAtitle = item.findViewById(R.id.fragment_main_secondSmallNavAtitle);
+        TextUnt.with(secondNavAtitle).setText(secondSmallNavAPage.getSecondSmallAtitle())
+                .setTextColor(secondSmallNavAPage.getSecondSmallAtitleColor());
+        /*第一个图片的介绍*/
+        TextView secondNavAcontext = item.findViewById(R.id.fragment_main_secondSmallNavAcontext);
+        TextUnt.with(secondNavAcontext).setText(secondSmallNavAPage.getSecondSmallAcontext())
+                .setTextColor(secondSmallNavAPage.getSecondSmallAcontextColor());
+
+
+    }
+
+
+    /**
+     * 定义一个类 用来存储首页中Big_headImg的参数信息
+     */
+    class BigheadImg {
+        public String onClick_url;
+        public String showImg;
+        public String TAG_ONCLICK_URL = "onClick_url";
+        public String TAG_SHOW_IMG = "showImg";
+
+        public void setOnClick_url(String onClick_url) {
+            this.onClick_url = onClick_url;
+        }
+
+        public void setShowImg(String showImg) {
+            this.showImg = showImg;
+        }
+
+        public String getOnClick_url() {
+            return onClick_url;
+        }
+
+        public String getShowImg() {
+            return showImg;
+        }
+
+        public String getTAG_ONCLICK_URL() {
+            return TAG_ONCLICK_URL;
+        }
+
+        public String getTAG_SHOW_IMG() {
+            return TAG_SHOW_IMG;
+        }
     }
 
 

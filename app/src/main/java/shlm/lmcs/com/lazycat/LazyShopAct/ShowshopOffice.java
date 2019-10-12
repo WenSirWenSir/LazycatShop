@@ -384,8 +384,72 @@ public class ShowshopOffice extends LazyCatAct {
                 ImageView deliverShopimg = confirmdeliverItem.findViewById(R.id
                         .assembly_confirmdeliverShopimg);
                 /*设置图片*/
-                Glide.with(getApplicationContext()).load("http://f.freep" + "" + "" +
-                        ".cn/583105/SHOP_DATABASE/" + shopvalues.getImg()).into(deliverShopimg);
+                Glide.with(getApplicationContext()).load("http://f.freep" + "" + "" + "" + "" +
+                        "" + ".cn/583105/SHOP_DATABASE/" + shopvalues.getImg()).into
+                        (deliverShopimg);
+                /*设置数量*/
+                TextView deliverShophow = confirmdeliverItem.findViewById(R.id
+                        .assembly_confirmdeliverShopNumber);
+                deliverShophow.setText("订购数量:" + select_number.getText().toString() + shopvalues
+                        .getCompany());
+                /*设置箱规*/
+                TextView deliverShopspec = confirmdeliverItem.findViewById(R.id
+                        .assembly_confirmdeliverShopSpec);
+                deliverShopspec.setText("规格:" + shopvalues.getCompany() + "装X" + shopvalues
+                        .getSpec());
+                /*设置保质期和生产日期*/
+                TextView deliverShopPd_exp = confirmdeliverItem.findViewById(R.id
+                        .assembly_confirmdeliverShopPd_Exp);
+                deliverShopPd_exp.setText("生产日期:" + shopvalues.getExp() + "·保质期:" + shopvalues
+                        .getPd() + "天");
+                /**
+                 * 计算总和
+                 */
+                float deliverTotal = Float.valueOf(select_number.getText().toString().trim()) *
+                        Float.valueOf(shopvalues.getTp().trim());
+                TextView deliverShopTotal = confirmdeliverItem.findViewById(R.id
+                        .assembly_confirmedliverTotal);
+                deliverShopTotal.setText(Float.toString(deliverTotal));
+
+                /**
+                 * 判断用户是否为VIP
+                 */
+                /*VIP提供的服务*/
+                TextView deliverVipMsg = confirmdeliverItem.findViewById(R.id
+                        .assembly_confirmdeliverShopVipMsg);
+                /*商品的VIP图标*/
+                ImageView deliverShopequity = confirmdeliverItem.findViewById(R.id
+                        .assembly_confirmdeliverShopEquity);
+                /*名字旁边的VIP图标*/
+                TextView deliverUserIco = confirmdeliverItem.findViewById(R.id
+                        .assembly_confirmdeliverIcoVip);
+                if (true) {
+                    /*是Vip*/
+                    TextUnt.with(deliverVipMsg).setBackground(Tools.CreateDrawable(1,
+                            getResources().getString(R.color.colorVip), getResources().getString
+                                    (R.color.colorVip), 5)).setTextColor("#ffffff").setText
+                            (getResources().getString(R.string.isVipmsg));
+                    /*设置Vip图标*/
+                    deliverShopequity.setImageDrawable(Tools.setSvgColor(getApplicationContext(),
+                            R.drawable.ico_equity, getResources().getString(R.color.colorVip)));
+                    /*设置名字旁边的图标*/
+                    TextUnt.with(deliverUserIco).setBackground(Tools.CreateDrawable(1,
+                            getResources().getString(R.color.colorVip), getResources().getString
+                                    (R.color.colorVip), 5)).setTextColor("#ffffff");
+
+                } else {
+                    /*不是Vip*/
+                    TextUnt.with(deliverVipMsg).setBackground(Tools.CreateDrawable(1,
+                            getResources().getString(R.color.colornoVip), getResources()
+                                    .getString(R.color.colornoVip), 5)).setTextColor("#ffffff")
+                            .setText(getResources().getString(R.string.noVipmsg));
+                    deliverShopequity.setImageDrawable(Tools.setSvgColor(getApplicationContext(),
+                            R.drawable.ico_equity, getResources().getString(R.color.colornoVip)));
+                    /*设置名字旁边的图标*/
+                    TextUnt.with(deliverUserIco).setBackground(Tools.CreateDrawable(1,
+                            getResources().getString(R.color.colornoVip), getResources()
+                                    .getString(R.color.colornoVip), 5)).setTextColor("#ffffff");
+                }
                 builder.show();
                 builder.setCancelable(false);
             }
@@ -414,14 +478,19 @@ public class ShowshopOffice extends LazyCatAct {
 
         /*界面初始化*/
         TextUnt.with(SHOP_TITLE).setText(shopvalues.getTitle());
-        /*设置虚线价格*/
-        TextUnt.with(SHOP_DLP).setText(shopvalues.getDlp()).setMidcourtLine();
-        /*设置批发价格*/
-        if(LocalValues.isLogin){
+        if (LocalValues.isLogin) {
+            /*设置批发价格*/
             TextUnt.with(SHOP_TP).setText(shopvalues.getTp());
-        }
-        else{
-            TextUnt.with(SHOP_TP).setText("**.**");
+            /*设置虚线价格*/
+            TextUnt.with(SHOP_DLP).setText(shopvalues.getDlp()).setMidcourtLine();
+        } else {
+            TextUnt.with(SHOP_TP).setText("*.*");
+            /*设置批发价格*/
+            TextUnt.with(SHOP_TP).setText("*.*");
+            /*设置虚线价格*/
+            SHOP_DLP.setVisibility(View.GONE);
+            TextUnt.with(SHOP_DLP).setVisibility(false);
+
         }
         /*设置生产日期*/
         TextUnt.with(SHOP_PD).setText("生产日期:" + shopvalues.getPd());

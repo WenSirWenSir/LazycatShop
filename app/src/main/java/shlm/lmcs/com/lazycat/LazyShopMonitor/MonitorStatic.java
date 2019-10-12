@@ -1,1 +1,0 @@
-package shlm.lmcs.com.lazycat.LazyShopMonitor;public class MonitorStatic {    public static final int CLEAR_DONE = 0;//清空完毕    public static final int LOAD_IN = 1;/*正在加载*/    public static final int LOAD_DONE = 2;/*加载完毕 但是没清空VIEW数据*/    public static final int NOT_LOAD = 3;/*没有加载的默认赋值*/}
