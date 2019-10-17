@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.widget.TextView;
 
 import java.util.Timer;
@@ -13,14 +12,9 @@ import java.util.TimerTask;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.XmlBuilder;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyShopAct.MainAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.PromotionAct;
-import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 
 
@@ -58,48 +52,9 @@ public class lazyCatLogAct extends LazyCatAct {
         /**
          * 测试代码区
          */
-        XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder();
-        xmlInstance.initDom();
-        xmlInstance.setXmlTree("action", "0");
-        xmlInstance.setXmlTree("phone", "15206036936");
-        xmlInstance.overDom();
-        Log.e(MSG, "行动开始");
-        Log.i(MSG, "xml数据信息" + xmlInstance.getXmlTree());
 
-        /**
-         * 第一件事情 检查是否用户登录
-         */
-        if (Tools.gettoKen(getApplicationContext(), LocalAction.ACTION_LOCALUSERPAGE
-                .ACTION_TOKEN).equals("")) {
-            /*没有登录*/
-            LocalValues.isLogin = false;
-        } else {
-            /*登录成功*/
+
             LocalValues.isLogin = true;
-        }
-        Net.doPostXml(getApplicationContext(), "http://120.79.63.36/CK_SERVICE/Login/login.php",
-                new ProgramInterface() {
-
-
-            @Override
-            public void onSucess(String data, int code, WaitDialog.RefreshDialog _refreshDialog) {
-                Log.i(MSG, "手机号码：" + data.trim());
-            }
-
-            @Override
-            public WaitDialog.RefreshDialog onStartLoad() {
-                return null;
-            }
-
-            @Override
-            public void onFaile(String data, int code) {
-
-            }
-        }, xmlInstance.getXmlTree());
-
-        /**
-         * 测试代码区域结束
-         */
         /*找到Ico控件*/
         log_title = findViewById(R.id.activity_lazy_log_title);/*控件图标*/
         log_context = findViewById(R.id.activity_lazy_log_context);/*控件的内容CangKu Service*/

@@ -1,11 +1,14 @@
 package shlm.lmcs.com.lazycat.LazyShopFrg;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
@@ -30,15 +34,20 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.LazyCatFragment;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WEB_VALUES_ACT;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.XmlBuilder;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlanalysisFactory;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.RefreshScrollView;
 import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
 import shlm.lmcs.com.lazycat.LazyShopInterface.LocationMapListener;
 import shlm.lmcs.com.lazycat.LazyShopPage.LocalPage;
+import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
+import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
 
@@ -85,6 +94,7 @@ public class Mainfrg extends LazyCatFragment {
      * 类的实现
      */
     private BigheadImg bigheadImg = new BigheadImg();/*存储首页BigHeadImg中的参数*/
+    private LocalProgramTools.UserToolsInstance userToolsInstance;/*用户类的Instance*/
 
     private Handler handler = new Handler() {
         @Override
@@ -342,6 +352,8 @@ public class Mainfrg extends LazyCatFragment {
                     /*不是为空的话 就去访问网络*/
                     LocalValues.ADDR_SERVICE = tOrgin.trim();
                     getConfigXml();/*获取首页的配置文件*/
+                    checkPermission();
+                    getUserPage();/*读取用户的数据文件*/
                 } else {
                     /*没有地址  没有开放*/
                     Log.i(MSG, "该地区服务器地址没开放");
@@ -360,6 +372,113 @@ public class Mainfrg extends LazyCatFragment {
 
             }
         }, Config.HttpAction.ACTION_ADDR, Districe);
+    }
+
+
+    /**
+     * 获取用户的数据地址
+     */
+    @SuppressLint("NewApi")
+    private void getUserPage() {
+        /**
+         * 第一件事情 检查是否用户登录
+         */
+        if (Tools.gettoKen(getContext(), LocalAction.ACTION_LOCALUSERPAGE.ACTION_TOKEN).equals
+                ("")) {
+            /*没有登录*/
+            LocalValues.isLogin = false;
+        } else {
+            /*登录成功 获取数据信息*/
+            XmlBuilder.XmlInstance xmlInstance = new XmlBuilder.XmlInstance();
+            xmlInstance.initDom();
+            xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, "15206036936");
+            xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_TOKEN, "123456789");
+            xmlInstance.overDom();
+            Net.doPostXml(getContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GETUSER_PAGE, new
+                    ProgramInterface() {
+                @Override
+                public void onSucess(String data, int code, WaitDialog.RefreshDialog
+                        _refreshDialog) {
+                    Log.i(MSG, "返回数据:" + data.trim());
+                    XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(data.trim());
+                    xmlanalysisFactory.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
+                        @Override
+                        public void onFaile() {
+
+                        }
+
+                        @Override
+                        public void onStartDocument(String tag) {
+                            userToolsInstance = LocalProgramTools.getUserToolsInstance();
+                        }
+
+                        @Override
+                        public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
+                            try {
+                                /*商户的别称*/
+                                if (tag.equals(LocalAction.ACTION_LOGIN.ACTION_XML_NIACKNAME)) {
+                                    userToolsInstance.setNiackName(pullParser.nextText().trim());
+                                }
+                                /*商户的余额*/
+                                if (tag.equals(LocalAction.ACTION_LOGIN.ACTION_XML_BALANCE)) {
+                                    userToolsInstance.setBlance(pullParser.nextText().trim());
+                                }
+                                /*商户的状态*/
+                                if (tag.equals(LocalAction.ACTION_LOGIN.ACTION_XML_STATUS)) {
+                                    userToolsInstance.setStatus(pullParser.nextText().trim());
+                                }
+                                /*商户的VIP状态*/
+                                if (tag.equals(LocalAction.ACTION_LOGIN.ACTION_XML_VIPSTATUS)) {
+                                    userToolsInstance.setVipstatus(pullParser.nextText().trim());
+                                }
+                                /*商户的TOKEN*/
+                                if (tag.equals(LocalAction.ACTION_LOGIN.ACTION_XML_TOKEN)) {
+                                    userToolsInstance.setToken(pullParser.nextText().trim());
+                                }
+                            } catch (Exception e) {
+
+                            }
+                        }
+
+                        @Override
+                        public void onEndTag(String tag, XmlPullParser pullParser, Integer id) {
+
+                        }
+
+                        @Override
+                        public void onEndDocument() {
+                            if (userToolsInstance.SaveingUserPageXml()) {
+                                Toast.makeText(getContext(), "保存成功", Toast.LENGTH_SHORT).show();
+                                /*保存成功之后 马上开始尝试解析*/
+                                userToolsInstance.StartPullerUserpageXml(new LocalProgramTools
+                                        .UserToolsInstance.SetReadUserpageListener() {
+                                    @Override
+                                    public void onRead(String tag, String values) {
+                                        if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                                .ACTION_LOCALUSERPAGE_TOKEN)) {
+                                            Toast.makeText(getContext(), "Token:" + values, Toast
+                                                    .LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(getContext(), "保存失败", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+
+                @Override
+                public WaitDialog.RefreshDialog onStartLoad() {
+                    return null;
+                }
+
+                @Override
+                public void onFaile(String data, int code) {
+
+                }
+            }, xmlInstance.getXmlTree().trim());
+        }
     }
 
 
@@ -586,4 +705,34 @@ public class Mainfrg extends LazyCatFragment {
     }
 
 
+    /**
+     * 检查权限
+     */
+    @SuppressLint("NewApi")
+    private void checkPermission() {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission
+                .WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission
+                    .WRITE_EXTERNAL_STORAGE}, 0);
+            Log.i(MSG, "没有授权权限!");
+            Toast.makeText(getContext(), "获取权限失败", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "获取权限成功", Toast.LENGTH_SHORT).show();
+            Log.i(MSG, "已经授权读写权限成功!");
+        }
+    }
+
+
+    /**
+     * 动态申请权限回调
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[]
+            grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }

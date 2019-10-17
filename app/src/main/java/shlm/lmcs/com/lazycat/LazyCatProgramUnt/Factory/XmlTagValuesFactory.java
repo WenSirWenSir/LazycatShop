@@ -580,6 +580,15 @@ public class XmlTagValuesFactory {
         String brand;/*品牌*/
         String dlp;/*虚线的价格*/
         String img;/*图片的地址*/
+        String splitUnit;/*最小的的组合单位*/
+
+        public String getSplitUnit() {
+            return splitUnit;
+        }
+
+        public void setSplitUnit(String splitUnit) {
+            this.splitUnit = splitUnit;
+        }
 
         public String getImg() {
             return img;

@@ -62,8 +62,10 @@ public class ShowshopOffice extends LazyCatAct {
     private TextView SHOP_BARCODE;/*商品的条码*/
     private TextView SHOP_RETAIL;/*商品的零售价格*/
     private TextView SHOP_SHOWBRAND;/*商品显示的品牌*/
+    private AlertDialog gradeAlertDialog;/*等级的Alert*/
     private XmlTagValuesFactory.Shopvalues shopvalues = null;
     private ImageView countDownadavert;
+    private ImageView btnGradeAsk;/*问号按钮*/
     private LinearLayout select_numberBody;
     private LinearLayout showShoplistBody;
     private LinearLayout valuesBody;/*商品参数的Body*/
@@ -184,6 +186,8 @@ public class ShowshopOffice extends LazyCatAct {
         inShowCarPage = findViewById(R.id.activity_showshopoffice_carpage);
         /*显示商品的参数的Body*/
         valuesBody = findViewById(R.id.activity_showshopoffice_valuesBody);
+        /*显示问号按钮*/
+        btnGradeAsk = findViewById(R.id.activity_showshopoffice_btnGradeAsk);
         /*尝试加载*/
         /*图片包裹*/
         /*获取界面传值*/
@@ -311,6 +315,11 @@ public class ShowshopOffice extends LazyCatAct {
                             if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_IMG)) {
                                 shopvalues.setImg(pullParser.nextText().trim());
                             }
+                            /*商品的最低的组合单位*/
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                    .ACTION_SHOPVALUES_SPLITUNIT)) {
+                                shopvalues.setSplitUnit(pullParser.nextText().trim());
+                            }
 
                         } catch (Exception e) {
 
@@ -362,6 +371,38 @@ public class ShowshopOffice extends LazyCatAct {
     private void listener() {
 
         /**
+         * 询问等级的按钮问号
+         */
+        btnGradeAsk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ShowshopOffice.this);
+                View item = LayoutInflater.from(ShowshopOffice.this).inflate(R.layout
+                        .alert_message, null);
+                /*提示文字的标题*/
+                TextView alertTitle = item.findViewById(R.id.alert_messageTitle);
+                TextUnt.with(alertTitle).setText("等级解释");
+                /*提示文字信息*/
+                TextView alertText = item.findViewById(R.id.alert_messageText);
+                /*确定按钮*/
+                TextView btnConfirm = item.findViewById(R.id.alert_messageBtnConfirm);
+                TextUnt.with(alertText).setHtmlText
+                        ("<b>一级:</b>过期可以退款。<br><br><b>二级:</b>过期之前可以退款。<br><br><b>三级:</b>售卖3" +
+                                "个月支持退款<br><br>");
+                TextUnt.with(btnConfirm).setText("我已知晓");
+                btnConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (gradeAlertDialog != null) {
+                            gradeAlertDialog.dismiss();
+                        }
+                    }
+                });
+                builder.setView(item);
+                gradeAlertDialog = builder.show();
+            }
+        });
+        /**
          * 请求仓库网络发货
          */
 
@@ -396,20 +437,50 @@ public class ShowshopOffice extends LazyCatAct {
                 TextView deliverShopspec = confirmdeliverItem.findViewById(R.id
                         .assembly_confirmdeliverShopSpec);
                 deliverShopspec.setText("规格:" + shopvalues.getCompany() + "装X" + shopvalues
-                        .getSpec());
+                        .getSpec() + shopvalues.getSplitUnit());
                 /*设置保质期和生产日期*/
                 TextView deliverShopPd_exp = confirmdeliverItem.findViewById(R.id
                         .assembly_confirmdeliverShopPd_Exp);
                 deliverShopPd_exp.setText("生产日期:" + shopvalues.getExp() + "·保质期:" + shopvalues
                         .getPd() + "天");
+                /*设置价格*/
+                TextView deliverShopTp = confirmdeliverItem.findViewById(R.id
+                        .assembly_confirmdeliverShopTp);
+                deliverShopTp.setText("商品单价:" + shopvalues.getTp() + "/" + shopvalues.getCompany());
                 /**
                  * 计算总和
                  */
-                float deliverTotal = Float.valueOf(select_number.getText().toString().trim()) *
-                        Float.valueOf(shopvalues.getTp().trim());
+                float deliverTotal = Math.round(Float.valueOf(select_number.getText().toString()
+                        .trim()) * Float.valueOf(shopvalues.getTp().trim()) * 100) / 100;
                 TextView deliverShopTotal = confirmdeliverItem.findViewById(R.id
                         .assembly_confirmedliverTotal);
                 deliverShopTotal.setText(Float.toString(deliverTotal));
+                /*虚线价格的符号*/
+                TextView deliverPriceSymbol = confirmdeliverItem.findViewById(R.id
+                        .assembly_confirmedliverPriceSymbol);
+                /*虚线的价格*/
+                TextView deliverDottedPrices = confirmdeliverItem.findViewById(R.id
+                        .assembly_confirmedliverDottedPrice);
+                /**
+                 * 判断是否为促销或者其他状态
+                 */
+                switch (shopvalues.get_static()) {
+                    case LocalValues.VALUES_SHOPPAGE.NORMAL:
+                        Log.i(MSG, "正常商品");
+                        TextUnt.with(deliverDottedPrices).setVisibility(false);
+                        TextUnt.with(deliverPriceSymbol).setVisibility(false);
+                        break;
+                    case LocalValues.VALUES_SHOPPAGE.PROMOTION:
+                        Log.i(MSG, "促销商品");
+                        break;
+                    case LocalValues.VALUES_SHOPPAGE.REDUCTION:
+                        Log.i(MSG, "折扣商品");
+                        break;
+                    case LocalValues.VALUES_SHOPPAGE.VOLUME:
+                        Log.i(MSG, "用卷商品");
+                        break;
+                }
+
 
                 /**
                  * 判断用户是否为VIP
@@ -423,6 +494,7 @@ public class ShowshopOffice extends LazyCatAct {
                 /*名字旁边的VIP图标*/
                 TextView deliverUserIco = confirmdeliverItem.findViewById(R.id
                         .assembly_confirmdeliverIcoVip);
+
                 if (true) {
                     /*是Vip*/
                     TextUnt.with(deliverVipMsg).setBackground(Tools.CreateDrawable(1,
