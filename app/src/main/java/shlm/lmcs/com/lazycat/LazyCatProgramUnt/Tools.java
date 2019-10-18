@@ -76,6 +76,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
  */
 @SuppressLint("LongLogTag")
 public class Tools {
+    private final static String MSG = "Tools.java[+]";
 
     /**
      * Whether the network is Connected
@@ -966,7 +967,19 @@ public class Tools {
         return data;
     }
 
+    public static String getProgramVersion(Context _context) {
+        String ApkVersion;
+        try {
+            String pkName = _context.getPackageName();/*获取包名*/
 
+            ApkVersion = String.valueOf(_context.getPackageManager().getPackageInfo(pkName, 0)
+                    .versionCode);
+            return ApkVersion;
+        } catch (Exception e) {
+            Log.e(MSG, "获取程序版本号失败,原因为:" + e.getMessage());
+            return null;
+        }
+    }
 
 
 }

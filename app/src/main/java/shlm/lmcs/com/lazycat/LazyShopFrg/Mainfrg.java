@@ -2,6 +2,7 @@ package shlm.lmcs.com.lazycat.LazyShopFrg;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -83,8 +84,16 @@ public class Mainfrg extends LazyCatFragment {
     private LinearLayout _Refreshhead;/*滑动控件的头部的广告*/
     private ImageView bigHead_img;/*头部第一个Img的控件*/
     private LocalPage.SecondSmallNavAPage secondSmallNavAPage;
+    private LocalPage.BigCenterHeadpageInstance bigCenterHeadpageInstance;
     private ImageView secondNavAimg;/*第二个导航中的第一个子导航的NAV*/
+    private ImageView secondNavCimg;/*第二个导航中的第三个子导航的图片*/
+    private ImageView secondNavDimg;/*第四个导航中的第四个子导航的图片*/
+    private String ProgramVersion;/*应用程序版本号*/
+    private String ProgramNewSize;/*更新的文件的大小*/
+    private String ProgramVersionText;/*更新之后的一些简介*/
+    private ImageView CenterHeadpageImg;
     private static final String REFRESH_STOP_MESSAGELOAD = "0";/*停止刷新 隐藏广告*/
+    private AlertDialog UpdateDialog;
     /**
      * 模块数据存储
      */
@@ -130,6 +139,12 @@ public class Mainfrg extends LazyCatFragment {
         bigHead_img = item.findViewById(R.id.fragment_main_bigHeadMsg);
         /*第二个导航的第一个子导航*/
         secondNavAimg = item.findViewById(R.id.fragment_main_secondSmallNavAimg);
+        /*第二个导航的第三个子导航*/
+        secondNavCimg = item.findViewById(R.id.fragment_main_secondSmallNavCimg);
+        /*第四个导航的子导航*/
+        secondNavDimg = item.findViewById(R.id.fragment_main_secondSmallNavDimg);
+        /*中间的宣传图片*/
+        CenterHeadpageImg = item.findViewById(R.id.fragment_main_CenterHeadimg);
         for (int i = 0; i < 20; i++) {
             View shopItem = LayoutInflater.from(getContext()).inflate(R.layout.item_mainshoplist,
                     null);
@@ -532,6 +547,26 @@ public class Mainfrg extends LazyCatFragment {
                     @Override
                     public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
                         try {
+
+                            /**
+                             * 版本号
+                             */
+                            if (tag.equals("ProgramVersion")) {
+                                ProgramVersion = pullParser.nextText().trim();
+                            }
+                            /**
+                             * 版本号大小
+                             */
+                            if (tag.equals("ProgramNewSize")) {
+                                ProgramNewSize = pullParser.nextText().trim();
+                            }
+
+                            /**
+                             * 对于该版本的介绍信息
+                             */
+                            if (tag.equals("ProgramVersionText")) {
+                                ProgramVersionText = pullParser.nextText().trim();
+                            }
                             /*设置点击之后的地址*/
                             if (tag.equals(bigheadImg.getTAG_ONCLICK_URL())) {
                                 bigheadImg.setOnClick_url(pullParser.nextText().trim());
@@ -607,6 +642,54 @@ public class Mainfrg extends LazyCatFragment {
                                 }
                             }
 
+
+                            /**
+                             * 竖向的第一个图片的地址
+                             */
+
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVC_IMG)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallCimgUrl(pullParser.nextText
+                                            ().trim());
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+
+
+                            /**
+                             * 竖向的第二个图片的地址
+                             */
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVD_IMG)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallDimgUrl(pullParser.nextText
+                                            ().trim());
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+
+
+                            /**
+                             * 中间的横向图片的地址
+                             */
+                            if (tag.equals(LocalPage.BigCenterHeadpageInstance
+                                    .XML_TAG_CENTER_HEAD_START)) {
+                                bigCenterHeadpageInstance = LocalPage
+                                        .getBigCenterHeadpageInstance();
+                            }
+
+                            /*获取中间横向图片的地址*/
+                            if (tag.equals(LocalPage.BigCenterHeadpageInstance
+                                    .XML_TAG_CENTER_HEAD_IMG)) {
+                                if (bigCenterHeadpageInstance != null) {
+                                    Log.i(MSG,"中间的图片地址:" + pullParser.nextText().trim());
+                                    bigCenterHeadpageInstance.setHeadimg(pullParser.nextText()
+                                            .trim());
+                                } else {
+                                    Log.e(MSG, "bigCenterHeadpageInstantce为NULL没有初始化");
+                                }
+                            }
                         } catch (Exception e) {
                             Log.e(MSG, "解析首页整理的XML数据中出错:" + e.getMessage());
                         }
@@ -623,7 +706,44 @@ public class Mainfrg extends LazyCatFragment {
                          * 结束完成  开始整理界面
                          */
                         InitMainPage();
+                        /**
+                         * 判断是否需要跳出更新框
+                         */
 
+                        if (Tools.getProgramVersion(getContext()) != null) {
+                            Log.i(MSG, "本地版本号:" + Tools.getProgramVersion(getContext()) +
+                                    "服务器版本号:" + ProgramVersion);
+                            if (Tools.getProgramVersion(getContext()).equals(ProgramVersion)) {
+                                //版本号相同
+                            } else {
+                                //版本号不相同
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                View item = LayoutInflater.from(getContext()).inflate(R.layout
+                                        .item_uploadapp, null);
+                                builder.setView(item);
+                                /*更改更新LOGO的图标信息*/
+                                TextView upadLog = item.findViewById(R.id.uploadapp_logo);
+                                TextUnt.with(upadLog).setFontFile(getContext(), "canLogo");
+                                TextView upadText = item.findViewById(R.id.item_uploadappText);
+                                TextUnt.with(upadText).setHtmlText(ProgramVersionText.trim());
+                                /*新的大小*/
+                                TextView upadNewsize = item.findViewById(R.id
+                                        .item_uploadappNewsize);
+                                TextUnt.with(upadNewsize).setText("更新版本大小:" + ProgramNewSize.trim
+                                        ());
+                                TextView upadVersion = item.findViewById(R.id
+                                        .item_uploadappNewversion);
+                                TextUnt.with(upadVersion).setText("最新版本号:" + ProgramVersion.trim());
+                                builder.setCancelable(false);//不能返回
+                                UpdateDialog = builder.show();
+                                UpdateDialog.getWindow().setBackgroundDrawableResource(android.R
+                                        .color.transparent);
+                            }
+
+                        } else {
+                            Toast.makeText(getContext(), "没有找到应用程序的Version您可能在使用过程中出现意外,请联系管理人员",
+                                    Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
             }
@@ -649,7 +769,6 @@ public class Mainfrg extends LazyCatFragment {
         /*加载顶部的第一个Big_headimg*/
         Glide.with(getContext()).load(bigheadImg.getShowImg()).into(bigHead_img);
 
-
         /**
          * 整理第二个图片导航
          */
@@ -657,6 +776,18 @@ public class Mainfrg extends LazyCatFragment {
         Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallAimgUrl().trim())
                 .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
                 (secondNavAimg);
+        /*加载竖向的第一个图片*/
+        Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallCimgUrl().trim())
+                .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
+                (secondNavCimg);
+        Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallDimgUrl().trim())
+                .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
+                (secondNavDimg);
+        Glide.with(getContext()).load(bigCenterHeadpageInstance.getHeadimg().trim())
+                .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
+                (CenterHeadpageImg);
+
+
         /*第一个图片的标题*/
         TextView secondNavAtitle = item.findViewById(R.id.fragment_main_secondSmallNavAtitle);
         TextUnt.with(secondNavAtitle).setText(secondSmallNavAPage.getSecondSmallAtitle())
