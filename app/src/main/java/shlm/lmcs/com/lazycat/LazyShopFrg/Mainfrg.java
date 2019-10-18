@@ -655,6 +655,60 @@ public class Mainfrg extends LazyCatFragment {
                                     Log.e(MSG, "SecondSmallA为空");
                                 }
                             }
+                            /*竖向的第二个图片的Title*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVC_TITLE)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallCtitle(pullParser.nextText
+                                            ().trim());
+
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+                            /*竖向的第二个图片的Title的颜色*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVC_TITLECOLOR)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallCtitleColor(pullParser
+                                            .nextText().trim());
+
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+
+                            }
+                            /*竖向的第二个图片的Context*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVC_CONTEXT)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallCcontext(pullParser
+                                            .nextText().trim());
+
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+
+                            }
+                            /*竖向的第二个图片的Context的颜色*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage
+                                    .XML_TAG_NAVC_CONTEXTCOLOR)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallCcontextColor(pullParser
+                                            .nextText().trim());
+
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+                            /*竖向的第二个图片的点击URL*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVC_URL)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallCClickUrl(pullParser
+                                            .nextText().trim());
+
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+
+                            }
 
 
                             /**
@@ -669,7 +723,60 @@ public class Mainfrg extends LazyCatFragment {
                                 }
                             }
 
+                            /*竖向的第二个图片的Title*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVD_TITLE)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallDtitle(pullParser.nextText
+                                            ().trim());
 
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+                            /*竖向的第二个图片的Title的颜色*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVD_TITLECOLOR)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallDtitleColor(pullParser
+                                            .nextText().trim());
+
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+
+                            }
+                            /*竖向的第二个图片的Context*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVD_CONTEXT)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallDcontext(pullParser
+                                            .nextText().trim());
+
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+
+                            }
+                            /*竖向的第二个图片的Context的颜色*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage
+                                    .XML_TAG_NAVD_CONTEXTCOLOR)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallDcontextColor(pullParser
+                                            .nextText().trim());
+
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+                            /*竖向的第二个图片的点击URL*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVD_URL)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallDClickUrl(pullParser
+                                            .nextText().trim());
+
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+
+                            }
                             /**
                              * 中间的横向图片的地址
                              */
@@ -678,12 +785,10 @@ public class Mainfrg extends LazyCatFragment {
                                 bigCenterHeadpageInstance = LocalPage
                                         .getBigCenterHeadpageInstance();
                             }
-
                             /*获取中间横向图片的地址*/
                             if (tag.equals(LocalPage.BigCenterHeadpageInstance
                                     .XML_TAG_CENTER_HEAD_IMG)) {
                                 if (bigCenterHeadpageInstance != null) {
-                                    Log.i(MSG,"中间的图片地址:" + pullParser.nextText().trim());
                                     bigCenterHeadpageInstance.setHeadimg(pullParser.nextText()
                                             .trim());
                                 } else {
@@ -780,9 +885,11 @@ public class Mainfrg extends LazyCatFragment {
         Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallCimgUrl().trim())
                 .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
                 (secondNavCimg);
+        /*加载竖向的第二个图片*/
         Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallDimgUrl().trim())
                 .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
                 (secondNavDimg);
+        /*加载中间的导航的图片*/
         Glide.with(getContext()).load(bigCenterHeadpageInstance.getHeadimg().trim())
                 .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
                 (CenterHeadpageImg);
@@ -796,6 +903,14 @@ public class Mainfrg extends LazyCatFragment {
         TextView secondNavAcontext = item.findViewById(R.id.fragment_main_secondSmallNavAcontext);
         TextUnt.with(secondNavAcontext).setText(secondSmallNavAPage.getSecondSmallAcontext())
                 .setTextColor(secondSmallNavAPage.getSecondSmallAcontextColor());
+        /*第一个NAV导航的竖向地址的标题*/
+        TextView secondNavCtitle = item.findViewById(R.id.fragment_main_secondSmallNavCtitle);
+        TextUnt.with(secondNavCtitle).setText(secondSmallNavAPage.getSecondSmallCtitle())
+                .setTextColor(secondSmallNavAPage.getSecondSmallAtitleColor().trim());
+        /*第一个NAV导航的竖向地址的内容*/
+        TextView secondNavCcontext = item.findViewById(R.id.fragment_main_secondSmallNavCcontext);
+        TextUnt.with(secondNavCcontext).setText(secondSmallNavAPage.getSecondSmallCcontext())
+                .setTextColor(secondSmallNavAPage.getSecondSmallCcontextColor().trim());
 
 
     }
