@@ -85,9 +85,12 @@ public class Mainfrg extends LazyCatFragment {
     private ImageView bigHead_img;/*头部第一个Img的控件*/
     private LocalPage.SecondSmallNavAPage secondSmallNavAPage;
     private LocalPage.BigCenterHeadpageInstance bigCenterHeadpageInstance;
+    private LocalPage.ThreeNavPageInstance threeNavPageInstance;
     private ImageView secondNavAimg;/*第二个导航中的第一个子导航的NAV*/
+    private ImageView secondNavBimg;/*第二个导航中的第二个子导航的NAV*/
     private ImageView secondNavCimg;/*第二个导航中的第三个子导航的图片*/
     private ImageView secondNavDimg;/*第四个导航中的第四个子导航的图片*/
+    private ImageView threeNavAimg;/*第三排的第一个竖向图片*/
     private String ProgramVersion;/*应用程序版本号*/
     private String ProgramNewSize;/*更新的文件的大小*/
     private String ProgramVersionText;/*更新之后的一些简介*/
@@ -139,12 +142,16 @@ public class Mainfrg extends LazyCatFragment {
         bigHead_img = item.findViewById(R.id.fragment_main_bigHeadMsg);
         /*第二个导航的第一个子导航*/
         secondNavAimg = item.findViewById(R.id.fragment_main_secondSmallNavAimg);
+        /*第二个导航的第二个子导航*/
+        secondNavBimg = item.findViewById(R.id.fragment_main_secondSmallNavBimg);
         /*第二个导航的第三个子导航*/
         secondNavCimg = item.findViewById(R.id.fragment_main_secondSmallNavCimg);
         /*第四个导航的子导航*/
         secondNavDimg = item.findViewById(R.id.fragment_main_secondSmallNavDimg);
         /*中间的宣传图片*/
         CenterHeadpageImg = item.findViewById(R.id.fragment_main_CenterHeadimg);
+        /*第三排的第一个竖向的图片*/
+        threeNavAimg = item.findViewById(R.id.fragment_main_threeNavAimg);
         for (int i = 0; i < 20; i++) {
             View shopItem = LayoutInflater.from(getContext()).inflate(R.layout.item_mainshoplist,
                     null);
@@ -233,8 +240,8 @@ public class Mainfrg extends LazyCatFragment {
 */
 
         init(item);
-        listener(item);
         getServiceAddr("上杭县");
+        listener(item);
         return item;
 
     }
@@ -247,6 +254,18 @@ public class Mainfrg extends LazyCatFragment {
      */
     @SuppressLint({"NewApi", "ResourceType"})
     private void listener(View item) {
+
+        /**
+         * 第二排导航的第一个横向的图片的点击事件
+         */
+        secondNavAimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WEB_VALUES_ACT web_values_act = new WEB_VALUES_ACT(v.getTag().toString().trim());
+                web_values_act.set_StaticColor("#ffffff");
+                LazyCatFragmentStartWevact(web_values_act);
+            }
+        });
 
         /**
          * 搜索ICO点击
@@ -612,7 +631,7 @@ public class Mainfrg extends LazyCatFragment {
                                     Log.e(MSG, "SecondSmallA为空");
                                 }
                             }
-                            /*第二个Nav的图片介绍*/
+                            /*第一个Nav的图片介绍*/
                             if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVA_CONTEXT)) {
                                 if (secondSmallNavAPage != null) {
                                     secondSmallNavAPage.setSecondSmallAcontext(pullParser
@@ -622,7 +641,7 @@ public class Mainfrg extends LazyCatFragment {
                                 }
                             }
 
-                            /*第二个Nav的标题的颜色*/
+                            /*第一个Nav的标题的颜色*/
                             if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVA_TITLECOLOR)) {
                                 if (secondSmallNavAPage != null) {
                                     secondSmallNavAPage.setSecondSmallAtitleColor(pullParser
@@ -631,7 +650,7 @@ public class Mainfrg extends LazyCatFragment {
                                     Log.e(MSG, "SecondSmallA为空");
                                 }
                             }
-                            /*第二个Nav的介绍的颜色*/
+                            /*第一个Nav的介绍的颜色*/
                             if (tag.equals(LocalPage.SecondSmallNavAPage
                                     .XML_TAG_NAVA_CONTEXTCOLOR)) {
                                 if (secondSmallNavAPage != null) {
@@ -642,6 +661,65 @@ public class Mainfrg extends LazyCatFragment {
                                 }
                             }
 
+                            /**
+                             * 横向第二个图片的取值
+                             */
+                            /*获取标题*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVB_TITLE)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallBtitle(pullParser.nextText
+                                            ().trim());
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+
+                            /*获取标题的颜色*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVB_TITLECOLOR)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallBtitleColor(pullParser
+                                            .nextText().trim());
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+                            /*获取介绍的信息*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVB_CONTEXT)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallBcontext(pullParser
+                                            .nextText().trim());
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+                            /*获取介绍信息的颜色值*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage
+                                    .XML_TAG_NAVB_CONTEXTCOLOR)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallBcontextColor(pullParser
+                                            .nextText().trim());
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+                            /*获取点击的跳转介绍URL*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVB_URL)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallBClickUrl(pullParser
+                                            .nextText().trim());
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
+                            /*获取图片地址*/
+                            if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVB_IMG)) {
+                                if (secondSmallNavAPage != null) {
+                                    secondSmallNavAPage.setSecondSmallBimgUrl(pullParser.nextText
+                                            ().trim());
+                                } else {
+                                    Log.e(MSG, "SecondSmallA为空");
+                                }
+                            }
 
                             /**
                              * 竖向的第一个图片的地址
@@ -655,7 +733,7 @@ public class Mainfrg extends LazyCatFragment {
                                     Log.e(MSG, "SecondSmallA为空");
                                 }
                             }
-                            /*竖向的第二个图片的Title*/
+                            /*竖向的第一个图片的Title*/
                             if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVC_TITLE)) {
                                 if (secondSmallNavAPage != null) {
                                     secondSmallNavAPage.setSecondSmallCtitle(pullParser.nextText
@@ -665,7 +743,7 @@ public class Mainfrg extends LazyCatFragment {
                                     Log.e(MSG, "SecondSmallA为空");
                                 }
                             }
-                            /*竖向的第二个图片的Title的颜色*/
+                            /*竖向的第一个图片的Title的颜色*/
                             if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVC_TITLECOLOR)) {
                                 if (secondSmallNavAPage != null) {
                                     secondSmallNavAPage.setSecondSmallCtitleColor(pullParser
@@ -676,7 +754,7 @@ public class Mainfrg extends LazyCatFragment {
                                 }
 
                             }
-                            /*竖向的第二个图片的Context*/
+                            /*竖向的第一个图片的Context*/
                             if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVC_CONTEXT)) {
                                 if (secondSmallNavAPage != null) {
                                     secondSmallNavAPage.setSecondSmallCcontext(pullParser
@@ -687,7 +765,7 @@ public class Mainfrg extends LazyCatFragment {
                                 }
 
                             }
-                            /*竖向的第二个图片的Context的颜色*/
+                            /*竖向的第一个个图片的Context的颜色*/
                             if (tag.equals(LocalPage.SecondSmallNavAPage
                                     .XML_TAG_NAVC_CONTEXTCOLOR)) {
                                 if (secondSmallNavAPage != null) {
@@ -698,7 +776,7 @@ public class Mainfrg extends LazyCatFragment {
                                     Log.e(MSG, "SecondSmallA为空");
                                 }
                             }
-                            /*竖向的第二个图片的点击URL*/
+                            /*竖向的第一个个图片的点击URL*/
                             if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVC_URL)) {
                                 if (secondSmallNavAPage != null) {
                                     secondSmallNavAPage.setSecondSmallCClickUrl(pullParser
@@ -795,6 +873,35 @@ public class Mainfrg extends LazyCatFragment {
                                     Log.e(MSG, "bigCenterHeadpageInstantce为NULL没有初始化");
                                 }
                             }
+
+
+                            /**
+                             * 第三行的导航的参数取值
+                             */
+                            if (tag.equals(LocalPage.ThreeNavPageInstance
+                                    .XML_TAG_THREE_NAVA_START)) {
+                                if (threeNavPageInstance == null) {
+                                    threeNavPageInstance = LocalPage.getThreeNavPageInstance();
+                                }
+                            }
+
+                            /*获取竖向的第一个图片地址*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance.XML_TAG_THREE_NAVA_IMG)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavAimg(pullParser.nextText().trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+                            /*获取竖向的点击事件的跳转URL*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance.XML_TAG_THREE_NAVA_URL)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavAurl(pullParser.nextText().trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+
+                            }
                         } catch (Exception e) {
                             Log.e(MSG, "解析首页整理的XML数据中出错:" + e.getMessage());
                         }
@@ -877,10 +984,16 @@ public class Mainfrg extends LazyCatFragment {
         /**
          * 整理第二个图片导航
          */
-        /*加载第一个图片*/
+        /*加载横向的第一个图片*/
         Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallAimgUrl().trim())
                 .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
                 (secondNavAimg);
+        /*设置图片的点击跳转地址*/
+        secondNavAimg.setTag(secondSmallNavAPage.getSecondSmallAClickUrl());
+        /*加载横向的第二个图片*/
+        Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallBimgUrl().trim())
+                .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
+                (secondNavBimg);
         /*加载竖向的第一个图片*/
         Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallCimgUrl().trim())
                 .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
@@ -893,8 +1006,9 @@ public class Mainfrg extends LazyCatFragment {
         Glide.with(getContext()).load(bigCenterHeadpageInstance.getHeadimg().trim())
                 .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
                 (CenterHeadpageImg);
-
-
+        /*加载第三个导航的第一个竖向的图片*/
+        Glide.with(getContext()).load(threeNavPageInstance.getNavAimg()).skipMemoryCache(false)
+                .diskCacheStrategy(DiskCacheStrategy.NONE).into(threeNavAimg);
         /*第一个图片的标题*/
         TextView secondNavAtitle = item.findViewById(R.id.fragment_main_secondSmallNavAtitle);
         TextUnt.with(secondNavAtitle).setText(secondSmallNavAPage.getSecondSmallAtitle())
@@ -903,6 +1017,14 @@ public class Mainfrg extends LazyCatFragment {
         TextView secondNavAcontext = item.findViewById(R.id.fragment_main_secondSmallNavAcontext);
         TextUnt.with(secondNavAcontext).setText(secondSmallNavAPage.getSecondSmallAcontext())
                 .setTextColor(secondSmallNavAPage.getSecondSmallAcontextColor());
+        /*横向的第二个图片的标题*/
+        TextView secondNavBtitle = item.findViewById(R.id.fragment_main_secondSmallNavBtitle);
+        TextUnt.with(secondNavBtitle).setText(secondSmallNavAPage.getSecondSmallBtitle())
+                .setTextColor(secondSmallNavAPage.getSecondSmallBtitleColor());
+        /*横向的第二个图片的介绍*/
+        TextView secondNavBcontext = item.findViewById(R.id.fragment_main_secondSmallNavBcontext);
+        TextUnt.with(secondNavBcontext).setText(secondSmallNavAPage.getSecondSmallBcontext())
+                .setTextColor(secondSmallNavAPage.getSecondSmallBcontextColor());
         /*第一个NAV导航的竖向地址的标题*/
         TextView secondNavCtitle = item.findViewById(R.id.fragment_main_secondSmallNavCtitle);
         TextUnt.with(secondNavCtitle).setText(secondSmallNavAPage.getSecondSmallCtitle())
@@ -911,7 +1033,14 @@ public class Mainfrg extends LazyCatFragment {
         TextView secondNavCcontext = item.findViewById(R.id.fragment_main_secondSmallNavCcontext);
         TextUnt.with(secondNavCcontext).setText(secondSmallNavAPage.getSecondSmallCcontext())
                 .setTextColor(secondSmallNavAPage.getSecondSmallCcontextColor().trim());
-
+        /*第二个NAV导航的竖向地址的的标题*/
+        TextView secondNavDtitle = item.findViewById(R.id.fragment_main_secondSmallNavDtitle);
+        TextUnt.with(secondNavDtitle).setText(secondSmallNavAPage.getSecondSmallDtitle().trim())
+                .setTextColor(secondSmallNavAPage.getSecondSmallDtitleColor().trim());
+        /*第二个NAV导航的竖向地址的第内容*/
+        TextView secondNavDcontext = item.findViewById(R.id.fragment_main_secondSmallNavDcontext);
+        TextUnt.with(secondNavDcontext).setText(secondSmallNavAPage.getSecondSmallDcontext().trim
+                ()).setTextColor(secondSmallNavAPage.getSecondSmallDcontextColor().trim());
 
     }
 
