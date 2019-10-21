@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.ScrollViewBiggerPhoto;
+import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
@@ -50,6 +52,7 @@ public class ShowshopOffice extends LazyCatAct {
     private String shopmesage;/*关于商品的信息*/
     private String getshopAction;/*获取商品的方式 1条码查找 2 名称查找 3 模糊查找 4 唯一识别号查找*/
     private ScrollViewBiggerPhoto scrollViewBiggerPhoto;
+    private Boolean isLoginin;/*标记用户是否已经登录状态*/
     private ImageView photo;
     private TextView btn_select_del;
     private TextView btn_select_add;
@@ -63,6 +66,7 @@ public class ShowshopOffice extends LazyCatAct {
     private TextView SHOP_BARCODE;/*商品的条码*/
     private TextView SHOP_RETAIL;/*商品的零售价格*/
     private TextView SHOP_SHOWBRAND;/*商品显示的品牌*/
+    private LocalProgramTools.UserToolsInstance userToolsInstance;/*用户工具类*/
     private AlertDialog gradeAlertDialog;/*等级的Alert*/
     private XmlTagValuesFactory.Shopvalues shopvalues = null;
     private ImageView countDownadavert;
@@ -252,6 +256,11 @@ public class ShowshopOffice extends LazyCatAct {
                             /*商品的品牌*/
                             if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_BRAND)) {
                                 shopvalues.setBrand(pullParser.nextText().trim());
+                            }
+                            /*商品的零售价格*/
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                    .ACTION_SHOPVALUES_RETAIL)) {
+                                shopvalues.setRetail(pullParser.nextText().trim());
                             }
 
                             /*商品单位*/
@@ -535,15 +544,44 @@ public class ShowshopOffice extends LazyCatAct {
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
 
+
+        /**
+         * 查询本地是否登录了账户 如果没有 就不要显示
+         */
+        /*获取用户工具类*/
+        userToolsInstance = LocalProgramTools.getUserToolsInstance();
+        userToolsInstance.StartPullerUserpageXml(new LocalProgramTools.UserToolsInstance
+                .SetReadUserpageListener() {
+            @Override
+            public void onRead(String tag, String values) {
+                if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_TOKEN)) {
+                    if (!TextUtils.isEmpty(values)) {
+                        /*有登录*/
+                        isLoginin = true;
+                    } else {
+                        /*没有登录*/
+                        isLoginin = false;
+                    }
+                }
+            }
+
+            @Override
+            public void onError() {
+                /*处理失败  直接退出*/
+                Toast.makeText(getApplicationContext(), "您的账号登录失败,请您联系管理人员", Toast.LENGTH_SHORT)
+                        .show();
+                finish();
+            }
+        });
         /*设置条码图片*/
         if (shopvalues.getBarcode().equals("") || shopvalues.getBarcode().equals("0")) {
             imgBarcode.setVisibility(View.GONE);
         } else {
-            Log.i(MSG,"图片条码地址:" + "http://api.k780.com/?app=barcode.get&bc_text=" +
-                    shopvalues.getBarcode() + "&appkey=" + getResources().getString(R.string
-                    .nowApiKey) + "&sign=" + getResources().getString(R.string.nowApiMd5));
-            Glide.with(ShowshopOffice.this).load("http://api.k780.com/?app=barcode.get&bc_text=" +
-                    shopvalues.getBarcode() + "&appkey=" + getResources().getString(R.string
+            Log.i(MSG, "图片条码地址:" + "http://api.k780.com/?app=barcode.get&bc_text=" + shopvalues
+                    .getBarcode() + "&appkey=" + getResources().getString(R.string.nowApiKey) +
+                    "&sign=" + getResources().getString(R.string.nowApiMd5));
+            Glide.with(ShowshopOffice.this).load("http://api.k780.com/?app=barcode.get&bc_text="
+                    + shopvalues.getBarcode() + "&appkey=" + getResources().getString(R.string
                     .nowApiKey) + "&sign=" + getResources().getString(R.string.nowApiMd5))
                     .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(false).into
                     (imgBarcode);
@@ -560,24 +598,34 @@ public class ShowshopOffice extends LazyCatAct {
                 .WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(15, 0, 0, 0);
         tp.setLayoutParams(params);
-        TextUnt.with(tp).setText(shopvalues.getSu() + shopvalues.getCompany() + "起订")
-                .setTextColor("#08c299").setTextSize(8);
+
         otherMessage.addView(tp);
 
         /*界面初始化*/
         TextUnt.with(SHOP_TITLE).setText(shopvalues.getTitle());
-        if (LocalValues.isLogin) {
+        if (isLoginin) {
             /*设置批发价格*/
             TextUnt.with(SHOP_TP).setText(shopvalues.getTp());
             /*设置虚线价格*/
             TextUnt.with(SHOP_DLP).setText(shopvalues.getDlp()).setMidcourtLine();
+            /*设置零售价*/
+            TextUnt.with(SHOP_RETAIL).setText("终端建议售价:" + shopvalues.getRetail() + "元/" +
+                    shopvalues.getSplitUnit());
+            TextUnt.with(tp).setText(shopvalues.getSu() + shopvalues.getCompany() + "起订")
+                    .setTextColor("#08c299").setTextSize(8);
         } else {
+            TextUnt.with(btnAccount).setText("未登录账户").setBackground(Tools.CreateDrawable(1, "#666666",
+                    "#666666",5)).setTextColor("#ffffff");
             TextUnt.with(SHOP_TP).setText("*.*");
             /*设置批发价格*/
             TextUnt.with(SHOP_TP).setText("*.*");
             /*设置虚线价格*/
             SHOP_DLP.setVisibility(View.GONE);
             TextUnt.with(SHOP_DLP).setVisibility(false);
+            /*设置零售价*/
+            TextUnt.with(SHOP_RETAIL).setText("终端建议售价:-元/" + shopvalues.getSplitUnit());
+            TextUnt.with(tp).setText("-" + shopvalues.getCompany() + "起订")
+                    .setTextColor("#08c299").setTextSize(8);
 
         }
         /*设置生产日期*/
@@ -585,14 +633,12 @@ public class ShowshopOffice extends LazyCatAct {
         /*设置保质期*/
         TextUnt.with(SHOP_EXP).setText("保质期:" + shopvalues.getExp());
         /*设置品牌*/
-        TextUnt.with(SHOP_SPEC).setText("箱规:" + shopvalues.getSpec() + shopvalues.getCompany());
+        TextUnt.with(SHOP_SPEC).setText("箱规:" + shopvalues.getSpec() + shopvalues.getSplitUnit());
         /*设置等级*/
         TextUnt.with(SHOP_GRADE).setText("等级:" + shopvalues.getGrade());
         /*设置条码*/
         TextUnt.with(SHOP_BARCODE).setText("条码:" + shopvalues.getBarcode());
-        /*设置零售价*/
-        TextUnt.with(SHOP_RETAIL).setText("终端建议售价:" + shopvalues.getPrice() + "元/" + shopvalues
-                .getCompany());
+
         /*设置要显示的品牌*/
         TextUnt.with(SHOP_SHOWBRAND).setText(shopvalues.getBrand());
 

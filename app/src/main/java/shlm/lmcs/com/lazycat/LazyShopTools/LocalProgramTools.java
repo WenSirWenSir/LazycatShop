@@ -186,6 +186,9 @@ public class LocalProgramTools {
                     }
                 } catch (Exception e) {
                     Log.e(MSG, "解析用户的XML文件为空,错误内容为:" + e.getMessage());
+                    if(_setReadUserpageListener != null){
+                        _setReadUserpageListener.onError();
+                    }
                 }
             } else {
                 Log.e(MSG, "解析用户的XML文件的回调为空!");
@@ -195,6 +198,7 @@ public class LocalProgramTools {
 
         public interface SetReadUserpageListener {
             void onRead(String tag, String values);
+            void onError();
         }
     }
 

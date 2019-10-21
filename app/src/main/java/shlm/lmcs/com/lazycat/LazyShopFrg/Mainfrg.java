@@ -482,7 +482,6 @@ public class Mainfrg extends LazyCatFragment {
                         @Override
                         public void onEndDocument() {
                             if (userToolsInstance.SaveingUserPageXml()) {
-                                Toast.makeText(getContext(), "保存成功", Toast.LENGTH_SHORT).show();
                                 /*保存成功之后 马上开始尝试解析*/
                                 userToolsInstance.StartPullerUserpageXml(new LocalProgramTools
                                         .UserToolsInstance.SetReadUserpageListener() {
@@ -490,9 +489,12 @@ public class Mainfrg extends LazyCatFragment {
                                     public void onRead(String tag, String values) {
                                         if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
                                                 .ACTION_LOCALUSERPAGE_TOKEN)) {
-                                            Toast.makeText(getContext(), "Token:" + values, Toast
-                                                    .LENGTH_SHORT).show();
                                         }
+                                    }
+
+                                    @Override
+                                    public void onError() {
+
                                     }
                                 });
                             } else {

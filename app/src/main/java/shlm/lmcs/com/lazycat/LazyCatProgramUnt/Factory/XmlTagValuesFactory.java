@@ -573,7 +573,10 @@ public class XmlTagValuesFactory {
         String exp;/*保质期*/
         String infrom;/*原场地*/
         String onlyid;/*唯一表示符号*/
-        String price;/*零售价*/
+        String price;
+        String retail;/*零售价格*/
+
+
         String _static;/*状态*/
         String su;/*起订*/
         String tp;/*批发价格*/
@@ -733,6 +736,14 @@ public class XmlTagValuesFactory {
 
         public void setBrand(String brand) {
             this.brand = brand;
+        }
+
+        public String getRetail() {
+            return retail;
+        }
+
+        public void setRetail(String retail) {
+            this.retail = retail;
         }
     }
 
