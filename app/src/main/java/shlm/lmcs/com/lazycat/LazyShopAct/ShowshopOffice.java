@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -66,6 +67,7 @@ public class ShowshopOffice extends LazyCatAct {
     private XmlTagValuesFactory.Shopvalues shopvalues = null;
     private ImageView countDownadavert;
     private ImageView btnGradeAsk;/*问号按钮*/
+    private ImageView imgBarcode;/*图片的条码*/
     private LinearLayout select_numberBody;
     private LinearLayout showShoplistBody;
     private LinearLayout valuesBody;/*商品参数的Body*/
@@ -188,6 +190,8 @@ public class ShowshopOffice extends LazyCatAct {
         valuesBody = findViewById(R.id.activity_showshopoffice_valuesBody);
         /*显示问号按钮*/
         btnGradeAsk = findViewById(R.id.activity_showshopoffice_btnGradeAsk);
+        /*图片的条码*/
+        imgBarcode = findViewById(R.id.activity_showshopoffice_imgBarcode);
         /*尝试加载*/
         /*图片包裹*/
         /*获取界面传值*/
@@ -531,7 +535,19 @@ public class ShowshopOffice extends LazyCatAct {
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
 
-
+        /*设置条码图片*/
+        if (shopvalues.getBarcode().equals("") || shopvalues.getBarcode().equals("0")) {
+            imgBarcode.setVisibility(View.GONE);
+        } else {
+            Log.i(MSG,"图片条码地址:" + "http://api.k780.com/?app=barcode.get&bc_text=" +
+                    shopvalues.getBarcode() + "&appkey=" + getResources().getString(R.string
+                    .nowApiKey) + "&sign=" + getResources().getString(R.string.nowApiMd5));
+            Glide.with(ShowshopOffice.this).load("http://api.k780.com/?app=barcode.get&bc_text=" +
+                    shopvalues.getBarcode() + "&appkey=" + getResources().getString(R.string
+                    .nowApiKey) + "&sign=" + getResources().getString(R.string.nowApiMd5))
+                    .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(false).into
+                    (imgBarcode);
+        }
         /*设置商品参数的Body的边框*/
         valuesBody.setBackground(Tools.CreateDrawable(1, "#efefef", "#efefef", 10));
         /*判断网络整理的标题是否为空*/
