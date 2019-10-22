@@ -35,6 +35,15 @@ public class LocalProgramTools {
         private String Status;/*用户的账户状态*/
         private String Vipstatus;/*用户的VIP状态*/
         private String Token;/*用户的TOKEN*/
+        private String Account;/*用户的账户*/
+
+        public String getAccount() {
+            return Account;
+        }
+
+        public void setAccount(String account) {
+            Account = account;
+        }
 
         private SetReadUserpageListener _setReadUserpageListener;
 
@@ -84,7 +93,15 @@ public class LocalProgramTools {
         public Boolean SaveingUserPageXml() {
             try {
                 File file = new File(Environment.getExternalStorageDirectory(), "CK_USERPAGE.xml");
-                Log.i(MSG, "文件路径地址:" + file.getPath());
+                /*判断是否存在 存在就先删除之后再保存*/
+                if (file.exists() && file.isFile()) {
+                    if (file.delete()) {
+                        Log.i(MSG, "原始文件清除成功");
+                    } else {
+                        Log.e(MSG, "删除原始数据失败");
+                        return false;
+                    }
+                }
                 FileOutputStream fos = new FileOutputStream(file);
                 /*获取序列化工具*/
                 XmlSerializer serializer = Xml.newSerializer();
@@ -117,6 +134,11 @@ public class LocalProgramTools {
                 serializer.text(Token.trim());
                 serializer.endTag(null, LocalAction.ACTION_LOCALUSERPAGE
                         .ACTION_LOCALUSERPAGE_TOKEN);
+                serializer.startTag(null, LocalAction.ACTION_LOCALUSERPAGE
+                        .ACTION_LOCALUSERPAGE_ACCOUNT);
+                serializer.text(Account.trim());
+                serializer.endTag(null, LocalAction.ACTION_LOCALUSERPAGE
+                        .ACTION_LOCALUSERPAGE_ACCOUNT);
                 serializer.endTag(null, "userPage");
                 serializer.endTag(null, "body");
                 serializer.endDocument();
@@ -180,13 +202,19 @@ public class LocalProgramTools {
                                             .ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_TOKEN,
                                             parser.nextText().trim());
                                 }
+                                if (tagName.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                        .ACTION_LOCALUSERPAGE_ACCOUNT)) {
+                                    _setReadUserpageListener.onRead(LocalAction
+                                            .ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_ACCOUNT,
+                                            parser.nextText().trim());
+                                }
                                 break;
                         }
                         eventType = parser.next();
                     }
                 } catch (Exception e) {
                     Log.e(MSG, "解析用户的XML文件为空,错误内容为:" + e.getMessage());
-                    if(_setReadUserpageListener != null){
+                    if (_setReadUserpageListener != null) {
                         _setReadUserpageListener.onError();
                     }
                 }
@@ -198,6 +226,7 @@ public class LocalProgramTools {
 
         public interface SetReadUserpageListener {
             void onRead(String tag, String values);
+
             void onError();
         }
     }

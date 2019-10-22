@@ -481,8 +481,8 @@ public class Mainfrg extends LazyCatFragment {
 
                         @Override
                         public void onEndDocument() {
-                            if (userToolsInstance.SaveingUserPageXml()) {
-                                /*保存成功之后 马上开始尝试解析*/
+/*                            if (userToolsInstance.SaveingUserPageXml()) {
+                                *//*保存成功之后 马上开始尝试解析*//*
                                 userToolsInstance.StartPullerUserpageXml(new LocalProgramTools
                                         .UserToolsInstance.SetReadUserpageListener() {
                                     @Override
@@ -499,7 +499,7 @@ public class Mainfrg extends LazyCatFragment {
                                 });
                             } else {
                                 Toast.makeText(getContext(), "保存失败", Toast.LENGTH_SHORT).show();
-                            }
+                            }*/
                         }
                     });
                 }

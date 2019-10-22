@@ -493,8 +493,6 @@ public class ShowshopOffice extends LazyCatAct {
                         Log.i(MSG, "用卷商品");
                         break;
                 }
-
-
                 /**
                  * 判断用户是否为VIP
                  */

@@ -1,12 +1,12 @@
 package shlm.lmcs.com.lazycat.LazyShopAct;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,15 +23,16 @@ import org.xmlpull.v1.XmlPullParser;
 import java.util.ArrayList;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.XmlBuilder;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlanalysisFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.AutoLineLayout;
+import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
@@ -49,6 +50,15 @@ public class SearchAct extends LazyCatAct {
 
     private LinearLayout SearchViewBody;
     private ImageView btnSearch;
+    private TextView btnClear;/*点击清空按钮*/
+    private TextView headTitle;/*标题*/
+    private String userAccount;/*用户的账户*/
+    private String userToken;/*用户的TOKEN*/
+    /*热搜*/
+    private ArrayList<String> hotTitle;
+
+    private LocalProgramTools.UserToolsInstance userToolsInstance;
+
 
     @SuppressLint({"NewApi", "ResourceType"})
     @Override
@@ -64,10 +74,16 @@ public class SearchAct extends LazyCatAct {
         SearchViewBody = findViewById(R.id.activity_search_searchHead);
         /*搜索框的点击的图片*/
         btnSearch = SearchViewBody.findViewById(R.id.assembly_head_btnSearch);
-
+        /*点击清空的按钮*/
+        btnClear = findViewById(R.id.activity_searchBtnclear);
+        /**/
+        headTitle = findViewById(R.id.assembly_act_headTitle);
+        headTitle.setText("检索商品");
+        userToolsInstance = LocalProgramTools.getUserToolsInstance();/*获取用户工具类*/
         Tools.getFocusable(input);
         init();
     }
+
 
     private void init() {
         InitPageXml();/*整理编辑框的界面*/
@@ -187,14 +203,6 @@ public class SearchAct extends LazyCatAct {
         });
 
 
-        ArrayList<String> text_list = new ArrayList<>();
-        text_list.add("流浪地球");
-        text_list.add("逍遥散人");
-        text_list.add("东宫");
-        text_list.add("EXO");
-        text_list.add("老番茄");
-        text_list.add("假面骑士ZI-O");
-        text_list.add("信誓旦旦");
         ArrayList<String> text_list2 = new ArrayList<>();
         text_list2.add("流浪地球");
         text_list2.add("逍遥散人");
@@ -203,16 +211,13 @@ public class SearchAct extends LazyCatAct {
         text_list2.add("老番茄");
         text_list2.add("假面骑士ZI-O");
         text_list2.add("信誓旦旦");
-        ArrayList<LinearLayout> tv_list = Tools.handleToarraylist(getApplicationContext(),
-                text_list, 20, 10, 20, 10, "#e9e9e9", "#666666", 13);
+
         ArrayList<LinearLayout> tv_list2 = Tools.handleToarraylist(getApplicationContext(),
                 text_list2, 20, 10, 20, 10, "#e9e9e9", "#666666", 13);
 
         everyoneSearch = findViewById(R.id.activity_everyone_searchBody);/*大家都在搜*/
         searchLog = findViewById(R.id.activity_search_searchLogBody);/*用户的搜索记录*/
-        for (int i = 0; i < tv_list.size(); i++) {
-            everyoneSearch.addView(tv_list.get(i));
-        }
+
         for (int i = 0; i < tv_list2.size(); i++) {
             searchLog.addView(tv_list2.get(i));
         }
@@ -227,6 +232,21 @@ public class SearchAct extends LazyCatAct {
             @Override
             public void onClick(View v) {
                 LazyCatActStartActivity(SearchShoplist.class, false);
+            }
+        });
+
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchLog.removeAllViews();
+                TextView noLog = new TextView(searchLog.getContext());
+                noLog.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams
+                        .MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                noLog.setGravity(Gravity.CENTER);
+                searchLog.addView(noLog);
+                TextUnt.with(noLog).setText("没有搜索记录").setTextColor("#666666").setTextSize(12);
+                /*隐藏 不出现*/
+                btnClear.setVisibility(View.GONE);
             }
         });
     }
@@ -285,18 +305,51 @@ public class SearchAct extends LazyCatAct {
      */
     @SuppressLint("NewApi")
     private void InitPageXml() {
-        Net.doGet(getApplicationContext(), Config.HTTP_ADDR.getInitMainXmlConfig(), new Net
-                .onVisitInterServiceListener() {
+        /**
+         * 判断用户是否登录状态
+         */
+
+        userToolsInstance.StartPullerUserpageXml(new LocalProgramTools.UserToolsInstance
+                .SetReadUserpageListener() {
             @Override
-            public WaitDialog.RefreshDialog onStartLoad() {
-                return null;
+            public void onRead(String tag, String values) {
+                if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_ACCOUNT)) {
+                    if (!TextUtils.isEmpty(values) && values != null) {
+                        userAccount = values;
+                    } else {
+                        userAccount = "";
+                    }
+                }
+                if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_TOKEN)) {
+                    if (!TextUtils.isEmpty(values) && values != null) {
+                        userToken = values;
+                    } else {
+                        userToken = "";
+                    }
+                }
             }
 
             @Override
-            public void onSucess(String tOrgin, final WaitDialog.RefreshDialog _RefreshDialog) {
-                Log.i(MSG, "调试输出:" + tOrgin);
-                XmlanalysisFactory xmlTools = new XmlanalysisFactory(tOrgin);
-                xmlTools.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
+            public void onError() {
+                userAccount = "";/*没有登录*/
+                userToken = "";/*没有登录*/
+
+            }
+        });
+        XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder();
+        xmlInstance.initDom();
+        Log.i(MSG, "获取到的账户名称:" + userAccount);
+        Log.i(MSG, "获取到的账户Token:" + userToken);
+        xmlInstance.setXmlTree(LocalAction.ACTION_LOCALUSERPAGE.ACTION_USER, userAccount);/*用户账户*/
+        xmlInstance.setXmlTree(LocalAction.ACTION_LOCALUSERPAGE.ACTION_TOKEN, userToken);/*用户密码*/
+        xmlInstance.overDom();
+        Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_INITSEARCH, new
+                ProgramInterface() {
+            @Override
+            public void onSucess(String data, int code, WaitDialog.RefreshDialog _refreshDialog) {
+                Log.i(MSG, data.trim());
+                XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(data.trim());
+                xmlanalysisFactory.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
                     @Override
                     public void onFaile() {
 
@@ -310,63 +363,26 @@ public class SearchAct extends LazyCatAct {
                     @Override
                     public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
                         try {
-
-                            /**
-                             * 获取搜索的父窗口的背景颜色
-                             */
-                            if (tag.equals(XmlTagValuesFactory.XmlInitPage.key_searchbackground)) {
-                                XmlTagValuesFactory.XmlInitPage.setSearchBackground(pullParser
-                                        .nextText().trim());
+                            if (tag.equals(LocalAction.ACTION_SEARCHKEY.ACTION_HOT_BEGIN)) {
+                                if (hotTitle != null) {
+                                    hotTitle.clear();
+                                } else {
+                                    hotTitle = new ArrayList<String>();
+                                }
+                            }
+                            /*获取解析的热搜标题*/
+                            if (tag.equals(LocalAction.ACTION_SEARCHKEY.ACTION_HOT_TITLE)) {
+                                if (hotTitle != null) {
+                                    hotTitle.add(pullParser.nextText().trim());
+                                } else {
+                                    Log.e(MSG, "热搜的数组是空的");
+                                }
                             }
 
-
-                            /**
-                             * 获取状态栏颜色
-                             */
-                            if (tag.equals(XmlTagValuesFactory.XmlInitPage.key_windowcolor)) {
-                                XmlTagValuesFactory.XmlInitPage.setWindowColor(pullParser
-                                        .nextText().trim());
-                            }
-
-                            /**
-                             * 获取搜索栏的线条的颜色
-                             */
-
-                            if (tag.equals(XmlTagValuesFactory.XmlInitPage.key_searchlinecolor)) {
-                                XmlTagValuesFactory.XmlInitPage.setSearchLineColor(pullParser
-                                        .nextText().trim());
-                            }
-
-                            /**
-                             * 获取搜索栏的背景颜色
-                             */
-
-                            if (tag.equals(XmlTagValuesFactory.XmlInitPage.key_searchbodycolor)) {
-                                XmlTagValuesFactory.XmlInitPage.setSearchBodyColor(pullParser
-                                        .nextText().trim());
-                            }
-
-                            /**
-                             * 获取系统通知的数量
-                             */
-
-                            if (tag.equals(XmlTagValuesFactory.XmlInitPage.key_howmessagenumber)) {
-                                XmlTagValuesFactory.XmlInitPage.setHowMessageNumber(pullParser
-                                        .nextText().trim());
-
-                            }
-
-                            /**
-                             * 获取热搜的标题
-                             */
-                            if (tag.equals(XmlTagValuesFactory.XmlInitPage.key_searchkeyword)) {
-                                XmlTagValuesFactory.XmlInitPage.setSearchKeyWord(pullParser
-                                        .nextText().trim());
-                            }
                         } catch (Exception e) {
-                            Log.e(MSG, "错误信息:" + e.getMessage());
-                        }
+                            Log.e(MSG, "解析XML错误,错误原因:" + e.getMessage());
 
+                        }
                     }
 
                     @Override
@@ -376,40 +392,44 @@ public class SearchAct extends LazyCatAct {
 
                     @Override
                     public void onEndDocument() {
-                        setStatusBar(XmlTagValuesFactory.XmlInitPage.getSearchBackground());
-                        /*设置搜索框的线条和背景颜色*/
-                        EditText editText = SearchViewBody.findViewById(R.id
-                                .assembly_head_editText);
-                        editText.setBackground(Tools.CreateDrawable(1, XmlTagValuesFactory
-                                .XmlInitPage.getSearchLineColor(), XmlTagValuesFactory
-                                .XmlInitPage.getSearchBodyColor(), 10));
-                        /*设置父窗口背景的颜色*/
-                        SearchViewBody.setBackgroundColor(Color.parseColor(XmlTagValuesFactory
-                                .XmlInitPage.getSearchBackground()));
-                        /*设置热搜*/
-                        EditText SearchEditView = SearchViewBody.findViewById(R.id
-                                .assembly_head_editText);/*热搜输入框*/
+                        /**
+                         * 开始整理热搜界面
+                         */
+                        ArrayList<LinearLayout> hotTitlearray = Tools.handleToarraylist
+                                (getApplicationContext(), hotTitle, 20, 10, 20, 10, "#e9e9e9",
+                                        "#666666", 13);
+                        for (int i = 0; i < hotTitlearray.size(); i++) {
+                            everyoneSearch.addView(hotTitlearray.get(i));
+                        }
                     }
                 });
-
-
+                _refreshDialog.dismiss();
             }
 
             @Override
-            public void onNotConnect() {
-
+            public WaitDialog.RefreshDialog onStartLoad() {
+                /*初始化一个DIALOG*/
+                final WaitDialog.RefreshDialog refreshDialog = new WaitDialog.RefreshDialog
+                        (SearchAct.this);
+                WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+                wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                wait_itme_dialogpage.setView(R.layout.item_wait);
+                wait_itme_dialogpage.setCanClose(false);
+                wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+                refreshDialog.Init(wait_itme_dialogpage);
+                refreshDialog.showRefreshDialog("加载中...", false);
+                return refreshDialog;
             }
 
             @Override
-            public void onFail(String tOrgin) {
+            public void onFaile(String data, int code) {
 
             }
-        });
+        }, xmlInstance.getXmlTree());
     }
 
 
     class viewpage {
-
         TextView title;
         TextView _static;
     }
