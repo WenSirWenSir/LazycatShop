@@ -21,11 +21,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.SDKInitializer;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.tencent.map.geolocation.TencentLocation;
+import com.tencent.map.geolocation.TencentLocationListener;
+import com.tencent.map.geolocation.TencentLocationManager;
+import com.tencent.map.geolocation.TencentLocationRequest;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -46,7 +47,6 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.RefreshScrollView;
 import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.ShowshopOffice;
-import shlm.lmcs.com.lazycat.LazyShopInterface.LocationMapListener;
 import shlm.lmcs.com.lazycat.LazyShopPage.LocalPage;
 import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
@@ -57,6 +57,7 @@ import static shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config.Windows.GET_WINDOW_
 
 @SuppressLint("HandlerLeak")
 public class Mainfrg extends LazyCatFragment {
+
 
     /**
      * -------------------------------------------
@@ -78,11 +79,11 @@ public class Mainfrg extends LazyCatFragment {
      */
 
     /**
-     * 百度定位模块
+     * 腾讯定位模块
      */
-    private LocationClient locationClient;/*接口*/
-    private LocationClientOption locationClientOption;/*参数*/
-    private LocationMapListener locationListener;/*回调接口*/
+    private TencentLocationRequest LocationRequest;
+    private TencentLocationListener locationListener;
+    private TencentLocationManager locationManager;
     private View item;
     private static final String MSG = "Mainfrg.java[+]";
     /**
@@ -151,8 +152,16 @@ public class Mainfrg extends LazyCatFragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         /*确定用户的物理地址*/
-        SDKInitializer.initialize(getActivity().getApplicationContext());
+        LocationRequest = TencentLocationRequest.create();
+        LocationRequest.setInterval(1000);
+        LocationRequest.setAllowCache(false);
+        //包含经纬度位置所处的中国大陆行政划区
+        LocationRequest.setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_ADMIN_AREA);//
+        locationManager = TencentLocationManager.getInstance(getContext());
+        int error = locationManager.requestLocationUpdates(LocationRequest, new Tententlistener());
+        Log.i(MSG, "腾讯地图调用:" + error);
         /*设置是否加载完毕*/
+
         isLoadEnd = false;
         /*设置状态栏颜色*/
         item = inflater.inflate(R.layout.fragment_main, null);
@@ -203,16 +212,6 @@ public class Mainfrg extends LazyCatFragment {
                 isLogin = false;
             }
         });
-        //初始化一个背景样式
-        locationClientOption = new LocationClientOption();
-        locationClient = new LocationClient(getActivity().getApplicationContext());
-        locationListener = new LocationMapListener();
-        locationClientOption.setOpenGps(true);
-        locationClientOption.setIsNeedAddress(true);
-        locationClientOption.setIsNeedLocationDescribe(true);
-        locationClientOption.setOpenAutoNotifyMode();/*设置自动回调*/
-        locationClient.setLocOption(locationClientOption);
-        locationClient.registerLocationListener(locationListener);
 
         /**
          * 初始化 DIALOG
@@ -393,17 +392,20 @@ public class Mainfrg extends LazyCatFragment {
                                     LazyCatFragmentStartActivityWithBundler(ShowshopOffice.class,
                                             Config.Windows.GET_WINDOW_VALUE_SHOP_MESSAGE, _list
                                                     .get_title().trim(),
-                                            GET_WINDOW_VALUE_SHOP_ACTION, LocalValues.VALUES_SEARCH
-                                                    .VALUES_TO_SEARCH_SHOPKEYWORD);
+                                            GET_WINDOW_VALUE_SHOP_ACTION, LocalValues
+                                                    .VALUES_SEARCH.VALUES_TO_SEARCH_SHOPKEYWORD);
                                 }
                             });
                             shopItem.setTag(showList.get(Position));
                             /*进行Item处理监听*/
-                            ImageView btnLike = shopItem.findViewById(R.id.item_mainshoplist_btnLike);
+                            ImageView btnLike = shopItem.findViewById(R.id
+                                    .item_mainshoplist_btnLike);
                             /*是否喜欢*/
-                            TextView Itemtitle = shopItem.findViewById(R.id.item_mainshoplist_Title);
+                            TextView Itemtitle = shopItem.findViewById(R.id
+                                    .item_mainshoplist_Title);
                             /*标题*/
-                            TextView ItemTp = shopItem.findViewById(R.id.item_mainshoplist_Tp);/*批发价格*/
+                            TextView ItemTp = shopItem.findViewById(R.id.item_mainshoplist_Tp);
+                            /*批发价格*/
                             TextView ItemCompany = shopItem.findViewById(R.id
                                     .item_mainshoplist_Company);
                             /*批发规格单位*/
@@ -427,15 +429,16 @@ public class Mainfrg extends LazyCatFragment {
                                 TextUnt.with(ItemTp).setText("*.*");
                             }
                             /*设置供货商*/
-                            TextUnt.with(ItemBusiness).setText(showList.get(Position).get_business());
+                            TextUnt.with(ItemBusiness).setText(showList.get(Position)
+                                    .get_business());
                             /*设置生产日期和保质期*/
                             TextUnt.with(ItemExpAndPd).setText(showList.get(Position).get_exp() +
                                     "生产·" + showList.get(Position).get_pd() + "天保质");
                             /*加载图片*/
-                            Glide.with(getContext()).load("http://i.caigoubao" + "" + "" + "" + "" +
-                                    ".cc/583105/SHOP_DATABASE/" + showList.get(Position).get_img())
-                                    .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                    .into(ItemShopimg);
+                            Glide.with(getContext()).load("http://i.caigoubao" + "" + "" + "" +
+                                    "" + ".cc/583105/SHOP_DATABASE/" + showList.get(Position)
+                                    .get_img()).skipMemoryCache(false).diskCacheStrategy
+                                    (DiskCacheStrategy.NONE).into(ItemShopimg);
 
                             Itemtitle.setText(showList.get(Position).get_title());
                             /*进行数据判断 用户是否收藏过该商品 如果没有就设置为灰色*/
@@ -457,9 +460,8 @@ public class Mainfrg extends LazyCatFragment {
                                 }
                             });
                             refreshBody.addView(shopItem);
-                        }
-                        catch(Exception e){
-                            Log.e(MSG,"显示展示商品的信息失败信息:" +e.getMessage());
+                        } catch (Exception e) {
+                            Log.e(MSG, "显示展示商品的信息失败信息:" + e.getMessage());
                         }
                         refreshDialog.dismiss();
                     }
@@ -511,7 +513,6 @@ public class Mainfrg extends LazyCatFragment {
      */
     @SuppressLint("NewApi")
     private void getServiceAddr(String Districe) {
-        locationClient.stop();/*禁止多次去访问地址*/
         Net.doGet(getContext(), Config.HTTP_ADDR.getIsServiceIn(), new Net
                 .onVisitInterServiceListener() {
             @Override
@@ -1301,6 +1302,26 @@ public class Mainfrg extends LazyCatFragment {
 
         public void set_businessimg(String _businessimg) {
             this._businessimg = _businessimg;
+        }
+    }
+
+    @SuppressLint("NewApi")
+    class Tententlistener implements TencentLocationListener {
+
+        @Override
+        public void onLocationChanged(TencentLocation tencentLocation, int i, String s) {
+            if (TencentLocation.ERROR_OK == 0) {
+                Toast.makeText(getContext(), "定位成功" + tencentLocation.getAddress().trim(), Toast
+                        .LENGTH_SHORT).show();
+                locationManager.removeUpdates(this);
+            } else {
+                Toast.makeText(getContext(), "定位失败,错误原因:" + i, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void onStatusUpdate(String s, int i, String s1) {
+
         }
     }
 }
