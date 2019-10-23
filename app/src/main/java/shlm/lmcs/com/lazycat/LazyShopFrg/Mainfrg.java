@@ -12,6 +12,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.xmlpull.v1.XmlPullParser;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,16 +37,15 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.LazyCatFragment;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WEB_VALUES_ACT;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.XmlBuilder;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlanalysisFactory;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.RefreshScrollView;
 import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
+import shlm.lmcs.com.lazycat.LazyShopAct.ShowshopOffice;
 import shlm.lmcs.com.lazycat.LazyShopInterface.LocationMapListener;
 import shlm.lmcs.com.lazycat.LazyShopPage.LocalPage;
 import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
@@ -52,8 +53,29 @@ import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
 
+import static shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config.Windows.GET_WINDOW_VALUE_SHOP_ACTION;
+
 @SuppressLint("HandlerLeak")
 public class Mainfrg extends LazyCatFragment {
+
+    /**
+     * -------------------------------------------
+     * 显示商品的参数
+     */
+    private ShowshopList showshopList = null;
+    ArrayList<ShowshopList> showList = new ArrayList<ShowshopList>();
+    private final static String SHOW_SHOPLIST_BEGIN = "Showshoplist";
+    private final static String SHOW_SHOPLIST_TITLE = "shopTitle";
+    private final static String SHOW_SHOPLIST_TP = "shopTp";
+    private final static String SHOW_SHOPLIST_IMG = "shopImg";
+    private final static String SHOW_SHOPLIST_COMPANY = "shopCompany";
+    private final static String SHOW_SHOPLIST_EXP = "shopExp";
+    private final static String SHOW_SHOPLIST_PD = "shopPd";
+    private final static String SHOW_SHOPLIST_BUSINESS = "business";
+    private final static String SHOW_SHOPLIST_BUSINESSIMG = "businessImg";
+    /**
+     * -------------------------------------------
+     */
 
     /**
      * 百度定位模块
@@ -97,6 +119,10 @@ public class Mainfrg extends LazyCatFragment {
     private ImageView CenterHeadpageImg;
     private static final String REFRESH_STOP_MESSAGELOAD = "0";/*停止刷新 隐藏广告*/
     private AlertDialog UpdateDialog;
+    private Boolean isLogin;/*判断本地是否有登录数据*/
+    private Boolean isLoadEnd;/*判断是否加载完毕*/
+    private int Position;/*设置position用来底部加载*/
+
     /**
      * 模块数据存储
      */
@@ -126,6 +152,8 @@ public class Mainfrg extends LazyCatFragment {
             savedInstanceState) {
         /*确定用户的物理地址*/
         SDKInitializer.initialize(getActivity().getApplicationContext());
+        /*设置是否加载完毕*/
+        isLoadEnd = false;
         /*设置状态栏颜色*/
         item = inflater.inflate(R.layout.fragment_main, null);
         /*顶部标题*/
@@ -152,31 +180,29 @@ public class Mainfrg extends LazyCatFragment {
         CenterHeadpageImg = item.findViewById(R.id.fragment_main_CenterHeadimg);
         /*第三排的第一个竖向的图片*/
         threeNavAimg = item.findViewById(R.id.fragment_main_threeNavAimg);
-        for (int i = 0; i < 20; i++) {
-            View shopItem = LayoutInflater.from(getContext()).inflate(R.layout.item_mainshoplist,
-                    null);
-            /*进行Item处理监听*/
-            ImageView btnLike = shopItem.findViewById(R.id.item_mainshoplist_btnLike);/*是否喜欢*/
-            /*进行数据判断 用户是否收藏过该商品 如果没有就设置为灰色*/
-            btnLike.setImageResource(R.drawable.ico_nolike);
-            btnLike.setTag(LocalValues.VALUES_SHOPLIKES.SHOP_NO_LIKE);
-            btnLike.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int tag = (int) v.getTag();
-                    if (tag == LocalValues.VALUES_SHOPLIKES.SHOP_NO_LIKE) {
-                        /*设置为喜欢的图标 并且发送服务器*/
-                        ImageView img = (ImageView) v;
-                        img.setImageResource(R.drawable.ico_like);
+
+        /**
+         * 判断本地是否登录账户
+         */
+        userToolsInstance = LocalProgramTools.getUserToolsInstance();
+        userToolsInstance.StartPullerUserpageXml(new LocalProgramTools.UserToolsInstance
+                .SetReadUserpageListener() {
+            @Override
+            public void onRead(String tag, String values) {
+                if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_ACCOUNT)) {
+                    if (TextUtils.isEmpty(values.trim()) && values != null) {
+                        isLogin = true;
                     } else {
-                        /*设置为不喜欢的图标 并且发送服务器*/
-                        ImageView img = (ImageView) v;
-                        img.setImageResource(R.drawable.ico_nolike);
+                        isLogin = false;
                     }
                 }
-            });
-            refreshBody.addView(shopItem);
-        }
+            }
+
+            @Override
+            public void onError() {
+                isLogin = false;
+            }
+        });
         //初始化一个背景样式
         locationClientOption = new LocationClientOption();
         locationClient = new LocationClient(getActivity().getApplicationContext());
@@ -323,7 +349,123 @@ public class Mainfrg extends LazyCatFragment {
 
             @Override
             public void onLoadBottom() {
-                Log.i(MSG, "开始更新数据");
+                /*显示一个加载中的DIALOG*/
+                /*初始化一个DIALOG*/
+                WaitDialog.RefreshDialog refreshDialog = new WaitDialog.RefreshDialog(getContext());
+                WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+                wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                wait_itme_dialogpage.setView(R.layout.item_wait);
+                wait_itme_dialogpage.setCanClose(false);
+                wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+                refreshDialog.Init(wait_itme_dialogpage);
+                refreshDialog.showRefreshDialog("加载中...", false);
+                refreshDialog.show();
+                /*向尾部更新5个数据信息*/
+
+                /**
+                 * 处理首页的商品展示信息
+                 */
+
+                for (int i = 0; i < 2; i++) {
+                    Position += 1;
+                    if (Position >= showList.size() && isLoadEnd == false) {
+                        isLoadEnd = true;
+                        /*没有更多的信息 那就加载一个ITEM*/
+                        TextView endTitle = new TextView(refreshBody.getContext());
+                        endTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
+                                .LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams
+                                .WRAP_CONTENT));
+                        endTitle.setPadding(0, 10, 0, 10);
+                        endTitle.setGravity(Gravity.CENTER);
+                        TextUnt.with(endTitle).setText("暂时没有推荐的商品啦,您可以去分类中心看看哦").setTextSize(13)
+                                .setTextColor("#666666");
+                        refreshBody.addView(endTitle);
+                        refreshDialog.dismiss();
+                    } else {
+                        try {
+
+                            View shopItem = LayoutInflater.from(getContext()).inflate(R.layout
+                                    .item_mainshoplist, null);
+                            shopItem.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ShowshopList _list = (ShowshopList) v.getTag();
+                                    LazyCatFragmentStartActivityWithBundler(ShowshopOffice.class,
+                                            Config.Windows.GET_WINDOW_VALUE_SHOP_MESSAGE, _list
+                                                    .get_title().trim(),
+                                            GET_WINDOW_VALUE_SHOP_ACTION, LocalValues.VALUES_SEARCH
+                                                    .VALUES_TO_SEARCH_SHOPKEYWORD);
+                                }
+                            });
+                            shopItem.setTag(showList.get(Position));
+                            /*进行Item处理监听*/
+                            ImageView btnLike = shopItem.findViewById(R.id.item_mainshoplist_btnLike);
+                            /*是否喜欢*/
+                            TextView Itemtitle = shopItem.findViewById(R.id.item_mainshoplist_Title);
+                            /*标题*/
+                            TextView ItemTp = shopItem.findViewById(R.id.item_mainshoplist_Tp);/*批发价格*/
+                            TextView ItemCompany = shopItem.findViewById(R.id
+                                    .item_mainshoplist_Company);
+                            /*批发规格单位*/
+                            /*生产日期和保质期*/
+                            TextView ItemExpAndPd = shopItem.findViewById(R.id
+                                    .item_mainshoplist_ExpAndPd);
+                            ImageView ItemShopimg = shopItem.findViewById(R.id
+                                    .item_mainshoplist_Shopimg);/*图片地址*/
+
+                            /*商户名称*/
+                            TextView ItemBusiness = shopItem.findViewById(R.id
+                                    .item_mainshoplist_business);
+                            /*设置生产日期和保质期*/
+                            /*设置单位*/
+                            TextUnt.with(ItemCompany).setText("/" + showList.get(Position)
+                                    .get_company());
+                            /*设置批发价格*/
+                            if (isLogin) {
+                                TextUnt.with(ItemTp).setText(showList.get(Position).get_tp());
+                            } else {
+                                TextUnt.with(ItemTp).setText("*.*");
+                            }
+                            /*设置供货商*/
+                            TextUnt.with(ItemBusiness).setText(showList.get(Position).get_business());
+                            /*设置生产日期和保质期*/
+                            TextUnt.with(ItemExpAndPd).setText(showList.get(Position).get_exp() +
+                                    "生产·" + showList.get(Position).get_pd() + "天保质");
+                            /*加载图片*/
+                            Glide.with(getContext()).load("http://i.caigoubao" + "" + "" + "" + "" +
+                                    ".cc/583105/SHOP_DATABASE/" + showList.get(Position).get_img())
+                                    .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                    .into(ItemShopimg);
+
+                            Itemtitle.setText(showList.get(Position).get_title());
+                            /*进行数据判断 用户是否收藏过该商品 如果没有就设置为灰色*/
+                            btnLike.setImageResource(R.drawable.ico_nolike);
+                            btnLike.setTag(LocalValues.VALUES_SHOPLIKES.SHOP_NO_LIKE);
+                            btnLike.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    int tag = (int) v.getTag();
+                                    if (tag == LocalValues.VALUES_SHOPLIKES.SHOP_NO_LIKE) {
+                                        /*设置为喜欢的图标 并且发送服务器*/
+                                        ImageView img = (ImageView) v;
+                                        img.setImageResource(R.drawable.ico_like);
+                                    } else {
+                                        /*设置为不喜欢的图标 并且发送服务器*/
+                                        ImageView img = (ImageView) v;
+                                        img.setImageResource(R.drawable.ico_nolike);
+                                    }
+                                }
+                            });
+                            refreshBody.addView(shopItem);
+                        }
+                        catch(Exception e){
+                            Log.e(MSG,"显示展示商品的信息失败信息:" +e.getMessage());
+                        }
+                        refreshDialog.dismiss();
+                    }
+
+                }
+
             }
 
             @Override
@@ -387,7 +529,6 @@ public class Mainfrg extends LazyCatFragment {
                     LocalValues.ADDR_SERVICE = tOrgin.trim();
                     getConfigXml();/*获取首页的配置文件*/
                     checkPermission();
-                    getUserPage();/*读取用户的数据文件*/
                 } else {
                     /*没有地址  没有开放*/
                     Log.i(MSG, "该地区服务器地址没开放");
@@ -406,115 +547,6 @@ public class Mainfrg extends LazyCatFragment {
 
             }
         }, Config.HttpAction.ACTION_ADDR, Districe);
-    }
-
-
-    /**
-     * 获取用户的数据地址
-     */
-    @SuppressLint("NewApi")
-    private void getUserPage() {
-        /**
-         * 第一件事情 检查是否用户登录
-         */
-        if (Tools.gettoKen(getContext(), LocalAction.ACTION_LOCALUSERPAGE.ACTION_TOKEN).equals
-                ("")) {
-            /*没有登录*/
-            LocalValues.isLogin = false;
-        } else {
-            /*登录成功 获取数据信息*/
-            XmlBuilder.XmlInstance xmlInstance = new XmlBuilder.XmlInstance();
-            xmlInstance.initDom();
-            xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, "15206036936");
-            xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_TOKEN, "123456789");
-            xmlInstance.overDom();
-            Net.doPostXml(getContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GETUSER_PAGE, new
-                    ProgramInterface() {
-                @Override
-                public void onSucess(String data, int code, WaitDialog.RefreshDialog
-                        _refreshDialog) {
-                    Log.i(MSG, "返回数据:" + data.trim());
-                    XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(data.trim());
-                    xmlanalysisFactory.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
-                        @Override
-                        public void onFaile() {
-
-                        }
-
-                        @Override
-                        public void onStartDocument(String tag) {
-                            userToolsInstance = LocalProgramTools.getUserToolsInstance();
-                        }
-
-                        @Override
-                        public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
-                            try {
-                                /*商户的别称*/
-                                if (tag.equals(LocalAction.ACTION_LOGIN.ACTION_XML_NIACKNAME)) {
-                                    userToolsInstance.setNiackName(pullParser.nextText().trim());
-                                }
-                                /*商户的余额*/
-                                if (tag.equals(LocalAction.ACTION_LOGIN.ACTION_XML_BALANCE)) {
-                                    userToolsInstance.setBlance(pullParser.nextText().trim());
-                                }
-                                /*商户的状态*/
-                                if (tag.equals(LocalAction.ACTION_LOGIN.ACTION_XML_STATUS)) {
-                                    userToolsInstance.setStatus(pullParser.nextText().trim());
-                                }
-                                /*商户的VIP状态*/
-                                if (tag.equals(LocalAction.ACTION_LOGIN.ACTION_XML_VIPSTATUS)) {
-                                    userToolsInstance.setVipstatus(pullParser.nextText().trim());
-                                }
-                                /*商户的TOKEN*/
-                                if (tag.equals(LocalAction.ACTION_LOGIN.ACTION_XML_TOKEN)) {
-                                    userToolsInstance.setToken(pullParser.nextText().trim());
-                                }
-                            } catch (Exception e) {
-
-                            }
-                        }
-
-                        @Override
-                        public void onEndTag(String tag, XmlPullParser pullParser, Integer id) {
-
-                        }
-
-                        @Override
-                        public void onEndDocument() {
-/*                            if (userToolsInstance.SaveingUserPageXml()) {
-                                *//*保存成功之后 马上开始尝试解析*//*
-                                userToolsInstance.StartPullerUserpageXml(new LocalProgramTools
-                                        .UserToolsInstance.SetReadUserpageListener() {
-                                    @Override
-                                    public void onRead(String tag, String values) {
-                                        if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
-                                                .ACTION_LOCALUSERPAGE_TOKEN)) {
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onError() {
-
-                                    }
-                                });
-                            } else {
-                                Toast.makeText(getContext(), "保存失败", Toast.LENGTH_SHORT).show();
-                            }*/
-                        }
-                    });
-                }
-
-                @Override
-                public WaitDialog.RefreshDialog onStartLoad() {
-                    return null;
-                }
-
-                @Override
-                public void onFaile(String data, int code) {
-
-                }
-            }, xmlInstance.getXmlTree().trim());
-        }
     }
 
 
@@ -902,8 +934,82 @@ public class Mainfrg extends LazyCatFragment {
                                 } else {
                                     Log.e(MSG, "ThreeNavPageInstance为空");
                                 }
-
                             }
+                            /**
+                             * 获取首页显示商品的数据
+                             */
+                            if (tag.equals(SHOW_SHOPLIST_BEGIN)) {
+                                /*重新申请一个ShowshopList*/
+                                showshopList = new ShowshopList();
+                            }
+                            /*获取标题*/
+                            if (tag.equals(SHOW_SHOPLIST_TITLE)) {
+                                if (showshopList != null) {
+                                    showshopList.set_title(pullParser.nextText().trim());
+                                } else {
+                                    Log.e(MSG, "XML数据错误显示首页商品数据的数组为空");
+                                }
+                            }
+
+                            /*获取批发价格*/
+                            if (tag.equals(SHOW_SHOPLIST_TP)) {
+                                if (showshopList != null) {
+                                    showshopList.set_tp(pullParser.nextText().trim());
+                                } else {
+                                    Log.e(MSG, "XML数据错误显示首页商品数据的数组为空");
+                                }
+                            }
+                            /*获取商品图片地址*/
+                            if (tag.equals(SHOW_SHOPLIST_IMG)) {
+                                if (showshopList != null) {
+                                    showshopList.set_img(pullParser.nextText().trim());
+                                } else {
+                                    Log.e(MSG, "XML数据错误显示首页商品数据的数组为空");
+                                }
+                            }
+
+                            /*获取商品单位*/
+                            if (tag.equals(SHOW_SHOPLIST_COMPANY)) {
+                                if (showshopList != null) {
+                                    showshopList.set_company(pullParser.nextText().trim());
+                                } else {
+                                    Log.e(MSG, "XML数据错误显示首页商品数据的数组为空");
+                                }
+                            }
+                            /*获取商品保质期*/
+                            if (tag.equals(SHOW_SHOPLIST_EXP)) {
+                                if (showshopList != null) {
+                                    showshopList.set_exp(pullParser.nextText().trim());
+                                } else {
+                                    Log.e(MSG, "XML数据错误显示首页商品数据的数组为空");
+                                }
+                            }
+                            /*获取商品单位*/
+                            if (tag.equals(SHOW_SHOPLIST_PD)) {
+                                if (showshopList != null) {
+                                    showshopList.set_pd(pullParser.nextText().trim());
+                                } else {
+                                    Log.e(MSG, "XML数据错误显示首页商品数据的数组为空");
+                                }
+                            }
+                            /*获取商品单位*/
+                            if (tag.equals(SHOW_SHOPLIST_BUSINESS)) {
+                                if (showshopList != null) {
+                                    showshopList.set_business(pullParser.nextText().trim());
+                                } else {
+                                    Log.e(MSG, "XML数据错误显示首页商品数据的数组为空");
+                                }
+                            }
+                            /*获取商品单位*/
+                            if (tag.equals(SHOW_SHOPLIST_BUSINESSIMG)) {
+                                if (showshopList != null) {
+                                    showshopList.set_businessimg(pullParser.nextText().trim());
+                                } else {
+                                    Log.e(MSG, "XML数据错误显示首页商品数据的数组为空");
+                                }
+                            }
+
+
                         } catch (Exception e) {
                             Log.e(MSG, "解析首页整理的XML数据中出错:" + e.getMessage());
                         }
@@ -911,6 +1017,12 @@ public class Mainfrg extends LazyCatFragment {
 
                     @Override
                     public void onEndTag(String tag, XmlPullParser pullParser, Integer id) {
+
+                        /*在堆栈中 存入一个数据之后制空*/
+                        if (tag.equals(SHOW_SHOPLIST_BEGIN)) {
+                            showList.add(showshopList);
+                            showshopList = null;
+                        }
 
                     }
 
@@ -1111,5 +1223,84 @@ public class Mainfrg extends LazyCatFragment {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[]
             grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+
+    /**
+     * 显示商品的参数集合
+     */
+    class ShowshopList {
+        String _title;/*标题*/
+        String _tp;/*批发价格*/
+        String _company;/*配送单位*/
+        String _exp;/*保质期*/
+        String _pd;/*生产日期*/
+        String _business;/*对接商家*/
+        String _businessimg;/*对接商家的图片地址*/
+        String _img;/*商品的图片地址*/
+
+        public String get_img() {
+            return _img;
+        }
+
+        public void set_img(String _img) {
+            this._img = _img;
+        }
+
+        public String get_title() {
+            return _title;
+        }
+
+        public void set_title(String _title) {
+            this._title = _title;
+        }
+
+        public String get_tp() {
+            return _tp;
+        }
+
+        public void set_tp(String _su) {
+            this._tp = _su;
+        }
+
+        public String get_company() {
+            return _company;
+        }
+
+        public void set_company(String _company) {
+            this._company = _company;
+        }
+
+        public String get_exp() {
+            return _exp;
+        }
+
+        public void set_exp(String _exp) {
+            this._exp = _exp;
+        }
+
+        public String get_pd() {
+            return _pd;
+        }
+
+        public void set_pd(String _pd) {
+            this._pd = _pd;
+        }
+
+        public String get_business() {
+            return _business;
+        }
+
+        public void set_business(String _business) {
+            this._business = _business;
+        }
+
+        public String get_businessimg() {
+            return _businessimg;
+        }
+
+        public void set_businessimg(String _businessimg) {
+            this._businessimg = _businessimg;
+        }
     }
 }

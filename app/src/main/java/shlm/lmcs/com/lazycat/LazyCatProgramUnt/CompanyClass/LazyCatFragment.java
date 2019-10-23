@@ -22,9 +22,22 @@ public class LazyCatFragment extends Fragment {
 
     @SuppressLint("NewApi")
     protected void LazyCatFragmetStartAct(Class<?> into) {
+
         Intent i = new Intent();
         i.setClass(getContext(), into);
         startActivity(i);
+    }
+
+
+    @SuppressLint("NewApi")
+    protected void LazyCatFragmentStartActivityWithBundler(Class<?> _Toin, String... kvs) {
+        Intent intent = new Intent();
+        for (int i = 0; i < kvs.length; i += 2) {
+            intent.putExtra(kvs[i], kvs[i + 1]);
+        }
+        intent.setClass(getContext(), _Toin);
+        startActivity(intent);
+
     }
 
     @SuppressLint("NewApi")
@@ -34,6 +47,7 @@ public class LazyCatFragment extends Fragment {
         i.putExtra(WINDOW_PAGE.RESULT_WEBVIEW, values);
         startActivity(i);
     }
+
     protected void setStatusBar(String tColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //5.O版本及以上
@@ -43,6 +57,7 @@ public class LazyCatFragment extends Fragment {
             getActivity().getWindow().setStatusBarColor(Color.parseColor(tColor));
         }
     }
+
     /**
      * 设置透明状态栏
      */

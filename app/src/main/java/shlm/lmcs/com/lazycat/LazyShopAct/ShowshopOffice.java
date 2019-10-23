@@ -66,6 +66,7 @@ public class ShowshopOffice extends LazyCatAct {
     private TextView SHOP_BARCODE;/*商品的条码*/
     private TextView SHOP_RETAIL;/*商品的零售价格*/
     private TextView SHOP_SHOWBRAND;/*商品显示的品牌*/
+    private TextView SHOP_BUSINESS;/*商品的供货单位*/
     private LocalProgramTools.UserToolsInstance userToolsInstance;/*用户工具类*/
     private AlertDialog gradeAlertDialog;/*等级的Alert*/
     private XmlTagValuesFactory.Shopvalues shopvalues = null;
@@ -196,6 +197,8 @@ public class ShowshopOffice extends LazyCatAct {
         btnGradeAsk = findViewById(R.id.activity_showshopoffice_btnGradeAsk);
         /*图片的条码*/
         imgBarcode = findViewById(R.id.activity_showshopoffice_imgBarcode);
+        /*商品的供货单位*/
+        SHOP_BUSINESS = findViewById(R.id.activity_showshopoffice_businessName);
         /*尝试加载*/
         /*图片包裹*/
         /*获取界面传值*/
@@ -332,6 +335,10 @@ public class ShowshopOffice extends LazyCatAct {
                             if (tag.equals(LocalAction.ACTION_SHOPVALUES
                                     .ACTION_SHOPVALUES_SPLITUNIT)) {
                                 shopvalues.setSplitUnit(pullParser.nextText().trim());
+                            }
+                            /*商品的对接商家*/
+                            if(tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_BUSINSS)){
+                                shopvalues.setBusiness(pullParser.nextText().trim());
                             }
 
                         } catch (Exception e) {
@@ -600,6 +607,7 @@ public class ShowshopOffice extends LazyCatAct {
         otherMessage.addView(tp);
 
         /*界面初始化*/
+        TextUnt.with(SHOP_BUSINESS).setText(shopvalues.getBusiness());
         TextUnt.with(SHOP_TITLE).setText(shopvalues.getTitle());
         if (isLoginin) {
             /*设置批发价格*/

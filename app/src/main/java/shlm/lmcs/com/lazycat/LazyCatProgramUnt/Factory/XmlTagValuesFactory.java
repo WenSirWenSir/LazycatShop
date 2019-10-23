@@ -575,7 +575,7 @@ public class XmlTagValuesFactory {
         String onlyid;/*唯一表示符号*/
         String price;
         String retail;/*零售价格*/
-
+        String business;/*商品的对接供货商家*/
 
         String _static;/*状态*/
         String su;/*起订*/
@@ -584,6 +584,15 @@ public class XmlTagValuesFactory {
         String dlp;/*虚线的价格*/
         String img;/*图片的地址*/
         String splitUnit;/*最小的的组合单位*/
+
+
+        public String getBusiness() {
+            return business;
+        }
+
+        public void setBusiness(String business) {
+            this.business = business;
+        }
 
         public String getSplitUnit() {
             return splitUnit;
