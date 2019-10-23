@@ -20,6 +20,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.GradientDrawable;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -731,6 +732,7 @@ public class Tools {
 
     }
 
+
     /**
      * 创建一个可以让View逐渐显示动画
      *
@@ -981,5 +983,25 @@ public class Tools {
         }
     }
 
+
+    /**
+     * 通过经纬度 计算两地的直线的距离
+     * 系统自带的计算距离
+     * @param _logitude   结束经度
+     * @param _latitue    结束维度
+     * @param in_logitude 起点经度
+     * @param in_latitue  起点维度
+     * @return
+     */
+    public static double getDistance(double _logitude, double _latitue, double in_logitude,
+                                     double in_latitue) {
+        float[] results = new float[1];
+        Location.distanceBetween(_latitue, _logitude, in_latitue, in_logitude, results);
+        return results[0];
+    }
+
+    public static double rad(double d) {
+        return d * Math.PI / 180.0;
+    }
 
 }
