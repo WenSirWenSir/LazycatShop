@@ -54,6 +54,7 @@ import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
 
 import static shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config.Windows.GET_WINDOW_VALUE_SHOP_ACTION;
+import static shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools.isPermission;
 
 @SuppressLint("HandlerLeak")
 public class Mainfrg extends LazyCatFragment {
@@ -123,6 +124,7 @@ public class Mainfrg extends LazyCatFragment {
     private Boolean isLogin;/*判断本地是否有登录数据*/
     private Boolean isLoadEnd;/*判断是否加载完毕*/
     private int Position;/*设置position用来底部加载*/
+    private AlertDialog alertDialog = null;
 
     /**
      * 模块数据存储
@@ -151,15 +153,46 @@ public class Mainfrg extends LazyCatFragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
-        /*确定用户的物理地址*/
-        LocationRequest = TencentLocationRequest.create();
-        LocationRequest.setInterval(1000);
-        LocationRequest.setAllowCache(false);
-        //包含经纬度位置所处的中国大陆行政划区
-        LocationRequest.setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_ADMIN_AREA);//
-        locationManager = TencentLocationManager.getInstance(getContext());
-        int error = locationManager.requestLocationUpdates(LocationRequest, new Tententlistener());
-        Log.i(MSG, "腾讯地图调用:" + error);
+
+
+        /*判断是否有定位权限 没有定位权限就去申请定位权限*/
+        if (isPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            Toast.makeText(getContext(), "获取权限成功", Toast.LENGTH_SHORT).show();
+            /*确定用户的物理地址*/
+            LocationRequest = TencentLocationRequest.create();
+            LocationRequest.setInterval(1000);
+            LocationRequest.setAllowCache(false);
+            //包含经纬度位置所处的中国大陆行政划区
+            LocationRequest.setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_ADMIN_AREA);//
+            locationManager = TencentLocationManager.getInstance(getContext());
+            int error = locationManager.requestLocationUpdates(LocationRequest, new
+                    Tententlistener());
+            Log.i(MSG, "腾讯地图调用:" + error);
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            View item = LayoutInflater.from(getContext()).inflate(R.layout.alert_message, null);
+            TextView btn_confirm = item.findViewById(R.id.alert_messageBtnConfirm);
+            TextView Tv_title = item.findViewById(R.id.alert_messageTitle);
+            TextUnt.with(Tv_title).setText("请求授权");
+            TextView Tv_context = item.findViewById(R.id.alert_messageText);
+            TextUnt.with(Tv_context).setText("检测到您没有开启定位权限,请您开启定位权限用来获取您的店铺位置.如果没有定位信息," +
+                    "程序将无法获取到数据连接.如果您无法打开您手机的定位权限,请联系仓库的管理人员。");
+            btn_confirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest
+                            .permission.ACCESS_COARSE_LOCATION}, 0);
+                    alertDialog.dismiss();
+                    alertDialog = null;
+                }
+            });
+            TextUnt.with(btn_confirm).setText("马上去开启");
+            builder.setView(item);
+            if(alertDialog == null){
+                alertDialog = builder.show();
+            }
+        }
+
         /*设置是否加载完毕*/
 
         isLoadEnd = false;
