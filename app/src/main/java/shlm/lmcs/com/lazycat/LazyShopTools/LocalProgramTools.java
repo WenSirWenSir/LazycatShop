@@ -229,6 +229,20 @@ public class LocalProgramTools {
 
             void onError();
         }
+
+        /**
+         * 清空缓存
+         */
+        public void ClearLocalCach(){
+            File file = new File(Environment.getExternalStorageDirectory(), "CK_USERPAGE.xml");
+            if (file.exists() && file.isFile()) {
+                if (file.delete()) {
+                    Log.i(MSG, "原始文件清除成功");
+                } else {
+                    Log.e(MSG, "删除原始数据失败");
+                }
+            }
+        }
     }
 
 }
