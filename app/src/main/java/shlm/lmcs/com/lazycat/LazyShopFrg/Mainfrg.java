@@ -576,7 +576,7 @@ public class Mainfrg extends LazyCatFragment implements ActivityCompat
     private void init(View item) {
         /*设置头部广告*/
         _RefreshScrollView.SetHeadView(_Refreshhead, 150, R.id.fragment_main_Headprogressbar, R
-                .drawable.a1234444);
+                .drawable.program_ico);
 
     }
 
