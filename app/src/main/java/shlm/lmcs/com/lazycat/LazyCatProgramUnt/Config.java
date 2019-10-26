@@ -13,7 +13,7 @@ public class Config {
      * 网络访问key
      */
     public static class HttpAction {
-        public static final String ACTION_ADDR = "addrs";
+        public static final String ACTION_CITYCODE = "cityCode";
 
     }
 

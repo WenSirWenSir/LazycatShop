@@ -1,22 +1,30 @@
 package shlm.lmcs.com.lazycat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyShopAct.MainAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.PromotionAct;
 import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
+
+import static shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools.isPermission;
 
 
 public class lazyCatLogAct extends LazyCatAct {
@@ -28,6 +36,7 @@ public class lazyCatLogAct extends LazyCatAct {
     private TextView log_propagandaB;
     private TextView log_context;
     //private ImageView img;
+    private AlertDialog alertDialog = null;
 
     @SuppressLint({"HandlerLeak", "StaticFieldLeak"})
     @Override
@@ -53,7 +62,8 @@ public class lazyCatLogAct extends LazyCatAct {
         /**
          * 测试代码区
          */
-        LocalProgramTools.UserToolsInstance userToolsInstance  = LocalProgramTools.getUserToolsInstance();
+        LocalProgramTools.UserToolsInstance userToolsInstance = LocalProgramTools
+                .getUserToolsInstance();
         userToolsInstance.setToken("TOKEN15206036936");
         userToolsInstance.setVipstatus(LocalValues.VALUES_USERCENTER.IS_NOT_VIP);
         userToolsInstance.setStatus(LocalValues.VALUES_USERCENTER.ACCOUNT_IS_OK);
@@ -75,22 +85,93 @@ public class lazyCatLogAct extends LazyCatAct {
 //        img = findViewById(R.id.activity_lazy_log_image);
         /*设置导航栏透明*/
         setHideNav();
-        //初始化稍等的表格  判断网络是否要更新文件
-        WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
-        wait_itme_dialogpage.setView(R.layout.item_wait);
-        wait_itme_dialogpage.setImg(R.id.item_wait_img);
+        init();
         //refreshDialog = WaitDialog.instanceRefreshDialog(lazyCatLogAct
         //        .this);
         //refreshDialog.Init(wait_itme_dialogpage);
         //refreshDialog.showRefreshDialog("", false);
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.sendMessage(new Message());
-            }
-        }, 3000);
 
 
     }
 
+    private void init() {
+
+        /*获取定位权限*/
+        if (isPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    handler.sendMessage(new Message());
+                }
+            }, 3000);
+
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(lazyCatLogAct.this);
+            View item = LayoutInflater.from(lazyCatLogAct.this).inflate(R.layout.alert_message,
+                    null);
+            TextView btn_confirm = item.findViewById(R.id.alert_messageBtnConfirm);
+            TextView Tv_title = item.findViewById(R.id.alert_messageTitle);
+            TextUnt.with(Tv_title).setText("请求授权");
+            TextView Tv_context = item.findViewById(R.id.alert_messageText);
+            TextUnt.with(Tv_context).setText("检测到您没有开启定位权限,请您开启定位权限用来获取您的店铺位置.如果没有定位信息," +
+                    "程序将无法获取到数据连接.如果您无法打开您手机的定位权限,请联系仓库的管理人员。");
+            btn_confirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ActivityCompat.requestPermissions(lazyCatLogAct.this, new String[]{Manifest
+                            .permission.ACCESS_COARSE_LOCATION}, 0);
+                    alertDialog.dismiss();
+                    alertDialog = null;
+                }
+            });
+            TextUnt.with(btn_confirm).setText("马上去开启");
+            builder.setView(item);
+            if (alertDialog == null) {
+                alertDialog = builder.show();
+            }
+        }
+
+        /*获取读写权限*/
+
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[]
+            grantResults) {
+        if (requestCode == 0) {
+            Log.i(MSG, "地址权限获取状态中");
+            if (Tools.isPermission(getApplicationContext(), Manifest.permission
+                    .ACCESS_COARSE_LOCATION)) {
+                Log.i(MSG, "获取权限成功");
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        handler.sendMessage(new Message());
+                    }
+                }, 3000);
+            } else {
+                /*地址获取失败 直接告知 并且退出程序*/
+                final AlertDialog alertDialog;
+                AlertDialog.Builder builder = new AlertDialog.Builder(lazyCatLogAct.this);
+                View item = LayoutInflater.from(lazyCatLogAct.this).inflate(R.layout
+                        .alert_message, null);
+                builder.setView(item);
+                TextView Tv_context = item.findViewById(R.id.alert_messageText);
+                TextUnt.with(Tv_context).setText(getResources().getString(R.string.quitMsg));
+                TextView Tv_btnconfirm = item.findViewById(R.id.alert_messageBtnConfirm);
+                TextUnt.with(Tv_btnconfirm).setTextColor("#ffffff").setBackColor("#f30d65");
+                builder.setCancelable(false);
+                Tv_btnconfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+                alertDialog = builder.show();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }

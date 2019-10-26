@@ -57,10 +57,7 @@ import static shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config.Windows.GET_WINDOW_
 import static shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools.isPermission;
 
 @SuppressLint("HandlerLeak")
-public class Mainfrg extends LazyCatFragment implements ActivityCompat
-        .OnRequestPermissionsResultCallback {
-
-
+public class Mainfrg extends LazyCatFragment implements TencentLocationListener {
     /**
      * -------------------------------------------
      * 显示商品的参数
@@ -88,6 +85,9 @@ public class Mainfrg extends LazyCatFragment implements ActivityCompat
     private TencentLocationManager locationManager;
     private View item;
     private static final String MSG = "Mainfrg.java[+]";
+    private Double StLong;/*经度*/
+    private Double StLat;/*维度*/
+    private String StCitycode;/*获取城市的CODE用来获取地区服务器地址*/
     /**
      * DIALOG
      */
@@ -160,25 +160,19 @@ public class Mainfrg extends LazyCatFragment implements ActivityCompat
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             View item = LayoutInflater.from(getContext()).inflate(R.layout.alert_message, null);
-            TextView btn_confirm = item.findViewById(R.id.alert_messageBtnConfirm);
-            TextView Tv_title = item.findViewById(R.id.alert_messageTitle);
-            TextUnt.with(Tv_title).setText("请求授权");
+            builder.setView(item);
             TextView Tv_context = item.findViewById(R.id.alert_messageText);
-            TextUnt.with(Tv_context).setText("检测到您没有开启定位权限,请您开启定位权限用来获取您的店铺位置.如果没有定位信息," +
-                    "程序将无法获取到数据连接.如果您无法打开您手机的定位权限,请联系仓库的管理人员。");
-            btn_confirm.setOnClickListener(new View.OnClickListener() {
+            TextUnt.with(Tv_context).setText(getResources().getString(R.string.quitMsg));
+            TextView Tv_btnconfirm = item.findViewById(R.id.alert_messageBtnConfirm);
+            TextUnt.with(Tv_btnconfirm).setTextColor("#ffffff").setBackColor("#f30d65");
+            builder.setCancelable(false);
+            Tv_btnconfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
-                    alertDialog.dismiss();
-                    alertDialog = null;
+                    getActivity().finish();
                 }
             });
-            TextUnt.with(btn_confirm).setText("马上去开启");
-            builder.setView(item);
-            if (alertDialog == null) {
-                alertDialog = builder.show();
-            }
+            alertDialog = builder.show();
         }
 
         /*设置是否加载完毕*/
@@ -211,28 +205,6 @@ public class Mainfrg extends LazyCatFragment implements ActivityCompat
         /*第三排的第一个竖向的图片*/
         threeNavAimg = item.findViewById(R.id.fragment_main_threeNavAimg);
 
-        /**
-         * 判断本地是否登录账户
-         */
-        userToolsInstance = LocalProgramTools.getUserToolsInstance();
-        userToolsInstance.StartPullerUserpageXml(new LocalProgramTools.UserToolsInstance
-                .SetReadUserpageListener() {
-            @Override
-            public void onRead(String tag, String values) {
-                if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_ACCOUNT)) {
-                    if (TextUtils.isEmpty(values.trim()) && values != null) {
-                        isLogin = true;
-                    } else {
-                        isLogin = false;
-                    }
-                }
-            }
-
-            @Override
-            public void onError() {
-                isLogin = false;
-            }
-        });
 
         /**
          * 初始化 DIALOG
@@ -286,8 +258,6 @@ public class Mainfrg extends LazyCatFragment implements ActivityCompat
 */
 
         init(item);
-        getServiceAddr("上杭县");
-        listener(item);
         return item;
 
     }
@@ -533,17 +503,27 @@ public class Mainfrg extends LazyCatFragment implements ActivityCompat
      * 判断该地址是否开通服务
      */
     @SuppressLint("NewApi")
-    private void getServiceAddr(String Districe) {
+    private void getServiceAddr(String CityCode) {
         Net.doGet(getContext(), Config.HTTP_ADDR.getIsServiceIn(), new Net
                 .onVisitInterServiceListener() {
             @Override
             public WaitDialog.RefreshDialog onStartLoad() {/*初始化一个DIALOG*/
-
-                return null;
+                /*初始化一个DIALOG*/
+                final WaitDialog.RefreshDialog refreshDialog = new WaitDialog.RefreshDialog
+                        (getContext());
+                WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+                wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                wait_itme_dialogpage.setView(R.layout.item_wait);
+                wait_itme_dialogpage.setCanClose(false);
+                wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+                refreshDialog.Init(wait_itme_dialogpage);
+                refreshDialog.showRefreshDialog("加载中...", false);
+                return refreshDialog;
             }
 
             @Override
             public void onSucess(String tOrgin, final WaitDialog.RefreshDialog _RefreshDialog) {
+                _RefreshDialog.dismiss();
                 if (!TextUtils.isEmpty(tOrgin)) {
                     /*调试输出*/
                     Log.i(MSG, "地区服务器地址:" + tOrgin.trim());
@@ -568,7 +548,7 @@ public class Mainfrg extends LazyCatFragment implements ActivityCompat
             public void onFail(String tOrgin) {
 
             }
-        }, Config.HttpAction.ACTION_ADDR, Districe);
+        }, Config.HttpAction.ACTION_CITYCODE, CityCode);
     }
 
 
@@ -604,7 +584,7 @@ public class Mainfrg extends LazyCatFragment implements ActivityCompat
             }
 
             @Override
-            public void onSucess(String tOrgin, WaitDialog.RefreshDialog _rfreshdialog) {
+            public void onSucess(String tOrgin, final WaitDialog.RefreshDialog _rfreshdialog) {
                 Log.i(MSG, "返回的首页整理的XML信息: " + tOrgin);
                 _rfreshdialog.dismiss();
                 XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(tOrgin.trim());
@@ -1050,6 +1030,7 @@ public class Mainfrg extends LazyCatFragment implements ActivityCompat
 
                     @Override
                     public void onEndDocument() {
+                        _rfreshdialog.dismiss();
                         /**
                          * 结束完成  开始整理界面
                          */
@@ -1114,6 +1095,29 @@ public class Mainfrg extends LazyCatFragment implements ActivityCompat
      */
     @SuppressLint("NewApi")
     private void InitMainPage() {
+        /**
+         * 判断本地是否登录账户
+         */
+        userToolsInstance = LocalProgramTools.getUserToolsInstance();
+        userToolsInstance.StartPullerUserpageXml(new LocalProgramTools.UserToolsInstance
+                .SetReadUserpageListener() {
+            @Override
+            public void onRead(String tag, String values) {
+                if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_ACCOUNT)) {
+                    if (TextUtils.isEmpty(values.trim()) && values != null) {
+                        isLogin = true;
+                    } else {
+                        isLogin = false;
+                    }
+                }
+            }
+
+            @Override
+            public void onError() {
+                isLogin = false;
+            }
+        });
+
         /*加载顶部的第一个Big_headimg*/
         Glide.with(getContext()).load(bigheadImg.getShowImg()).into(bigHead_img);
 
@@ -1182,6 +1186,93 @@ public class Mainfrg extends LazyCatFragment implements ActivityCompat
 
 
     /**
+     * 腾讯地图
+     *
+     * @param tencentLocation
+     * @param i
+     * @param s
+     */
+    @SuppressLint("NewApi")
+    @Override
+    public void onLocationChanged(TencentLocation tencentLocation, int i, String s) {
+        try {
+            if (TencentLocation.ERROR_OK == 0) {
+                //定位成功  就整理界面
+                Log.i(MSG, "获取的地址为:" + tencentLocation.getCityCode());
+                StCitycode = tencentLocation.getCityCode();
+                /*莫名的定位失败就重新打开应用*/
+                if (tencentLocation.getCityCode() == null) {
+                    locationManager.removeUpdates(this);
+                    LocationRequest = null;
+                    /*确定用户的物理地址*/
+                    LocationRequest = TencentLocationRequest.create();
+                    LocationRequest.setInterval(1000);
+                    LocationRequest.setAllowCache(false);
+                    //包含经纬度位置所处的中国大陆行政划区
+                    LocationRequest.setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_POI);//
+                    locationManager = TencentLocationManager.getInstance(getContext());
+                    locationManager.requestLocationUpdates(LocationRequest, this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    View item = LayoutInflater.from(getContext()).inflate(R.layout.alert_message,
+                            null);
+                    TextView Tv_title = item.findViewById(R.id.alert_messageTitle);
+                    TextUnt.with(Tv_title).setText("错误提示").setTextColor("#f30d65");
+                    TextView Tv_context = item.findViewById(R.id.alert_messageText);
+                    TextUnt.with(Tv_context).setText(getResources().getString(R.string
+                            .ErrorNoCityCode)).setTextColor("#f03d65");
+                    TextView Tv_btnconfirm = item.findViewById(R.id.alert_messageBtnConfirm);
+                    TextUnt.with(Tv_btnconfirm).setText("重新启动").setTextColor("#ffffff")
+                            .setBackColor("#f30d65");
+                    Tv_btnconfirm.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            getActivity().finish();
+                        }
+                    });
+                    builder.setView(item);
+                    //alertDialog = builder.show();
+                } else {
+                    getServiceAddr(StCitycode);
+                    StLong = tencentLocation.getLongitude();/*获取经度*/
+                    StLat = tencentLocation.getLatitude();/*获取维度*/
+                    locationManager.removeUpdates(this);
+                    /**
+                     * 定位成功  获取地区服务器地址
+                     */
+                    listener(item);
+
+                }
+
+            } else {
+                /*定位失败  直接弹出对话框 禁止整理界面*/
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                View item = LayoutInflater.from(getContext()).inflate(R.layout.alert_message, null);
+                TextView Tv_title = item.findViewById(R.id.alert_messageTitle);
+                TextUnt.with(Tv_title).setText("错误提示").setTextColor("#f30d65");
+                /*错误的内容*/
+                TextView Tv_context = item.findViewById(R.id.alert_messageText);
+                Tv_context.setText(getResources().getString(R.string.ErrorLocal));
+                /*知晓的按钮*/
+                TextView Tv_btnConfirm = item.findViewById(R.id.alert_messageBtnConfirm);
+                TextUnt.with(Tv_btnConfirm).setText("我已知晓").setTextColor("#ffffff").setBackColor
+                        ("#f30d65");
+                builder.setView(item);
+                builder.show();
+                Toast.makeText(getContext(), "定位失败,错误原因:" + i, Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (Exception e) {
+            Log.e(MSG, "处理定位的时候发生失败:" + e.getMessage());
+        }
+    }
+
+    @Override
+    public void onStatusUpdate(String s, int i, String s1) {
+
+    }
+
+
+    /**
      * 定义一个类 用来存储首页中Big_headImg的参数信息
      */
     class BigheadImg {
@@ -1224,38 +1315,12 @@ public class Mainfrg extends LazyCatFragment implements ActivityCompat
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission
                 .WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission
-                    .WRITE_EXTERNAL_STORAGE}, 0);
+                    .WRITE_EXTERNAL_STORAGE}, 1);
             Log.i(MSG, "没有授权权限!");
-            Toast.makeText(getContext(), "获取权限失败", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getContext(), "获取权限成功", Toast.LENGTH_SHORT).show();
             Log.i(MSG, "已经授权读写权限成功!");
         }
     }
-
-
-    /**
-     * 动态申请权限回调
-     *
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
-     */
-    @SuppressLint("NewApi")
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[]
-            grantResults) {
-        if (requestCode == 0) {
-            if (permissions[0].equals(Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                Toast.makeText(getContext(), "您已获取权限成功!", Toast.LENGTH_SHORT).show();
-                StartLocaling();
-            } else {
-                Toast.makeText(getContext(), "获取权限失败", Toast.LENGTH_SHORT).show();
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
 
     /**
      * 显示商品的参数集合
@@ -1335,44 +1400,19 @@ public class Mainfrg extends LazyCatFragment implements ActivityCompat
         }
     }
 
-    @SuppressLint("NewApi")
-    class Tententlistener implements TencentLocationListener {
-
-        @Override
-        public void onLocationChanged(TencentLocation tencentLocation, int i, String s) {
-            try {
-                if (TencentLocation.ERROR_OK == 0) {
-                    locationManager.removeUpdates(this);
-                } else {
-                    Toast.makeText(getContext(), "定位失败,错误原因:" + i, Toast.LENGTH_SHORT).show();
-                }
-
-            } catch (Exception e) {
-                Log.e(MSG, "处理定位的时候发生失败:" + e.getMessage());
-            }
-        }
-
-        @Override
-        public void onStatusUpdate(String s, int i, String s1) {
-
-        }
-    }
-
-
     /**
      * 获取用户的地理位置
      */
     @SuppressLint("NewApi")
-    private void StartLocaling(){
+    private void StartLocaling() {
         /*确定用户的物理地址*/
         LocationRequest = TencentLocationRequest.create();
         LocationRequest.setInterval(1000);
         LocationRequest.setAllowCache(false);
         //包含经纬度位置所处的中国大陆行政划区
-        LocationRequest.setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_ADMIN_AREA);//
+        LocationRequest.setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_POI);//
         locationManager = TencentLocationManager.getInstance(getContext());
-        int error = locationManager.requestLocationUpdates(LocationRequest, new
-                Tententlistener());
+        int error = locationManager.requestLocationUpdates(LocationRequest, this);
         Log.i(MSG, "腾讯地图调用:" + error);
     }
 }

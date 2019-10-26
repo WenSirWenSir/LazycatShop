@@ -987,17 +987,19 @@ public class Tools {
     /**
      * 通过经纬度 计算两地的直线的距离
      * 系统自带的计算距离
+     *
      * @param _logitude   结束经度
      * @param _latitue    结束维度
      * @param in_logitude 起点经度
      * @param in_latitue  起点维度
      * @return
      */
-    public static double getDistance(double _logitude, double _latitue, double in_logitude,
-                                     double in_latitue) {
+    public static int getDistance(double _logitude, double _latitue, double in_logitude, double
+            in_latitue) {
         float[] results = new float[1];
         Location.distanceBetween(_latitue, _logitude, in_latitue, in_logitude, results);
-        return results[0];
+        int Distance = new Double(results[0]).intValue();
+        return Distance;
     }
 
     public static double rad(double d) {

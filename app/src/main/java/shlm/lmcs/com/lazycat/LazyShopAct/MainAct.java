@@ -302,7 +302,11 @@ public class MainAct extends LazyCatAct {
                 break;
             case ICO_FRAGMENT_DELIVERY:
                 if (messagefrg != null) {
-                    ft.show(messagefrg);
+                    ft.remove(messagefrg);/*先移除messagefrg*/
+                    messagefrg = null;
+                    messagefrg = new Messagefrg();
+                    ft.add(R.id.activity_main_Framelayout, messagefrg);
+
                 } else {
                     messagefrg = new Messagefrg();
                     ft.add(R.id.activity_main_Framelayout, messagefrg);
