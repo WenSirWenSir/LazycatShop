@@ -2,9 +2,9 @@ package shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -15,11 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.LOAD_IMAGEPAGE;
+import com.bumptech.glide.Glide;
+
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.ImageCache;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 
 /**
  * 滑动监听的View
@@ -50,6 +49,10 @@ public class RefreshScrollView extends ScrollView {
     private int RefershImg = 0;
     private Boolean _CanListenMoveLeft = null;
     private Boolean _CanListenMoveRight = null;
+    private String HeadMessageimg;/*头部的地址*/
+    private String HeadMessageOnclick;/*头部的点击事件*/
+    private Boolean isLoadMsgDone;/*标记加载广告图片是否完毕*/
+
 
     public RefreshScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -88,9 +91,13 @@ public class RefreshScrollView extends ScrollView {
      *
      * @param view 必须已经存在于ScrollView中
      */
-    public void SetHeadView(LinearLayout view, int viewHeight, int refershLogid, int refreshImgid) {
+    public void SetHeadView(String _headMessageimg, String _headMessageOnclick, LinearLayout
+            view, int viewHeight, int refershLogid, int refreshImgid) {
+        isLoadMsgDone = false;
         this.RefershLog = refershLogid;
         this.RefershImg = refreshImgid;
+        this.HeadMessageimg = _headMessageimg;
+        this.HeadMessageOnclick = _headMessageOnclick;
         layout = view;//加载文件
         if (layout == null) {
             Log.e(Config.DEBUG, "RefreshScrollView.java[+]view为空");
@@ -182,30 +189,17 @@ public class RefreshScrollView extends ScrollView {
                         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) layout
                                 .getLayoutParams();
                         final ImageView head_img = (ImageView) layout.findViewById(this.RefershImg);
-                        /*这边要加载网络图片*/
-                        if (imageCache.getImage("225522") != null || onGetHeadimg == true) {
-                            Log.i(Config.DEBUG, "缓存中存在图片或者已经在开始下载");
-                            //head_img.setImageBitmap(imageCache.getImage("225522"));
+                        if (head_img != null) {
+                            /*这边要加载网络图片*/
+                            if (!TextUtils.isEmpty(HeadMessageimg) && !isLoadMsgDone) {
+                                Glide.with(getContext()).load(HeadMessageimg).into(head_img);
+                                isLoadMsgDone = true;/*加载完毕*/
+                            } else {
+                                Log.i(MSG, "已经加载图片完毕");
+                            }
+
                         } else {
-                            LOAD_IMAGEPAGE load_imagepage = new LOAD_IMAGEPAGE();
-                            load_imagepage.setImg_url("/photos/225522.png");
-                            load_imagepage.setLruchTag("2423423");
-                            //load_imagepage.setImgBody(head_img);
-                            Net.doGetimg(load_imagepage, new ProgramInterface.doGetImg() {
-                                @Override
-                                public void onSucess(Bitmap bitmap) {
-                                    //成功 获取到网络图片
-                                    Log.i(Config.DEBUG, "获取到图片信息了");
-                                    imageCache.saveImage("225522", bitmap);
-                                    head_img.setImageBitmap(imageCache.getImage("225522"));
-                                }
-
-                                @Override
-                                public void onFain() {
-
-                                }
-                            });
-
+                            Log.e(MSG, "没有获取到加载的图片的控件");
                         }
                         params.width = ViewWidth;
                         params.height = downRange;
@@ -252,10 +246,11 @@ public class RefreshScrollView extends ScrollView {
         }
         if (ev.getAction() == MotionEvent.ACTION_UP) {
             //鼠标抬起
+            isLoadMsgDone = false;/*鼠标一抬起 就代表可以加载控件的广告了*/
             if (b_down) {
                 //可以刷新
                 if (inLoadMessage == false) {
-                    if (total_distance >= viewHeight * 2) {
+                    if (total_distance >= viewHeight * 1) {
                         //下拉大于2倍就开始加载广告
                         if (_RefreshScrollViewListener != null) {
                             _RefreshScrollViewListener.onloadMessage();
@@ -346,7 +341,7 @@ public class RefreshScrollView extends ScrollView {
             if (onStopHandle) {
                 //表示外部已经在处理 不用重复提交
             } else {
-                if(_RefreshScrollViewListener != null){
+                if (_RefreshScrollViewListener != null) {
                     _RefreshScrollViewListener.onScrollStop();
                 }
             }
@@ -354,4 +349,6 @@ public class RefreshScrollView extends ScrollView {
         return super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX, scrollRangeY,
                 maxOverScrollX, maxOverScrollY, isTouchEvent);
     }
+
+
 }

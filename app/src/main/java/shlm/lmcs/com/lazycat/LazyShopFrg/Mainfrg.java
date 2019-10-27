@@ -4,11 +4,9 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
@@ -73,10 +71,20 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
     private final static String SHOW_SHOPLIST_PD = "shopPd";
     private final static String SHOW_SHOPLIST_BUSINESS = "business";
     private final static String SHOW_SHOPLIST_BUSINESSIMG = "businessImg";
+
     /**
      * -------------------------------------------
      */
 
+
+    /**
+     * 显示首页的下拉加载的图片的参数值
+     */
+    private String LoadingImgurl;/*图片的地址*/
+    private String LoadingOnclick;/*图片的点击的地址*/
+    /**
+     * -------------------------------------------
+     */
     /**
      * 腾讯定位模块
      */
@@ -116,11 +124,12 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
     private ImageView secondNavCimg;/*第二个导航中的第三个子导航的图片*/
     private ImageView secondNavDimg;/*第四个导航中的第四个子导航的图片*/
     private ImageView threeNavAimg;/*第三排的第一个竖向图片*/
+    private ImageView _RefreshheadImg;/*滑动的控件的图片的控件*/
     private String ProgramVersion;/*应用程序版本号*/
     private String ProgramNewSize;/*更新的文件的大小*/
     private String ProgramVersionText;/*更新之后的一些简介*/
     private ImageView CenterHeadpageImg;
-    private static final String REFRESH_STOP_MESSAGELOAD = "0";/*停止刷新 隐藏广告*/
+    private static final int REFRESH_STOP_MESSAGELOAD = 0;/*停止刷新 隐藏广告*/
     private AlertDialog UpdateDialog;
     private Boolean isLogin;/*判断本地是否有登录数据*/
     private Boolean isLoadEnd;/*判断是否加载完毕*/
@@ -141,7 +150,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.obj.toString()) {
+            switch (msg.what) {
                 case REFRESH_STOP_MESSAGELOAD:
                     _RefreshScrollView.stopRefresh();
                     break;
@@ -155,26 +164,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
         /*判断是否有定位权限 没有定位权限就去申请定位权限*/
-        if (isPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            StartLocaling();
-        } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            View item = LayoutInflater.from(getContext()).inflate(R.layout.alert_message, null);
-            builder.setView(item);
-            TextView Tv_context = item.findViewById(R.id.alert_messageText);
-            TextUnt.with(Tv_context).setText(getResources().getString(R.string.quitMsg));
-            TextView Tv_btnconfirm = item.findViewById(R.id.alert_messageBtnConfirm);
-            TextUnt.with(Tv_btnconfirm).setTextColor("#ffffff").setBackColor("#f30d65");
-            builder.setCancelable(false);
-            Tv_btnconfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getActivity().finish();
-                }
-            });
-            alertDialog = builder.show();
-        }
-
+        onStartMain();
         /*设置是否加载完毕*/
 
         isLoadEnd = false;
@@ -190,6 +180,8 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         _RefreshScrollView = item.findViewById(R.id.fragment_main_refreshScrollview);
         /*滑动控件的头部广告*/
         _Refreshhead = item.findViewById(R.id.fragment_main_refreshHead);
+        /*滑动控件的头部的图片控件*/
+        _RefreshheadImg = item.findViewById(R.id.fragment_main_refreshHeadImg);
         /*头部第一个Image的广告控件*/
         bigHead_img = item.findViewById(R.id.fragment_main_bigHeadMsg);
         /*第二个导航的第一个子导航*/
@@ -257,9 +249,35 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         locationClient.start();
 */
 
-        init(item);
         return item;
 
+    }
+
+
+    /**
+     * 最先开始
+     */
+    @SuppressLint("NewApi")
+    private void onStartMain() {
+        if (isPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            StartLocaling();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            View item = LayoutInflater.from(getContext()).inflate(R.layout.alert_message, null);
+            builder.setView(item);
+            TextView Tv_context = item.findViewById(R.id.alert_messageText);
+            TextUnt.with(Tv_context).setText(getResources().getString(R.string.quitMsg));
+            TextView Tv_btnconfirm = item.findViewById(R.id.alert_messageBtnConfirm);
+            TextUnt.with(Tv_btnconfirm).setTextColor("#ffffff").setBackColor("#f30d65");
+            builder.setCancelable(false);
+            Tv_btnconfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().finish();
+                }
+            });
+            alertDialog = builder.show();
+        }
     }
 
 
@@ -314,27 +332,31 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         _RefreshScrollView.SetLinstener(new RefreshScrollView.RefreshScrollViewListener() {
             @Override
             public void onRefresh() {
+                Log.i(MSG, "onRefresh");
 
             }
 
             @Override
             public void onRefreshDone() {
+                Log.i(MSG, "onRefreshDone");
 
             }
 
             @Override
             public void onStopRefresh() {
+                Log.i(MSG, "onStopRefresh");
 
             }
 
             @Override
             public void onState(int _static) {
+                Log.i(MSG, "onState");
 
             }
 
             @Override
             public void onLoadMore() {
-
+                Log.i(MSG, "onLoadMore");
             }
 
             @Override
@@ -463,18 +485,18 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
 
             @Override
             public void onScrollStop() {
-
+                Log.e(MSG, "onScrollStop");
             }
 
             @Override
             public void onloadMessage() {
-                Log.e(MSG, "onRefresh回调");
+                onStartMain();/*重新尝试加载*/
                 Timer timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         Message msg = new Message();
-                        msg.obj = REFRESH_STOP_MESSAGELOAD;
+                        msg.what = REFRESH_STOP_MESSAGELOAD;
                         handler.sendMessage(msg);
                     }
                 }, 3000);
@@ -482,16 +504,19 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
 
             @Override
             public void onScrollDistance(int distance) {
+                Log.e(MSG, "onScrollDistance");
 
             }
 
             @Override
             public void onScrollToleft(int _moveCount) {
+                Log.e(MSG, "onScrollToleft");
 
             }
 
             @Override
             public void onScrollToRight(int _moveCount) {
+                Log.e(MSG, "onScrollToRight");
 
             }
         });
@@ -552,14 +577,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void init(View item) {
-        /*设置头部广告*/
-        _RefreshScrollView.SetHeadView(_Refreshhead, 150, R.id.fragment_main_Headprogressbar, R
-                .drawable.program_ico);
-
-    }
-
     @SuppressLint("NewApi")
     private void getConfigXml() {
         /**
@@ -603,6 +620,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                     public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
                         try {
 
+
                             /**
                              * 版本号
                              */
@@ -621,6 +639,16 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                              */
                             if (tag.equals("ProgramVersionText")) {
                                 ProgramVersionText = pullParser.nextText().trim();
+                            }
+                            /*设置下拉的图片*/
+                            if (tag.equals(LocalAction.ACTION_MAINPAGE
+                                    .ACTION_MAINFRGPAG_LOADINGIMG)) {
+                                LoadingImgurl = pullParser.nextText().trim();
+                            }
+                            /*设置下拉图片加载的点击地址*/
+                            if (tag.equals(LocalAction.ACTION_MAINPAGE
+                                    .ACTION_MAINFRGPAG_LOADINGONCLICK)) {
+                                LoadingOnclick = pullParser.nextText().trim();/*获取点击的地址*/
                             }
                             /*设置点击之后的地址*/
                             if (tag.equals(bigheadImg.getTAG_ONCLICK_URL())) {
@@ -1095,6 +1123,13 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
      */
     @SuppressLint("NewApi")
     private void InitMainPage() {
+
+        /**
+         * 设置加载的下拉加载的图片地址和点击事件
+         */
+        LinearLayout headView = item.findViewById(R.id.fragment_main_refreshHead);
+        _RefreshScrollView.SetHeadView(LoadingImgurl, LoadingOnclick, headView, 100, R.id
+                .fragment_main_Headprogressbar, R.id.fragment_main_refreshHeadImg);
         /**
          * 判断本地是否登录账户
          */

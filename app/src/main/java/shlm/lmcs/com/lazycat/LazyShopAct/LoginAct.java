@@ -6,16 +6,24 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.EditTextUnt;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.XmlBuilder;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
+import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
+import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
 
 @SuppressLint("NewApi")
@@ -72,12 +80,12 @@ public class LoginAct extends LazyCatAct {
         /**
          *加入仓库网络的按钮
          */
-       findViewById(R.id.activity_login_btnTojoin).setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               LazyCatActStartActivity(MakebusinessAct.class, true);
-           }
-       });
+        findViewById(R.id.activity_login_btnTojoin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LazyCatActStartActivity(MakebusinessAct.class, true);
+            }
+        });
 
 
         /**
@@ -122,6 +130,33 @@ public class LoginAct extends LazyCatAct {
                     /*输入了账户就冻结 不准再次输入®*/
                     etAccount.setTextColor(Color.parseColor("#000000"));
                     EditTextUnt.with(etToken).requestFocus().setText("");
+
+                    /**
+                     * 发送登录验证码
+                     */
+                    XmlBuilder.XmlInstance xmlInstance = new XmlBuilder.XmlInstance();
+                    xmlInstance.initDom();
+                    xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, etAccount
+                            .getText().toString().trim());
+                    xmlInstance.overDom();
+                    Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS
+                            .HTTP_ADDR_SEND_LOGINSMS, new ProgramInterface() {
+                        @Override
+                        public void onSucess(String data, int code, WaitDialog.RefreshDialog
+                                _refreshDialog) {
+                            Log.i(MSG, "发送短信验证码提示:" + data.trim());
+                        }
+
+                        @Override
+                        public WaitDialog.RefreshDialog onStartLoad() {
+                            return null;
+                        }
+
+                        @Override
+                        public void onFaile(String data, int code) {
+
+                        }
+                    }, xmlInstance.getXmlTree().trim());
                 }
 
             }
@@ -157,7 +192,7 @@ public class LoginAct extends LazyCatAct {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.length() == 6){
+                if (s.length() == 6) {
                     etToken.setEnabled(false);
                     /*输入了验证码就冻结 不准再次输入®*/
                     etToken.setTextColor(Color.parseColor("#000000"));
@@ -169,21 +204,12 @@ public class LoginAct extends LazyCatAct {
         /**
          * 登录按钮的监听
          */
-      /*  btnLoginin.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.activity_login_btnTologin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"点击登录",Toast.LENGTH_SHORT).show();
-                LLSelectBody.startAnimation(clearAnimation);
-                RLLoginBody.setAlpha(1);
-                RLLoginBody.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Animator animation = Tools.createRoundAnimation(RLLoginBody, 600);
-                        animation.start();
-                    }
-                });
+                Toast.makeText(getApplicationContext(), "登录按钮", Toast.LENGTH_SHORT).show();
             }
-        });*/
+        });
     }
 
 }
