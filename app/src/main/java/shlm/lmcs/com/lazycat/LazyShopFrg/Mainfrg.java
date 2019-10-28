@@ -1139,7 +1139,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
             @Override
             public void onRead(String tag, String values) {
                 if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_ACCOUNT)) {
-                    if (TextUtils.isEmpty(values.trim()) && values != null) {
+                    if (!TextUtils.isEmpty(values.trim()) && values != null) {
                         isLogin = true;
                     } else {
                         isLogin = false;

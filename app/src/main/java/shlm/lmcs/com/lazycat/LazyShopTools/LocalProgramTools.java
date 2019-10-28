@@ -30,12 +30,63 @@ public class LocalProgramTools {
     }
 
     public static class UserToolsInstance {
-        private String NiackName;/*用户的昵称*/
-        private String Blance;/*用户余额*/
-        private String Status;/*用户的账户状态*/
-        private String Vipstatus;/*用户的VIP状态*/
         private String Token;/*用户的TOKEN*/
+        private String Shopname;/*店铺的名称*/
+        private String Shopaddr;/*店铺的位置*/
+        private String Shoptel;/*店铺的电话*/
+        private String ShopusePeople;/*店铺的负责人*/
+        private String Shoplong;/*店铺的经度*/
+        private String Shoplat;/*店铺的维度*/
         private String Account;/*用户的账户*/
+        private SetReadUserpageListener _setReadUserpageListener;
+
+        public String getShopname() {
+            return Shopname;
+        }
+
+        public void setShopname(String shopname) {
+            Shopname = shopname;
+        }
+
+        public String getShopaddr() {
+            return Shopaddr;
+        }
+
+        public void setShopaddr(String shopaddr) {
+            Shopaddr = shopaddr;
+        }
+
+        public String getShoptel() {
+            return Shoptel;
+        }
+
+        public void setShoptel(String shoptel) {
+            Shoptel = shoptel;
+        }
+
+        public String getShopusePeople() {
+            return ShopusePeople;
+        }
+
+        public void setShopusePeople(String shopusePeople) {
+            ShopusePeople = shopusePeople;
+        }
+
+        public String getShoplong() {
+            return Shoplong;
+        }
+
+        public void setShoplong(String shoplong) {
+            Shoplong = shoplong;
+        }
+
+        public String getShoplat() {
+            return Shoplat;
+        }
+
+        public void setShoplat(String shoplat) {
+            Shoplat = shoplat;
+        }
 
         public String getAccount() {
             return Account;
@@ -45,39 +96,6 @@ public class LocalProgramTools {
             Account = account;
         }
 
-        private SetReadUserpageListener _setReadUserpageListener;
-
-        public String getNiackName() {
-            return NiackName;
-        }
-
-        public void setNiackName(String niackName) {
-            NiackName = niackName;
-        }
-
-        public String getBlance() {
-            return Blance;
-        }
-
-        public void setBlance(String blance) {
-            Blance = blance;
-        }
-
-        public String getStatus() {
-            return Status;
-        }
-
-        public void setStatus(String status) {
-            Status = status;
-        }
-
-        public String getVipstatus() {
-            return Vipstatus;
-        }
-
-        public void setVipstatus(String vipstatus) {
-            Vipstatus = vipstatus;
-        }
 
         public String getToken() {
             return Token;
@@ -110,26 +128,6 @@ public class LocalProgramTools {
                 serializer.startTag(null, "body");
                 serializer.startTag(null, "userPage");
                 serializer.startTag(null, LocalAction.ACTION_LOCALUSERPAGE
-                        .ACTION_LOCALUSERPAGE_NIACKNAME);
-                serializer.text(NiackName.trim());
-                serializer.endTag(null, LocalAction.ACTION_LOCALUSERPAGE
-                        .ACTION_LOCALUSERPAGE_NIACKNAME);
-                serializer.startTag(null, LocalAction.ACTION_LOCALUSERPAGE
-                        .ACTION_LOCALUSERPAGE_BLANCE);
-                serializer.text(Blance.trim());
-                serializer.endTag(null, LocalAction.ACTION_LOCALUSERPAGE
-                        .ACTION_LOCALUSERPAGE_BLANCE);
-                serializer.startTag(null, LocalAction.ACTION_LOCALUSERPAGE
-                        .ACTION_LOCALUSERPAGE_STATUS);
-                serializer.text(Status.trim());
-                serializer.endTag(null, LocalAction.ACTION_LOCALUSERPAGE
-                        .ACTION_LOCALUSERPAGE_STATUS);
-                serializer.startTag(null, LocalAction.ACTION_LOCALUSERPAGE
-                        .ACTION_LOCALUSERPAGE_VIPSTATUS);
-                serializer.text(Vipstatus.trim());
-                serializer.endTag(null, LocalAction.ACTION_LOCALUSERPAGE
-                        .ACTION_LOCALUSERPAGE_VIPSTATUS);
-                serializer.startTag(null, LocalAction.ACTION_LOCALUSERPAGE
                         .ACTION_LOCALUSERPAGE_TOKEN);
                 serializer.text(Token.trim());
                 serializer.endTag(null, LocalAction.ACTION_LOCALUSERPAGE
@@ -139,6 +137,43 @@ public class LocalProgramTools {
                 serializer.text(Account.trim());
                 serializer.endTag(null, LocalAction.ACTION_LOCALUSERPAGE
                         .ACTION_LOCALUSERPAGE_ACCOUNT);
+                /*店铺的管理者*/
+                serializer.startTag(null, LocalAction.ACTION_LOCALUSERPAGE
+                        .ACTION_LOCALUSERPAGE_SHOPUSEPEOPLE);
+                serializer.text(ShopusePeople.trim());
+                serializer.endTag(null, LocalAction.ACTION_LOCALUSERPAGE
+                        .ACTION_LOCALUSERPAGE_SHOPUSEPEOPLE);
+                /*店铺的电话*/
+                serializer.startTag(null, LocalAction.ACTION_LOCALUSERPAGE
+                        .ACTION_LOCALUSERPAGE_SHOPTEL);
+                serializer.text(Shoptel.trim());
+                serializer.endTag(null, LocalAction.ACTION_LOCALUSERPAGE
+                        .ACTION_LOCALUSERPAGE_SHOPTEL);
+                /*店铺的名称*/
+                serializer.startTag(null, LocalAction.ACTION_LOCALUSERPAGE
+                        .ACTION_LOCALUSERPAGE_SHOPNAME);
+                serializer.text(Shopname.trim());
+                serializer.endTag(null, LocalAction.ACTION_LOCALUSERPAGE
+                        .ACTION_LOCALUSERPAGE_SHOPNAME);
+                /*店铺的位置*/
+                serializer.startTag(null, LocalAction.ACTION_LOCALUSERPAGE
+                        .ACTION_LOCALUSERPAGE_SHOPADDR);
+                serializer.text(Shopaddr.trim());
+                serializer.endTag(null, LocalAction.ACTION_LOCALUSERPAGE
+                        .ACTION_LOCALUSERPAGE_SHOPADDR);
+                /*店铺的经度*/
+                serializer.startTag(null, LocalAction.ACTION_LOCALUSERPAGE
+                        .ACTION_LOCALUSERPAGE_SHOPLONG);
+                serializer.text(Shoplong.trim());
+                serializer.endTag(null, LocalAction.ACTION_LOCALUSERPAGE
+                        .ACTION_LOCALUSERPAGE_SHOPLONG);
+                /*店铺的维度*/
+                serializer.startTag(null, LocalAction.ACTION_LOCALUSERPAGE
+                        .ACTION_LOCALUSERPAGE_SHOPLAT);
+                serializer.text(Shoplat.trim());
+                serializer.endTag(null, LocalAction.ACTION_LOCALUSERPAGE
+                        .ACTION_LOCALUSERPAGE_SHOPLAT);
+
                 serializer.endTag(null, "userPage");
                 serializer.endTag(null, "body");
                 serializer.endDocument();
@@ -167,34 +202,6 @@ public class LocalProgramTools {
                         String tagName = parser.getName();/*获取当前节点的名称*/
                         switch (eventType) {
                             case XmlPullParser.START_TAG:
-                                /*商户的别称*/
-                                if (tagName.equals(LocalAction.ACTION_LOCALUSERPAGE
-                                        .ACTION_LOCALUSERPAGE_NIACKNAME)) {
-                                    _setReadUserpageListener.onRead(LocalAction
-                                            .ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_NIACKNAME,
-                                            parser.nextText().trim());
-                                }
-                                /*账户的状态*/
-                                if (tagName.equals(LocalAction.ACTION_LOCALUSERPAGE
-                                        .ACTION_LOCALUSERPAGE_STATUS)) {
-                                    _setReadUserpageListener.onRead(LocalAction
-                                            .ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_STATUS,
-                                            parser.nextText().trim());
-                                }
-                                /*账户的余额*/
-                                if (tagName.equals(LocalAction.ACTION_LOCALUSERPAGE
-                                        .ACTION_LOCALUSERPAGE_BLANCE)) {
-                                    _setReadUserpageListener.onRead(LocalAction
-                                            .ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_BLANCE,
-                                            parser.nextText().trim());
-                                }
-                                /*账户的VIP状态*/
-                                if (tagName.equals(LocalAction.ACTION_LOCALUSERPAGE
-                                        .ACTION_LOCALUSERPAGE_VIPSTATUS)) {
-                                    _setReadUserpageListener.onRead(LocalAction
-                                            .ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_VIPSTATUS,
-                                            parser.nextText().trim());
-                                }
                                 /*账户的Token*/
                                 if (tagName.equals(LocalAction.ACTION_LOCALUSERPAGE
                                         .ACTION_LOCALUSERPAGE_TOKEN)) {
@@ -202,10 +209,47 @@ public class LocalProgramTools {
                                             .ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_TOKEN,
                                             parser.nextText().trim());
                                 }
+                                /*用户的账户*/
                                 if (tagName.equals(LocalAction.ACTION_LOCALUSERPAGE
                                         .ACTION_LOCALUSERPAGE_ACCOUNT)) {
                                     _setReadUserpageListener.onRead(LocalAction
                                             .ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_ACCOUNT,
+                                            parser.nextText().trim());
+                                }
+                                /*商品的地址*/
+                                if (tagName.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                        .ACTION_LOCALUSERPAGE_SHOPADDR)) {
+                                    _setReadUserpageListener.onRead(LocalAction
+                                            .ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_SHOPADDR,
+                                            parser.nextText().trim());
+                                }
+                                /*商品的负责人*/
+                                if (tagName.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                        .ACTION_LOCALUSERPAGE_SHOPUSEPEOPLE)) {
+                                    _setReadUserpageListener.onRead(LocalAction
+                                            .ACTION_LOCALUSERPAGE
+                                            .ACTION_LOCALUSERPAGE_SHOPUSEPEOPLE, parser.nextText
+                                            ().trim());
+                                }
+                                /*商品的名称*/
+                                if (tagName.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                        .ACTION_LOCALUSERPAGE_SHOPNAME)) {
+                                    _setReadUserpageListener.onRead(LocalAction
+                                            .ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_SHOPNAME,
+                                            parser.nextText().trim());
+                                }
+                                /*店铺的经度*/
+                                if (tagName.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                        .ACTION_LOCALUSERPAGE_SHOPLONG)) {
+                                    _setReadUserpageListener.onRead(LocalAction
+                                            .ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_SHOPLONG,
+                                            parser.nextText().trim());
+                                }
+                                /*店铺的维度*/
+                                if (tagName.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                        .ACTION_LOCALUSERPAGE_SHOPLAT)) {
+                                    _setReadUserpageListener.onRead(LocalAction
+                                            .ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_SHOPLAT,
                                             parser.nextText().trim());
                                 }
                                 break;
@@ -233,7 +277,7 @@ public class LocalProgramTools {
         /**
          * 清空缓存
          */
-        public void ClearLocalCach(){
+        public void ClearLocalCach() {
             File file = new File(Environment.getExternalStorageDirectory(), "CK_USERPAGE.xml");
             if (file.exists() && file.isFile()) {
                 if (file.delete()) {

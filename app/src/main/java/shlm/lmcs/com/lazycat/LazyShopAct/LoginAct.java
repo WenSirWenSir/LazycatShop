@@ -1,5 +1,6 @@
 package shlm.lmcs.com.lazycat.LazyShopAct;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -14,14 +15,19 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import org.xmlpull.v1.XmlPullParser;
+
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.EditTextUnt;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.XmlBuilder;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlanalysisFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.JsonEndata;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
+import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
@@ -38,6 +44,10 @@ public class LoginAct extends LazyCatAct {
     private AlphaAnimation showAnimation;
     private AlphaAnimation clearAnimation;
 
+    /**
+     * 存入用户的表格的工具类
+     */
+    private LocalProgramTools.UserToolsInstance userToolsInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +155,21 @@ public class LoginAct extends LazyCatAct {
                         public void onSucess(String data, int code, WaitDialog.RefreshDialog
                                 _refreshDialog) {
                             Log.i(MSG, "发送短信验证码提示:" + data.trim());
+                            try {
+                                JsonEndata jsonEndata = new JsonEndata(data.trim());
+                                if (jsonEndata.getJsonKeyValue("return_code").equals("00000")) {
+                                    Toast.makeText(getApplicationContext(), "短信验证码发送成功", Toast
+                                            .LENGTH_SHORT).show();
+                                } else if (jsonEndata.getJsonKeyValue("return_code").equals
+                                        ("00001")) {
+                                    Toast.makeText(getApplicationContext(), "该账户没有在仓库网络注册过¬",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
+                                Log.e(MSG, "请求发送登录验证码失败");
+                                Toast.makeText(getApplicationContext(), "提交信息错误,请联系管理人员", Toast
+                                        .LENGTH_SHORT).show();
+                            }
                         }
 
                         @Override
@@ -207,6 +232,138 @@ public class LoginAct extends LazyCatAct {
         findViewById(R.id.activity_login_btnTologin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder();
+                xmlInstance.initDom();
+                xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, etAccount.getText()
+                        .toString().trim());
+                xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_CODE, etToken.getText()
+                        .toString().trim());
+                xmlInstance.overDom();
+                Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS
+                        .HTTP_ADDR_INSPECT_LOGIN, new ProgramInterface() {
+                    @Override
+                    public void onSucess(String data, int code, WaitDialog.RefreshDialog
+                            _refreshDialog) {
+                        Log.i(MSG, "登录验证码检查返回数据：" + data.trim());
+
+
+                        if (data.trim().equals("-1")) {
+                            Toast.makeText(getApplicationContext(), "登录失败!", Toast.LENGTH_SHORT)
+                                    .show();
+                        } else {
+                            XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(data
+                                    .trim());
+                            xmlanalysisFactory.Startanalysis(new XmlanalysisFactory
+                                    .XmlanalysisInterface() {
+                                @Override
+                                public void onFaile() {
+
+                                }
+
+                                @Override
+                                public void onStartDocument(String tag) {
+                                    userToolsInstance = LocalProgramTools.getUserToolsInstance();
+                                }
+
+                                @Override
+                                public void onStartTag(String tag, XmlPullParser pullParser,
+                                                       Integer id) {
+                                    try {
+                                        /*用户的TOKEN*/
+                                        if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                                .ACTION_LOCALUSERPAGE_TOKEN)) {
+                                            userToolsInstance.setToken(pullParser.nextText().trim
+                                                    ());
+                                        }
+                                        /*用户的账户*/
+                                        if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                                .ACTION_LOCALUSERPAGE_ACCOUNT)) {
+                                            userToolsInstance.setAccount(pullParser.nextText()
+                                                    .trim());
+                                        }
+                                        /*店铺的地址*/
+                                        if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                                .ACTION_LOCALUSERPAGE_SHOPADDR)) {
+                                            userToolsInstance.setShopaddr(pullParser.nextText());
+                                        }
+                                        /*店铺的全称*/
+                                        if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                                .ACTION_LOCALUSERPAGE_SHOPNAME)) {
+                                            userToolsInstance.setShopname(pullParser.nextText()
+                                                    .trim());
+                                        }
+                                        /*店铺的负责人*/
+                                        if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                                .ACTION_LOCALUSERPAGE_SHOPUSEPEOPLE)) {
+                                            userToolsInstance.setShopusePeople(pullParser
+                                                    .nextText().trim());
+                                        }
+                                        /*店铺的经度*/
+                                        if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                                .ACTION_LOCALUSERPAGE_SHOPLONG)) {
+                                            userToolsInstance.setShoplong(pullParser.nextText()
+                                                    .trim());
+                                        }
+                                        /*店铺的维度*/
+                                        if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                                .ACTION_LOCALUSERPAGE_SHOPLAT)) {
+                                            userToolsInstance.setShoplat(pullParser.nextText()
+                                                    .trim());
+                                        }
+                                    } catch (Exception e) {
+
+                                        Log.e(MSG, "登录整理用户的数据错误输出:" + e.getMessage());
+                                    }
+
+                                }
+
+                                @Override
+                                public void onEndTag(String tag, XmlPullParser pullParser,
+                                                     Integer id) {
+
+                                }
+
+                                @Override
+                                public void onEndDocument() {
+
+                                    /*判断是否拥有写入权限*/
+                                    if (!Tools.isPermission(getApplicationContext(), Manifest
+                                            .permission.READ_EXTERNAL_STORAGE)) {
+                                        Toast.makeText(getApplicationContext(), "没有写入权限", Toast
+                                                .LENGTH_SHORT).show();
+
+
+                                    } else if (!Tools.isPermission(getApplicationContext(),
+                                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                                        Toast.makeText(getApplicationContext(), "没有读入权限", Toast
+                                                .LENGTH_SHORT).show();
+                                    } else {
+                                        /*两个权限都有了*/
+                                        if (userToolsInstance.SaveingUserPageXml()) {
+                                            Toast.makeText(getApplicationContext(),
+                                                    "登录成功!********欢迎您", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "登录失败," +
+                                                    "无法在本地保存用户登录数据", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                }
+                            });
+                        }
+
+                    }
+
+                    @Override
+                    public WaitDialog.RefreshDialog onStartLoad() {
+                        return null;
+                    }
+
+                    @Override
+                    public void onFaile(String data, int code) {
+
+                    }
+                }, xmlInstance.getXmlTree().trim());
                 Toast.makeText(getApplicationContext(), "登录按钮", Toast.LENGTH_SHORT).show();
             }
         });

@@ -21,8 +21,6 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyShopAct.MainAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.PromotionAct;
-import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
-import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 
 import static shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools.isPermission;
 
@@ -62,15 +60,6 @@ public class lazyCatLogAct extends LazyCatAct {
         /**
          * 测试代码区
          */
-        LocalProgramTools.UserToolsInstance userToolsInstance = LocalProgramTools
-                .getUserToolsInstance();
-        userToolsInstance.setToken("TOKEN15206036936");
-        userToolsInstance.setVipstatus(LocalValues.VALUES_USERCENTER.IS_NOT_VIP);
-        userToolsInstance.setStatus(LocalValues.VALUES_USERCENTER.ACCOUNT_IS_OK);
-        userToolsInstance.setBlance("10000");
-        userToolsInstance.setNiackName("资本家");
-        userToolsInstance.setAccount("15206036936");
-        userToolsInstance.SaveingUserPageXml();
         /*找到Ico控件*/
         log_title = findViewById(R.id.activity_lazy_log_title);/*控件图标*/
         log_context = findViewById(R.id.activity_lazy_log_context);/*控件的内容CangKu Service*/
