@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -555,29 +554,6 @@ public class ShowshopOffice extends LazyCatAct {
          */
         /*获取用户工具类*/
         userToolsInstance = LocalProgramTools.getUserToolsInstance();
-        userToolsInstance.StartPullerUserpageXml(new LocalProgramTools.UserToolsInstance
-                .SetReadUserpageListener() {
-            @Override
-            public void onRead(String tag, String values) {
-                if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_TOKEN)) {
-                    if (!TextUtils.isEmpty(values)) {
-                        /*有登录*/
-                        isLoginin = true;
-                    } else {
-                        /*没有登录*/
-                        isLoginin = false;
-                    }
-                }
-            }
-
-            @Override
-            public void onError() {
-                /*处理失败  直接退出*/
-                Toast.makeText(getApplicationContext(), "您的账号登录失败,请您联系管理人员", Toast.LENGTH_SHORT)
-                        .show();
-                finish();
-            }
-        });
         /*设置条码图片*/
         if (shopvalues.getBarcode().equals("") || shopvalues.getBarcode().equals("0")) {
             imgBarcode.setVisibility(View.GONE);

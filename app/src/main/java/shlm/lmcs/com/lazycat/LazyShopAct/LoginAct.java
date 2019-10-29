@@ -245,8 +245,6 @@ public class LoginAct extends LazyCatAct {
                     public void onSucess(String data, int code, WaitDialog.RefreshDialog
                             _refreshDialog) {
                         Log.i(MSG, "登录验证码检查返回数据：" + data.trim());
-
-
                         if (data.trim().equals("-1")) {
                             Toast.makeText(getApplicationContext(), "登录失败!", Toast.LENGTH_SHORT)
                                     .show();
@@ -304,6 +302,12 @@ public class LoginAct extends LazyCatAct {
                                             userToolsInstance.setShoplong(pullParser.nextText()
                                                     .trim());
                                         }
+                                        /*店铺的电话*/
+                                        if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                                .ACTION_LOCALUSERPAGE_SHOPTEL)) {
+                                            userToolsInstance.setShoptel(pullParser.nextText()
+                                                    .trim());
+                                        }
                                         /*店铺的维度*/
                                         if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
                                                 .ACTION_LOCALUSERPAGE_SHOPLAT)) {
@@ -329,19 +333,22 @@ public class LoginAct extends LazyCatAct {
                                     /*判断是否拥有写入权限*/
                                     if (!Tools.isPermission(getApplicationContext(), Manifest
                                             .permission.READ_EXTERNAL_STORAGE)) {
-                                        Toast.makeText(getApplicationContext(), "没有写入权限", Toast
-                                                .LENGTH_SHORT).show();
+                                        /*没有写入权限 要求客户重新打开权限后重试*/
+                                        Toast.makeText(getApplicationContext(), "没有打开写入权限," +
+                                                "请关闭系统打开信息重试", Toast.LENGTH_SHORT).show();
 
 
                                     } else if (!Tools.isPermission(getApplicationContext(),
                                             Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                                        Toast.makeText(getApplicationContext(), "没有读入权限", Toast
-                                                .LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "没有打开读入权限," +
+                                                "请关闭系统打开信息重试", Toast.LENGTH_SHORT).show();
                                     } else {
                                         /*两个权限都有了*/
                                         if (userToolsInstance.SaveingUserPageXml()) {
-                                            Toast.makeText(getApplicationContext(),
-                                                    "登录成功!********欢迎您", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(), "登录成功!" +
+                                                    userToolsInstance.getShopname().trim() +
+                                                    "欢迎您", Toast.LENGTH_SHORT).show();
+                                            finish();
                                         } else {
                                             Toast.makeText(getApplicationContext(), "登录失败," +
                                                     "无法在本地保存用户登录数据", Toast.LENGTH_SHORT).show();
@@ -364,7 +371,6 @@ public class LoginAct extends LazyCatAct {
 
                     }
                 }, xmlInstance.getXmlTree().trim());
-                Toast.makeText(getApplicationContext(), "登录按钮", Toast.LENGTH_SHORT).show();
             }
         });
     }

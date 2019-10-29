@@ -309,37 +309,8 @@ public class SearchAct extends LazyCatAct {
          * 判断用户是否登录状态
          */
 
-        userToolsInstance.StartPullerUserpageXml(new LocalProgramTools.UserToolsInstance
-                .SetReadUserpageListener() {
-            @Override
-            public void onRead(String tag, String values) {
-                if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_ACCOUNT)) {
-                    if (!TextUtils.isEmpty(values) && values != null) {
-                        userAccount = values;
-                    } else {
-                        userAccount = "";
-                    }
-                }
-                if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_TOKEN)) {
-                    if (!TextUtils.isEmpty(values) && values != null) {
-                        userToken = values;
-                    } else {
-                        userToken = "";
-                    }
-                }
-            }
-
-            @Override
-            public void onError() {
-                userAccount = "";/*没有登录*/
-                userToken = "";/*没有登录*/
-
-            }
-        });
         XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder();
         xmlInstance.initDom();
-        Log.i(MSG, "获取到的账户名称:" + userAccount);
-        Log.i(MSG, "获取到的账户Token:" + userToken);
         xmlInstance.setXmlTree(LocalAction.ACTION_LOCALUSERPAGE.ACTION_USER, userAccount);/*用户账户*/
         xmlInstance.setXmlTree(LocalAction.ACTION_LOCALUSERPAGE.ACTION_TOKEN, userToken);/*用户密码*/
         xmlInstance.overDom();

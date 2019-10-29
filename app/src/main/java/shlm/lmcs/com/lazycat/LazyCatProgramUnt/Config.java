@@ -150,8 +150,6 @@ public class Config {
 
         public final static String CONFIG_LOGIN_CHECKTOKEN_SERVICE = SERVICE +
                 "/CK_SERVICE/Login/CK_CHECK_TOKEN.php";
-        public final static String CONFIG_GET_USERVALUES_SERVICE = SERVICE +
-                "/CK_SERVICE/User/initUsercenter.php";
 
         public static void setAddr(String addr) {
             if (!TextUtils.isEmpty(addr)) {

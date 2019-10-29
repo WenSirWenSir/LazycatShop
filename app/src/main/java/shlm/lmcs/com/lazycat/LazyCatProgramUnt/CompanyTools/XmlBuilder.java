@@ -58,7 +58,7 @@ public class XmlBuilder {
         public void initDom() {
             xmlDom = new StringBuilder();
             xmlDom.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");/*添加头部信息*/
-            xmlDom.append("<body>");
+            xmlDom.append("<xml>");
 
         }
 
@@ -66,7 +66,7 @@ public class XmlBuilder {
          * 结束Xml的树
          */
         public void overDom() {
-            xmlDom.append("</body>");
+            xmlDom.append("</xml>");
         }
 
 

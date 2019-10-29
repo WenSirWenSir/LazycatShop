@@ -166,7 +166,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         /*判断是否有定位权限 没有定位权限就去申请定位权限*/
         onStartMain();
         /*设置是否加载完毕*/
-
         isLoadEnd = false;
         /*设置状态栏颜色*/
         item = inflater.inflate(R.layout.fragment_main, null);
@@ -551,7 +550,10 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                 _RefreshDialog.dismiss();
                 if (!TextUtils.isEmpty(tOrgin)) {
                     /*调试输出*/
-                    Log.i(MSG, "地区服务器地址:" + tOrgin.trim());
+                    LocalProgramTools.ProgramServiceTools programServiceTools = LocalProgramTools
+                            .getServiceToolsInstatnce();
+                    programServiceTools.set_Service(tOrgin.trim());
+                    programServiceTools.SaveService();/*保存服务器*/
                     /*不是为空的话 就去访问网络*/
                     LocalValues.ADDR_SERVICE = tOrgin.trim();
                     getConfigXml();/*获取首页的配置文件*/
@@ -1134,24 +1136,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
          * 判断本地是否登录账户
          */
         userToolsInstance = LocalProgramTools.getUserToolsInstance();
-        userToolsInstance.StartPullerUserpageXml(new LocalProgramTools.UserToolsInstance
-                .SetReadUserpageListener() {
-            @Override
-            public void onRead(String tag, String values) {
-                if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_ACCOUNT)) {
-                    if (!TextUtils.isEmpty(values.trim()) && values != null) {
-                        isLogin = true;
-                    } else {
-                        isLogin = false;
-                    }
-                }
-            }
-
-            @Override
-            public void onError() {
-                isLogin = false;
-            }
-        });
 
         /*加载顶部的第一个Big_headimg*/
         Glide.with(getContext()).load(bigheadImg.getShowImg()).into(bigHead_img);

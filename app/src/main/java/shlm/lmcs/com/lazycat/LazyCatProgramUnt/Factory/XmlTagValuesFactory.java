@@ -52,14 +52,43 @@ public class XmlTagValuesFactory {
      * 初始化用户资料的action
      */
     public static class Init_UserCenter {
-        public static String ACTION_STATIC = "";
-        public static String ACTION_NAME = "business_title";/*商户名称*/
-        public static String ACTION_VIP = "business_vip";/*是否为VIP*/
-        public static String ACTION_BALANCE = "business_balance";/*余额*/
-        public static String ACTION_COUPON = "business_coupon";/*抵用券*/
-        public static String ACTION_INTEGRAL = "business_integral";/*积分*/
-        public static String ACTION_RECHARGERECORD = "business_rechargerecord";/*充值记录*/
-        public static String ACTION_IMG = "business_img";/*图片地址*/
+        private String St_userbalance;/*余额*/
+        private String St_userstatus;/*状态*/
+        private String St_uservip;/*0 表示VIP 1表示不是VIP*/
+
+        public String getSt_userbalance() {
+            return St_userbalance;
+        }
+
+        public void setSt_userbalance(String st_userbalance) {
+            St_userbalance = st_userbalance;
+        }
+
+        public String getSt_userstatus() {
+            return St_userstatus;
+        }
+
+        public void setSt_userstatus(String st_userstatus) {
+            St_userstatus = st_userstatus;
+        }
+
+        public String getSt_uservip() {
+            return St_uservip;
+        }
+
+        public void setSt_uservip(String st_uservip) {
+            St_uservip = st_uservip;
+        }
+
+        public String getSt_uservipoverdate() {
+            return St_uservipoverdate;
+        }
+
+        public void setSt_uservipoverdate(String st_uservipoverdate) {
+            St_uservipoverdate = st_uservipoverdate;
+        }
+
+        private String St_uservipoverdate;/*VIP过期时间*/
     }
 
 
@@ -67,72 +96,104 @@ public class XmlTagValuesFactory {
      * 初始化用户资料的表格
      */
     public static class Init_UserCenterValues {
+        private Float St_userBalance;/*用户的余额*/
+        private String St_userStatus;/*用户的状态*/
+        private String St_userVip;/*0表示VIP 1表示不是VIP*/
+        private String St_userVipoverDate;/*VIP的过期时间*/
+        private String St_img;
+        private String St_coupon;/*抵用券数量*/
+        private String St_integer;/*积分数量*/
+        private String St_rechargerecord;/*充值记录*/
+        private String St_transaction;/*交易记录*/
+        private String St_sendsystem;/*通知发货数量*/
+        private String St_deliver;/*正在配送数量*/
 
-        public void Clear() {
+        public String getSt_img() {
+            return St_img;
         }
 
-        String name;
-        String vip;
-        String balance;
-        String coupon;
-        String integral;
-        String rechargerecord;
-        String img;
-
-        public String getName() {
-            return name;
+        public void setSt_img(String st_img) {
+            St_img = st_img;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public String getSt_coupon() {
+            return St_coupon;
         }
 
-        public String getVip() {
-            return vip;
+        public void setSt_coupon(String st_coupon) {
+            St_coupon = st_coupon;
         }
 
-        public void setVip(String vip) {
-            this.vip = vip;
+        public String getSt_integer() {
+            return St_integer;
         }
 
-        public String getBalance() {
-            return balance;
+        public void setSt_integer(String st_integer) {
+            St_integer = st_integer;
         }
 
-        public void setBalance(String balance) {
-            this.balance = balance;
+        public String getSt_rechargerecord() {
+            return St_rechargerecord;
         }
 
-        public String getCoupon() {
-            return coupon;
+        public void setSt_rechargerecord(String st_rechargerecord) {
+            St_rechargerecord = st_rechargerecord;
         }
 
-        public void setCoupon(String coupon) {
-            this.coupon = coupon;
+        public String getSt_transaction() {
+            return St_transaction;
         }
 
-        public String getIntegral() {
-            return integral;
+        public void setSt_transaction(String st_transaction) {
+            St_transaction = st_transaction;
         }
 
-        public void setIntegral(String integral) {
-            this.integral = integral;
+        public String getSt_sendsystem() {
+            return St_sendsystem;
         }
 
-        public String getRechargerecord() {
-            return rechargerecord;
+        public void setSt_sendsystem(String st_sendsystem) {
+            St_sendsystem = st_sendsystem;
         }
 
-        public void setRechargerecord(String rechargerecord) {
-            this.rechargerecord = rechargerecord;
+        public String getSt_deliver() {
+            return St_deliver;
         }
 
-        public String getImg() {
-            return img;
+        public void setSt_deliver(String st_deliver) {
+            St_deliver = st_deliver;
         }
 
-        public void setImg(String img) {
-            this.img = img;
+        public Float getSt_userBalance() {
+            return St_userBalance;
+        }
+
+        public void setSt_userBalance(Float st_userBalance) {
+            St_userBalance = st_userBalance;
+        }
+
+        public String getSt_userStatus() {
+            return St_userStatus;
+        }
+
+        public void setSt_userStatus(String st_userStatus) {
+            St_userStatus = st_userStatus;
+        }
+
+        public String getSt_userVip() {
+            return St_userVip;
+        }
+
+        public void setSt_userVip(String st_userVip) {
+            St_userVip = st_userVip;
+        }
+
+        public String getSt_userVipoverDate() {
+            return St_userVipoverDate;
+        }
+
+        public void setSt_userVipoverDate(String st_userVipoverDate) {
+            St_userVipoverDate = st_userVipoverDate;
         }
     }
 

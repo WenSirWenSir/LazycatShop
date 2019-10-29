@@ -41,6 +41,7 @@ public class MainAct extends LazyCatAct {
     private final static int ICO_FRAGMENT_DELIVERY = 1;
     private final static int ICO_FRAGMENT_USERCENTER = 2;
     private final static int ICO_FRAGMENT_MESSAGE = 3;
+    private int now_fragment;/*判断是哪一个FRAGMENT*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,11 +82,13 @@ public class MainAct extends LazyCatAct {
                 "#08c299"));
         TextView InitTitle = (TextView) btn_main.getChildAt(1);
         InitTitle.setTextColor(Color.parseColor("#08c299"));
+        now_fragment = ICO_FRAGMENT_MAIN;
         btn_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hideFragment();
                 showFragment(ICO_FRAGMENT_MAIN);
+                now_fragment = ICO_FRAGMENT_MAIN;
                 ClearallIcoBackground();
                 final RelativeLayout rl = (RelativeLayout) v;
                 rl.post(new Runnable() {
@@ -134,6 +137,7 @@ public class MainAct extends LazyCatAct {
                 ClearallIcoBackground();
                 hideFragment();
                 showFragment(ICO_FRAGMENT_DELIVERY);
+                now_fragment = ICO_FRAGMENT_DELIVERY;
                 final RelativeLayout rl = (RelativeLayout) v;
                 rl.post(new Runnable() {
                     @Override
@@ -172,6 +176,7 @@ public class MainAct extends LazyCatAct {
                 ClearallIcoBackground();
                 hideFragment();
                 showFragment(ICO_FRAGMENT_MESSAGE);
+                now_fragment = ICO_FRAGMENT_MESSAGE;
                 final RelativeLayout rl = (RelativeLayout) v;
                 rl.post(new Runnable() {
                     @Override
@@ -214,6 +219,7 @@ public class MainAct extends LazyCatAct {
                 final RelativeLayout rl = (RelativeLayout) v;
                 hideFragment();
                 showFragment(ICO_FRAGMENT_USERCENTER);
+                now_fragment = ICO_FRAGMENT_USERCENTER;
                 rl.post(new Runnable() {
                     @Override
                     public void run() {
@@ -323,12 +329,15 @@ public class MainAct extends LazyCatAct {
             case ICO_FRAGMENT_USERCENTER:
                 if (usercneterfrg != null) {
                     ft.remove(usercneterfrg);
+                    usercneterfrg = null;
                     usercneterfrg = new UserCenterfrg();
                     ft.add(R.id.activity_main_Framelayout, usercneterfrg);
+
                 } else {
                     usercneterfrg = new UserCenterfrg();
                     ft.add(R.id.activity_main_Framelayout, usercneterfrg);
                 }
+
                 break;
         }
         ft.commit();
@@ -355,4 +364,57 @@ public class MainAct extends LazyCatAct {
     public void startActivityForResult(Intent intent, int requestCode) {
         super.startActivityForResult(intent, requestCode);
     }
+
+    @Override
+    protected void onRestart() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        switch (now_fragment) {
+            case ICO_FRAGMENT_MAIN:
+                if (mainfrg != null) {
+                    ft.show(mainfrg);
+                } else {
+                    mainfrg = new Mainfrg();
+                    ft.add(R.id.activity_main_Framelayout, mainfrg);
+                }
+                break;
+            case ICO_FRAGMENT_DELIVERY:
+                if (messagefrg != null) {
+                    ft.remove(messagefrg);/*先移除messagefrg*/
+                    messagefrg = null;
+                    messagefrg = new Messagefrg();
+                    ft.add(R.id.activity_main_Framelayout, messagefrg);
+
+                } else {
+                    messagefrg = new Messagefrg();
+                    ft.add(R.id.activity_main_Framelayout, messagefrg);
+                }
+                break;
+            case ICO_FRAGMENT_MESSAGE:
+                if (classifyfrg != null) {
+                    ft.show(classifyfrg);
+                } else {
+                    classifyfrg = new Classifyfrg();
+                    ft.add(R.id.activity_main_Framelayout, classifyfrg);
+                }
+                break;
+            case ICO_FRAGMENT_USERCENTER:
+                if (usercneterfrg != null) {
+                    ft.remove(usercneterfrg);
+                    usercneterfrg = null;
+                    usercneterfrg = new UserCenterfrg();
+                    ft.add(R.id.activity_main_Framelayout, usercneterfrg);
+
+                } else {
+                    usercneterfrg = new UserCenterfrg();
+                    ft.add(R.id.activity_main_Framelayout, usercneterfrg);
+                }
+
+                break;
+        }
+        ft.commit();
+        /*重新吊起*/
+        Log.e(MSG, "MainAct.java[+]重新吊起");
+        super.onRestart();
+    }
+
 }
