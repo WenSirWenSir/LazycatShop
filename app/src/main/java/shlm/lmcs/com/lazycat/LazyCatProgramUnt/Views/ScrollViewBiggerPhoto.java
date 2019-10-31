@@ -16,6 +16,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
  * 设置下拉的时候控件大
  */
 public class ScrollViewBiggerPhoto extends ScrollView {
+    private String MSG = "ScrollViewBiggerPhoto.java[+]";
     private View img_body;
     private float myFirstMove = 0;
     private DisplayMetrics metrics;//
@@ -91,9 +92,14 @@ public class ScrollViewBiggerPhoto extends ScrollView {
      * 清空ImageView的放大效果
      */
     private void ClearImage() {
-        ViewGroup.LayoutParams params = this.img_body.getLayoutParams();
-        params.width = this.metrics.widthPixels;
-        params.height = this.metrics.heightPixels * 8 / 16;
-        this.img_body.setLayoutParams(params);
+        try {
+            ViewGroup.LayoutParams params = this.img_body.getLayoutParams();
+            params.width = this.metrics.widthPixels;
+            params.height = this.metrics.heightPixels * 8 / 16;
+            this.img_body.setLayoutParams(params);
+        } catch (Exception e) {
+            Log.e(MSG, e.getMessage());
+        }
+
     }
 }

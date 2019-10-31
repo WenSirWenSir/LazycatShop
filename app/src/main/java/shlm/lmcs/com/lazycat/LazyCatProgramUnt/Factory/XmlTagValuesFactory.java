@@ -645,7 +645,15 @@ public class XmlTagValuesFactory {
         String dlp;/*虚线的价格*/
         String img;/*图片的地址*/
         String splitUnit;/*最小的的组合单位*/
+        Boolean isOnlyVipPay;
 
+        public Boolean getonlyVipPay() {
+            return isOnlyVipPay;
+        }
+
+        public void setonlyVipPay(Boolean onlyVipPay) {
+            isOnlyVipPay = onlyVipPay;
+        }
 
         public String getBusiness() {
             return business;

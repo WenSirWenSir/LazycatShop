@@ -40,6 +40,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlanalysisFactory;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.RefreshScrollView;
@@ -408,7 +409,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                                                     .VALUES_SEARCH.VALUES_TO_SEARCH_SHOPKEYWORD);
                                 }
                             });
-                            shopItem.setTag(showList.get(Position));
+                            //shopItem.setTag(showList.get(Position));
                             /*进行Item处理监听*/
                             ImageView btnLike = shopItem.findViewById(R.id
                                     .item_mainshoplist_btnLike);
@@ -555,7 +556,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                     programServiceTools.set_Service(tOrgin.trim());
                     programServiceTools.SaveService();/*保存服务器*/
                     /*不是为空的话 就去访问网络*/
-                    LocalValues.ADDR_SERVICE = tOrgin.trim();
                     getConfigXml();/*获取首页的配置文件*/
                     checkPermission();
                 } else {
@@ -581,6 +581,26 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
 
     @SuppressLint("NewApi")
     private void getConfigXml() {
+
+        Net.doPostXml(getContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GET_MAINCONFIGPAGE, new ProgramInterface() {
+
+
+
+            @Override
+            public void onSucess(String data, int code, WaitDialog.RefreshDialog _refreshDialog) {
+                Log.i(MSG,"doPost:" + data.trim());
+            }
+
+            @Override
+            public WaitDialog.RefreshDialog onStartLoad() {
+                return null;
+            }
+
+            @Override
+            public void onFaile(String data, int code) {
+
+            }
+        },"");
         /**
          * 获取地区服务器关于该地址的首页配置信息
          * fragment_main_bigHeadMsg

@@ -3,7 +3,6 @@ package shlm.lmcs.com.lazycat.LazyShopAct;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -51,7 +50,6 @@ public class ShowshopOffice extends LazyCatAct {
     private String shopmesage;/*关于商品的信息*/
     private String getshopAction;/*获取商品的方式 1条码查找 2 名称查找 3 模糊查找 4 唯一识别号查找*/
     private ScrollViewBiggerPhoto scrollViewBiggerPhoto;
-    private Boolean isLoginin;/*标记用户是否已经登录状态*/
     private ImageView photo;
     private TextView btn_select_del;
     private TextView btn_select_add;
@@ -86,6 +84,7 @@ public class ShowshopOffice extends LazyCatAct {
     private final static int MSG_COUNT_DOWN_ADAVERT = 0;
     private final static int MSG_CLEAR_COUNT_DOWN_ADAVERT = 1;
     private DisplayMetrics metrics;
+    private Boolean IsVip;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -136,8 +135,7 @@ public class ShowshopOffice extends LazyCatAct {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_showshopoffice);
         setTransparentBar();
-
-
+        userToolsInstance = LocalProgramTools.getUserToolsInstance();
         /**
          * 设置促销的标题
          */
@@ -212,6 +210,16 @@ public class ShowshopOffice extends LazyCatAct {
         xmlInstance.initDom();
         xmlInstance.setXmlTree(LocalAction.ACTION, getshopAction);
         xmlInstance.setXmlTree(LocalAction.ACTION_SEARCHKEY.ACTION_KEYWORD, shopmesage);
+        if (userToolsInstance.isLogin()) {
+            xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, userToolsInstance
+                    .getAccount());
+            xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_TOKEN, userToolsInstance
+                    .getToken());
+        } else {
+            xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, "");
+            xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_TOKEN, "");
+
+        }
         xmlInstance.overDom();
         Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GET_SHOPVALUES,
                 new ProgramInterface() {
@@ -243,6 +251,7 @@ public class ShowshopOffice extends LazyCatAct {
                             /*商品标题*/
                             if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_TITLE)) {
                                 shopvalues.setTitle(pullParser.nextText().trim());
+
                             }
 
                             /*商品条码*/
@@ -336,7 +345,8 @@ public class ShowshopOffice extends LazyCatAct {
                                 shopvalues.setSplitUnit(pullParser.nextText().trim());
                             }
                             /*商品的对接商家*/
-                            if(tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_BUSINSS)){
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                    .ACTION_SHOPVALUES_BUSINSS)) {
                                 shopvalues.setBusiness(pullParser.nextText().trim());
                             }
 
@@ -428,134 +438,362 @@ public class ShowshopOffice extends LazyCatAct {
         btnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                /**
-                 * 展示给用户重新确认的订单
-                 */
-                AlertDialog.Builder builder = new AlertDialog.Builder(ShowshopOffice.this);
-                View confirmdeliverItem = LayoutInflater.from(ShowshopOffice.this).inflate(R
-                        .layout.assembly_confirmdeliver, null);
-                builder.setView(confirmdeliverItem);
-                TextView deliverShopname = confirmdeliverItem.findViewById(R.id
-                        .assembly_confirmdeliverShopname);
-                /*设置标题*/
-                deliverShopname.setText(shopvalues.getTitle());
-                /*设置图片*/
-                ImageView deliverShopimg = confirmdeliverItem.findViewById(R.id
-                        .assembly_confirmdeliverShopimg);
-                /*设置图片*/
-                Glide.with(getApplicationContext()).load("http://f.freep" + "" + "" + "" + "" +
-                        "" + ".cn/583105/SHOP_DATABASE/" + shopvalues.getImg()).into
-                        (deliverShopimg);
-                /*设置数量*/
-                TextView deliverShophow = confirmdeliverItem.findViewById(R.id
-                        .assembly_confirmdeliverShopNumber);
-                deliverShophow.setText("订购数量:" + select_number.getText().toString() + shopvalues
-                        .getCompany());
-                /*设置箱规*/
-                TextView deliverShopspec = confirmdeliverItem.findViewById(R.id
-                        .assembly_confirmdeliverShopSpec);
-                deliverShopspec.setText("规格:" + shopvalues.getCompany() + "装X" + shopvalues
-                        .getSpec() + shopvalues.getSplitUnit());
-                /*设置保质期和生产日期*/
-                TextView deliverShopPd_exp = confirmdeliverItem.findViewById(R.id
-                        .assembly_confirmdeliverShopPd_Exp);
-                deliverShopPd_exp.setText("生产日期:" + shopvalues.getExp() + "·保质期:" + shopvalues
-                        .getPd() + "天");
-                /*设置价格*/
-                TextView deliverShopTp = confirmdeliverItem.findViewById(R.id
-                        .assembly_confirmdeliverShopTp);
-                deliverShopTp.setText("商品单价:" + shopvalues.getTp() + "/" + shopvalues.getCompany());
-                /**
-                 * 计算总和
-                 */
-                float deliverTotal = Math.round(Float.valueOf(select_number.getText().toString()
-                        .trim()) * Float.valueOf(shopvalues.getTp().trim()) * 100) / 100;
-                TextView deliverShopTotal = confirmdeliverItem.findViewById(R.id
-                        .assembly_confirmedliverTotal);
-                deliverShopTotal.setText(Float.toString(deliverTotal));
-                /*虚线价格的符号*/
-                TextView deliverPriceSymbol = confirmdeliverItem.findViewById(R.id
-                        .assembly_confirmedliverPriceSymbol);
-                /*虚线的价格*/
-                TextView deliverDottedPrices = confirmdeliverItem.findViewById(R.id
-                        .assembly_confirmedliverDottedPrice);
-                /**
-                 * 判断是否为促销或者其他状态
-                 */
-                switch (shopvalues.get_static()) {
-                    case LocalValues.VALUES_SHOPPAGE.NORMAL:
-                        Log.i(MSG, "正常商品");
-                        TextUnt.with(deliverDottedPrices).setVisibility(false);
-                        TextUnt.with(deliverPriceSymbol).setVisibility(false);
-                        break;
-                    case LocalValues.VALUES_SHOPPAGE.PROMOTION:
-                        Log.i(MSG, "促销商品");
-                        break;
-                    case LocalValues.VALUES_SHOPPAGE.REDUCTION:
-                        Log.i(MSG, "折扣商品");
-                        break;
-                    case LocalValues.VALUES_SHOPPAGE.VOLUME:
-                        Log.i(MSG, "用卷商品");
-                        break;
-                }
-                /**
-                 * 判断用户是否为VIP
-                 */
-                /*VIP提供的服务*/
-                TextView deliverVipMsg = confirmdeliverItem.findViewById(R.id
-                        .assembly_confirmdeliverShopVipMsg);
-                /*商品的VIP图标*/
-                ImageView deliverShopequity = confirmdeliverItem.findViewById(R.id
-                        .assembly_confirmdeliverShopEquity);
-                /*名字旁边的VIP图标*/
-                TextView deliverUserIco = confirmdeliverItem.findViewById(R.id
-                        .assembly_confirmdeliverIcoVip);
-
-                if (true) {
-                    /*是Vip*/
-                    TextUnt.with(deliverVipMsg).setBackground(Tools.CreateDrawable(1,
-                            getResources().getString(R.color.colorVip), getResources().getString
-                                    (R.color.colorVip), 5)).setTextColor("#ffffff").setText
-                            (getResources().getString(R.string.isVipmsg));
-                    /*设置Vip图标*/
-                    deliverShopequity.setImageDrawable(Tools.setSvgColor(getApplicationContext(),
-                            R.drawable.ico_equity, getResources().getString(R.color.colorVip)));
-                    /*设置名字旁边的图标*/
-                    TextUnt.with(deliverUserIco).setBackground(Tools.CreateDrawable(1,
-                            getResources().getString(R.color.colorVip), getResources().getString
-                                    (R.color.colorVip), 5)).setTextColor("#ffffff");
-
+                if ((Boolean) v.getTag()) {
+                    showOrderConfirm();
                 } else {
-                    /*不是Vip*/
-                    TextUnt.with(deliverVipMsg).setBackground(Tools.CreateDrawable(1,
-                            getResources().getString(R.color.colornoVip), getResources()
-                                    .getString(R.color.colornoVip), 5)).setTextColor("#ffffff")
-                            .setText(getResources().getString(R.string.noVipmsg));
-                    deliverShopequity.setImageDrawable(Tools.setSvgColor(getApplicationContext(),
-                            R.drawable.ico_equity, getResources().getString(R.color.colornoVip)));
-                    /*设置名字旁边的图标*/
-                    TextUnt.with(deliverUserIco).setBackground(Tools.CreateDrawable(1,
-                            getResources().getString(R.color.colornoVip), getResources()
-                                    .getString(R.color.colornoVip), 5)).setTextColor("#ffffff");
+                    Toast.makeText(getApplicationContext(), "您没有登录,请你登录后发送订货单", Toast
+                            .LENGTH_SHORT).show();
                 }
-                builder.show();
-                builder.setCancelable(false);
+
             }
         });
     }
 
+
+    /**
+     * 展示用户的确定界面
+     */
+    private void showOrderConfirm() {
+        /**
+         * 重新获取用户的信息
+         */
+        XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder();
+        xmlInstance.initDom();
+        xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, userToolsInstance
+                .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE
+                        .ACTION_LOCALUSERPAGE_ACCOUNT));/*存入账户*/
+        xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_TOKEN, userToolsInstance
+                .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_TOKEN)
+        );/*存入密码*/
+        xmlInstance.overDom();
+        Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GETUSER, new
+                ProgramInterface() {
+            @Override
+            public void onSucess(String data, int code, final WaitDialog.RefreshDialog
+                    _refreshDialog) {
+                Log.i(MSG, "重新获取用户信息的请求:" + data.trim());
+                if (data.trim().equals(LocalValues.VALUES_LOGIN.LOGIN_ERROR)) {
+                    Toast.makeText(getApplicationContext(), "登录过期,请重新登录", Toast.LENGTH_SHORT)
+                            .show();
+                    if (userToolsInstance != null) {
+                        userToolsInstance.ClearLocalCach();
+                    }
+                    _refreshDialog.dismiss();
+
+                } else {
+                    XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(data.trim());
+                    xmlanalysisFactory.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
+                        @Override
+                        public void onFaile() {
+
+                        }
+
+                        @Override
+                        public void onStartDocument(String tag) {
+
+                        }
+
+                        @Override
+                        public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
+                            /*判断是否是Vip客户*/
+                            try {
+                                if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                        .ACTION_LOCALUSERPAGE_VIPSTATUS)) {
+                                    if (pullParser.nextText().trim().equals("0")) {
+                                        IsVip = true;
+                                    } else {
+                                        IsVip = false;
+                                    }
+                                }
+                                /*更新用户的地址*/
+                                if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                        .ACTION_LOCALUSERPAGE_SHOPADDR)) {
+                                    if (userToolsInstance != null) {
+                                        userToolsInstance.setShopaddr(pullParser.nextText().trim());
+                                    }
+                                }
+                                /*更新店铺的名称*/
+                                if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                        .ACTION_LOCALUSERPAGE_SHOPNAME)) {
+                                    if (userToolsInstance != null) {
+                                        userToolsInstance.setShopname(pullParser.nextText().trim());
+                                    }
+                                }
+                                /*更新店铺的电话*/
+                                if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                        .ACTION_LOCALUSERPAGE_SHOPTEL)) {
+                                    if (userToolsInstance != null) {
+                                        userToolsInstance.setShoptel(pullParser.nextText().trim());
+                                    }
+                                }
+                                /*更新店铺的负责人*/
+                                if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
+                                        .ACTION_LOCALUSERPAGE_SHOPTEL)) {
+                                    if (userToolsInstance != null) {
+                                        userToolsInstance.setShopusePeople(pullParser.nextText()
+                                                .trim());
+                                    }
+                                }
+                            } catch (Exception e) {
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onEndTag(String tag, XmlPullParser pullParser, Integer id) {
+
+                        }
+
+                        @Override
+                        public void onEndDocument() {
+                            /**
+                             * 设置原本就保持不变的东西
+                             */
+                            userToolsInstance.setShoplong(userToolsInstance.GetUserpageOnAction
+                                    (LocalAction.ACTION_LOCALUSERPAGE
+                                            .ACTION_LOCALUSERPAGE_SHOPLONG));
+                            userToolsInstance.setShoplat(userToolsInstance.GetUserpageOnAction
+                                    (LocalAction.ACTION_LOCALUSERPAGE
+                                            .ACTION_LOCALUSERPAGE_SHOPLAT));
+                            userToolsInstance.setAccount(userToolsInstance.GetUserpageOnAction
+                                    (LocalAction.ACTION_LOCALUSERPAGE
+                                            .ACTION_LOCALUSERPAGE_ACCOUNT));
+                            userToolsInstance.setToken(userToolsInstance.GetUserpageOnAction
+                                    (LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_TOKEN));
+                            /*保存更新本地的用户*/
+                            if (userToolsInstance != null) {
+                                userToolsInstance.SaveingUserPageXml();
+                            } else {
+                                Log.e(MSG, "无法更新本地用户的数据");
+                            }
+                            _refreshDialog.dismiss();
+                            /**
+                             * 展示给用户重新确认的订单
+                             */
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ShowshopOffice
+                                    .this);
+                            View confirmdeliverItem = LayoutInflater.from(ShowshopOffice.this)
+                                    .inflate(R.layout.assembly_confirmdeliver, null);
+                            builder.setView(confirmdeliverItem);
+                            /*确定通知仓库发货的按钮*/
+
+                            confirmdeliverItem.findViewById(R.id
+                                    .assembly_confirmdeliver_BtnSendorder).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    /*开始整理数据*/
+                                }
+                            });
+                            /*设置标题*/
+
+                            TextUnt.with(confirmdeliverItem, R.id
+                                    .assembly_confirmdeliverShopname).setText(shopvalues.getTitle
+                                    ());
+                            /*设置图片*/
+                            ImageView deliverShopimg = confirmdeliverItem.findViewById(R.id
+                                    .assembly_confirmdeliverShopimg);
+                            /*设置图片*/
+                            Glide.with(getApplicationContext()).load("http://f.freep" + "" + "" +
+                                    "" + "" + "" + "" + ".cn/583105/SHOP_DATABASE/" + shopvalues
+                                    .getImg()).into(deliverShopimg);
+                            /*设置数量*/
+                            TextUnt.with(confirmdeliverItem, R.id
+                                    .assembly_confirmdeliverShopNumber).setText("订购数量:" +
+                                    select_number.getText().toString() + shopvalues.getCompany());
+                            /*设置箱规*/
+                            TextUnt.with(confirmdeliverItem, R.id
+                                    .assembly_confirmdeliverShopSpec).setText("规格:" + shopvalues
+                                    .getCompany() + "装X" + shopvalues.getSpec() + shopvalues
+                                    .getSplitUnit());
+                            /*设置保质期和生产日期*/
+                            TextUnt.with(confirmdeliverItem, R.id
+                                    .assembly_confirmdeliverShopPd_Exp).setText("生产日期:" +
+                                    shopvalues.getExp() + "·保质期:" + shopvalues.getPd() + "天");
+                            /*设置价格*/
+                            TextUnt.with(confirmdeliverItem, R.id.assembly_confirmdeliverShopTp)
+                                    .setText("商品单价:" + shopvalues.getTp() + "/" + shopvalues
+                                            .getCompany());
+                            /*设置用户的店铺的名称*/
+                            TextUnt.with(confirmdeliverItem, R.id
+                                    .assembly_confirmdeliverUsername).setText(userToolsInstance
+                                    .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE
+                                            .ACTION_LOCALUSERPAGE_SHOPNAME));
+                            /*设置用户的手机*/
+                            TextUnt.with(confirmdeliverItem, R.id
+                                    .assembly_confirmdeliver_Shoptel).setText(userToolsInstance
+                                    .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE
+                                            .ACTION_LOCALUSERPAGE_SHOPTEL));
+                            Log.i(MSG, "电话：" + userToolsInstance.GetUserpageOnAction(LocalAction
+                                    .ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_SHOPTEL));
+                            /*设置用户的地址*/
+                            TextUnt.with(confirmdeliverItem, R.id
+                                    .assembly_confirmdeliver_Shopaddr).setText(userToolsInstance
+                                    .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE
+                                            .ACTION_LOCALUSERPAGE_SHOPADDR));
+                            /*设置用户的店铺负责人*/
+                            TextUnt.with(confirmdeliverItem, R.id
+                                    .assembly_confirmdeliver_shopusePeople).setText
+                                    (userToolsInstance.GetUserpageOnAction(LocalAction
+                                            .ACTION_LOCALUSERPAGE
+                                            .ACTION_LOCALUSERPAGE_SHOPUSEPEOPLE));
+                            /**
+                             * 计算总和
+                             */
+                            float deliverTotal = Math.round(Float.valueOf(select_number.getText()
+                                    .toString().trim()) * Float.valueOf(shopvalues.getTp().trim()
+                            ) * 100) / 100;
+                            TextView deliverShopTotal = confirmdeliverItem.findViewById(R.id
+                                    .assembly_confirmedliverTotal);
+                            deliverShopTotal.setText(Float.toString(deliverTotal));
+                            /**
+                             * 判断用户是否为VIP
+                             */
+                            /*VIP提供的服务*/
+                            TextView deliverVipMsg = confirmdeliverItem.findViewById(R.id
+                                    .assembly_confirmdeliverShopVipMsg);
+                            /*商品的VIP图标*/
+                            ImageView deliverShopequity = confirmdeliverItem.findViewById(R.id
+                                    .assembly_confirmdeliverShopEquity);
+                            /*名字旁边的VIP图标*/
+                            TextView deliverUserIco = confirmdeliverItem.findViewById(R.id
+                                    .assembly_confirmdeliverIcoVip);
+
+                            /*判断状态*/
+                            switch (shopvalues.get_static()) {
+                                case LocalValues.VALUES_SHOPPAGE.NORMAL:
+                                    /*正常*/
+                                    /*设置原始价格为不显示*/
+                                    TextUnt.with(confirmdeliverItem, R.id
+                                            .assembly_confirmedliverDottedPrice).setVisibility
+                                            (false);
+                                    TextUnt.with(confirmdeliverItem, R.id
+                                            .assembly_confirmedliverDottedPriceSymbol)
+                                            .setVisibility(false);
+                                    break;
+                                case LocalValues.VALUES_SHOPPAGE.PROMOTION:
+                                    /*促销*/
+                                    /*设置原始价格为显示*/
+                                    TextUnt.with(confirmdeliverItem, R.id
+                                            .assembly_confirmedliverDottedPrice).setVisibility
+                                            (true).setText(shopvalues.getDlp().trim())
+                                            .setMidcourtLine();
+                                    TextUnt.with(confirmdeliverItem, R.id
+                                            .assembly_confirmedliverDottedPriceSymbol)
+                                            .setVisibility(true);
+                                    break;
+                                case LocalValues.VALUES_SHOPPAGE.REDUCTION:
+                                    /*满减*/
+                                    /*设置原始价格为不显示*/
+                                    TextUnt.with(confirmdeliverItem, R.id
+                                            .assembly_confirmedliverDottedPrice).setVisibility
+                                            (false);
+                                    TextUnt.with(confirmdeliverItem, R.id
+                                            .assembly_confirmedliverDottedPriceSymbol)
+                                            .setVisibility(false);
+                                    break;
+                                case LocalValues.VALUES_SHOPPAGE.VOLUME:
+                                    /*用卷*/
+                                    /*设置原始价格为不显示*/
+                                    TextUnt.with(confirmdeliverItem, R.id
+                                            .assembly_confirmedliverDottedPrice).setVisibility
+                                            (false);
+                                    TextUnt.with(confirmdeliverItem, R.id
+                                            .assembly_confirmedliverDottedPriceSymbol)
+                                            .setVisibility(false);
+                                    break;
+                                case LocalValues.VALUES_SHOPPAGE.ONLY_VIP:
+                                    /*只有Vip可以购买*/
+                                    /*设置VIP的颜色为VIP专属颜色*/
+                                    TextUnt.with(confirmdeliverItem, R.id
+                                            .assembly_confirmedliverTotal).setTextColor
+                                            (getResources().getString(R.color.colorVip));
+                                    TextUnt.with(confirmdeliverItem, R.id
+                                            .assembly_confirmdeliver_TotalSymbol).setTextColor
+                                            (getResources().getString(R.color.colorVip));
+                                    /*设置原始价格为显示*/
+                                    TextUnt.with(confirmdeliverItem, R.id
+                                            .assembly_confirmedliverDottedPrice).setVisibility
+                                            (true).setText(shopvalues.getDlp().trim())
+                                            .setMidcourtLine();
+                                    TextUnt.with(confirmdeliverItem, R.id
+                                            .assembly_confirmedliverDottedPriceSymbol)
+                                            .setVisibility(true);
+                                    break;
+                            }
+                            if (IsVip) {
+                                /*是Vip*/
+                                TextUnt.with(deliverVipMsg).setBackground(Tools.CreateDrawable(1,
+                                        getResources().getString(R.color.colorVip), getResources
+                                                ().getString(R.color.colorVip), 5)).setTextColor
+                                        ("#ffffff").setText(getResources().getString(R.string
+                                        .isVipmsg));
+                                /*设置Vip图标*/
+                                deliverShopequity.setImageDrawable(Tools.setSvgColor
+                                        (getApplicationContext(), R.drawable.ico_equity,
+                                                getResources().getString(R.color.colorVip)));
+                                /*设置名字旁边的图标*/
+                                TextUnt.with(deliverUserIco).setBackground(Tools.CreateDrawable
+                                        (1, getResources().getString(R.color.colorVip),
+                                                getResources().getString(R.color.colorVip), 5))
+                                        .setTextColor("#ffffff").setText("Vip");
+
+                            } else {
+                                /*不是Vip*/
+                                TextUnt.with(deliverVipMsg).setBackground(Tools.CreateDrawable(1,
+                                        getResources().getString(R.color.colornoVip),
+                                        getResources().getString(R.color.colornoVip), 5))
+                                        .setTextColor("#ffffff").setText(getResources().getString
+                                        (R.string.noVipmsg));
+                                deliverShopequity.setImageDrawable(Tools.setSvgColor
+                                        (getApplicationContext(), R.drawable.ico_equity,
+                                                getResources().getString(R.color.colornoVip)));
+                                /*设置名字旁边的图标*/
+                                TextUnt.with(deliverUserIco).setBackground(Tools.CreateDrawable
+                                        (1, getResources().getString(R.color.colornoVip),
+                                                getResources().getString(R.color.colornoVip), 5))
+                                        .setTextColor("#ffffff").setText("Vip");
+                            }
+                            builder.show();
+                            builder.setCancelable(false);
+
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public WaitDialog.RefreshDialog onStartLoad() {
+                /*初始化一个DIALOG*/
+                final WaitDialog.RefreshDialog refreshDialog = new WaitDialog.RefreshDialog
+                        (ShowshopOffice.this);
+                WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+                wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                wait_itme_dialogpage.setView(R.layout.item_wait);
+                wait_itme_dialogpage.setCanClose(false);
+                wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+                refreshDialog.Init(wait_itme_dialogpage);
+                refreshDialog.showRefreshDialog("加载中...", false);
+                return refreshDialog;
+            }
+
+            @Override
+            public void onFaile(String data, int code) {
+
+            }
+        }, xmlInstance.getXmlTree());
+
+
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
-
-
-        /**
-         * 查询本地是否登录了账户 如果没有 就不要显示
-         */
+        /*判断商品的状态*/
         /*获取用户工具类*/
-        userToolsInstance = LocalProgramTools.getUserToolsInstance();
         /*设置条码图片*/
-        if (shopvalues.getBarcode().equals("") || shopvalues.getBarcode().equals("0")) {
+        if (shopvalues.getBarcode().equals("") || shopvalues.getBarcode().equals("0") ||
+                shopvalues.getBarcode().equals("暂无")) {
             imgBarcode.setVisibility(View.GONE);
         } else {
             Log.i(MSG, "图片条码地址:" + "http://api.k780.com/?app=barcode.get&bc_text=" + shopvalues
@@ -573,19 +811,65 @@ public class ShowshopOffice extends LazyCatAct {
         Log.i(MSG, "标题为:" + shopvalues.getTitle());
         //添加起订
         TextView tp = new TextView(otherMessage.getContext());
-        tp.setBackground(Tools.CreateDrawable(2, "#08c299", "#ffffff", 5));
         tp.setPadding(10, 7, 10, 7);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
                 .WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(15, 0, 0, 0);
         tp.setLayoutParams(params);
-
         otherMessage.addView(tp);
 
         /*界面初始化*/
         TextUnt.with(SHOP_BUSINESS).setText(shopvalues.getBusiness());
         TextUnt.with(SHOP_TITLE).setText(shopvalues.getTitle());
-        if (isLoginin) {
+        /*判断商品的状态*/
+        switch (shopvalues.get_static()) {
+            case LocalValues.VALUES_SHOPPAGE.NORMAL:
+                /*正常*/
+                TextUnt.with(this, R.id.activity_showshopoffice_static).setVisibility(false);
+                TextUnt.with(SHOP_DLP).setVisibility(false);
+                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(false);
+                break;
+            case LocalValues.VALUES_SHOPPAGE.PROMOTION:
+                /*促销*/
+                TextUnt.with(this, R.id.activity_showshopoffice_static).setVisibility(true)
+                        .setText("促销产品");
+                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(true)
+                        .setTextColor(getResources().getString(R.color.colorPrice));
+                TextUnt.with(SHOP_DLP).setVisibility(false);
+                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(false);
+                break;
+            case LocalValues.VALUES_SHOPPAGE.REDUCTION:
+                /*用卷*/
+                TextUnt.with(this, R.id.activity_showshopoffice_static).setVisibility(true)
+                        .setText("用卷商品");
+                TextUnt.with(SHOP_DLP).setVisibility(false);
+                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(false);
+                break;
+            case LocalValues.VALUES_SHOPPAGE.VOLUME:
+                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(false);
+                TextUnt.with(SHOP_DLP).setVisibility(false);
+                break;
+            case LocalValues.VALUES_SHOPPAGE.ONLY_VIP:
+                /*只有VIP可以购买*/
+                /*设置原先的单位的价格符号*/
+                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(true)
+                        .setTextColor(getResources().getString(R.color.colorPrice));
+                TextUnt.with(this, R.id.activity_showshopoffice_tpSymbol).setTextColor
+                        (getResources().getString(R.color.colorVip));
+                TextUnt.with(this, R.id.activity_showshopoffice_tp).setTextColor(getResources()
+                        .getString(R.color.colorVip));
+                shopvalues.setonlyVipPay(true);
+                TextUnt.with(this, R.id.activity_showshopoffice_static).setVisibility(true)
+                        .setText("VIP用户专享").setBackground(Tools.CreateDrawable(1, getResources()
+                        .getString(R.color.colorVip), getResources().getString(R.color.colorVip),
+                        5));
+                break;
+        }
+
+        /**
+         * 判断是否登录账户
+         */
+        if (userToolsInstance.isLogin()) {
             /*设置批发价格*/
             TextUnt.with(SHOP_TP).setText(shopvalues.getTp());
             /*设置虚线价格*/
@@ -593,23 +877,31 @@ public class ShowshopOffice extends LazyCatAct {
             /*设置零售价*/
             TextUnt.with(SHOP_RETAIL).setText("终端建议售价:" + shopvalues.getRetail() + "元/" +
                     shopvalues.getSplitUnit());
-            TextUnt.with(tp).setText(shopvalues.getSu() + shopvalues.getCompany() + "起订")
-                    .setTextColor("#08c299").setTextSize(8);
+            TextUnt.with(btnAccount).setBackground(Tools.CreateDrawable(1, "#08c299", "#08c299",
+                    5)).setTextColor("#ffffff");
+            TextUnt.with(btnAccount).setText("通知仓库发货").setBackground(Tools.CreateDrawable(1,
+                    getResources().getString(R.color.ThemeColor), getResources().getString(R
+                            .color.ThemeColor), 10)).setTextColor("#ffffff").setTag(true);
+
         } else {
-            TextUnt.with(btnAccount).setText("未登录账户").setBackground(Tools.CreateDrawable(1, "#666666",
-                    "#666666",5)).setTextColor("#ffffff");
+            /*设置不能发送订货单*/
+            TextUnt.with(btnAccount).setText("未登录,请登录后使用").setBackground(Tools.CreateDrawable(1,
+                    "#666666", "#666666", 5)).setTextColor("#ffffff").setTag(false);
             TextUnt.with(SHOP_TP).setText("*.*");
             /*设置批发价格*/
             TextUnt.with(SHOP_TP).setText("*.*");
+
             /*设置虚线价格*/
             SHOP_DLP.setVisibility(View.GONE);
             TextUnt.with(SHOP_DLP).setVisibility(false);
             /*设置零售价*/
-            TextUnt.with(SHOP_RETAIL).setText("终端建议售价:-元/" + shopvalues.getSplitUnit());
-            TextUnt.with(tp).setText("-" + shopvalues.getCompany() + "起订")
-                    .setTextColor("#08c299").setTextSize(8);
+            TextUnt.with(SHOP_RETAIL).setText("终端建议售价:*.*元/" + shopvalues.getSplitUnit());
 
         }
+
+        /**
+         * 初始化布局
+         */
         /*设置生产日期*/
         TextUnt.with(SHOP_PD).setText("生产日期:" + shopvalues.getPd());
         /*设置保质期*/
@@ -620,64 +912,20 @@ public class ShowshopOffice extends LazyCatAct {
         TextUnt.with(SHOP_GRADE).setText("等级:" + shopvalues.getGrade());
         /*设置条码*/
         TextUnt.with(SHOP_BARCODE).setText("条码:" + shopvalues.getBarcode());
-
         /*设置要显示的品牌*/
         TextUnt.with(SHOP_SHOWBRAND).setText(shopvalues.getBrand());
+        /*设置起订按钮*/
+        TextUnt.with(tp).setText(shopvalues.getSu() + shopvalues.getCompany() + "起订")
+                .setTextColor("#ffffff").setTextSize(8).setBackground(Tools.CreateDrawable(1,
+                getResources().getString(R.color.ThemeColor), getResources().getString(R.color
+                        .ThemeColor), 5));
 
-        /*设置边框的圆角*/
-        /*设置订购边框的圆角 订单未满*/
-        // btnAccount.setBackground(Tools.CreateDrawable(1, getResources().getString(R.color
-        //         .ThemeColor), getResources().getString(R.color.ThemeColor), 5));
-        btnAccount.setBackground(Tools.CreateDrawable(1, "#08c299", "#08c299", 5));
-        btnAccount.setTextColor(Color.parseColor("#ffffff"));
-        metrics = new DisplayMetrics();/*获取屏幕矩阵*/
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        /*重新计算图片的高度实现开场动画*/
-        final ViewGroup.LayoutParams photoParams = photo.getLayoutParams();
-        window_height = metrics.heightPixels;
-        photoParams.height = metrics.heightPixels;
-        photoParams.width = metrics.widthPixels;
-        photo.setLayoutParams(photoParams);
-
-        /*图片边框动画*/
-        ValueAnimator anim = ValueAnimator.ofInt(metrics.heightPixels, metrics.heightPixels * 8 /
-                16);
-        anim.setDuration(1000);
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                ViewGroup.LayoutParams params = photo.getLayoutParams();
-                Log.e(Config.DEBUG, "ShowshopOffice.java[+]改变的高度值:" + animation.getAnimatedValue());
-                params.height = (int) animation.getAnimatedValue();
-                photo.setLayoutParams(params);
-            }
-        });
-        anim.start();
-        /*重新计算高度和宽度*/
-        ViewGroup.LayoutParams Bodyparams = countDownadavert.getLayoutParams();
-        Bodyparams.width = metrics.widthPixels;
-        Bodyparams.height = Tools.getCount_downAdvert(metrics);
-        countDownadavert.setLayoutParams(Bodyparams);
-        countDownadavert.setVisibility(View.GONE);
-        /*线程开启计算倒计时广告*/
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Message msg = new Message();
-                msg.what = MSG_COUNT_DOWN_ADAVERT;
-                handler.sendMessage(msg);
-
-            }
-        }, Tools.getRandom(10, 20) * 1000);
-        scrollViewBiggerPhoto.setImageHead(photo, metrics);
-
+        OpeningAnimation();
         /**
          *  开始访问网络图片
          */
         Glide.with(getApplicationContext()).load("http://f.freep.cn/583105/SHOP_DATABASE/" +
                 shopvalues.getImg()).into(photo);
-        /*加入购物车的布局*/
         /*数量减少*/
         btn_select_del.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -721,69 +969,57 @@ public class ShowshopOffice extends LazyCatAct {
                 int total = i * (Integer.valueOf(shopvalues.getSu()));
             }
         });
-
-
     }
 
+
     /**
-     * 展示购物车的产品
+     * 计算开场动画
      */
-
-    private void showShoplist() {
-        /**
-         * 开始网络访问 计算优惠和总额
-         */
-        if (true) {
-
-            /*满足条件就显示*/
-            inShowCarPage.setVisibility(View.VISIBLE);
-            if (hideShopBody.getVisibility() == View.VISIBLE) {
-                isShowCart = false;/*标志购物车没有显示*/
-                /*动画隐藏购物车显示*/
-                ValueAnimator valueAnimator = ValueAnimator.ofInt((int) (window_height / 1.5), 0);
-                valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        int height = (int) animation.getAnimatedValue();
-                        ViewGroup.LayoutParams params = showShoplistBody.getLayoutParams();/*获取布局*/
-                        params.height = height;
-                        showShoplistBody.setLayoutParams(params);
-                    }
-                });
-                valueAnimator.setDuration(500);
-                valueAnimator.start();
-                //控件显示就隐藏
-                hideShopBody.setVisibility(View.GONE);
-
-            } else {
-                hideShopBody.setVisibility(View.VISIBLE);
-                isShowCart = true;/*标志购物车展开*/
-                //没有显示就显示
-                //创建属性动画 改变高度
-                ValueAnimator valueAnimator = ValueAnimator.ofInt(0, (int) (window_height / 1.5));
-                valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        int height = (int) animation.getAnimatedValue();
-                        ViewGroup.LayoutParams params = showShoplistBody.getLayoutParams();/*获取布局*/
-                        params.height = height;
-                        showShoplistBody.setLayoutParams(params);
-                    }
-                });
-                valueAnimator.setDuration(500);
-                valueAnimator.start();
+    private void OpeningAnimation() {
+        metrics = new DisplayMetrics();/*获取屏幕矩阵*/
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        /*重新计算图片的高度实现开场动画*/
+        final ViewGroup.LayoutParams photoParams = photo.getLayoutParams();
+        window_height = metrics.heightPixels;
+        photoParams.height = metrics.heightPixels;
+        photoParams.width = metrics.widthPixels;
+        photo.setLayoutParams(photoParams);
+        /*图片边框动画*/
+        ValueAnimator anim = ValueAnimator.ofInt(metrics.heightPixels, metrics.heightPixels * 8 /
+                16);
+        anim.setDuration(1000);
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                ViewGroup.LayoutParams params = photo.getLayoutParams();
+                Log.e(Config.DEBUG, "ShowshopOffice.java[+]改变的高度值:" + animation.getAnimatedValue());
+                params.height = (int) animation.getAnimatedValue();
+                photo.setLayoutParams(params);
             }
-        } else {
-
-        }
-
-
+        });
+        anim.start();
+        /*重新计算高度和宽度*/
+        ViewGroup.LayoutParams Bodyparams = countDownadavert.getLayoutParams();
+        Bodyparams.width = metrics.widthPixels;
+        Bodyparams.height = Tools.getCount_downAdvert(metrics);
+        countDownadavert.setLayoutParams(Bodyparams);
+        countDownadavert.setVisibility(View.GONE);
+        /*线程开启计算倒计时广告*/
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Message msg = new Message();
+                msg.what = MSG_COUNT_DOWN_ADAVERT;
+                handler.sendMessage(msg);
+            }
+        }, Tools.getRandom(10, 20) * 1000);
+        scrollViewBiggerPhoto.setImageHead(photo, metrics);
     }
 
     @Override
     public void onBackPressed() {
         if (isShowCart) {
-            showShoplist();/*去关闭*/
         } else {
             super.onBackPressed();
         }

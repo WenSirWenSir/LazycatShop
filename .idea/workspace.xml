@@ -18,8 +18,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a52fcd4-d8d6-4277-af4b-2d758702a440" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/WxpayinitInstance.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/WXPayEntryActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/classAnalysis.bin" afterDir="false" />
@@ -29,10 +27,20 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/UserCenterfrg.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/UserCenterfrg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/TextUnt.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/TextUnt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/handlerText.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/handlerText.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/XmlTagValuesFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/XmlTagValuesFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/ScrollViewBiggerPhoto.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/ScrollViewBiggerPhoto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyPage/LocalPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyPage/LocalPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchShoplist.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchShoplist.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/ShowshopOffice.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/ShowshopOffice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalValues.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalValues.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_showshopoffice.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_showshopoffice.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/assembly_confirmdeliver.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/assembly_confirmdeliver.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_searchshoplist.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_searchshoplist.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -110,95 +118,62 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="UserCenterfrg.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/UserCenterfrg.java">
+      <file leaf-file-name="ShowshopOffice.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/ShowshopOffice.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="73">
-              <caret line="256" lean-forward="true" selection-start-line="256" selection-end-line="256" />
+            <state relative-caret-position="273">
+              <caret line="766" column="34" lean-forward="true" selection-start-line="766" selection-start-column="34" selection-end-line="766" selection-end-column="34" />
               <folding>
-                <element signature="e#2195#2238#0" expanded="true" />
-                <element signature="e#8163#8550#0" expanded="true" />
-                <element signature="e#8406#8451#0" expanded="true" />
-                <element signature="e#8549#8550#0" expanded="true" />
-                <element signature="e#8635#11520#0" expanded="true" />
-                <element signature="e#8854#8866#0" expanded="true" />
-                <element signature="e#11519#11520#0" expanded="true" />
-                <element signature="e#11624#12012#0" expanded="true" />
-                <element signature="e#11867#11912#0" expanded="true" />
-                <element signature="e#12011#12012#0" expanded="true" />
-                <element signature="e#12107#12495#0" expanded="true" />
-                <element signature="e#12350#12395#0" expanded="true" />
-                <element signature="e#12494#12495#0" expanded="true" />
-                <element signature="e#12594#13009#0" expanded="true" />
-                <element signature="e#12832#12903#0" expanded="true" />
-                <element signature="e#13008#13009#0" expanded="true" />
-                <element signature="e#13132#13573#0" expanded="true" />
-                <element signature="e#13343#13388#0" expanded="true" />
-                <element signature="e#13572#13573#0" expanded="true" />
-                <element signature="e#13700#14080#0" expanded="true" />
-                <element signature="e#13911#13956#0" expanded="true" />
-                <element signature="e#14079#14080#0" expanded="true" />
-                <element signature="e#14206#14587#0" expanded="true" />
-                <element signature="e#14417#14462#0" expanded="true" />
-                <element signature="e#14586#14587#0" expanded="true" />
-                <element signature="e#14707#16479#0" expanded="true" />
-                <element signature="e#15384#15934#0" expanded="true" />
-                <element signature="e#15933#15934#0" expanded="true" />
-                <element signature="e#16078#16123#0" expanded="true" />
-                <element signature="e#16478#16479#0" expanded="true" />
-                <element signature="e#17416#17462#0" expanded="true" />
+                <element signature="e#3782#5947#0" expanded="true" />
+                <element signature="e#4254#4577#0" expanded="true" />
+                <element signature="e#4576#4577#0" expanded="true" />
+                <element signature="e#4933#5618#0" expanded="true" />
+                <element signature="e#5617#5618#0" expanded="true" />
+                <element signature="e#5946#5947#0" expanded="true" />
+                <element signature="e#18819#20228#0" expanded="true" />
+                <element signature="e#19826#20112#0" expanded="true" />
+                <element signature="e#20111#20112#0" expanded="true" />
+                <element signature="e#20227#20228#0" expanded="true" />
+                <element signature="e#20314#20695#0" expanded="true" />
+                <element signature="e#20694#20695#0" expanded="true" />
+                <element signature="e#27515#27758#0" expanded="true" />
+                <element signature="e#27757#27758#0" expanded="true" />
+                <element signature="e#37028#37112#0" expanded="true" />
+                <element signature="e#38261#38345#0" expanded="true" />
+                <element signature="e#40651#40695#0" expanded="true" />
+                <element signature="e#40729#40773#0" expanded="true" />
+                <element signature="e#40934#40999#0" expanded="true" />
+                <element signature="e#41013#41057#0" expanded="true" />
+                <element signature="e#47233#48110#0" expanded="true" />
+                <element signature="e#48109#48110#0" expanded="true" />
+                <element signature="e#48172#48834#0" expanded="true" />
+                <element signature="e#48833#48834#0" expanded="true" />
+                <element signature="e#49526#49974#0" expanded="true" />
+                <element signature="e#49973#49974#0" expanded="true" />
+                <element signature="e#50400#50633#0" expanded="true" />
+                <element signature="e#50632#50633#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider editor-type-id="android-manifest">
+      <file leaf-file-name="assembly_confirmdeliver.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/assembly_confirmdeliver.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="52">
+              <caret line="147" column="44" selection-start-line="147" selection-start-column="44" selection-end-line="147" selection-end-column="44" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
             <state />
           </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="960">
-              <caret line="40" column="56" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="56" />
-            </state>
-          </provider>
         </entry>
       </file>
-      <file leaf-file-name="WxpayinitInstance.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/WxpayinitInstance.java">
+      <file leaf-file-name="TextUnt.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/TextUnt.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="496">
-              <caret line="101" column="45" selection-start-line="101" selection-start-column="45" selection-end-line="101" selection-end-column="45" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LocalAction.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalAction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="30" column="50" selection-start-line="30" selection-start-column="35" selection-end-line="30" selection-end-column="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainAct.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/MainAct.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9024">
-              <caret line="399" column="41" selection-start-line="399" selection-start-column="41" selection-end-line="399" selection-end-column="41" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="XmlanalysisFactory.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/XmlanalysisFactory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="984">
-              <caret line="50" selection-start-line="50" selection-end-line="50" />
+            <state relative-caret-position="484">
+              <caret line="41" column="33" selection-start-line="41" selection-start-column="33" selection-end-line="41" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -218,36 +193,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>获取的地址为</find>
-      <find>locationManager</find>
-      <find>requestLocationUpdates</find>
-      <find>item</find>
-      <find>_RefreshScrollView</find>
-      <find>InitMainPage</find>
-      <find>_Refreshhead</find>
-      <find>inLoadMessage</find>
-      <find>InitMain</find>
-      <find>setHead</find>
-      <find>RefershImg</find>
-      <find>refreshImgid</find>
-      <find>SetHeadView</find>
-      <find>REFRESH_STOP_MESSAGELOAD</find>
-      <find>setHeadView</find>
-      <find>TvBrowshow</find>
-      <find>activity_login_btnTologin</find>
-      <find>_setReadUserpageListener</find>
-      <find>isLogin</find>
-      <find>地区</find>
-      <find>保存用户的</find>
-      <find>init_userCenter</find>
-      <find>fragmen_user_coupon</find>
-      <find>TvSendSystemhow</find>
-      <find>body</find>
-      <find>userToolsInstance</find>
       <find>获取</find>
       <find>business_balance</find>
       <find>btn_recharge</find>
       <find>PayReq</find>
+      <find>showList</find>
+      <find>isLoginin</find>
+      <find>userToolsInstance</find>
+      <find>解析失败</find>
+      <find>促销</find>
+      <find>setonlyVipPay</find>
+      <find>显示展示</find>
+      <find>TP</find>
+      <find>SU</find>
+      <find>SHOP_PAGE</find>
+      <find>price</find>
+      <find>OpeningAnimation</find>
+      <find>btn_select_add</find>
+      <find>wait</find>
+      <find>activity_showshopoffice_tpSymbol</find>
+      <find>activity_showshopoffice_tp</find>
+      <find>SHOP_TP</find>
+      <find>btnAccount</find>
+      <find>showOrderConfirm</find>
+      <find>起订</find>
+      <find>otherMessage</find>
+      <find>tp</find>
+      <find>init</find>
+      <find>SHOP_DLP</find>
+      <find>getDlp</find>
+      <find>deliverUserIco</find>
     </findStrings>
   </component>
   <component name="GenerateSignedApkSettings">
@@ -2514,18 +2489,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_message.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/item_uploadapp.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopPage/LocalPage.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ico_shield.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/item_searchshoplist.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/assembly_act_head.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/assembly_head.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyClass/LazyCatFragment.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_makebusiness.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_showshopoffice.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/assembly_fragment_main_newshopin.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/item_browseactlist.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/item_mainshoplist.xml" />
@@ -2533,7 +2500,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/item_order.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_loginin.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/TextUnt.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/EditTextUnt.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/handlerEdittext.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/item_messageview.xml" />
@@ -2544,15 +2510,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/PromotionAct.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/lazyCatLogAct.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Config.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalValues.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/ShowshopOffice.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchShoplist.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchAct.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/XmlTagValuesFactory.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_user.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopTools/LocalProgramTools.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/MakebusinessAct.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/LoginAct.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/Numberincrease.java" />
@@ -2560,11 +2520,26 @@
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/XmlBuilder.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/SingValues.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/Utils.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalAction.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/WXPayEntryactivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/WxpayinitInstance.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/UserCenterfrg.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/ScrollViewBiggerPhoto.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/XmlanalysisFactory.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyPage/LocalPage.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/item_searchshoplist.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchShoplist.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/XmlTagValuesFactory.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalAction.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalValues.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/handlerText.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_showshopoffice.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/TextUnt.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/assembly_confirmdeliver.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopTools/LocalProgramTools.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/ShowshopOffice.java" />
       </list>
     </option>
   </component>
@@ -2581,6 +2556,47 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="lazycat" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="lazycat" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="LazyShopAct" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="lazycat" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="LazyShopFrg" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
+              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="ProjectPane" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <expand>
@@ -2666,79 +2682,6 @@
               <item name="lazyCat" type="cbb8eebc:String" user="lazyCat" />
               <item name="lazyCat" type="cbb8eebc:String" user="lazyCat" />
               <item name="gradle/wrapper" type="cbb8eebc:String" user="gradle/wrapper" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="ProjectPane" />
-      <pane id="AndroidView">
-        <subPane>
-          <expand>
-            <path>
-              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="manifests" type="f94875db:AndroidManifestsGroupNode" />
-            </path>
-            <path>
-              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="lazycat" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="lazycat" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="wxapi" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="assets" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="assets" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="font" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
-            <path>
-              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="drawable" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
-              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
             </path>
           </expand>
           <select />
@@ -2980,25 +2923,25 @@
       <window_info id="Build Variants" order="1" side_tool="true" weight="0.32956383" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="bottom" id="Event Log" order="2" sideWeight="0.50080776" side_tool="true" weight="0.53931034" />
+      <window_info anchor="right" id="Preview" order="2" />
       <window_info anchor="bottom" id="Run" order="8" weight="0.32827586" />
       <window_info anchor="bottom" id="Version Control" order="3" weight="0.32965517" />
       <window_info anchor="bottom" id="Terminal" order="5" weight="0.32965517" />
-      <window_info anchor="bottom" id="Logcat" order="4" sideWeight="0.49919224" weight="0.6758621" />
+      <window_info anchor="bottom" id="Logcat" order="4" sideWeight="0.49919224" weight="0.6786207" />
       <window_info id="Captures" order="7" weight="0.24959612" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="Designer" order="0" />
-      <window_info active="true" content_ui="combo" id="Project" order="4" sideWeight="0.49787235" visible="true" weight="0.24959612" />
+      <window_info content_ui="combo" id="Project" order="4" sideWeight="0.49787235" weight="0.24959612" />
       <window_info anchor="bottom" id="Build" order="0" weight="0.32689655" />
       <window_info anchor="right" id="Gradle" order="4" weight="0.32956383" />
       <window_info id="Structure" order="5" sideWeight="0.50212765" side_tool="true" weight="0.24959612" />
+      <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
       <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" weight="0.546042" />
       <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" id="Assistant" order="10" weight="0.32956383" />
       <window_info anchor="right" id="StringPreview" order="0" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="6" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Preview" order="2" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="7" weight="0.25" />
@@ -3027,7 +2970,7 @@
       <window_info anchor="bottom" id="Find" order="7" weight="0.32965517" />
       <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" weight="0.546042" />
       <window_info anchor="right" id="Assistant" order="10" weight="0.32956383" />
-      <window_info active="true" anchor="bottom" id="Logcat" order="4" sideWeight="0.49919224" visible="true" weight="0.6758621" />
+      <window_info active="true" anchor="bottom" id="Logcat" order="4" sideWeight="0.49919224" visible="true" weight="0.6786207" />
       <window_info anchor="bottom" id="Version Control" order="3" weight="0.32965517" />
       <window_info anchor="bottom" id="Terminal" order="5" weight="0.32965517" />
       <window_info anchor="right" id="Gradle" order="4" weight="0.32956383" />
@@ -3050,75 +2993,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-28/android/view/View.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="15047" column="35" lean-forward="true" selection-start-line="15047" selection-start-column="35" selection-end-line="15047" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/TextUnt.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="16" column="7" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/handlerText.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-305">
-          <caret line="29" column="46" selection-start-line="29" selection-start-column="46" selection-end-line="29" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/EditTextUnt.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="13" column="20" lean-forward="true" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/handlerEdittext.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="40" column="34" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopView/PriceNumberView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="13" column="24" selection-start-line="12" selection-start-column="28" selection-end-line="13" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyPage/WEB_VALUES_ACT.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="62" column="11" selection-start-line="62" selection-start-column="11" selection-end-line="62" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_messageview.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/7c16652f9c273b1709f59fcf73406da6/jars/classes.jar!/android/support/v4/app/ActivityCompat.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="154" column="23" selection-start-line="154" selection-start-column="23" selection-end-line="154" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/TencentLocationSdk-openplatform-7.2.4.aar/5b3bfcf4a62026459e5ab220393616d4/jars/classes.jar!/com/tencent/map/geolocation/TencentLocationRequest.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
@@ -3141,21 +3015,21 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_message.xml">
-      <provider selected="true" editor-type-id="android-designer2">
+      <provider editor-type-id="text-editor">
         <state />
       </provider>
-      <provider editor-type-id="text-editor">
+      <provider selected="true" editor-type-id="android-designer2">
         <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
           <caret line="29" column="44" lean-forward="true" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/RefreshScrollView.java">
@@ -3176,13 +3050,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="127" column="62" selection-start-line="127" selection-start-column="37" selection-end-line="127" selection-end-column="62" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-28/android.jar!/android/Manifest.class">
@@ -3206,13 +3080,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalValues.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="43" column="51" selection-start-line="43" selection-start-column="51" selection-end-line="43" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-28/java/lang/Float.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1160">
@@ -3221,45 +3088,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_main.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="91" column="26" selection-start-line="91" selection-start-column="26" selection-end-line="91" selection-end-column="26" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="170" column="47" lean-forward="true" selection-start-line="170" selection-start-column="47" selection-end-line="170" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2647#2661#0" expanded="true" />
-            <element signature="e#5714#6024#0" expanded="true" />
-            <element signature="e#6023#6024#0" expanded="true" />
-            <element signature="e#10398#10440#0" expanded="true" />
-            <element signature="e#10705#10881#0" expanded="true" />
-            <element signature="e#10880#10881#0" expanded="true" />
-            <element signature="e#11185#11518#0" expanded="true" />
-            <element signature="e#11517#11518#0" expanded="true" />
-            <element signature="e#11643#11833#0" expanded="true" />
-            <element signature="e#11832#11833#0" expanded="true" />
-            <element signature="e#11932#12462#0" expanded="true" />
-            <element signature="e#12461#12462#0" expanded="true" />
-            <element signature="e#15222#15953#0" expanded="true" />
-            <element signature="e#15952#15953#0" expanded="true" />
-            <element signature="e#18957#19825#0" expanded="true" />
-            <element signature="e#19824#19825#0" expanded="true" />
-            <element signature="e#20443#20734#0" expanded="true" />
-            <element signature="e#20733#20734#0" expanded="true" />
-            <element signature="e#56764#56843#0" expanded="true" />
-            <element signature="e#57159#57375#0" expanded="true" />
-            <element signature="e#57374#57375#0" expanded="true" />
-            <element signature="e#58432#58477#0" expanded="true" />
-          </folding>
-        </state>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchAct.java">
@@ -3269,48 +3104,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchShoplist.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="82" selection-start-line="82" selection-end-line="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/ShowshopOffice.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11267">
-          <caret line="554" column="19" selection-start-line="554" selection-start-column="19" selection-end-line="554" selection-end-column="19" />
-          <folding>
-            <element signature="e#30986#31434#0" expanded="true" />
-            <element signature="e#31433#31434#0" expanded="true" />
-            <element signature="e#31860#32094#0" expanded="true" />
-            <element signature="e#32093#32094#0" expanded="true" />
-            <element signature="e#32458#33335#0" expanded="true" />
-            <element signature="e#33334#33335#0" expanded="true" />
-            <element signature="e#33397#34059#0" expanded="true" />
-            <element signature="e#34058#34059#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/build/generated/not_namespaced_r_class_sources/debug/processDebugResources/r/shlm/lmcs/com/lazycat/R.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
           <caret line="3188" column="28" selection-start-line="3188" selection-start-column="28" selection-end-line="3188" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopTools/LocalProgramTools.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="207" column="17" lean-forward="true" selection-start-line="207" selection-start-column="17" selection-end-line="207" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -3346,65 +3143,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/MainAct.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9024">
-          <caret line="399" column="41" selection-start-line="399" selection-start-column="41" selection-end-line="399" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/alert_message.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="473">
           <caret line="45" column="52" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="52" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/XmlanalysisFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="984">
-          <caret line="50" selection-start-line="50" selection-end-line="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_user.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_user.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="66" column="73" selection-start-line="66" selection-start-column="49" selection-end-line="66" selection-end-column="73" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/XmlTagValuesFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="1982" column="24" selection-start-line="1982" selection-start-column="24" selection-end-line="1982" selection-end-column="24" />
-          <folding>
-            <element signature="e#1512#1513#0" expanded="true" />
-            <element signature="e#1557#1558#0" expanded="true" />
-          </folding>
-        </state>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/SingValues.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
-          <folding>
-            <element signature="e#161#162#0" expanded="true" />
-            <element signature="e#187#188#0" expanded="true" />
-            <element signature="e#225#226#0" expanded="true" />
-            <element signature="e#255#256#0" expanded="true" />
-            <element signature="e#288#289#0" expanded="true" />
-            <element signature="e#317#318#0" expanded="true" />
-            <element signature="e#361#362#0" expanded="true" />
-            <element signature="e#397#398#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3421,21 +3183,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="30" column="50" selection-start-line="30" selection-start-column="35" selection-end-line="30" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.tencent.mm.opensdk/wechat-sdk-android-with-mta/5.4.0/8bef9a62e35f2c73bb891dd7f383d7baad86db14/wechat-sdk-android-with-mta-5.4.0.jar!/com/tencent/mm/opensdk/openapi/WXApiImplV10.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="109">
           <caret line="23" column="12" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
-          <folding>
-            <element signature="e#883#884#0" expanded="true" />
-            <element signature="e#922#923#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3446,27 +3197,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/test/java/net/sourceforge.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="2" column="24" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/test/java/net/sourceforge/simcpux/WXPayEntrayActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/test/java/net/sourceforge.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/test/java/net/sourceforge/simcpux/WXPayEntrayActivity.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/WXPayEntryActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="11" column="62" lean-forward="true" selection-start-line="11" selection-start-column="62" selection-end-line="11" selection-end-column="62" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3480,6 +3216,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="27" column="40" lean-forward="true" selection-start-line="27" selection-start-column="40" selection-end-line="27" selection-end-column="40" />
+          <folding>
+            <element signature="e#1090#1108#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/UserCenterfrg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="276" lean-forward="true" selection-start-line="276" selection-end-line="276" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/WxpayinitInstance.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="496">
@@ -3490,53 +3246,201 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/UserCenterfrg.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/MainAct.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="256" lean-forward="true" selection-start-line="256" selection-end-line="256" />
+        <state relative-caret-position="630">
+          <caret line="399" column="41" selection-start-line="399" selection-start-column="41" selection-end-line="399" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Views/ScrollViewBiggerPhoto.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="100" column="37" selection-start-line="100" selection-start-column="37" selection-end-line="100" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-721">
+          <caret line="395" column="28" selection-start-line="395" selection-start-column="28" selection-end-line="395" selection-end-column="28" />
           <folding>
-            <element signature="e#2195#2238#0" expanded="true" />
-            <element signature="e#8163#8550#0" expanded="true" />
-            <element signature="e#8406#8451#0" expanded="true" />
-            <element signature="e#8549#8550#0" expanded="true" />
-            <element signature="e#8635#11520#0" expanded="true" />
-            <element signature="e#8854#8866#0" expanded="true" />
-            <element signature="e#11519#11520#0" expanded="true" />
-            <element signature="e#11624#12012#0" expanded="true" />
-            <element signature="e#11867#11912#0" expanded="true" />
-            <element signature="e#12011#12012#0" expanded="true" />
-            <element signature="e#12107#12495#0" expanded="true" />
-            <element signature="e#12350#12395#0" expanded="true" />
-            <element signature="e#12494#12495#0" expanded="true" />
-            <element signature="e#12594#13009#0" expanded="true" />
-            <element signature="e#12832#12903#0" expanded="true" />
-            <element signature="e#13008#13009#0" expanded="true" />
-            <element signature="e#13132#13573#0" expanded="true" />
-            <element signature="e#13343#13388#0" expanded="true" />
-            <element signature="e#13572#13573#0" expanded="true" />
-            <element signature="e#13700#14080#0" expanded="true" />
-            <element signature="e#13911#13956#0" expanded="true" />
-            <element signature="e#14079#14080#0" expanded="true" />
-            <element signature="e#14206#14587#0" expanded="true" />
-            <element signature="e#14417#14462#0" expanded="true" />
-            <element signature="e#14586#14587#0" expanded="true" />
-            <element signature="e#14707#16479#0" expanded="true" />
-            <element signature="e#15384#15934#0" expanded="true" />
-            <element signature="e#15933#15934#0" expanded="true" />
-            <element signature="e#16078#16123#0" expanded="true" />
-            <element signature="e#16478#16479#0" expanded="true" />
-            <element signature="e#17416#17462#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_searchshoplist.xml">
+      <provider editor-type-id="text-editor">
         <state />
       </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyPage/LocalPage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="40" column="56" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="56" />
+        <state relative-caret-position="360">
+          <caret line="17" column="37" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchShoplist.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="445" column="37" lean-forward="true" selection-start-line="445" selection-start-column="37" selection-end-line="445" selection-end-column="37" />
+          <folding>
+            <element signature="e#2065#2103#0" expanded="true" />
+            <element signature="e#11808#11970#0" expanded="true" />
+            <element signature="e#11969#11970#0" expanded="true" />
+            <element signature="e#12023#12598#0" expanded="true" />
+            <element signature="e#12597#12598#0" expanded="true" />
+            <element signature="e#12727#12752#0" expanded="true" />
+            <element signature="e#16837#16916#0" expanded="true" />
+            <element signature="e#21032#21111#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_searchshoplist.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="184" column="68" selection-start-line="184" selection-start-column="37" selection-end-line="184" selection-end-column="68" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/XmlTagValuesFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="656" selection-start-line="656" selection-end-line="656" />
+          <folding>
+            <element signature="e#1512#1513#0" expanded="true" />
+            <element signature="e#1557#1558#0" expanded="true" />
+            <element signature="e#25487#25488#0" expanded="true" />
+            <element signature="e#25530#25531#0" expanded="true" />
+            <element signature="e#25587#25588#0" expanded="true" />
+            <element signature="e#25636#25637#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="10" column="27" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-28/android/view/View.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="22867" column="16" selection-start-line="22867" selection-start-column="16" selection-end-line="22867" selection-end-column="16" />
+          <folding>
+            <element signature="e#915700#915701#0" expanded="true" />
+            <element signature="e#915726#915727#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/handlerText.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="190" column="43" lean-forward="true" selection-start-line="190" selection-start-column="43" selection-end-line="190" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalValues.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="71" column="35" selection-start-line="71" selection-start-column="35" selection-end-line="71" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/XmlanalysisFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="46" column="73" selection-start-line="46" selection-start-column="63" selection-end-line="46" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_showshopoffice.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="134" column="75" selection-start-line="134" selection-start-column="49" selection-end-line="134" selection-end-column="75" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/TextUnt.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="41" column="33" selection-start-line="41" selection-start-column="33" selection-end-line="41" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="171" column="35" selection-start-line="171" selection-start-column="35" selection-end-line="171" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/assembly_confirmdeliver.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="147" column="44" selection-start-line="147" selection-start-column="44" selection-end-line="147" selection-end-column="44" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopTools/LocalProgramTools.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="45" column="40" lean-forward="true" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/ShowshopOffice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="766" column="34" lean-forward="true" selection-start-line="766" selection-start-column="34" selection-end-line="766" selection-end-column="34" />
+          <folding>
+            <element signature="e#3782#5947#0" expanded="true" />
+            <element signature="e#4254#4577#0" expanded="true" />
+            <element signature="e#4576#4577#0" expanded="true" />
+            <element signature="e#4933#5618#0" expanded="true" />
+            <element signature="e#5617#5618#0" expanded="true" />
+            <element signature="e#5946#5947#0" expanded="true" />
+            <element signature="e#18819#20228#0" expanded="true" />
+            <element signature="e#19826#20112#0" expanded="true" />
+            <element signature="e#20111#20112#0" expanded="true" />
+            <element signature="e#20227#20228#0" expanded="true" />
+            <element signature="e#20314#20695#0" expanded="true" />
+            <element signature="e#20694#20695#0" expanded="true" />
+            <element signature="e#27515#27758#0" expanded="true" />
+            <element signature="e#27757#27758#0" expanded="true" />
+            <element signature="e#37028#37112#0" expanded="true" />
+            <element signature="e#38261#38345#0" expanded="true" />
+            <element signature="e#40651#40695#0" expanded="true" />
+            <element signature="e#40729#40773#0" expanded="true" />
+            <element signature="e#40934#40999#0" expanded="true" />
+            <element signature="e#41013#41057#0" expanded="true" />
+            <element signature="e#47233#48110#0" expanded="true" />
+            <element signature="e#48109#48110#0" expanded="true" />
+            <element signature="e#48172#48834#0" expanded="true" />
+            <element signature="e#48833#48834#0" expanded="true" />
+            <element signature="e#49526#49974#0" expanded="true" />
+            <element signature="e#49973#49974#0" expanded="true" />
+            <element signature="e#50400#50633#0" expanded="true" />
+            <element signature="e#50632#50633#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
