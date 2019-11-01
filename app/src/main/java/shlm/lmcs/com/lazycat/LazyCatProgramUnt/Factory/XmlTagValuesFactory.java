@@ -646,6 +646,24 @@ public class XmlTagValuesFactory {
         String img;/*图片的地址*/
         String splitUnit;/*最小的的组合单位*/
         Boolean isOnlyVipPay;
+        Boolean isPaythis;/*判断是否购买*/
+        String payHow;/*购买数量*/
+
+        public Boolean getPaythis() {
+            return isPaythis;
+        }
+
+        public void setPaythis(Boolean paythis) {
+            isPaythis = paythis;
+        }
+
+        public String getPayHow() {
+            return payHow;
+        }
+
+        public void setPayHow(String payHow) {
+            this.payHow = payHow;
+        }
 
         public Boolean getonlyVipPay() {
             return isOnlyVipPay;

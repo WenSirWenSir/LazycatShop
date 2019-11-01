@@ -36,8 +36,6 @@ public class ScrollViewBiggerPhoto extends ScrollView {
     public void setImageHead(View _imgbody, DisplayMetrics _metrics) {
         this.img_body = _imgbody;
         this.metrics = _metrics;//屏幕矩阵
-        Log.e(Config.DEBUG, "ScrollViewBiggerPhoto.java[+]屏幕宽度:" + this.metrics.widthPixels);
-        Log.e(Config.DEBUG, "ScrollViewBiggerPhoto.java[+]屏幕高度:" + this.metrics.heightPixels);
         /*设置控件的高度和宽度*/
         ViewGroup.LayoutParams params = this.img_body.getLayoutParams();
         params.width = this.metrics.widthPixels;

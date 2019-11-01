@@ -40,14 +40,14 @@ public class LocalProgramTools {
     }
 
     public static class UserToolsInstance {
-        private String Token;/*用户的TOKEN*/
-        private String Shopname;/*店铺的名称*/
-        private String Shopaddr;/*店铺的位置*/
-        private String Shoptel;/*店铺的电话*/
-        private String ShopusePeople;/*店铺的负责人*/
-        private String Shoplong;/*店铺的经度*/
-        private String Shoplat;/*店铺的维度*/
-        private String Account;/*用户的账户*/
+        private String Token = "";/*用户的TOKEN*/
+        private String Shopname = "";/*店铺的名称*/
+        private String Shopaddr = "";/*店铺的位置*/
+        private String Shoptel = "";/*店铺的电话*/
+        private String ShopusePeople = "";/*店铺的负责人*/
+        private String Shoplong = "";/*店铺的经度*/
+        private String Shoplat = "";/*店铺的维度*/
+        private String Account = "";/*用户的账户*/
 
         public String getShopname() {
             return Shopname;
@@ -258,8 +258,9 @@ public class LocalProgramTools {
                 Log.e(MSG, "解析用户的XML文件为空,错误内容为:" + e.getMessage());
             }
             return _Values;
-
         }
+
+
 
         /**
          * 清空缓存

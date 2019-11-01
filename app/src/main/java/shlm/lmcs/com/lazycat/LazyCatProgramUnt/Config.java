@@ -2,8 +2,6 @@ package shlm.lmcs.com.lazycat.LazyCatProgramUnt;
 
 import android.text.TextUtils;
 
-import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
-
 public class Config {
 
     public static final String DEBUG = "LazyCatProgramUnt";
@@ -234,29 +232,7 @@ public class Config {
     }
 
 
-    /**
-     * 有服务器地址的调用方法
-     */
 
-    public static class SERVICE_API {
-        public static String getInitMainXml() {
-            if (!TextUtils.isEmpty(LocalValues.ADDR_SERVICE)) {
-                return "http://" + LocalValues.ADDR_SERVICE + "/webdata/ConfigXml/InitMainConfig"
-                        + ".php";
-            } else {
-                return "";
-            }
-        }
-
-        public static String getInitUserpageXml() {
-            if (!TextUtils.isEmpty(LocalValues.ADDR_SERVICE)) {
-                return "http://" + LocalValues.ADDR_SERVICE +
-                        "/webdata/ConfigXml/InitUserpageConfig.php";
-            } else {
-                return "";
-            }
-        }
-    }
 
     /**
      * Use to select the template to send a SMS message
