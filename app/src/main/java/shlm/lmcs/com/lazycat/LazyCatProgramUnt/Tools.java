@@ -1006,4 +1006,18 @@ public class Tools {
         return d * Math.PI / 180.0;
     }
 
+
+    /**
+     * 计算两个数字相乘
+     * @param a
+     * @param b
+     * @return
+     */
+    public static String calcToRide(String a, String b) {
+        float _a = Float.parseFloat(a);
+        float _b = Float.parseFloat(b);
+        return String.valueOf((_a * _b));
+    }
+
+
 }

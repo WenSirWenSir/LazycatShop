@@ -914,7 +914,33 @@ public class ShowshopOffice extends LazyCatAct {
         btn_select_del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((Boolean) v.getTag()) {
+                if (v.getTag() != null) {
+                    if ((Boolean) v.getTag()) {
+                        /*可以被点击*/
+                        int i = Integer.parseInt(select_number.getText().toString());
+                        i -= 1;
+
+                        if (i <= 0) {
+                            Toast.makeText(getApplicationContext(), "配送的数量不能小于0哦", Toast
+                                    .LENGTH_SHORT).show();
+                        } else {
+                            try {
+                                int su = Integer.parseInt(shopvalues.getSu());
+                                float tp = Float.parseFloat(shopvalues.getTp());
+                                Total -= su * tp;
+                                float total = su * tp;
+                            } catch (Exception e) {
+                                Log.e(MSG, "计算总和错误:" + e.getMessage());
+
+                            }
+                            select_number.setText(String.valueOf(i));
+                        }
+                    } else {
+                        /*不能被点击*/
+                        Toast.makeText(getApplicationContext(), "限定的商品不能减少", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                } else {
                     /*可以被点击*/
                     int i = Integer.parseInt(select_number.getText().toString());
                     i -= 1;
@@ -934,9 +960,7 @@ public class ShowshopOffice extends LazyCatAct {
                         }
                         select_number.setText(String.valueOf(i));
                     }
-                } else {
-                    /*不能被点击*/
-                    Toast.makeText(getApplicationContext(), "限定的商品不能减少", Toast.LENGTH_SHORT).show();
+
                 }
 
 
@@ -946,7 +970,25 @@ public class ShowshopOffice extends LazyCatAct {
         btn_select_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((Boolean) v.getTag()) {
+                if (v.getTag() != null) {
+                    if ((Boolean) v.getTag()) {
+                        int i = Integer.parseInt(select_number.getText().toString());
+                        i += 1;
+                        select_number.setText(String.valueOf(i));
+                        try {
+                            int su = Integer.parseInt(shopvalues.getSu());
+                            float tp = Float.parseFloat(shopvalues.getTp());
+                            Total += su * tp;
+                        } catch (Exception e) {
+                            Log.e(MSG, "计算总和错误:" + e.getMessage());
+
+                        }
+                        int total = i * (Integer.valueOf(shopvalues.getSu()));
+                    } else {
+                        Toast.makeText(getApplicationContext(), "限定的商品不能增加", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                } else {
                     int i = Integer.parseInt(select_number.getText().toString());
                     i += 1;
                     select_number.setText(String.valueOf(i));
@@ -959,9 +1001,8 @@ public class ShowshopOffice extends LazyCatAct {
 
                     }
                     int total = i * (Integer.valueOf(shopvalues.getSu()));
-                } else {
-                    Toast.makeText(getApplicationContext(), "限定的商品不能增加", Toast.LENGTH_SHORT).show();
                 }
+
 
             }
         });
