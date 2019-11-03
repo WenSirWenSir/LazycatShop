@@ -60,6 +60,7 @@ public class lazyCatLogAct extends LazyCatAct {
         /**
          * 测试代码区
          */
+        Log.i(MSG,"时间戳:"+Tools.getTimeStamp());
         /*找到Ico控件*/
         log_title = findViewById(R.id.activity_lazy_log_title);/*控件图标*/
         log_context = findViewById(R.id.activity_lazy_log_context);/*控件的内容CangKu Service*/

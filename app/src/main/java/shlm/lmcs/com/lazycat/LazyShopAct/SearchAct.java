@@ -249,6 +249,13 @@ public class SearchAct extends LazyCatAct {
                 btnClear.setVisibility(View.GONE);
             }
         });
+        /*点击退出的按钮*/
+        findViewById(R.id.assembly_act_headBackImg).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     class SearchLogAdapter extends BaseAdapter {

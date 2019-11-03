@@ -12,6 +12,8 @@ import org.xmlpull.v1.XmlSerializer;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
 
@@ -353,6 +355,20 @@ public class LocalProgramTools {
             }
             return _ServiceAddr;
 
+        }
+    }
+
+    public static class TimeTools{
+        public static int getTimeforsecond(){
+            return 0;
+        }
+
+        /**
+         * 把现在的现在的时间转换成秒数
+         * @return
+         */
+        public static String getNowtimeForsecond(){
+            return "";
         }
     }
 

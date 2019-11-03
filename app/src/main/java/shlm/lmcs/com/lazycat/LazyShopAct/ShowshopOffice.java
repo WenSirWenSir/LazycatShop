@@ -1092,6 +1092,18 @@ public class ShowshopOffice extends LazyCatAct {
         /*商品的拆分单位*/
         xmlInstance.setXmlTree(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_SPLITUNIT,
                 shopvalues.getSplitUnit());
+        /*商品的条码*/
+        xmlInstance.setXmlTree(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_BARCODE,
+                shopvalues.getBarcode());
+        /*订单的打包单位 需要定格 不能以平台的单位随时变动*/
+        xmlInstance.setXmlTree(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_COMPANY,
+                shopvalues.getCompany());
+        /*商品的图片 需要定格 有些时候促销的图片是有依据的*/
+        xmlInstance.setXmlTree(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_IMG, shopvalues
+                .getImg());
+        /*商品的标题 需要定格  不能以平台的标题随时变动*/
+        xmlInstance.setXmlTree(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_TITLE, shopvalues
+                .getTitle());
         xmlInstance.overDom();
         Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_SAVEUSERODER, new
                 ProgramInterface() {

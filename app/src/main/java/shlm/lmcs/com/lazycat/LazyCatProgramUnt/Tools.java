@@ -56,6 +56,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -1009,6 +1010,7 @@ public class Tools {
 
     /**
      * 计算两个数字相乘
+     *
      * @param a
      * @param b
      * @return
@@ -1017,6 +1019,16 @@ public class Tools {
         float _a = Float.parseFloat(a);
         float _b = Float.parseFloat(b);
         return String.valueOf((_a * _b));
+    }
+
+
+    /**
+     * 返回系统当前的时间戳
+     * @return
+     */
+    public static String getTimeStamp() {
+        Date date = new Date();
+        return String.valueOf(date.getTime() / 1000);
     }
 
 
