@@ -44,7 +44,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.RefreshScrollView;
-import shlm.lmcs.com.lazycat.LazyShopAct.ScanBarcodeAct;
+import shlm.lmcs.com.lazycat.LazyShopAct.ScanQRCodeAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.ShowshopOffice;
 import shlm.lmcs.com.lazycat.LazyShopPage.LocalPage;
@@ -527,7 +527,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
             @Override
             public void onClick(View v) {
                 //加载扫一扫
-                LazyCatFragmetStartAct(ScanBarcodeAct.class);
+                LazyCatFragmetStartAct(ScanQRCodeAct.class);
             }
         });
 
