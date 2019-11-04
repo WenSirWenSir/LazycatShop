@@ -1,10 +1,13 @@
 package shlm.lmcs.com.lazycat.LazyShopTools;
 
 
+import android.Manifest;
+import android.content.Context;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Xml;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlSerializer;
@@ -12,9 +15,8 @@ import org.xmlpull.v1.XmlSerializer;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
 
 /**
@@ -120,8 +122,17 @@ public class LocalProgramTools {
         /**
          * 保存到本地的XML用户的文件信息
          */
-        public Boolean SaveingUserPageXml() {
+        public Boolean SaveingUserPageXml(Context _Context) {
             try {
+
+                if (Tools.isPermission(_Context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    /*读取的权限*/
+                    Toast.makeText(_Context, "没有获取读取的权限", Toast.LENGTH_SHORT).show();
+                }
+                if (Tools.isPermission(_Context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    /*写入的权限*/
+                    Toast.makeText(_Context, "没有获取写入的权限", Toast.LENGTH_SHORT).show();
+                }
                 File file = new File(Environment.getExternalStorageDirectory(), "CK_USERPAGE.xml");
                 /*判断是否存在 存在就先删除之后再保存*/
                 if (file.exists() && file.isFile()) {
@@ -132,7 +143,8 @@ public class LocalProgramTools {
                         return false;
                     }
                 }
-                FileOutputStream fos = new FileOutputStream(file);
+
+                 FileOutputStream fos = new FileOutputStream(file);
                 /*获取序列化工具*/
                 XmlSerializer serializer = Xml.newSerializer();
                 serializer.setOutput(fos, "utf-8");
@@ -263,7 +275,6 @@ public class LocalProgramTools {
         }
 
 
-
         /**
          * 清空缓存
          */
@@ -298,8 +309,20 @@ public class LocalProgramTools {
         }
 
         /*保存服务器缓存*/
-        public void SaveService() {
+        public void SaveService(Context _Context) {
             try {
+                if (Tools.isPermission(_Context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    /*读取的权限*/
+                }
+                else{
+
+                }
+                if (Tools.isPermission(_Context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    /*写入的权限*/
+                }
+                else{
+                    
+                }
                 File file = new File(Environment.getExternalStorageDirectory(), "CK_SERVICE.xml");
                 /*判断是否存在 存在就先删除之后再保存*/
                 if (file.exists() && file.isFile()) {
@@ -358,16 +381,17 @@ public class LocalProgramTools {
         }
     }
 
-    public static class TimeTools{
-        public static int getTimeforsecond(){
+    public static class TimeTools {
+        public static int getTimeforsecond() {
             return 0;
         }
 
         /**
          * 把现在的现在的时间转换成秒数
+         *
          * @return
          */
-        public static String getNowtimeForsecond(){
+        public static String getNowtimeForsecond() {
             return "";
         }
     }

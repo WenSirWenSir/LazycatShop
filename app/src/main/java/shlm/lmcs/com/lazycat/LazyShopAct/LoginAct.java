@@ -344,7 +344,7 @@ public class LoginAct extends LazyCatAct {
                                                 "请关闭系统打开信息重试", Toast.LENGTH_SHORT).show();
                                     } else {
                                         /*两个权限都有了*/
-                                        if (userToolsInstance.SaveingUserPageXml()) {
+                                        if (userToolsInstance.SaveingUserPageXml(getApplicationContext())) {
                                             Toast.makeText(getApplicationContext(), "登录成功!" +
                                                     userToolsInstance.getShopname().trim() +
                                                     "欢迎您", Toast.LENGTH_SHORT).show();

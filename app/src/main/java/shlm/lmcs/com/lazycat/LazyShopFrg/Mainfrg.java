@@ -564,7 +564,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                     LocalProgramTools.ProgramServiceTools programServiceTools = LocalProgramTools
                             .getServiceToolsInstatnce();
                     programServiceTools.set_Service(tOrgin.trim());
-                    programServiceTools.SaveService();/*保存服务器*/
+                    programServiceTools.SaveService(getContext());/*保存服务器*/
                     /*不是为空的话 就去访问网络*/
                     getConfigXml();/*获取首页的配置文件*/
                     checkPermission();

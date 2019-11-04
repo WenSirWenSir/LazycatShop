@@ -21,6 +21,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyShopAct.MainAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.PromotionAct;
+import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
 
 import static shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools.isPermission;
 
@@ -60,7 +61,7 @@ public class lazyCatLogAct extends LazyCatAct {
         /**
          * 测试代码区
          */
-        Log.i(MSG,"时间戳:"+Tools.getTimeStamp());
+        Log.i(MSG, "时间戳:" + Tools.getTimeStamp());
         /*找到Ico控件*/
         log_title = findViewById(R.id.activity_lazy_log_title);/*控件图标*/
         log_context = findViewById(R.id.activity_lazy_log_context);/*控件的内容CangKu Service*/
@@ -85,9 +86,15 @@ public class lazyCatLogAct extends LazyCatAct {
     }
 
     private void init() {
-
-        /*获取定位权限*/
-        if (isPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
+        LocalProgramTools.ProgramServiceTools serviceTools = LocalProgramTools
+                .getServiceToolsInstatnce();
+        serviceTools.set_Service("127.0.0.1");
+        serviceTools.SaveService(getApplicationContext());
+        /*判断三个主要权限是否获取*/
+        if (isPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) &&
+                isPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                && isPermission(getApplicationContext(), Manifest.permission
+                .WRITE_EXTERNAL_STORAGE)) {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -109,7 +116,8 @@ public class lazyCatLogAct extends LazyCatAct {
                 @Override
                 public void onClick(View v) {
                     ActivityCompat.requestPermissions(lazyCatLogAct.this, new String[]{Manifest
-                            .permission.ACCESS_COARSE_LOCATION}, 0);
+                            .permission.ACCESS_COARSE_LOCATION, Manifest.permission
+                            .READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
                     alertDialog.dismiss();
                     alertDialog = null;
                 }
@@ -120,8 +128,6 @@ public class lazyCatLogAct extends LazyCatAct {
                 alertDialog = builder.show();
             }
         }
-
-        /*获取读写权限*/
 
 
     }

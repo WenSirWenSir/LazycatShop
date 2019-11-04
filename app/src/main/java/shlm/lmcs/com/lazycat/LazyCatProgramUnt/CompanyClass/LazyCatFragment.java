@@ -56,6 +56,8 @@ public class LazyCatFragment extends Fragment {
             decorView.setSystemUiVisibility(option);
             getActivity().getWindow().setStatusBarColor(Color.parseColor(tColor));
         }
+        else{
+        }
     }
 
     /**

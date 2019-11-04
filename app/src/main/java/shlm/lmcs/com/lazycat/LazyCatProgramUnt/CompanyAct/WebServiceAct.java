@@ -19,7 +19,6 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.WebMonitor;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
@@ -86,8 +85,6 @@ public class WebServiceAct extends LazyCatAct {
             @Override
             public void onClick(View v) {
                 TextView tv = (TextView) v;
-                Toast.makeText(getApplicationContext(), tv.getText().toString(), Toast
-                        .LENGTH_SHORT).show();
             }
         });
         item.addView(ButtonTitle);
@@ -102,7 +99,6 @@ public class WebServiceAct extends LazyCatAct {
                 Message msg = new Message();
                 msg.obj = title;
                 handler.sendMessage(msg);
-                Toast.makeText(getApplicationContext(), title, Toast.LENGTH_SHORT).show();
                 super.onReceivedTitle(view, title);
             }
         });
