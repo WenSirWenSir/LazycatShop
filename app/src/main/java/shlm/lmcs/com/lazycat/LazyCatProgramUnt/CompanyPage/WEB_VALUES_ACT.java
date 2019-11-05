@@ -17,6 +17,16 @@ public class WEB_VALUES_ACT implements Serializable {
     private String _TitleBackColor = "#e9e9e9";/*标题背景颜色*/
     private String _TitleColor = "#000000";/*标题文字颜色*/
 
+    private Boolean _ScanFitXY = true;/*是否强制缩放*/
+
+    public Boolean get_ScanFitXY() {
+        return _ScanFitXY;
+    }
+
+    public void set_ScanFitXY(Boolean _ScanFitXY) {
+        this._ScanFitXY = _ScanFitXY;
+    }
+
     public String get_TitleBackColor() {
         return _TitleBackColor;
     }

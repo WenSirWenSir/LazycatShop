@@ -90,8 +90,23 @@ public class WebServiceAct extends LazyCatAct {
         item.addView(ButtonTitle);
         //增加WebView布局
         _WebView = new WebView(item.getContext());
+        /*设置自适应屏幕*/
+        if (web_values_act.get_ScanFitXY()) {
+            _WebView.getSettings().setUseWideViewPort(true);
+            _WebView.getSettings().setLoadWithOverviewMode(true);
+
+
+        } else {
+            _WebView.getSettings().setUseWideViewPort(false);
+            _WebView.getSettings().setLoadWithOverviewMode(false);
+
+
+        }
         _WebView.addJavascriptInterface(new WebMonitor(getApplicationContext(), this),
                 "webmonitor");
+        /*设置不显示滚动条*/
+        _WebView.setHorizontalScrollBarEnabled(false);
+        _WebView.setVerticalScrollBarEnabled(false);
         item.addView(_WebView);
         _WebView.setWebChromeClient(new WebChromeClient() {
             @Override
