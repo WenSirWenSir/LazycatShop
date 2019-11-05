@@ -267,7 +267,7 @@ public class Net {
                     byte[] xmlbyte = xmldata.getBytes("UTF-8");
                     URL url = new URL(_url[0]);//地址
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setConnectTimeout(5000);
+                    conn.setConnectTimeout(15000);
                     conn.setDoOutput(true);
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Content-Length", String.valueOf(xmlbyte.length));
