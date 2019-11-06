@@ -3,11 +3,13 @@ package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
+import shlm.lmcs.com.lazycat.LazyShopAct.ShowshopOffice;
 
 /**
  * 网页调用的方法
@@ -88,7 +90,13 @@ public class WebMonitor {
      * @param in      0代表短提示 1代表长提示
      */
     @JavascriptInterface
-    public void ShowToast(String message, int in) {
+    public void ShowShopOffice(String message, int in) {
+        Intent intent = new Intent();
+        intent.putExtra(Config.Windows.GET_WINDOW_VALUE_SHOP_MESSAGE, message.trim());
+        intent.putExtra(Config.Windows.GET_WINDOW_VALUE_SHOP_ACTION, String.valueOf(in));
+        intent.setClass(mContext, ShowshopOffice.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
         if (in == 0) {
             Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
         } else {
@@ -213,6 +221,20 @@ public class WebMonitor {
      * @param callBackurl 成功的回调地址
      */
     public void ShareQQ(String title, String content, String photo, String callBackurl) {
+
+    }
+
+
+    /**
+     * 打开商品浏览界面
+     */
+    public void openShowshopoffice(String title, String action) {
+        Intent intent = new Intent();
+        intent.putExtra(Config.Windows.GET_WINDOW_VALUE_SHOP_MESSAGE, title.trim());
+        intent.putExtra(Config.Windows.GET_WINDOW_VALUE_SHOP_ACTION, action);
+        intent.setClass(mContext, ShowshopOffice.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
 
     }
 

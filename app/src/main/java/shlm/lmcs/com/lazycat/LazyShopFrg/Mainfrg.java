@@ -10,7 +10,6 @@ import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,16 +63,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
      */
     private ShowshopList showshopList = null;
     ArrayList<ShowshopList> showList = new ArrayList<ShowshopList>();
-    private final static String SHOW_SHOPLIST_BEGIN = "Showshoplist";
-    private final static String SHOW_SHOPLIST_TITLE = "shopTitle";
-    private final static String SHOW_SHOPLIST_TP = "shopTp";
-    private final static String SHOW_SHOPLIST_IMG = "shopImg";
-    private final static String SHOW_SHOPLIST_COMPANY = "shopCompany";
-    private final static String SHOW_SHOPLIST_EXP = "shopExp";
-    private final static String SHOW_SHOPLIST_PD = "shopPd";
-    private final static String SHOW_SHOPLIST_BUSINESS = "business";
-    private final static String SHOW_SHOPLIST_BUSINESSIMG = "businessImg";
-
     /**
      * -------------------------------------------
      */
@@ -133,9 +122,9 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
     private ImageView CenterHeadpageImg;
     private static final int REFRESH_STOP_MESSAGELOAD = 0;/*停止刷新 隐藏广告*/
     private AlertDialog UpdateDialog;
-    private Boolean isLogin;/*判断本地是否有登录数据*/
-    private Boolean isLoadEnd;/*判断是否加载完毕*/
-    private int Position;/*设置position用来底部加载*/
+    private Boolean isLoadEnd = false;/*判断是否加载完毕*/
+    private Boolean isLoadShopdone = false;/*判断是否加载过首页推荐的商品了*/
+    private int Position = 0;/*设置position用来底部加载*/
     private AlertDialog alertDialog = null;
 
     /**
@@ -362,127 +351,171 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
 
             @Override
             public void onLoadBottom() {
-                /*显示一个加载中的DIALOG*/
-                /*初始化一个DIALOG*/
-                WaitDialog.RefreshDialog refreshDialog = new WaitDialog.RefreshDialog(getContext());
-                WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
-                wait_itme_dialogpage.setImg(R.id.item_wait_img);
-                wait_itme_dialogpage.setView(R.layout.item_wait);
-                wait_itme_dialogpage.setCanClose(false);
-                wait_itme_dialogpage.setTitle(R.id.item_wait_title);
-                refreshDialog.Init(wait_itme_dialogpage);
-                refreshDialog.showRefreshDialog("加载中...", false);
-                refreshDialog.show();
-                /*向尾部更新5个数据信息*/
+                if (!isLoadShopdone) {
+                    Net.doPostXml(getContext(), LocalValues.HTTP_ADDRS
+                            .HTT_ADDR_GETMAINPAGE_SHOWSHOP, new ProgramInterface() {
+                        @Override
+                        public void onSucess(String data, int code, WaitDialog.RefreshDialog
+                                _refreshDialog) {
+                            _refreshDialog.dismiss();
+                            Log.i(MSG, "获取到商品的数据信息" + data.trim());
+                            XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(data
+                                    .trim());
+                            xmlanalysisFactory.Startanalysis(new XmlanalysisFactory
+                                    .XmlanalysisInterface() {
 
-                /**
-                 * 处理首页的商品展示信息
-                 */
-
-                for (int i = 0; i < 2; i++) {
-                    Position += 1;
-                    if (Position >= showList.size() && isLoadEnd == false) {
-                        isLoadEnd = true;
-                        /*没有更多的信息 那就加载一个ITEM*/
-                        TextView endTitle = new TextView(refreshBody.getContext());
-                        endTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
-                                .LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams
-                                .WRAP_CONTENT));
-                        endTitle.setPadding(0, 10, 0, 10);
-                        endTitle.setGravity(Gravity.CENTER);
-                        TextUnt.with(endTitle).setText("暂时没有推荐的商品啦,您可以去分类中心看看哦").setTextSize(13)
-                                .setTextColor("#666666");
-                        refreshBody.addView(endTitle);
-                        refreshDialog.dismiss();
-                    } else {
-                        try {
-
-                            View shopItem = LayoutInflater.from(getContext()).inflate(R.layout
-                                    .item_mainshoplist, null);
-                            shopItem.setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public void onClick(View v) {
-                                    ShowshopList _list = (ShowshopList) v.getTag();
-                                    LazyCatFragmentStartActivityWithBundler(ShowshopOffice.class,
-                                            Config.Windows.GET_WINDOW_VALUE_SHOP_MESSAGE, _list
-                                                    .get_title().trim(),
-                                            GET_WINDOW_VALUE_SHOP_ACTION, LocalValues
-                                                    .VALUES_SEARCH.VALUES_TO_SEARCH_SHOPKEYWORD);
+                                public void onFaile() {
+
                                 }
-                            });
-                            //shopItem.setTag(showList.get(Position));
-                            /*进行Item处理监听*/
-                            ImageView btnLike = shopItem.findViewById(R.id
-                                    .item_mainshoplist_btnLike);
-                            /*是否喜欢*/
-                            TextView Itemtitle = shopItem.findViewById(R.id
-                                    .item_mainshoplist_Title);
-                            /*标题*/
-                            TextView ItemTp = shopItem.findViewById(R.id.item_mainshoplist_Tp);
-                            /*批发价格*/
-                            TextView ItemCompany = shopItem.findViewById(R.id
-                                    .item_mainshoplist_Company);
-                            /*批发规格单位*/
-                            /*生产日期和保质期*/
-                            TextView ItemExpAndPd = shopItem.findViewById(R.id
-                                    .item_mainshoplist_ExpAndPd);
-                            ImageView ItemShopimg = shopItem.findViewById(R.id
-                                    .item_mainshoplist_Shopimg);/*图片地址*/
 
-                            /*商户名称*/
-                            TextView ItemBusiness = shopItem.findViewById(R.id
-                                    .item_mainshoplist_business);
-                            /*设置生产日期和保质期*/
-                            /*设置单位*/
-                            TextUnt.with(ItemCompany).setText("/" + showList.get(Position)
-                                    .get_company());
-                            /*设置批发价格*/
-                            if (isLogin) {
-                                TextUnt.with(ItemTp).setText(showList.get(Position).get_tp());
-                            } else {
-                                TextUnt.with(ItemTp).setText("*.*");
-                            }
-                            /*设置供货商*/
-                            TextUnt.with(ItemBusiness).setText(showList.get(Position)
-                                    .get_business());
-                            /*设置生产日期和保质期*/
-                            TextUnt.with(ItemExpAndPd).setText(showList.get(Position).get_exp() +
-                                    "生产·" + showList.get(Position).get_pd() + "天保质");
-                            /*加载图片*/
-                            Glide.with(getContext()).load("http://i.caigoubao" + "" + "" + "" +
-                                    "" + ".cc/583105/SHOP_DATABASE/" + showList.get(Position)
-                                    .get_img()).skipMemoryCache(false).diskCacheStrategy
-                                    (DiskCacheStrategy.NONE).into(ItemShopimg);
-
-                            Itemtitle.setText(showList.get(Position).get_title());
-                            /*进行数据判断 用户是否收藏过该商品 如果没有就设置为灰色*/
-                            btnLike.setImageResource(R.drawable.ico_nolike);
-                            btnLike.setTag(LocalValues.VALUES_SHOPLIKES.SHOP_NO_LIKE);
-                            btnLike.setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public void onClick(View v) {
-                                    int tag = (int) v.getTag();
-                                    if (tag == LocalValues.VALUES_SHOPLIKES.SHOP_NO_LIKE) {
-                                        /*设置为喜欢的图标 并且发送服务器*/
-                                        ImageView img = (ImageView) v;
-                                        img.setImageResource(R.drawable.ico_like);
-                                    } else {
-                                        /*设置为不喜欢的图标 并且发送服务器*/
-                                        ImageView img = (ImageView) v;
-                                        img.setImageResource(R.drawable.ico_nolike);
+                                public void onStartDocument(String tag) {
+
+                                }
+
+                                @Override
+                                public void onStartTag(String tag, XmlPullParser pullParser,
+                                                       Integer id) {
+                                    isLoadShopdone = true;
+                                    try {
+                                        if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                                .ACTION_SHOPVALUES_START)) {
+                                            showshopList = new ShowshopList();
+
+                                        }
+                                        /*标题*/
+                                        if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                                .ACTION_SHOPVALUES_TITLE)) {
+                                            showshopList.set_title(pullParser.nextText().trim());
+                                        }
+                                        /*设置图片地址*/
+                                        if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                                .ACTION_SHOPVALUES_IMG)) {
+                                            showshopList.set_img(pullParser.nextText().trim());
+                                        }
+                                        /*商品的批发价格*/
+                                        if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                                .ACTION_SHOPVALUES_TP)) {
+                                            showshopList.set_tp(pullParser.nextText().trim());
+                                        }
+                                        /*商品唯一的ID*/
+                                        if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                                .ACTION_SHOPVALUES_ONLYID)) {
+                                            showshopList.set_onlyid(pullParser.nextText().trim());
+
+                                        }
+                                        /*商品批发价格对应的单位*/
+                                        if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                                .ACTION_SHOPVALUES_COMPANY)) {
+                                            showshopList.set_company(pullParser.nextText().trim());
+                                        }
+                                        /*商品的生产日期*/
+                                        if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                                .ACTION_SHOPVALUES_PD)) {
+                                            showshopList.set_pd(pullParser.nextText().trim());
+
+                                        }
+                                        /*商品的保质期*/
+                                        if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                                .ACTION_SHOPVALUES_EXP)) {
+                                            showshopList.set_exp(pullParser.nextText().trim());
+                                        }
+                                        /*商品的对接商家*/
+                                        if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                                .ACTION_SHOPVALUES_BUSINSS)) {
+                                            showshopList.set_business(pullParser.nextText().trim());
+
+                                        }
+                                    } catch (Exception e) {
+
                                     }
+
+
+                                }
+
+                                @Override
+                                public void onEndTag(String tag, XmlPullParser pullParser,
+                                                     Integer id) {
+                                    if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                            .ACTION_SHOPVALUES_START)) {
+                                        showList.add(showshopList);
+                                        showshopList = null;
+                                    }
+
+                                }
+
+                                @Override
+                                public void onEndDocument() {
+                                    /**
+                                     * 处理首页的商品展示信息 每次加载3个数据
+                                     */
+                                    toHandlerShoplist();
+
                                 }
                             });
-                            refreshBody.addView(shopItem);
-                        } catch (Exception e) {
-                            Log.e(MSG, "显示展示商品的信息失败信息:" + e.getMessage());
                         }
-                        refreshDialog.dismiss();
-                    }
+
+                        @Override
+                        public WaitDialog.RefreshDialog onStartLoad() {
+                            /*初始化一个DIALOG*/
+                            final WaitDialog.RefreshDialog refreshDialog = new WaitDialog
+                                    .RefreshDialog(getContext());
+                            WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+                            wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                            wait_itme_dialogpage.setView(R.layout.item_wait);
+                            wait_itme_dialogpage.setCanClose(false);
+                            wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+                            refreshDialog.Init(wait_itme_dialogpage);
+                            refreshDialog.showRefreshDialog("获取中...", false);
+                            return refreshDialog;
+                        }
+
+                        @Override
+                        public void onFaile(String data, int code) {
+
+                        }
+                    }, "");
+
+
+                } else {
+                    /**
+                     * 处理首页的商品展示信息 每次加载3个数据
+                     */
+                    toHandlerShoplist();
 
                 }
 
+
+                    /*for (int i = 0; i < showList.size(); i++) {
+                        Position += 1;
+                        if (Position >= showList.size() && isLoadEnd == false) {
+                            isLoadEnd = true;
+                            *//*没有更多的信息 那就加载一个ITEM*//*
+                            TextView endTitle = new TextView(refreshBody.getContext());
+                            endTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
+                                    .LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams
+                                    .WRAP_CONTENT));
+                            endTitle.setPadding(0, 10, 0, 10);
+                            endTitle.setGravity(Gravity.CENTER);
+                            TextUnt.with(endTitle).setText("暂时没有推荐的商品啦,您可以去分类中心看看哦").setTextSize
+                                    (13).setTextColor("#666666");
+                            refreshBody.addView(endTitle);
+                        } else {
+                            try {
+                                View shopItem = LayoutInflater.from(getContext()).inflate(R
+                                        .layout.item_mainshoplist, null);
+
+                                refreshBody.addView(shopItem);
+                            } catch (Exception e) {
+                                Log.e(MSG, "显示展示商品的信息失败信息:" + e.getMessage());
+                            }
+                        }*/
+/*
+                    }
+*/
             }
+
 
             @Override
             public void onScrollStop() {
@@ -523,13 +556,110 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         });
 
         /*加载扫一扫*/
-        item.findViewById(R.id.fragment_main_btnScan).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //加载扫一扫
-                LazyCatFragmetStartAct(ScanQRCodeAct.class);
+        item.findViewById(R.id.fragment_main_btnScan).
+
+                setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //加载扫一扫
+                        LazyCatFragmetStartAct(ScanQRCodeAct.class);
+                    }
+                });
+
+    }
+
+
+    /**
+     * 整理界面
+     */
+    @SuppressLint("NewApi")
+    private void toHandlerShoplist() {
+
+        for (int i = 0; i < 3; i++) {
+            try {
+                if (showList.get(Position) != null) {
+                    View shopItem = LayoutInflater.from(getContext()).inflate(R.layout
+                            .item_mainshoplist, null);
+                    TextUnt.with(shopItem, R.id.item_mainshoplist_Title).setText(showList.get
+                            (Position).get_title());
+                    shopItem.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ShowshopList _list = (ShowshopList) v.getTag();
+                            LazyCatFragmentStartActivityWithBundler(ShowshopOffice.class, Config
+                                    .Windows.GET_WINDOW_VALUE_SHOP_MESSAGE, _list.get_title()
+                                    .trim(), GET_WINDOW_VALUE_SHOP_ACTION, LocalValues
+                                    .VALUES_SEARCH.VALUES_TO_SEARCH_SHOPKEYWORD);
+                        }
+                    });
+                    //shopItem.setTag(showList.get(Position));
+                    //*进行Item处理监听*//*
+                    ImageView btnLike = shopItem.findViewById(R.id.item_mainshoplist_btnLike);
+                    //*是否喜欢*//*
+/*
+                                TextView Itemtitle = shopItem.findViewById(R.id
+                                        .item_mainshoplist_Title);
+*/
+                    //*标题*//*
+                    TextView ItemTp = shopItem.findViewById(R.id.item_mainshoplist_Tp);
+                    //*批发价格*//*
+                    TextView ItemCompany = shopItem.findViewById(R.id.item_mainshoplist_Company);
+                    //*批发规格单位*//*
+                    //*生产日期和保质期*//*
+                    TextView ItemExpAndPd = shopItem.findViewById(R.id.item_mainshoplist_ExpAndPd);
+                    ImageView ItemShopimg = shopItem.findViewById(R.id.item_mainshoplist_Shopimg);
+                    //*图片地址*//*
+
+                    //*商户名称*//*
+                    TextView ItemBusiness = shopItem.findViewById(R.id.item_mainshoplist_business);
+                    //*设置生产日期和保质期*//*
+                    //*设置单位*//*
+                    TextUnt.with(ItemCompany).setText("/" + showList.get(Position).get_company());
+                    //*设置批发价格*//*
+                    if (userToolsInstance.isLogin()) {
+                        TextUnt.with(ItemTp).setText(showList.get(Position).get_tp());
+                    } else {
+                        TextUnt.with(ItemTp).setText("*.*");
+                    }
+                    //*设置供货商*//*
+                    TextUnt.with(ItemBusiness).setText(showList.get(Position).get_business());
+                    //*设置生产日期和保质期*//*
+                    TextUnt.with(ItemExpAndPd).setText(showList.get(Position).get_exp() + "生产·" +
+                            showList.get(Position).get_pd() + "天保质");
+                    //*加载图片*//*
+
+                    Glide.with(getContext()).load("http://f.freep.cn/583105/SHOP_DATABASE/" +
+                            showList.get(Position).get_img().trim()).skipMemoryCache(false)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE).into(ItemShopimg);
+                    //*进行数据判断 用户是否收藏过该商品 如果没有就设置为灰色*//*
+                    btnLike.setImageResource(R.drawable.ico_nolike);
+                    btnLike.setTag(LocalValues.VALUES_SHOPLIKES.SHOP_NO_LIKE);
+                    btnLike.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            int tag = (int) v.getTag();
+                            if (tag == LocalValues.VALUES_SHOPLIKES.SHOP_NO_LIKE) {
+                                //*设置为喜欢的图标 并且发送服务器*//*
+                                ImageView img = (ImageView) v;
+                                img.setImageResource(R.drawable.ico_like);
+                            } else {
+                                //*设置为不喜欢的图标 并且发送服务器*//*
+                                ImageView img = (ImageView) v;
+                                img.setImageResource(R.drawable.ico_nolike);
+                            }
+                        }
+                    });
+                    refreshBody.addView(shopItem);
+                } else {
+
+                }
+                Position++;
+            } catch (Exception e) {
+                Log.e(MSG, "整理商品界面错误,错误原因:" + e.getMessage());
+
             }
-        });
+        }
+
 
     }
 
@@ -592,13 +722,13 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
     @SuppressLint("NewApi")
     private void getConfigXml() {
 
-        Net.doPostXml(getContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GET_MAINCONFIGPAGE, new ProgramInterface() {
-
+        Net.doPostXml(getContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GET_MAINCONFIGPAGE, new
+                ProgramInterface() {
 
 
             @Override
             public void onSucess(String data, int code, WaitDialog.RefreshDialog _refreshDialog) {
-                Log.i(MSG,"doPost:" + data.trim());
+                Log.i(MSG, "doPost:" + data.trim());
             }
 
             @Override
@@ -610,7 +740,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
             public void onFaile(String data, int code) {
 
             }
-        },"");
+        }, "");
         /**
          * 获取地区服务器关于该地址的首页配置信息
          * fragment_main_bigHeadMsg
@@ -997,80 +1127,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                                     Log.e(MSG, "ThreeNavPageInstance为空");
                                 }
                             }
-                            /**
-                             * 获取首页显示商品的数据
-                             */
-                            if (tag.equals(SHOW_SHOPLIST_BEGIN)) {
-                                /*重新申请一个ShowshopList*/
-                                showshopList = new ShowshopList();
-                            }
-                            /*获取标题*/
-                            if (tag.equals(SHOW_SHOPLIST_TITLE)) {
-                                if (showshopList != null) {
-                                    showshopList.set_title(pullParser.nextText().trim());
-                                } else {
-                                    Log.e(MSG, "XML数据错误显示首页商品数据的数组为空");
-                                }
-                            }
-
-                            /*获取批发价格*/
-                            if (tag.equals(SHOW_SHOPLIST_TP)) {
-                                if (showshopList != null) {
-                                    showshopList.set_tp(pullParser.nextText().trim());
-                                } else {
-                                    Log.e(MSG, "XML数据错误显示首页商品数据的数组为空");
-                                }
-                            }
-                            /*获取商品图片地址*/
-                            if (tag.equals(SHOW_SHOPLIST_IMG)) {
-                                if (showshopList != null) {
-                                    showshopList.set_img(pullParser.nextText().trim());
-                                } else {
-                                    Log.e(MSG, "XML数据错误显示首页商品数据的数组为空");
-                                }
-                            }
-
-                            /*获取商品单位*/
-                            if (tag.equals(SHOW_SHOPLIST_COMPANY)) {
-                                if (showshopList != null) {
-                                    showshopList.set_company(pullParser.nextText().trim());
-                                } else {
-                                    Log.e(MSG, "XML数据错误显示首页商品数据的数组为空");
-                                }
-                            }
-                            /*获取商品保质期*/
-                            if (tag.equals(SHOW_SHOPLIST_EXP)) {
-                                if (showshopList != null) {
-                                    showshopList.set_exp(pullParser.nextText().trim());
-                                } else {
-                                    Log.e(MSG, "XML数据错误显示首页商品数据的数组为空");
-                                }
-                            }
-                            /*获取商品单位*/
-                            if (tag.equals(SHOW_SHOPLIST_PD)) {
-                                if (showshopList != null) {
-                                    showshopList.set_pd(pullParser.nextText().trim());
-                                } else {
-                                    Log.e(MSG, "XML数据错误显示首页商品数据的数组为空");
-                                }
-                            }
-                            /*获取商品单位*/
-                            if (tag.equals(SHOW_SHOPLIST_BUSINESS)) {
-                                if (showshopList != null) {
-                                    showshopList.set_business(pullParser.nextText().trim());
-                                } else {
-                                    Log.e(MSG, "XML数据错误显示首页商品数据的数组为空");
-                                }
-                            }
-                            /*获取商品单位*/
-                            if (tag.equals(SHOW_SHOPLIST_BUSINESSIMG)) {
-                                if (showshopList != null) {
-                                    showshopList.set_businessimg(pullParser.nextText().trim());
-                                } else {
-                                    Log.e(MSG, "XML数据错误显示首页商品数据的数组为空");
-                                }
-                            }
-
 
                         } catch (Exception e) {
                             Log.e(MSG, "解析首页整理的XML数据中出错:" + e.getMessage());
@@ -1080,11 +1136,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                     @Override
                     public void onEndTag(String tag, XmlPullParser pullParser, Integer id) {
 
-                        /*在堆栈中 存入一个数据之后制空*/
-                        if (tag.equals(SHOW_SHOPLIST_BEGIN)) {
-                            showList.add(showshopList);
-                            showshopList = null;
-                        }
 
                     }
 
@@ -1383,6 +1434,16 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         String _business;/*对接商家*/
         String _businessimg;/*对接商家的图片地址*/
         String _img;/*商品的图片地址*/
+        String _onlyid;/*商品的唯一ID*/
+
+
+        public String get_onlyid() {
+            return _onlyid;
+        }
+
+        public void set_onlyid(String _onlyid) {
+            this._onlyid = _onlyid;
+        }
 
         public String get_img() {
             return _img;
@@ -1447,6 +1508,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         public void set_businessimg(String _businessimg) {
             this._businessimg = _businessimg;
         }
+
     }
 
     /**
@@ -1464,4 +1526,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         int error = locationManager.requestLocationUpdates(LocationRequest, this);
         Log.i(MSG, "腾讯地图调用:" + error);
     }
+
+
 }
