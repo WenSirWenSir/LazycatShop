@@ -199,6 +199,7 @@ public class ShowshopOffice extends LazyCatAct {
             public void onSucess(String data, int code, final WaitDialog.RefreshDialog
                     _refreshDialog) {
                 Log.i(MSG, "商品数据:" + data.trim());
+                _refreshDialog.dismiss();
                 XmlanalysisFactory xml = new XmlanalysisFactory(data.trim());
                 xml.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
                     @Override
@@ -342,7 +343,6 @@ public class ShowshopOffice extends LazyCatAct {
                     @Override
                     public void onEndDocument() {
                         /*文档处理完毕 就关闭显示的等待的LOGO*/
-                        _refreshDialog.dismiss();
 
                     }
                 });
@@ -372,6 +372,17 @@ public class ShowshopOffice extends LazyCatAct {
     }
 
     private void listener() {
+
+        /**
+         * 退出的监听事件
+         */
+        findViewById(R.id.activity_showshopoffice_btnBack).setOnClickListener(new View
+                .OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         /**
          * 询问等级的按钮问号
@@ -443,19 +454,19 @@ public class ShowshopOffice extends LazyCatAct {
                 .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_TOKEN)
         );/*存入密码*/
         xmlInstance.overDom();
-        Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GETUSER, new
+        Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GETUSER_VALUES, new
                 ProgramInterface() {
             @Override
             public void onSucess(String data, int code, final WaitDialog.RefreshDialog
                     _refreshDialog) {
                 Log.i(MSG, "重新获取用户信息的请求:" + data.trim());
+                _refreshDialog.dismiss();
                 if (data.trim().equals(LocalValues.VALUES_LOGIN.LOGIN_ERROR)) {
                     Toast.makeText(getApplicationContext(), "登录过期,请重新登录", Toast.LENGTH_SHORT)
                             .show();
                     if (userToolsInstance != null) {
                         userToolsInstance.ClearLocalCach();
                     }
-                    _refreshDialog.dismiss();
 
                 } else {
                     XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(data.trim());
@@ -476,7 +487,8 @@ public class ShowshopOffice extends LazyCatAct {
                             try {
                                 if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
                                         .ACTION_LOCALUSERPAGE_VIPSTATUS)) {
-                                    if (pullParser.nextText().trim().equals("0")) {
+                                    if (pullParser.nextText().trim().equals(LocalValues
+                                            .VALUES_USERCENTER.IS_VIP)) {
                                         IsVip = true;
                                     } else {
                                         IsVip = false;

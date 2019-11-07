@@ -88,6 +88,15 @@ public class LoginAct extends LazyCatAct {
 
     private void Listener() {
         /**
+         * 关闭界面
+         */
+        findViewById(R.id.activity_login_btnToclose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        /**
          *加入仓库网络的按钮
          */
         findViewById(R.id.activity_login_btnTojoin).setOnClickListener(new View.OnClickListener() {
@@ -334,24 +343,17 @@ public class LoginAct extends LazyCatAct {
                                     if (!Tools.isPermission(getApplicationContext(), Manifest
                                             .permission.READ_EXTERNAL_STORAGE)) {
                                         /*没有写入权限 要求客户重新打开权限后重试*/
-                                        Toast.makeText(getApplicationContext(), "没有打开写入权限," +
-                                                "请关闭系统打开信息重试", Toast.LENGTH_SHORT).show();
-
-
                                     } else if (!Tools.isPermission(getApplicationContext(),
                                             Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                                        Toast.makeText(getApplicationContext(), "没有打开读入权限," +
-                                                "请关闭系统打开信息重试", Toast.LENGTH_SHORT).show();
                                     } else {
                                         /*两个权限都有了*/
-                                        if (userToolsInstance.SaveingUserPageXml(getApplicationContext())) {
+                                        if (userToolsInstance.SaveingUserPageXml
+                                                (getApplicationContext())) {
                                             Toast.makeText(getApplicationContext(), "登录成功!" +
                                                     userToolsInstance.getShopname().trim() +
                                                     "欢迎您", Toast.LENGTH_SHORT).show();
                                             finish();
                                         } else {
-                                            Toast.makeText(getApplicationContext(), "登录失败," +
-                                                    "无法在本地保存用户登录数据", Toast.LENGTH_SHORT).show();
                                         }
                                     }
 

@@ -127,6 +127,45 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
     private int Position = 0;/*设置position用来底部加载*/
     private AlertDialog alertDialog = null;
 
+
+    /**
+     * TAG值
+     */
+    private String LOCALACTION_ONEBIGTITLE = "oneBigtitle";
+    private String LOCALACTION_ONEBIGTITLE_COLOR = "oneBigtitleColor";
+    private String LOCALACTION_ONESMALLTITLE = "oneSmalltitle";
+    private String LOCALACTION_ONESMALLTITLE_COLOR = "oneSmalltitleColor";
+    private String LOCALACTION_TWOBIGTITLE = "twoBigtitle";
+    private String LOCALACTION_TWOBIGTITLE_COLOR = "twoBigtitleColor";
+    private String LOCALACTION_TWOSMALLTITLE = "twoSmalltitle";
+    private String LOCALACTION_TWOSMALLTITLE_COLOR = "twoSmalltitleColor";
+    private String LOCALACTION_THREEBIGTITLE = "threeBigtitle";
+    private String LOCALACTION_THREEBIGTITLE_COLOR = "threeBigtitleColor";
+    private String LOCALACTION_THREESMALLTITLE = "threeSmalltitle";
+    private String LOCALACTION_THREESMALLTITLE_COLOR = "threeSmalltitleColor";
+    private String LOCALACTION_FOURBIGTITLE = "fourBigtitle";
+    private String LOCALACTION_FOURBIGTITLE_COLOR = "fourBigtitleColor";
+    private String LOCALACTION_FOURSMALLTITLE = "fourSmalltitle";
+    private String LOCALACTION_FOURSMALLTITLE_COLOR = "fourSmalltitleColor";
+    /**
+     * 对应上面的VALUES值
+     */
+    private String oneBigtitle;
+    private String oneBigtitleColor;
+    private String oneSmalltitle;
+    private String oneSmalltitleColor;
+    private String twoBigtitle;
+    private String twoBigtitleColor;
+    private String twoSmalltitle;
+    private String twoSmalltitleColor;
+    private String threeBigtitle;
+    private String threeBigtitleColor;
+    private String threeSmalltitle;
+    private String threeSmalltitleColor;
+    private String fourBigtitle;
+    private String fourBigtitleColor;
+    private String fourSmalltitle;
+    private String fourSmalltitleColor;
     /**
      * 模块数据存储
      */
@@ -154,8 +193,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
-        /*判断是否有定位权限 没有定位权限就去申请定位权限*/
-        onStartMain();
+
         /*设置是否加载完毕*/
         isLoadEnd = false;
         /*设置状态栏颜色*/
@@ -186,59 +224,8 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         CenterHeadpageImg = item.findViewById(R.id.fragment_main_CenterHeadimg);
         /*第三排的第一个竖向的图片*/
         threeNavAimg = item.findViewById(R.id.fragment_main_threeNavAimg);
-
-
-        /**
-         * 初始化 DIALOG
-         */
-       /* refreshDialog = new WaitDialog.RefreshDialog(getActivity());
-        WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
-        wait_itme_dialogpage.setImg(R.id.item_wait_img);
-        wait_itme_dialogpage.setView(R.layout.item_wait);
-        wait_itme_dialogpage.setTitle(R.id.item_wait_title);
-        refreshDialog.Init(wait_itme_dialogpage);
-        refreshDialog.showRefreshDialog("定位中...", false);*/
-        /*设置监听*/
-/*        locationListener.setOnReceiveLocationListener(new LocationMapListener
-                .onReceiveLocationListener() {
-            @Override
-            public void onHasAddr(BDLocation bdLocation) {
-                if (bdLocation.hasAddr()) {
-                    *//*存在地址信息*//*
-                    init(item);
-                    *//*设置地址标题*//*
-                    TextView addr_title = SearchViewBody.findViewById(R.id.assembly_head_addrTitle);
-                    String City = bdLocation.getCity();*//*获取城市信息*//*
-                    String District = bdLocation.getDistrict();*//*获取地区信息  用县区作为搜索条件*//*
-                    addr_title.setText(District + bdLocation.getStreet().trim());
-                    *//**
-         * 判断该地址是否在配送范围之内
-         *//*
-                    getServiceAddr(District);
-                    refreshDialog.dismiss();
-                }
-            }
-
-            @Override
-            public void onNotAddr(BDLocation bdLocation) {
-                *//*没有地址信息*//*
-                init(item);
-                getServiceAddr("上杭县");
-                refreshDialog.dismiss();
-                //body.setVisibility(View.VISIBLE);
-                //body.removeAllViews();
-                //View item_noservice = inflater.inflate(R.layout.item_noservice, null);
-                //body.addView(item_noservice);
-                //Log.e(MSG, "没有地址信息");
-                TextView addr_title = SearchViewBody.findViewById(R.id.assembly_head_addrTitle);
-                addr_title.setText("上杭县上杭大道");
-
-            }
-        });*/
-/*
-        locationClient.start();
-*/
-
+        /*判断是否有定位权限 没有定位权限就去申请定位权限*/
+        onStartMain();
         return item;
 
     }
@@ -485,35 +472,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                     toHandlerShoplist();
 
                 }
-
-
-                    /*for (int i = 0; i < showList.size(); i++) {
-                        Position += 1;
-                        if (Position >= showList.size() && isLoadEnd == false) {
-                            isLoadEnd = true;
-                            *//*没有更多的信息 那就加载一个ITEM*//*
-                            TextView endTitle = new TextView(refreshBody.getContext());
-                            endTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
-                                    .LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams
-                                    .WRAP_CONTENT));
-                            endTitle.setPadding(0, 10, 0, 10);
-                            endTitle.setGravity(Gravity.CENTER);
-                            TextUnt.with(endTitle).setText("暂时没有推荐的商品啦,您可以去分类中心看看哦").setTextSize
-                                    (13).setTextColor("#666666");
-                            refreshBody.addView(endTitle);
-                        } else {
-                            try {
-                                View shopItem = LayoutInflater.from(getContext()).inflate(R
-                                        .layout.item_mainshoplist, null);
-
-                                refreshBody.addView(shopItem);
-                            } catch (Exception e) {
-                                Log.e(MSG, "显示展示商品的信息失败信息:" + e.getMessage());
-                            }
-                        }*/
-/*
-                    }
-*/
             }
 
 
@@ -574,7 +532,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
      */
     @SuppressLint("NewApi")
     private void toHandlerShoplist() {
-
         for (int i = 0; i < 3; i++) {
             try {
                 if (showList.get(Position) != null) {
@@ -582,6 +539,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                             .item_mainshoplist, null);
                     TextUnt.with(shopItem, R.id.item_mainshoplist_Title).setText(showList.get
                             (Position).get_title());
+                    shopItem.setTag(showList.get(Position));
                     shopItem.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -637,16 +595,32 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                     btnLike.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            int tag = (int) v.getTag();
-                            if (tag == LocalValues.VALUES_SHOPLIKES.SHOP_NO_LIKE) {
-                                //*设置为喜欢的图标 并且发送服务器*//*
-                                ImageView img = (ImageView) v;
-                                img.setImageResource(R.drawable.ico_like);
+                            if (userToolsInstance != null) {
+                                if (userToolsInstance.isLogin()) {
+                                    try {
+                                        Toast.makeText(getContext(), getResources().getString(R
+                                                .string.noLoginuseLike), Toast.LENGTH_SHORT).show();
+                                        if (showList.get(Position).get_like() == LocalValues
+                                                .VALUES_SHOPLIKES.SHOP_NO_LIKE) {
+                                            //*设置为喜欢的图标 并且发送服务器*//*
+                                            ImageView img = (ImageView) v;
+                                            img.setImageResource(R.drawable.ico_like);
+                                        } else {
+                                            //*设置为不喜欢的图标 并且发送服务器*//*
+                                            ImageView img = (ImageView) v;
+                                            img.setImageResource(R.drawable.ico_nolike);
+                                        }
+                                    } catch (Exception e) {
+                                        Log.e(MSG, "整理用户是否收藏该商品错误:" + e.getMessage());
+                                    }
+
+                                } else {
+
+                                }
                             } else {
-                                //*设置为不喜欢的图标 并且发送服务器*//*
-                                ImageView img = (ImageView) v;
-                                img.setImageResource(R.drawable.ico_nolike);
+
                             }
+
                         }
                     });
                     refreshBody.addView(shopItem);
@@ -719,28 +693,11 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
     }
 
 
+    /**
+     * 获取首页的配置信息
+     */
     @SuppressLint("NewApi")
     private void getConfigXml() {
-
-        Net.doPostXml(getContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GET_MAINCONFIGPAGE, new
-                ProgramInterface() {
-
-
-            @Override
-            public void onSucess(String data, int code, WaitDialog.RefreshDialog _refreshDialog) {
-                Log.i(MSG, "doPost:" + data.trim());
-            }
-
-            @Override
-            public WaitDialog.RefreshDialog onStartLoad() {
-                return null;
-            }
-
-            @Override
-            public void onFaile(String data, int code) {
-
-            }
-        }, "");
         /**
          * 获取地区服务器关于该地址的首页配置信息
          * fragment_main_bigHeadMsg
@@ -758,7 +715,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                 wait_itme_dialogpage.setCanClose(false);
                 wait_itme_dialogpage.setTitle(R.id.item_wait_title);
                 refreshDialog.Init(wait_itme_dialogpage);
-                refreshDialog.showRefreshDialog("加载中...", false);
+                refreshDialog.showRefreshDialog("拉取信息...", false);
                 return refreshDialog;
             }
 
@@ -823,10 +780,81 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
 
 
                             /**
+                             * 获取首页的大标题和小标题
+                             */
+                            /*第一个大标题*/
+                            if (tag.equals(LOCALACTION_ONEBIGTITLE)) {
+                                oneBigtitle = pullParser.nextText().trim();
+                            }
+                            /*第一个大标题的颜色*/
+                            if (tag.equals(LOCALACTION_ONEBIGTITLE_COLOR)) {
+                                oneBigtitleColor = pullParser.nextText().trim();
+                            }
+                            /*第一个大标题对应的小标题的文字*/
+                            if (tag.equals(LOCALACTION_ONESMALLTITLE)) {
+                                oneSmalltitle = pullParser.nextText().trim();
+                            }
+                            /*第一个大标题对应的小标题的颜色*/
+                            if (tag.equals(LOCALACTION_ONESMALLTITLE_COLOR)) {
+                                oneSmalltitleColor = pullParser.nextText().trim();
+                            }
+                            /*第二个大标题*/
+                            if (tag.equals(LOCALACTION_TWOBIGTITLE)) {
+                                twoBigtitle = pullParser.nextText().trim();
+                            }
+                            /*第二个大标题的颜色*/
+                            if (tag.equals(LOCALACTION_TWOBIGTITLE_COLOR)) {
+                                twoBigtitleColor = pullParser.nextText().trim();
+                            }
+                            /*第二个大标题对应的小标题*/
+                            if (tag.equals(LOCALACTION_TWOSMALLTITLE)) {
+                                twoSmalltitle = pullParser.nextText().trim();
+                            }
+                            /*第二个大标题对应的小标题的颜色*/
+                            if (tag.equals(LOCALACTION_TWOSMALLTITLE_COLOR)) {
+                                twoSmalltitleColor = pullParser.nextText().trim();
+                            }
+                            /*第三个大标题*/
+                            if (tag.equals(LOCALACTION_THREEBIGTITLE)) {
+                                threeBigtitle = pullParser.nextText().trim();
+                            }
+                            /*第三个标题的颜色*/
+                            if (tag.equals(LOCALACTION_THREEBIGTITLE_COLOR)) {
+                                threeBigtitleColor = pullParser.nextText().trim();
+                            }
+                            /*第三个标题对应的小标题的*/
+                            if (tag.equals(LOCALACTION_THREESMALLTITLE)) {
+                                threeSmalltitle = pullParser.nextText().trim();
+                            }
+                            /*第三个标题对应的小标题的颜色*/
+                            if (tag.equals(LOCALACTION_THREESMALLTITLE_COLOR)) {
+                                threeSmalltitleColor = pullParser.nextText().trim();
+                            }
+                            /*第四个大标题*/
+                            if (tag.equals(LOCALACTION_FOURBIGTITLE)) {
+                                fourBigtitle = pullParser.nextText().trim();
+                            }
+                            /*第四个大标题的颜色*/
+                            if (tag.equals(LOCALACTION_FOURBIGTITLE_COLOR)) {
+                                fourBigtitleColor = pullParser.nextText().trim();
+                            }
+                            /*第四个标题对应的小标题*/
+                            if (tag.equals(LOCALACTION_FOURSMALLTITLE)) {
+                                fourSmalltitle = pullParser.nextText().trim();
+                            }
+                            /*第四个标题对应的小标题的颜色*/
+                            if (tag.equals(LOCALACTION_FOURSMALLTITLE_COLOR)) {
+                                fourSmalltitleColor = pullParser.nextText().trim();
+                            }
+                            /**
                              * 判断是不是SecondSmallNavA
                              */
                             if (tag.equals(LocalPage.SecondSmallNavAPage.BEGIN_XML)) {
                                 secondSmallNavAPage = LocalPage.getSecondSmallNavAPageInstance();
+                            }
+                            /*获取第一个NAV的标题和提示*/
+                            if (tag.equals("Big")) {
+
                             }
                             /*设置第一个NAV的图片*/
                             if (tag.equals(LocalPage.SecondSmallNavAPage.XML_TAG_NAVA_IMG)) {
@@ -1142,10 +1170,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                     @Override
                     public void onEndDocument() {
                         _rfreshdialog.dismiss();
-                        /**
-                         * 结束完成  开始整理界面
-                         */
-                        InitMainPage();
+
                         /**
                          * 判断是否需要跳出更新框
                          */
@@ -1155,6 +1180,10 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                                     "服务器版本号:" + ProgramVersion);
                             if (Tools.getProgramVersion(getContext()).equals(ProgramVersion)) {
                                 //版本号相同
+                                /**
+                                 * 结束完成  开始整理界面
+                                 */
+                                InitMainPage();
                             } else {
                                 //版本号不相同
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -1213,11 +1242,32 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         LinearLayout headView = item.findViewById(R.id.fragment_main_refreshHead);
         _RefreshScrollView.SetHeadView(LoadingImgurl, LoadingOnclick, headView, 100, R.id
                 .fragment_main_Headprogressbar, R.id.fragment_main_refreshHeadImg);
-        /**
-         * 判断本地是否登录账户
-         */
         userToolsInstance = LocalProgramTools.getUserToolsInstance();
+        /*设置第一个大标题*/
+        TextUnt.with(item, R.id.fragment_main_oneBigtitle).setText(oneBigtitle).setTextColor
+                (oneBigtitleColor);
+        /*设置第一个小标题*/
+        TextUnt.with(item, R.id.fragment_main_oneSmalltitle).setText(oneSmalltitle).setTextColor
+                (oneSmalltitleColor);
 
+        /*设置第二个大标题*/
+        TextUnt.with(item, R.id.fragment_main_twoBigtitle).setText(twoBigtitle).setTextColor
+                (twoBigtitleColor);
+        /*设置第二个小标题*/
+        TextUnt.with(item, R.id.fragment_main_twoSmalltitle).setText(twoSmalltitle).setTextColor
+                (twoSmalltitleColor);
+        /*设置第三个大标题*/
+        TextUnt.with(item, R.id.fragment_main_threeBigtitle).setText(threeBigtitle).setTextColor
+                (threeBigtitleColor);
+        /*设置第三个小标题*/
+        TextUnt.with(item, R.id.fragment_main_threeSmalltitle).setText(threeSmalltitle)
+                .setTextColor(threeSmalltitleColor);
+        /*设置第四个大标题*/
+        TextUnt.with(item, R.id.fragment_main_fourBigtitle).setText(fourBigtitle).setTextColor
+                (fourBigtitleColor);
+        /*设置第四个小标题*/
+        TextUnt.with(item, R.id.fragment_main_fourSmalltitle).setText(fourSmalltitle)
+                .setTextColor(fourSmalltitleColor);
         /*加载顶部的第一个Big_headimg*/
         Glide.with(getContext()).load(bigheadImg.getShowImg()).into(bigHead_img);
 
@@ -1435,7 +1485,15 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         String _businessimg;/*对接商家的图片地址*/
         String _img;/*商品的图片地址*/
         String _onlyid;/*商品的唯一ID*/
+        String _like;/*判断用户是否喜欢*/
 
+        public String get_like() {
+            return _like;
+        }
+
+        public void set_like(String _like) {
+            this._like = _like;
+        }
 
         public String get_onlyid() {
             return _onlyid;

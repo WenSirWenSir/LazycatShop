@@ -713,7 +713,8 @@ public class Tools {
     @SuppressLint("NewApi")
     public static ArrayList<LinearLayout> handleToarraylist(Context context, ArrayList<String>
             text_list, int left, int top, int right, int bottom, String color, String textColor,
-                                                            int textSize) {
+                                                            int textSize, View.OnClickListener
+                                                                        listener) {
         ArrayList<LinearLayout> textViews = new ArrayList<LinearLayout>();
         for (int i = 0; i < text_list.size(); i++) {
             LinearLayout layout = new LinearLayout(context);
@@ -724,6 +725,7 @@ public class Tools {
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tv.getLayoutParams();
             params.setMargins(20, 10, 10, 10);
             tv.setLayoutParams(params);
+            tv.setOnClickListener(listener);
             tv.setTextSize(textSize);
             tv.setTextColor(Color.parseColor(textColor));
             tv.setBackground(CreateDrawable(1, color, color, 10));
@@ -1024,6 +1026,7 @@ public class Tools {
 
     /**
      * 返回系统当前的时间戳
+     *
      * @return
      */
     public static String getTimeStamp() {

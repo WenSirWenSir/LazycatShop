@@ -124,12 +124,11 @@ public class LocalProgramTools {
          */
         public Boolean SaveingUserPageXml(Context _Context) {
             try {
-
-                if (Tools.isPermission(_Context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                if (!Tools.isPermission(_Context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     /*读取的权限*/
                     Toast.makeText(_Context, "没有获取读取的权限", Toast.LENGTH_SHORT).show();
                 }
-                if (Tools.isPermission(_Context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                if (!Tools.isPermission(_Context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     /*写入的权限*/
                     Toast.makeText(_Context, "没有获取写入的权限", Toast.LENGTH_SHORT).show();
                 }
@@ -144,7 +143,7 @@ public class LocalProgramTools {
                     }
                 }
 
-                 FileOutputStream fos = new FileOutputStream(file);
+                FileOutputStream fos = new FileOutputStream(file);
                 /*获取序列化工具*/
                 XmlSerializer serializer = Xml.newSerializer();
                 serializer.setOutput(fos, "utf-8");
@@ -313,15 +312,13 @@ public class LocalProgramTools {
             try {
                 if (Tools.isPermission(_Context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     /*读取的权限*/
-                }
-                else{
+                } else {
 
                 }
                 if (Tools.isPermission(_Context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     /*写入的权限*/
-                }
-                else{
-                    
+                } else {
+
                 }
                 File file = new File(Environment.getExternalStorageDirectory(), "CK_SERVICE.xml");
                 /*判断是否存在 存在就先删除之后再保存*/
