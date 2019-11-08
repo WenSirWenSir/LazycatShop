@@ -9,10 +9,18 @@ import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
+import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.ShowshopOffice;
 
 /**
  * 网页调用的方法
+ */
+
+
+/**
+ * PS开辟的方法如果在头部没有定义
+ *     @JavascriptInterface
+ *     是无法被调用的!!!!
  */
 
 public class WebMonitor {
@@ -23,6 +31,7 @@ public class WebMonitor {
         this.mAc = ac;
         this.mContext = _Context;
     }
+
 
     /**
      * 网页接口  增加用户一个抵用卷  可以直接使用抵用券使用
@@ -81,6 +90,16 @@ public class WebMonitor {
 
     public void GetphoneAddr() {
 
+    }
+    /**
+     * 打开搜索界面
+     */
+    @JavascriptInterface
+    public void openSearchAct(){
+        Intent intent = new Intent();
+        intent.setClass(mContext, SearchAct.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
     }
 
     /**
@@ -235,7 +254,7 @@ public class WebMonitor {
         intent.setClass(mContext, ShowshopOffice.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);
-
     }
+
 
 }

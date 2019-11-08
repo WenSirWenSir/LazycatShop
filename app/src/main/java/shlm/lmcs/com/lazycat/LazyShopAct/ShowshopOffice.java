@@ -423,11 +423,18 @@ public class ShowshopOffice extends LazyCatAct {
         btnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextView tv = (TextView) v;
                 if ((Boolean) v.getTag()) {
                     showOrderConfirm();
                 } else {
-                    Toast.makeText(getApplicationContext(), "您没有登录,请你登录后发送订货单", Toast
-                            .LENGTH_SHORT).show();
+                    /*判断是否为发送订单了*/
+                    if(tv.getText().toString().trim().indexOf("仓库发货") != -1){
+                        Toast.makeText(getApplicationContext(),"您已成功发货,暂不支持补单哦!",Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "您没有登录,请你登录后发送订货单", Toast
+                                .LENGTH_SHORT).show();
+                    }
                 }
 
             }

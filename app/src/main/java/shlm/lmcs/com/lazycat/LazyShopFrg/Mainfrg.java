@@ -266,6 +266,20 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
     @SuppressLint({"NewApi", "ResourceType"})
     private void listener(View item) {
 
+/**
+ * 第一个横向大图片的点击事件
+ */
+        bigHead_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WEB_VALUES_ACT web_values_act = new WEB_VALUES_ACT(bigheadImg.getOnClick_url()
+                        .trim());
+                web_values_act.set_StaticColor(getResources().getString(R.color.ThemeColor));
+                web_values_act.set_TitleColor("#ffffff");
+                web_values_act.set_TitleBackColor(getResources().getString(R.color.ThemeColor));
+                LazyCatFragmentStartWevact(web_values_act);
+            }
+        });
         /**
          * 第二排导航的第一个横向的图片的点击事件
          */
@@ -670,8 +684,8 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                     programServiceTools.set_Service(tOrgin.trim());
                     programServiceTools.SaveService(getContext());/*保存服务器*/
                     /*不是为空的话 就去访问网络*/
-                    getConfigXml();/*获取首页的配置文件*/
                     checkPermission();
+                    getConfigXml();/*获取首页的配置文件*/
                 } else {
                     /*没有地址  没有开放*/
                     Log.i(MSG, "该地区服务器地址没开放");
