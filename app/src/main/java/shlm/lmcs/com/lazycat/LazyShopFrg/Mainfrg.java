@@ -452,7 +452,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                                      * 处理首页的商品展示信息 每次加载3个数据
                                      */
                                     toHandlerShoplist();
-
+                                    _RefreshScrollView.stopRefresh();/*下拉刷新停止*/
                                 }
                             });
                         }

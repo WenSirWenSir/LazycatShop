@@ -428,10 +428,10 @@ public class ShowshopOffice extends LazyCatAct {
                     showOrderConfirm();
                 } else {
                     /*判断是否为发送订单了*/
-                    if(tv.getText().toString().trim().indexOf("仓库发货") != -1){
-                        Toast.makeText(getApplicationContext(),"您已成功发货,暂不支持补单哦!",Toast.LENGTH_LONG).show();
-                    }
-                    else{
+                    if (tv.getText().toString().trim().indexOf("仓库发货") != -1) {
+                        Toast.makeText(getApplicationContext(), "您已成功发货,暂不支持补单哦!", Toast
+                                .LENGTH_LONG).show();
+                    } else {
                         Toast.makeText(getApplicationContext(), "您没有登录,请你登录后发送订货单", Toast
                                 .LENGTH_SHORT).show();
                     }
@@ -461,8 +461,8 @@ public class ShowshopOffice extends LazyCatAct {
                 .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_TOKEN)
         );/*存入密码*/
         xmlInstance.overDom();
-        Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GETUSER_VALUES, new
-                ProgramInterface() {
+        Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GETUSER_VALUES,
+                new ProgramInterface() {
             @Override
             public void onSucess(String data, int code, final WaitDialog.RefreshDialog
                     _refreshDialog) {
@@ -1123,6 +1123,16 @@ public class ShowshopOffice extends LazyCatAct {
         /*商品的标题 需要定格  不能以平台的标题随时变动*/
         xmlInstance.setXmlTree(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_TITLE, shopvalues
                 .getTitle());
+        /*设置下单时候的VIP状态*/
+        if (IsVip) {
+            xmlInstance.setXmlTree(LocalAction.ACTION_SENDORDER_SYSTEM.ACTION_ORDER_INVIPSTATUS,
+                    LocalValues.VALUES_USERCENTER.IS_VIP);
+        } else {
+            xmlInstance.setXmlTree(LocalAction.ACTION_SENDORDER_SYSTEM.ACTION_ORDER_INVIPSTATUS,
+                    LocalValues.VALUES_USERCENTER.IS_NOT_VIP);
+        }
+        xmlInstance.setXmlTree(LocalAction.ACTION_SENDORDER_SYSTEM.ACTION_ORDER_DISTANCE, "13");
+
         xmlInstance.overDom();
         Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_SAVEUSERODER, new
                 ProgramInterface() {
