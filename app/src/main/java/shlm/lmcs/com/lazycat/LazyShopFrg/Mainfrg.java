@@ -115,6 +115,8 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
     private ImageView secondNavCimg;/*第二个导航中的第三个子导航的图片*/
     private ImageView secondNavDimg;/*第四个导航中的第四个子导航的图片*/
     private ImageView threeNavAimg;/*第三排的第一个竖向图片*/
+    private ImageView threeNavBimg;/*第三排的第二个竖向的图片*/
+    private ImageView threeNavCimg;/*第三排的第四个竖向的图片*/
     private ImageView _RefreshheadImg;/*滑动的控件的图片的控件*/
     private String ProgramVersion;/*应用程序版本号*/
     private String ProgramNewSize;/*更新的文件的大小*/
@@ -224,6 +226,10 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         CenterHeadpageImg = item.findViewById(R.id.fragment_main_CenterHeadimg);
         /*第三排的第一个竖向的图片*/
         threeNavAimg = item.findViewById(R.id.fragment_main_threeNavAimg);
+        /*第三排的第二个竖向的图片*/
+        threeNavBimg = item.findViewById(R.id.fragment_main_threeNavBimg);
+        /*第三排的第三个竖向的图片*/
+        threeNavCimg = item.findViewById(R.id.fragment_main_threeNavCimg);
         /*判断是否有定位权限 没有定位权限就去申请定位权限*/
         onStartMain();
         return item;
@@ -1169,6 +1175,169 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                                     Log.e(MSG, "ThreeNavPageInstance为空");
                                 }
                             }
+                            /*获取竖向的大标题的文字信息*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance
+                                    .XML_TAG_THREE_NAVA_BIGTITLE)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavAbigTitle(pullParser.nextText()
+                                            .trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+                            /*获取竖向的大标题的文字颜色*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance
+                                    .XML_TAG_THREE_NAVA_BIGTITLE_COLOR)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavAbigTitlecolor(pullParser.nextText
+                                            ().trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+                            /*获取竖向的小标题的文字标题*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance
+                                    .XML_TAG_THREE_NAVA_SMALLTITLE)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavASmalltitle(pullParser.nextText()
+                                            .trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+                            /*设置竖向小标题的颜色*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance
+                                    .XML_TAG_THREE_NAVA_SMALLTITLE_COLOR)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavASmalltitleColor(pullParser.nextText
+                                            ().trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+
+                            /**
+                             * 设置第二个竖向的参数
+                             */
+                            /*获取竖向的第一个图片地址*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance.XML_TAG_THREE_NAVB_IMG)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavBimg(pullParser.nextText().trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+                            /*获取竖向的点击事件的跳转URL*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance.XML_TAG_THREE_NAVB_URL)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavBurl(pullParser.nextText().trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+                            /*获取竖向的大标题的文字信息*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance
+                                    .XML_TAG_THREE_NAVB_BIGTITLE)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavBbigTitle(pullParser.nextText()
+                                            .trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+                            /*获取竖向的大标题的文字颜色*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance
+                                    .XML_TAG_THREE_NAVB_BIGTITLE_COLOR)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavBbigTitlecolor(pullParser.nextText
+                                            ().trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+                            /*获取竖向的小标题的文字标题*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance
+                                    .XML_TAG_THREE_NAVB_SMALLTITLE)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavBSmalltitle(pullParser.nextText()
+                                            .trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+                            /*设置竖向小标题的颜色*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance
+                                    .XML_TAG_THREE_NAVB_SMALLTITLE_COLOR)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavBSmalltitleColor(pullParser.nextText
+                                            ().trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+
+
+                            /**
+                             * 设置第三个竖向的参数
+                             */
+
+                            /*获取竖向的第一个图片地址*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance.XML_TAG_THREE_NAVC_IMG)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavCimg(pullParser.nextText().trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+                            /*获取竖向的点击事件的跳转URL*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance.XML_TAG_THREE_NAVC_URL)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavCurl(pullParser.nextText().trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+                            /*获取竖向的大标题的文字信息*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance
+                                    .XML_TAG_THREE_NAVC_BIGTITLE)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavCbigTitle(pullParser.nextText()
+                                            .trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+                            /*获取竖向的大标题的文字颜色*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance
+                                    .XML_TAG_THREE_NAVC_BIGTITLE_COLOR)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavCbigTitlecolor(pullParser.nextText
+                                            ().trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+                            /*获取竖向的小标题的文字标题*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance
+                                    .XML_TAG_THREE_NAVC_SMALLTITLE)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavCSmalltitle(pullParser.nextText()
+                                            .trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+                            /*设置竖向小标题的颜色*/
+                            if (tag.equals(LocalPage.ThreeNavPageInstance
+                                    .XML_TAG_THREE_NAVC_SMALLTITLE_COLOR)) {
+                                if (threeNavPageInstance != null) {
+                                    threeNavPageInstance.setNavCSmalltitleColor(pullParser.nextText
+                                            ().trim());
+                                } else {
+                                    Log.e(MSG, "ThreeNavPageInstance为空");
+                                }
+                            }
+
 
                         } catch (Exception e) {
                             Log.e(MSG, "解析首页整理的XML数据中出错:" + e.getMessage());
@@ -1283,7 +1452,8 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         TextUnt.with(item, R.id.fragment_main_fourSmalltitle).setText(fourSmalltitle)
                 .setTextColor(fourSmalltitleColor);
         /*加载顶部的第一个Big_headimg*/
-        Glide.with(getContext()).load(bigheadImg.getShowImg()).into(bigHead_img);
+        Glide.with(getContext()).load(bigheadImg.getShowImg()).diskCacheStrategy
+                (DiskCacheStrategy.NONE).skipMemoryCache(false).into(bigHead_img);
 
         /**
          * 整理第二个图片导航
@@ -1310,9 +1480,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         Glide.with(getContext()).load(bigCenterHeadpageInstance.getHeadimg().trim())
                 .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
                 (CenterHeadpageImg);
-        /*加载第三个导航的第一个竖向的图片*/
-        Glide.with(getContext()).load(threeNavPageInstance.getNavAimg()).skipMemoryCache(false)
-                .diskCacheStrategy(DiskCacheStrategy.NONE).into(threeNavAimg);
+
         /*第一个图片的标题*/
         TextView secondNavAtitle = item.findViewById(R.id.fragment_main_secondSmallNavAtitle);
         TextUnt.with(secondNavAtitle).setText(secondSmallNavAPage.getSecondSmallAtitle())
@@ -1345,6 +1513,37 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         TextView secondNavDcontext = item.findViewById(R.id.fragment_main_secondSmallNavDcontext);
         TextUnt.with(secondNavDcontext).setText(secondSmallNavAPage.getSecondSmallDcontext().trim
                 ()).setTextColor(secondSmallNavAPage.getSecondSmallDcontextColor().trim());
+
+
+        /**
+         * 整理第三个NAV的导航内容和图片
+         */
+
+        /*整理大标题和小标题*/
+        Log.i(MSG,"第一个控件图片地址：" + threeNavPageInstance.getNavAimg());
+        TextUnt.with(item, R.id.fragment_main_threeABigtitle).setText(threeNavPageInstance
+                .getNavAbigTitle()).setTextColor(threeNavPageInstance.getNavAbigTitlecolor().trim());
+        TextUnt.with(item, R.id.fragment_main_threeASmalltitle).setText(threeNavPageInstance
+                .getNavASmalltitle()).setTextColor(threeNavPageInstance.getNavASmalltitleColor().trim());
+        TextUnt.with(item, R.id.fragment_main_threeBBigtitle).setText(threeNavPageInstance
+                .getNavBbigTitle()).setTextColor(threeNavPageInstance.getNavBbigTitlecolor().trim());
+        TextUnt.with(item, R.id.fragment_main_threeBSmalltitle).setText(threeNavPageInstance
+                .getNavBSmalltitle()).setTextColor(threeNavPageInstance.getNavBSmalltitleColor().trim());
+        TextUnt.with(item, R.id.fragment_main_threeCBigtitle).setText(threeNavPageInstance
+                .getNavCbigTitle()).setTextColor(threeNavPageInstance.getNavCbigTitlecolor().trim());
+        TextUnt.with(item, R.id.fragment_main_threeCSmalltitle).setText(threeNavPageInstance
+                .getNavCSmalltitle()).setTextColor(threeNavPageInstance.getNavCSmalltitleColor().trim());
+
+        /*加载第三个导航的第一个竖向的图片*/
+        Glide.with(getContext()).load(threeNavPageInstance.getNavAimg()).skipMemoryCache(false)
+                .diskCacheStrategy(DiskCacheStrategy.NONE).into(threeNavAimg);
+        /*加载第三个导航的第二个竖向图片*/
+        Glide.with(getContext()).load(threeNavPageInstance.getNavBimg()).skipMemoryCache(false)
+                .diskCacheStrategy(DiskCacheStrategy.NONE).into(threeNavBimg);
+        /*加载第三个导航的第二个竖向图片*/
+        Glide.with(getContext()).load(threeNavPageInstance.getNavCimg()).skipMemoryCache(false)
+                .diskCacheStrategy(DiskCacheStrategy.NONE).into(threeNavCimg);
+
 
     }
 
