@@ -34,7 +34,9 @@ import java.util.TimerTask;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.LazyCatFragment;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WEB_VALUES_ACT;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.RelativeLayoutUnt;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.ToOpenWindowtools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.XmlTagValuesFactory;
@@ -1209,8 +1211,8 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                             if (tag.equals(LocalPage.ThreeNavPageInstance
                                     .XML_TAG_THREE_NAVA_SMALLTITLE_COLOR)) {
                                 if (threeNavPageInstance != null) {
-                                    threeNavPageInstance.setNavASmalltitleColor(pullParser.nextText
-                                            ().trim());
+                                    threeNavPageInstance.setNavASmalltitleColor(pullParser
+                                            .nextText().trim());
                                 } else {
                                     Log.e(MSG, "ThreeNavPageInstance为空");
                                 }
@@ -1269,8 +1271,8 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                             if (tag.equals(LocalPage.ThreeNavPageInstance
                                     .XML_TAG_THREE_NAVB_SMALLTITLE_COLOR)) {
                                 if (threeNavPageInstance != null) {
-                                    threeNavPageInstance.setNavBSmalltitleColor(pullParser.nextText
-                                            ().trim());
+                                    threeNavPageInstance.setNavBSmalltitleColor(pullParser
+                                            .nextText().trim());
                                 } else {
                                     Log.e(MSG, "ThreeNavPageInstance为空");
                                 }
@@ -1331,8 +1333,8 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                             if (tag.equals(LocalPage.ThreeNavPageInstance
                                     .XML_TAG_THREE_NAVC_SMALLTITLE_COLOR)) {
                                 if (threeNavPageInstance != null) {
-                                    threeNavPageInstance.setNavCSmalltitleColor(pullParser.nextText
-                                            ().trim());
+                                    threeNavPageInstance.setNavCSmalltitleColor(pullParser
+                                            .nextText().trim());
                                 } else {
                                     Log.e(MSG, "ThreeNavPageInstance为空");
                                 }
@@ -1462,8 +1464,8 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallAimgUrl().trim())
                 .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
                 (secondNavAimg);
-        /*设置图片的点击跳转地址*/
-        secondNavAimg.setTag(secondSmallNavAPage.getSecondSmallAClickUrl());
+
+
         /*加载横向的第二个图片*/
         Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallBimgUrl().trim())
                 .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
@@ -1520,19 +1522,97 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
          */
 
         /*整理大标题和小标题*/
-        Log.i(MSG,"第一个控件图片地址：" + threeNavPageInstance.getNavAimg());
+        Log.i(MSG, "第一个控件图片地址：" + threeNavPageInstance.getNavAimg());
         TextUnt.with(item, R.id.fragment_main_threeABigtitle).setText(threeNavPageInstance
-                .getNavAbigTitle()).setTextColor(threeNavPageInstance.getNavAbigTitlecolor().trim());
+                .getNavAbigTitle()).setTextColor(threeNavPageInstance.getNavAbigTitlecolor().trim
+                ());
         TextUnt.with(item, R.id.fragment_main_threeASmalltitle).setText(threeNavPageInstance
-                .getNavASmalltitle()).setTextColor(threeNavPageInstance.getNavASmalltitleColor().trim());
+                .getNavASmalltitle()).setTextColor(threeNavPageInstance.getNavASmalltitleColor()
+                .trim());
         TextUnt.with(item, R.id.fragment_main_threeBBigtitle).setText(threeNavPageInstance
-                .getNavBbigTitle()).setTextColor(threeNavPageInstance.getNavBbigTitlecolor().trim());
+                .getNavBbigTitle()).setTextColor(threeNavPageInstance.getNavBbigTitlecolor().trim
+                ());
         TextUnt.with(item, R.id.fragment_main_threeBSmalltitle).setText(threeNavPageInstance
-                .getNavBSmalltitle()).setTextColor(threeNavPageInstance.getNavBSmalltitleColor().trim());
+                .getNavBSmalltitle()).setTextColor(threeNavPageInstance.getNavBSmalltitleColor()
+                .trim());
         TextUnt.with(item, R.id.fragment_main_threeCBigtitle).setText(threeNavPageInstance
-                .getNavCbigTitle()).setTextColor(threeNavPageInstance.getNavCbigTitlecolor().trim());
+                .getNavCbigTitle()).setTextColor(threeNavPageInstance.getNavCbigTitlecolor().trim
+                ());
         TextUnt.with(item, R.id.fragment_main_threeCSmalltitle).setText(threeNavPageInstance
-                .getNavCSmalltitle()).setTextColor(threeNavPageInstance.getNavCSmalltitleColor().trim());
+                .getNavCSmalltitle()).setTextColor(threeNavPageInstance.getNavCSmalltitleColor()
+                .trim());
+
+
+        /**
+         * 为所有的ITEM的图片设置监听事件
+         */
+        /*设置第二行第二个图片的点击跳转地址*/
+        RelativeLayoutUnt.with(item, R.id.fragment_main_secondSmallNavBBody).setOnclick(new View
+                .OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                String _url = (String) v.getTag();
+                ToOpenWindowtools toOpenWindowtools = new ToOpenWindowtools(getContext(), _url);
+                toOpenWindowtools.toStart();
+            }
+        }).setTag(secondSmallNavAPage.getSecondSmallBClickUrl().trim());
+        /*设置第二行第3处竖向的图片的点击跳转事件*/
+        RelativeLayoutUnt.with(item, R.id.fragment_main_secondSmallNavCBody).setOnclick(new View
+                .OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                String _url = (String) v.getTag();
+                ToOpenWindowtools toOpenWindowtools = new ToOpenWindowtools(getContext(), _url);
+                toOpenWindowtools.toStart();
+            }
+        }).setTag(secondSmallNavAPage.getSecondSmallCClickUrl().trim());
+        /*设置第二行4处的竖向图片的点击事件*/
+        RelativeLayoutUnt.with(item, R.id.fragment_main_secondSmallNavDBody).setOnclick(new View
+                .OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String _url = (String) v.getTag();
+                ToOpenWindowtools toOpenWindowtools = new ToOpenWindowtools(getContext(), _url);
+                toOpenWindowtools.toStart();
+            }
+        }).setTag(secondSmallNavAPage.getSecondSmallDClickUrl().trim());
+
+        /*第三行第一个BODY设置点击事件*/
+        RelativeLayoutUnt.with(item, R.id.fragment_main_threeAbody).setOnclick(new View
+                .OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String _url = v.getTag().toString().trim();
+                ToOpenWindowtools toOpenWindowtools = new ToOpenWindowtools(getContext(), _url);
+                toOpenWindowtools.toStart();
+
+            }
+        }).setTag(threeNavPageInstance.getNavAurl().trim());
+        /*第三行第二个BODY设置点击事件*/
+        RelativeLayoutUnt.with(item, R.id.fragment_main_threeBbody).setOnclick(new View
+                .OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String _url = v.getTag().toString().trim();
+                ToOpenWindowtools toOpenWindowtools = new ToOpenWindowtools(getContext(), _url);
+                toOpenWindowtools.toStart();
+
+            }
+        }).setTag(threeNavPageInstance.getNavBurl().trim());
+        /*第三行的第三个BODY设置点击事件*/
+        RelativeLayoutUnt.with(item, R.id.fragment_main_threeCbody).setOnclick(new View
+                .OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String _url = v.getTag().toString().trim();
+                ToOpenWindowtools toOpenWindowtools = new ToOpenWindowtools(getContext(), _url);
+                toOpenWindowtools.toStart();
+            }
+        }).setTag(threeNavPageInstance.getNavCurl().trim());
 
         /*加载第三个导航的第一个竖向的图片*/
         Glide.with(getContext()).load(threeNavPageInstance.getNavAimg()).skipMemoryCache(false)

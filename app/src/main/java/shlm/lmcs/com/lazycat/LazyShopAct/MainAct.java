@@ -15,14 +15,12 @@ import android.widget.TextView;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.FragmentLR;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Classifyfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Mainfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Messagefrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.UserCenterfrg;
-import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
 
 public class MainAct extends LazyCatAct {
@@ -116,10 +114,12 @@ public class MainAct extends LazyCatAct {
                 user_title.setTextColor(Color.parseColor("#a9a9a9"));
                 user.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable
                         .btn_user, "#a9a9a9"));
+/*
                 LazyCatStartActivityWithBundler(ShowshopOffice.class, false, Config.Windows
                         .GET_WINDOW_VALUE_SHOP_MESSAGE, "红牛维他命饮料250毫升搭赠装", Config.Windows
                         .GET_WINDOW_VALUE_SHOP_ACTION, LocalValues.VALUES_SEARCH
                         .VALUES_TO_SEARCH_SHOPKEYWORD);
+*/
                 TextView classify_title = (TextView) btn_classify.getChildAt(1);
                 TextUnt.with(classify_title).setTextColor("#a9a9a9");
                 ImageView classify_img = (ImageView) btn_classify.getChildAt(0);
