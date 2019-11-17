@@ -260,7 +260,8 @@ public class LocalProgramTools {
                     String tagName = parser.getName();/*获取当前节点的名称*/
                     switch (eventType) {
                         case XmlPullParser.START_TAG:
-                            if (tagName.equals(ActionTag)) {
+                            Log.i(MSG,"tagName:" + tagName);
+                            if (tagName.equals(ActionTag.trim())) {
                                 _Values = parser.nextText().trim();
                             }
                             break;

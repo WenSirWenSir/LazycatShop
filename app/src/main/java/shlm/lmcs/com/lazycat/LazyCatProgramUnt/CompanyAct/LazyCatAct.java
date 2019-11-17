@@ -64,6 +64,11 @@ public class LazyCatAct extends Activity {
         }
         intent.setClass(this, Bclass);
         this.startActivity(intent);
+        if (ColoseF) {
+            this.finish();
+        } else {
+
+        }
     }
 
     /**
@@ -93,7 +98,7 @@ public class LazyCatAct extends Activity {
                 Log.e(MSG, "界面传值的Intent为空");
                 return "";
             } else {
-                Log.i(MSG,"要获取的KEY为:" + key);
+                Log.i(MSG, "要获取的KEY为:" + key);
                 if (intent.getStringExtra(key.trim()) != null) {
                     return intent.getStringExtra(key);
                 } else {
