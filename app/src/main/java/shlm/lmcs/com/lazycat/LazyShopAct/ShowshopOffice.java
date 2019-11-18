@@ -638,8 +638,9 @@ public class ShowshopOffice extends LazyCatAct {
                 * Float.valueOf(shopvalues.getTp().trim()) * 100) / 100;
 
         /*设置总和*/
-        TextUnt.with(confirmdeliverItem, R.id.assembly_confirmedliverTotal).setText(Float
-                .toString(deliverTotal)).setTextColor(getResources().getString(R.color.colorPrice));
+        TextUnt.with(confirmdeliverItem, R.id.assembly_confirmedliverTotal).setText(Tools
+                .calcToRide(select_number.getText().toString().trim(), shopvalues.getTp().trim())
+        ).setTextColor(getResources().getString(R.color.colorPrice));
 
         /**
          * 判断用户是否为VIP
