@@ -1018,9 +1018,11 @@ public class Tools {
      * @return
      */
     public static String calcToRide(String a, String b) {
-        float _a = Float.parseFloat(a);
-        float _b = Float.parseFloat(b);
-        return String.valueOf((_a * _b));
+        try {
+            return String.format("%.2f", Float.parseFloat(a) * Float.parseFloat(b));
+        } catch (Exception e) {
+            return "";
+        }
     }
 
 
@@ -1034,5 +1036,27 @@ public class Tools {
         return String.valueOf(date.getTime() / 1000);
     }
 
+
+    /**
+     * 计算两数字相加
+     *
+     * @return
+     */
+    public static String calcToAdd(String a, String b) {
+        try {
+            return String.format("%.2f", Float.parseFloat(a) + Float.parseFloat(b));
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public static String calcTodel(String a, String b) {
+        try {
+            return String.format("%.2f", Float.parseFloat(a) - Float.parseFloat(b));
+        } catch (Exception e) {
+            return "";
+        }
+
+    }
 
 }
