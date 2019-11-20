@@ -838,7 +838,7 @@ public class ShowshopOffice extends LazyCatAct {
         otherMessage.addView(tp);
 
         /*界面初始化*/
-        TextUnt.with(SHOP_BUSINESS).setText(shopvalues.getBusiness());
+        TextUnt.with(SHOP_BUSINESS).setText("云仓库专送");
         TextUnt.with(SHOP_TITLE).setText(shopvalues.getTitle());
         /*判断商品的状态*/
         switch (shopvalues.get_static()) {

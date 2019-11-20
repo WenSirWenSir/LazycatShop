@@ -170,6 +170,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
     private String fourBigtitleColor;
     private String fourSmalltitle;
     private String fourSmalltitleColor;
+    private String marquee_forever;/*跑马灯的数字*/
     /**
      * 模块数据存储
      */
@@ -574,7 +575,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                     });
                     //shopItem.setTag(showList.get(Position));
                     //*进行Item处理监听*//*
-                    ImageView btnLike = shopItem.findViewById(R.id.item_mainshoplist_btnLike);
                     //*是否喜欢*//*
 /*
                                 TextView Itemtitle = shopItem.findViewById(R.id
@@ -590,8 +590,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                     ImageView ItemShopimg = shopItem.findViewById(R.id.item_mainshoplist_Shopimg);
                     //*图片地址*//*
 
-                    //*商户名称*//*
-                    TextView ItemBusiness = shopItem.findViewById(R.id.item_mainshoplist_business);
                     //*设置生产日期和保质期*//*
                     //*设置单位*//*
                     TextUnt.with(ItemCompany).setText("/" + showList.get(Position).get_company());
@@ -601,8 +599,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                     } else {
                         TextUnt.with(ItemTp).setText("*.*");
                     }
-                    //*设置供货商*//*
-                    TextUnt.with(ItemBusiness).setText(showList.get(Position).get_business());
                     //*设置生产日期和保质期*//*
                     TextUnt.with(ItemExpAndPd).setText(showList.get(Position).get_exp() + "生产·" +
                             showList.get(Position).get_pd() + "天保质");
@@ -612,39 +608,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                             showList.get(Position).get_img().trim()).skipMemoryCache(false)
                             .diskCacheStrategy(DiskCacheStrategy.NONE).into(ItemShopimg);
                     //*进行数据判断 用户是否收藏过该商品 如果没有就设置为灰色*//*
-                    btnLike.setImageResource(R.drawable.ico_nolike);
-                    btnLike.setTag(LocalValues.VALUES_SHOPLIKES.SHOP_NO_LIKE);
-                    btnLike.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (userToolsInstance != null) {
-                                if (userToolsInstance.isLogin()) {
-                                    try {
-                                        Toast.makeText(getContext(), getResources().getString(R
-                                                .string.noLoginuseLike), Toast.LENGTH_SHORT).show();
-                                        if (showList.get(Position).get_like() == LocalValues
-                                                .VALUES_SHOPLIKES.SHOP_NO_LIKE) {
-                                            //*设置为喜欢的图标 并且发送服务器*//*
-                                            ImageView img = (ImageView) v;
-                                            img.setImageResource(R.drawable.ico_like);
-                                        } else {
-                                            //*设置为不喜欢的图标 并且发送服务器*//*
-                                            ImageView img = (ImageView) v;
-                                            img.setImageResource(R.drawable.ico_nolike);
-                                        }
-                                    } catch (Exception e) {
-                                        Log.e(MSG, "整理用户是否收藏该商品错误:" + e.getMessage());
-                                    }
-
-                                } else {
-
-                                }
-                            } else {
-
-                            }
-
-                        }
-                    });
                     refreshBody.addView(shopItem);
                 } else {
 
@@ -780,6 +743,11 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                              */
                             if (tag.equals("ProgramVersionText")) {
                                 ProgramVersionText = pullParser.nextText().trim();
+                            }
+
+                            /*跑马灯的内容*/
+                            if (tag.equals(LocalAction.ACTION_MAINPAGE.ACTION_MARQUEE_FOREVER)) {
+                                marquee_forever = pullParser.nextText().trim();
                             }
                             /*设置下拉的图片*/
                             if (tag.equals(LocalAction.ACTION_MAINPAGE
@@ -1389,6 +1357,14 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                                         .item_uploadappNewversion);
                                 TextUnt.with(upadVersion).setText("最新版本号:" + ProgramVersion.trim());
                                 builder.setCancelable(false);//不能返回
+                                TextUnt.with(item, R.id.uploadapp_btnupload).setOnClick(new View
+                                        .OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Net.doDownloadApk(LocalValues.HTTP_ADDRS
+                                                .HTTP_ADDR_UPDATE_APK, getContext());
+                                    }
+                                });
                                 UpdateDialog = builder.show();
                                 UpdateDialog.getWindow().setBackgroundDrawableResource(android.R
                                         .color.transparent);
@@ -1428,13 +1404,15 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         _RefreshScrollView.SetHeadView(LoadingImgurl, LoadingOnclick, headView, 100, R.id
                 .fragment_main_Headprogressbar, R.id.fragment_main_refreshHeadImg);
         userToolsInstance = LocalProgramTools.getUserToolsInstance();
+        /*设置跑马灯的文字*/
+        /*marquee_forever*/
+        TextUnt.with(item,R.id.fragment_main_marqueeTitle).setText(marquee_forever);
         /*设置第一个大标题*/
         TextUnt.with(item, R.id.fragment_main_oneBigtitle).setText(oneBigtitle).setTextColor
                 (oneBigtitleColor);
         /*设置第一个小标题*/
         TextUnt.with(item, R.id.fragment_main_oneSmalltitle).setText(oneSmalltitle).setTextColor
                 (oneSmalltitleColor);
-
         /*设置第二个大标题*/
         TextUnt.with(item, R.id.fragment_main_twoBigtitle).setText(twoBigtitle).setTextColor
                 (twoBigtitleColor);

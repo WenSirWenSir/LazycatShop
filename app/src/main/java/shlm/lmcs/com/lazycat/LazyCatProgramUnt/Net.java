@@ -3,13 +3,21 @@ package shlm.lmcs.com.lazycat.LazyCatProgramUnt;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -31,6 +39,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
  */
 @SuppressLint("LongLogTag")
 public class Net {
+
     private String MSG = "Net.java[+]";
     private String tUrl = "";
     private StringBuffer mKvsBuffer = new StringBuffer();
@@ -247,11 +256,11 @@ public class Net {
         new AsyncTask<String, Void, String>() {
             @Override
             protected String doInBackground(String... _url) {
-                if(_refreshDialog != null){
+                if (_refreshDialog != null) {
                     _refreshDialog.show();
                 }
                 String _data = null;
-                Log.i("Net.java[doPost]","要提交的XML信息为：" + xmldata);
+                Log.i("Net.java[doPost]", "要提交的XML信息为：" + xmldata);
                 //构建xml数据信息
                 /*StringBuilder xml = new StringBuilder();
                 xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
@@ -372,6 +381,72 @@ public class Net {
         Bitmap bitmap = null;
 
         return bitmap;
+    }
+
+
+    /**
+     * 下载更新文件
+     */
+    @SuppressLint("StaticFieldLeak")
+    public static void doDownloadApk(final String apk_url, final Context _context) {
+        Log.i("Net.java[+]", "开始更新文件");
+        new AsyncTask<String, Void, Boolean>() {
+
+            @Override
+            protected Boolean doInBackground(String... strings) {
+                URL http_url;
+                FileOutputStream fos = null;
+                InputStream is = null;
+                BufferedInputStream bis = null;
+                try {
+                    http_url = new URL(apk_url);
+                    HttpURLConnection conn = (HttpURLConnection) http_url.openConnection();
+                    conn.setConnectTimeout(10000);
+                    //获取文件大小
+                    int size = conn.getContentLength();
+                    is = conn.getInputStream();
+                    fos = new FileOutputStream(new File(Environment.getExternalStorageDirectory()
+                            + "/yunCanku.apk"));
+                    Log.i("Net.java[+]", "下载的APK文件路径:" + new File(Environment
+                            .getExternalStorageDirectory() + "/yunCanku.apk"));
+                    bis = new BufferedInputStream(is);
+                    byte[] buffer = new byte[1024];
+                    int len;
+                    int total = 0;
+                    while ((len = bis.read(buffer)) != -1) {
+                        fos.write(buffer, 0, len);
+                        total += len;
+                    }
+                    fos.close();
+                    bis.close();
+                    is.close();
+                    return true;
+                } catch (Exception e) {
+                    Log.e("Net.java[+]", "下载APK出错:" + e.getMessage());
+                    return false;
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                if (aBoolean) {
+                    /*开始要求用户安装新的程序*/
+                    Log.i("Net.java[+]", "下载APK成功");
+                    Intent i = new Intent();
+                    Uri contentUr = FileProvider.getUriForFile(_context, "shlm.lmcs.com.lazycat" +
+                            ".fileprovider", new File(Environment.getExternalStorageDirectory() +
+                            "/yunCanku.apk"));
+                    Log.i("Net.java[+]", contentUr.toString());
+                    i.setDataAndType(contentUr, "application/vnd.android.package-archive");
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION|Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    _context.startActivity(i);
+                } else {
+                    Toast.makeText(_context, "无法下载更新文件", Toast.LENGTH_SHORT).show();
+                }
+                super.onPostExecute(aBoolean);
+            }
+        }.execute();
     }
 
 
