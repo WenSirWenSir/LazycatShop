@@ -45,8 +45,8 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.RefreshScrollView;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.WxPay.WxpayinitInstance;
 import shlm.lmcs.com.lazycat.LazyShopAct.ScanQRCodeAct;
-import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.ShowshopOffice;
 import shlm.lmcs.com.lazycat.LazyShopPage.LocalPage;
 import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
@@ -130,6 +130,8 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
     private Boolean isLoadShopdone = false;/*判断是否加载过首页推荐的商品了*/
     private int Position = 0;/*设置position用来底部加载*/
     private AlertDialog alertDialog = null;
+
+    private String prepay_id;
 
 
     /**
@@ -308,7 +310,71 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                 .OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                final WxpayinitInstance wxpayinitInstance = new WxpayinitInstance(getContext(),
+                "支付测试",
+                        "APP支付测试", "678456324356789", "898989898002", "1", "APP");
+                Log.i(MSG,"XML数据信息:" +wxpayinitInstance.getXmldata());
+                Net.doPostXml(getContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_WXPAY_UNIFIEDORDER,
+                        new ProgramInterface() {
+                    @Override
+                    public void onSucess(String data, int code, WaitDialog.RefreshDialog
+                            _refreshDialog) {
+                        Log.i(MSG, "微信支付调用统一订单号数据回传:" + data.trim());
+                        XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(data.trim());
+                        xmlanalysisFactory.Startanalysis(new XmlanalysisFactory
+                        .XmlanalysisInterface() {
+
+
+
+                            @Override
+                            public void onFaile() {
+
+                            }
+
+                            @Override
+                            public void onStartDocument(String tag) {
+
+                            }
+
+                            @Override
+                            public void onStartTag(String tag, XmlPullParser pullParser, Integer
+                                    id) {
+                                try {
+                                        if(tag.equals("prepay_id")){
+                                            prepay_id = pullParser.nextText().trim();
+                                        }
+                                }catch (Exception e){
+
+                                }
+                            }
+
+                            @Override
+                            public void onEndTag(String tag, XmlPullParser pullParser, Integer id) {
+
+                            }
+
+                            @Override
+                            public void onEndDocument() {
+                                wxpayinitInstance.startWxPay(prepay_id);
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public WaitDialog.RefreshDialog onStartLoad() {
+                        return null;
+                    }
+
+                    @Override
+                    public void onFaile(String data, int code) {
+
+                    }
+                }, wxpayinitInstance.getXmldata());
+/*
                 LazyCatFragmetStartAct(SearchAct.class);
+*/
             }
         });
 
@@ -1406,7 +1472,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         userToolsInstance = LocalProgramTools.getUserToolsInstance();
         /*设置跑马灯的文字*/
         /*marquee_forever*/
-        TextUnt.with(item,R.id.fragment_main_marqueeTitle).setText(marquee_forever);
+        TextUnt.with(item, R.id.fragment_main_marqueeTitle).setText(marquee_forever);
         /*设置第一个大标题*/
         TextUnt.with(item, R.id.fragment_main_oneBigtitle).setText(oneBigtitle).setTextColor
                 (oneBigtitleColor);

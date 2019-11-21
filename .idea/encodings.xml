@@ -37,12 +37,11 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchAct.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/ShowshopOffice.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopMonitor/BrandSingMonitor.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopMonitor/Monitor.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopMonitor/NewShopinMonitor.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopPage/LocalShopPage.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopPage/LocalShoppage.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopTools/LocalProgramTools.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/lazyCatLogAct.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/wxTools.java" charset="UTF-8" />
     <file url="file://$USER_HOME$/Downloads/zzbj-5/zzbj/src/com/com/zzbj/MainActivity.java" charset="GB2312" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
