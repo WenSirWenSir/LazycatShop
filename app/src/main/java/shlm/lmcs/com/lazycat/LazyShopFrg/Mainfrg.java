@@ -45,6 +45,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.RefreshScrollView;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.WxPay.Utils;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.WxPay.WxpayinitInstance;
 import shlm.lmcs.com.lazycat.LazyShopAct.ScanQRCodeAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.ShowshopOffice;
@@ -310,10 +311,10 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                 .OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                    String nonce_str = Utils.getOutTradNo();
                 final WxpayinitInstance wxpayinitInstance = new WxpayinitInstance(getContext(),
                 "支付测试",
-                        "APP支付测试", "678456324356789", "898989898002", "1", "APP");
+                        "APP支付测试", nonce_str, Utils.getOutTradNo(), "1", "APP");
                 Log.i(MSG,"XML数据信息:" +wxpayinitInstance.getXmldata());
                 Net.doPostXml(getContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_WXPAY_UNIFIEDORDER,
                         new ProgramInterface() {

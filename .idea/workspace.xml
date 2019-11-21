@@ -18,31 +18,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a52fcd4-d8d6-4277-af4b-2d758702a440" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle____local_aars____Users_mac_Desktop_YaZhou_lazyCat_app_libs_libammsdk_jar_unspecified_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jbundle_util_osgi_wrapped_org_jbundle_util_osgi_wrapped_org_apache_http_client_4_1_2_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/libs/libammsdk.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/taskJars.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/taskJars.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/WxpayinitInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/WxpayinitInstance.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalValues.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalValues.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/WXPayEntryActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/WXPayEntryActivity.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -120,26 +105,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Mainfrg.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Mainfrg.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="313" column="71" selection-start-line="313" selection-start-column="71" selection-end-line="313" selection-end-column="71" />
+            <state relative-caret-position="60">
+              <caret line="316" column="53" selection-start-line="316" selection-start-column="53" selection-end-line="316" selection-end-column="53" />
               <folding>
-                <element signature="e#14023#14024#0" expanded="true" />
-                <element signature="e#14126#14127#0" expanded="true" />
-                <element signature="e#14276#14277#0" expanded="true" />
-                <element signature="e#14335#14336#0" expanded="true" />
+                <element signature="e#14143#14144#0" expanded="true" />
+                <element signature="e#14246#14247#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WxpayinitInstance.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="WxpayinitInstance.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/WxpayinitInstance.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="84" column="47" selection-start-line="84" selection-start-column="47" selection-end-line="84" selection-end-column="47" />
+            <state relative-caret-position="383">
+              <caret line="76" selection-start-line="76" selection-end-line="76" />
             </state>
           </provider>
         </entry>
@@ -149,27 +132,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="154">
               <caret line="37" column="35" selection-start-line="37" selection-start-column="35" selection-end-line="37" selection-end-column="35" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3096">
-              <caret line="129" column="17" selection-start-line="129" selection-start-column="17" selection-end-line="129" selection-end-column="17" />
-            </state>
-          </provider>
-          <provider editor-type-id="android-manifest">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Utils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/Utils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -2534,8 +2496,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/Util.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/Constants.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/wxTools.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/WxpayinitInstance.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" />
       </list>
     </option>
   </component>
@@ -2873,11 +2835,10 @@
       <window_info id="Build Variants" order="1" side_tool="true" weight="0.32956383" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="bottom" id="Event Log" order="2" sideWeight="0.50080776" side_tool="true" weight="0.53931034" />
-      <window_info anchor="right" id="Preview" order="2" />
       <window_info anchor="bottom" id="Run" order="8" weight="0.32827586" />
       <window_info anchor="bottom" id="Version Control" order="3" weight="0.32965517" />
       <window_info anchor="bottom" id="Terminal" order="5" weight="0.32965517" />
-      <window_info active="true" anchor="bottom" id="Logcat" order="4" sideWeight="0.49919224" visible="true" weight="0.68413794" />
+      <window_info active="true" anchor="bottom" id="Logcat" order="4" sideWeight="0.49919224" visible="true" weight="0.68551725" />
       <window_info id="Captures" order="7" weight="0.24959612" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="Designer" order="0" />
@@ -2885,13 +2846,14 @@
       <window_info anchor="bottom" id="Build" order="0" weight="0.32689655" />
       <window_info anchor="right" id="Gradle" order="4" weight="0.32956383" />
       <window_info id="Structure" order="5" sideWeight="0.51082253" side_tool="true" weight="0.24959612" />
+      <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
       <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" weight="0.546042" />
       <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" id="Assistant" order="10" weight="0.32956383" />
       <window_info anchor="right" id="StringPreview" order="0" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="6" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Preview" order="2" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="7" weight="0.25" />
@@ -2920,7 +2882,7 @@
       <window_info anchor="bottom" id="Find" order="7" weight="0.32965517" />
       <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" weight="0.546042" />
       <window_info anchor="right" id="Assistant" order="10" weight="0.32956383" />
-      <window_info active="true" anchor="bottom" id="Logcat" order="4" sideWeight="0.49919224" visible="true" weight="0.68413794" />
+      <window_info active="true" anchor="bottom" id="Logcat" order="4" sideWeight="0.49919224" visible="true" weight="0.68551725" />
       <window_info anchor="bottom" id="Version Control" order="3" weight="0.32965517" />
       <window_info anchor="bottom" id="Terminal" order="5" weight="0.32965517" />
       <window_info anchor="right" id="Gradle" order="4" weight="0.32956383" />
@@ -2982,35 +2944,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="45" column="37" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
-          <folding>
-            <element signature="e#2158#3396#0" expanded="true" />
-            <element signature="e#3395#3396#0" expanded="true" />
-            <element signature="e#5910#7172#0" expanded="true" />
-            <element signature="e#6537#6609#0" expanded="true" />
-            <element signature="e#6875#7146#0" expanded="true" />
-            <element signature="e#7145#7146#0" expanded="true" />
-            <element signature="e#7171#7172#0" expanded="true" />
-            <element signature="e#8048#8339#0" expanded="true" />
-            <element signature="e#8338#8339#0" expanded="true" />
-            <element signature="e#8773#8915#0" expanded="true" />
-            <element signature="e#8914#8915#0" expanded="true" />
-            <element signature="e#19103#19175#0" expanded="true" />
-            <element signature="e#19497#19543#0" expanded="true" />
-            <element signature="e#20425#20497#0" expanded="true" />
-            <element signature="e#20819#20865#0" expanded="true" />
-            <element signature="e#21728#21772#0" expanded="true" />
-            <element signature="e#22094#22140#0" expanded="true" />
-            <element signature="e#22976#23021#0" expanded="true" />
-            <element signature="e#23343#23389#0" expanded="true" />
-            <element signature="e#24265#24284#0" expanded="true" />
-            <element signature="e#24606#24652#0" expanded="true" />
-            <element signature="e#26454#26507#0" expanded="true" />
-            <element signature="e#26749#26805#0" expanded="true" />
-            <element signature="e#27027#27520#0" expanded="true" />
-            <element signature="e#27519#27520#0" expanded="true" />
-            <element signature="e#27916#28145#0" expanded="true" />
-            <element signature="e#28144#28145#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3084,40 +3017,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="236">
           <caret line="841" column="57" selection-start-line="841" selection-start-column="57" selection-end-line="841" selection-end-column="57" />
-          <folding>
-            <element signature="e#17100#17259#0" expanded="true" />
-            <element signature="e#17258#17259#0" expanded="true" />
-            <element signature="e#17347#18756#0" expanded="true" />
-            <element signature="e#18354#18640#0" expanded="true" />
-            <element signature="e#18639#18640#0" expanded="true" />
-            <element signature="e#18755#18756#0" expanded="true" />
-            <element signature="e#18842#19584#0" expanded="true" />
-            <element signature="e#19583#19584#0" expanded="true" />
-            <element signature="e#23732#23781#0" expanded="true" />
-            <element signature="e#23964#24401#0" expanded="true" />
-            <element signature="e#24400#24401#0" expanded="true" />
-            <element signature="e#31937#31980#0" expanded="true" />
-            <element signature="e#32896#32939#0" expanded="true" />
-            <element signature="e#33622#35007#0" expanded="true" />
-            <element signature="e#34391#34469#0" expanded="true" />
-            <element signature="e#34601#34921#0" expanded="true" />
-            <element signature="e#34920#34921#0" expanded="true" />
-            <element signature="e#35006#35007#0" expanded="true" />
-            <element signature="e#37284#37328#0" expanded="true" />
-            <element signature="e#37362#37406#0" expanded="true" />
-            <element signature="e#37567#37632#0" expanded="true" />
-            <element signature="e#37646#37690#0" expanded="true" />
-            <element signature="e#43398#45649#0" expanded="true" />
-            <element signature="e#45648#45649#0" expanded="true" />
-            <element signature="e#45711#47375#0" expanded="true" />
-            <element signature="e#47374#47375#0" expanded="true" />
-            <element signature="e#48067#48414#0" expanded="true" />
-            <element signature="e#48413#48414#0" expanded="true" />
-            <element signature="e#53437#53771#0" expanded="true" />
-            <element signature="e#53770#53771#0" expanded="true" />
-            <element signature="e#53945#54030#0" expanded="true" />
-            <element signature="e#54179#54266#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3193,18 +3092,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="92">
           <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;class#ScanQRCodeAct#0" />
-            <element signature="e#2846#2890#0" expanded="true" />
-            <element signature="e#2920#2964#0" expanded="true" />
-            <element signature="e#3108#3152#0" expanded="true" />
-            <element signature="e#3182#3226#0" expanded="true" />
-            <element signature="e#3610#3753#0" expanded="true" />
-            <element signature="e#3752#3753#0" expanded="true" />
-            <element signature="e#3866#4452#0" expanded="true" />
-            <element signature="e#4451#4452#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3253,10 +3140,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="27" column="10" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="10" />
-          <folding>
-            <element signature="e#883#884#0" expanded="true" />
-            <element signature="e#922#923#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3295,41 +3178,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/AppRegister.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/MD5.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="13" column="40" lean-forward="true" selection-start-line="13" selection-start-column="40" selection-end-line="13" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/MD5Util.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-186">
-          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/Util.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="12" column="33" lean-forward="true" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/AppRegister.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/MD5.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/MD5Util.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/Util.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/WXPayEntryActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="424">
           <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/Constants.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/wxTools.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="82" column="25" selection-start-line="82" selection-start-column="25" selection-end-line="82" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -3338,51 +3203,8 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3096">
+        <state relative-caret-position="601">
           <caret line="129" column="17" selection-start-line="129" selection-start-column="17" selection-end-line="129" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/Constants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="5" column="73" selection-start-line="5" selection-start-column="73" selection-end-line="5" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/wxTools.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="101" column="46" lean-forward="true" selection-start-line="101" selection-start-column="46" selection-end-line="101" selection-end-column="46" />
-          <folding>
-            <element signature="e#1127#1943#0" expanded="true" />
-            <element signature="e#1942#1943#0" expanded="true" />
-            <element signature="e#2237#2253#0" expanded="true" />
-            <element signature="e#3203#3204#0" expanded="true" />
-            <element signature="e#3242#3243#0" expanded="true" />
-            <element signature="e#3490#3505#0" expanded="true" />
-            <element signature="e#7547#7562#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="313" column="71" selection-start-line="313" selection-start-column="71" selection-end-line="313" selection-end-column="71" />
-          <folding>
-            <element signature="e#14023#14024#0" expanded="true" />
-            <element signature="e#14126#14127#0" expanded="true" />
-            <element signature="e#14276#14277#0" expanded="true" />
-            <element signature="e#14335#14336#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3395,8 +3217,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/WxpayinitInstance.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="383">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
-          <caret line="84" column="47" selection-start-line="84" selection-start-column="47" selection-end-line="84" selection-end-column="47" />
+          <caret line="316" column="53" selection-start-line="316" selection-start-column="53" selection-end-line="316" selection-end-column="53" />
+          <folding>
+            <element signature="e#14143#14144#0" expanded="true" />
+            <element signature="e#14246#14247#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
