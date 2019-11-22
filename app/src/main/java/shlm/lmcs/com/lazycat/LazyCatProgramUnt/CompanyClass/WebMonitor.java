@@ -11,6 +11,7 @@ import android.widget.Toast;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.ShowshopOffice;
+import shlm.lmcs.com.lazycat.LazyShopAct.SystemAct.SystemAddtoVip;
 
 /**
  * 网页调用的方法
@@ -19,8 +20,8 @@ import shlm.lmcs.com.lazycat.LazyShopAct.ShowshopOffice;
 
 /**
  * PS开辟的方法如果在头部没有定义
- *     @JavascriptInterface
- *     是无法被调用的!!!!
+ *
+ * @JavascriptInterface 是无法被调用的!!!!
  */
 
 public class WebMonitor {
@@ -91,11 +92,12 @@ public class WebMonitor {
     public void GetphoneAddr() {
 
     }
+
     /**
      * 打开搜索界面
      */
     @JavascriptInterface
-    public void openSearchAct(){
+    public void openSearchAct() {
         Intent intent = new Intent();
         intent.setClass(mContext, SearchAct.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -254,6 +256,15 @@ public class WebMonitor {
         intent.setClass(mContext, ShowshopOffice.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);
+    }
+
+
+    @JavascriptInterface
+    public void startWxpay(String payPrice, String attach, String body, String outtradeno) {
+        Intent i = new Intent();
+        i.setClass(mContext,SystemAddtoVip.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(i);
     }
 
 

@@ -313,63 +313,9 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
             public void onClick(View v) {
                 String nonce_str = Utils.getOutTradNo();
                 final WxpayinitInstance wxpayinitInstance = new WxpayinitInstance(getContext(),
-                        "支付测试", "APP支付测试", nonce_str, Utils.getOutTradNo(), "1", "APP");
-                Log.i(MSG, "XML数据信息:" + wxpayinitInstance.getXmldata());
-                Net.doPostXml(getContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_WXPAY_UNIFIEDORDER,
-                        new ProgramInterface() {
-                    @Override
-                    public void onSucess(String data, int code, WaitDialog.RefreshDialog
-                            _refreshDialog) {
-                        Log.i(MSG, "微信支付调用统一订单号数据回传:" + data.trim());
-                        XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(data.trim());
-                        xmlanalysisFactory.Startanalysis(new XmlanalysisFactory
-                                .XmlanalysisInterface() {
-                            @Override
-                            public void onFaile() {
-
-                            }
-
-                            @Override
-                            public void onStartDocument(String tag) {
-
-                            }
-
-                            @Override
-                            public void onStartTag(String tag, XmlPullParser pullParser, Integer
-                                    id) {
-                                try {
-                                    if (tag.equals("prepay_id")) {
-                                        prepay_id = pullParser.nextText().trim();
-                                    }
-                                } catch (Exception e) {
-
-                                }
-                            }
-
-                            @Override
-                            public void onEndTag(String tag, XmlPullParser pullParser, Integer id) {
-
-                            }
-
-                            @Override
-                            public void onEndDocument() {
-                                wxpayinitInstance.startWxPay(prepay_id);
-                            }
-                        });
-
-                    }
-
-                    @Override
-                    public WaitDialog.RefreshDialog onStartLoad() {
-                        return null;
-                    }
-
-                    @Override
-                    public void onFaile(String data, int code) {
-
-                    }
-                }, wxpayinitInstance.getXmldata());
-/*
+                        "支付测试", "APP支付测试", Utils.getOutTradNo(), "1");
+                wxpayinitInstance.startWxPay();
+                /*
                 LazyCatFragmetStartAct(SearchAct.class);
 */
             }

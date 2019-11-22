@@ -676,7 +676,24 @@ public class ShowshopOffice extends LazyCatAct {
                 TextUnt.with(confirmdeliverItem, R.id.assembly_confirmedliverDottedPriceSymbol)
                         .setVisibility(true);
                 break;
+            case LocalValues.VALUES_SHOPPAGE.WHOLEASALE:
+                /*商品拼团*/
+                TextUnt.with(confirmdeliverItem, R.id.assembly_confirmedliverTotal).setTextColor
+                        (getResources().getString(R.color.colorWholeasale));
+                TextUnt.with(confirmdeliverItem, R.id.assembly_confirmdeliver_TotalSymbol)
+                        .setTextColor(getResources().getString(R.color.colorWholeasale));
+                /*设置原始价格为显示*/
+                TextUnt.with(confirmdeliverItem, R.id.assembly_confirmedliverDottedPrice)
+                        .setVisibility(true).setText(shopvalues.getDlp().trim()).setMidcourtLine();
+                TextUnt.with(confirmdeliverItem, R.id.assembly_confirmedliverDottedPriceSymbol)
+                        .setVisibility(true);
+                /*将按钮设置为拼团*/
+                TextUnt.with(confirmdeliverItem, R.id.assembly_confirmdeliver_BtnSendorder)
+                        .setText("确定拼团").setTextColor("#ffffff").setBackColor(getResources()
+                        .getString(R.color.colorWholeasale));
+                break;
         }
+
         if (IsVip) {
             /*VIP提供的服务*/
             TextUnt.with(confirmdeliverItem, R.id.assembly_confirmdeliverShopVipMsg)
@@ -878,6 +895,23 @@ public class ShowshopOffice extends LazyCatAct {
                 /*隐藏加减BTN*/
                 TextUnt.with(btn_select_del).setTag(false);
                 TextUnt.with(btn_select_add).setTag(false);
+                break;
+            case LocalValues.VALUES_SHOPPAGE.WHOLEASALE:
+                TextUnt.with(this, R.id.activity_showshopoffice_static).setVisibility(true)
+                        .setText("商品拼团中").setTextColor("#ffffff").setBackColor(getResources()
+                        .getString(R.color.colorWholeasale));
+                TextUnt.with(SHOP_DLP).setVisibility(true).setText(shopvalues.getDlp())
+                        .setTextColor("#666666").setMidcourtLine();/*设置中划线*/
+                TextUnt.with(SHOP_TP).setTextColor(getResources().getString(R.color
+                        .colorWholeasale));
+                TextUnt.with(this, R.id.activity_showshopoffice_tpSymbol).setTextColor
+                        (getResources().getString(R.color.colorWholeasale));
+                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(true)
+                        .setTextColor("#666666");
+                /*设置按钮为开启拼团*/
+                TextUnt.with(this, R.id.activity_showshopoffice_btnAccount).setBackground(Tools
+                        .CreateDrawable(1, getResources().getString(R.color.colorWholeasale),
+                                getResources().getString(R.color.colorWholeasale), 5));
                 break;
         }
 
