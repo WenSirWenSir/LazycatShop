@@ -1,9 +1,13 @@
 package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XML_PAGE;
+import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
+import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
 
 /**
  * 生成一段XML的生成器
@@ -14,8 +18,33 @@ public class XmlBuilder {
     static XmlInstance xmlInstance;/*构造器*/
 
 
-    public static XmlInstance getXmlinstanceBuilder() {
+    /**
+     * 获取的一个树结构体
+     *
+     * @param haveingUserdata 如果为真 树结构中添加用户的本地信息 并且注意树形结构不要初始化了
+     * @return
+     */
+    public static XmlInstance getXmlinstanceBuilder(boolean haveingUserdata) {
         xmlInstance = new XmlInstance();
+        if (haveingUserdata) {
+            /*需要加入用户的账户和密码*/
+            xmlInstance.initDom();
+            LocalProgramTools.UserToolsInstance userToolsInstance = LocalProgramTools
+                    .getUserToolsInstance();/*获取工具类*/
+            if (userToolsInstance.isLogin()) {
+                xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, userToolsInstance
+                        .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE
+                                .ACTION_LOCALUSERPAGE_ACCOUNT));
+                xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_TOKEN, userToolsInstance
+                        .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE
+                                .ACTION_LOCALUSERPAGE_TOKEN));
+
+            } else {
+                xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, "");
+                xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_TOKEN, "");
+                Log.e("XmlBuilder.java[+]", "增加用户的树形结构出现用户没有登录");
+            }
+        }
         return xmlInstance;
     }
 

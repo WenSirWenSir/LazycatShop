@@ -241,7 +241,7 @@ public class LoginAct extends LazyCatAct {
         findViewById(R.id.activity_login_btnTologin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder();
+                XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(false);
                 xmlInstance.initDom();
                 xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, etAccount.getText()
                         .toString().trim());

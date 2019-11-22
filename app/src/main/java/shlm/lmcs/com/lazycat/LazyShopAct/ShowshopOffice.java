@@ -176,22 +176,9 @@ public class ShowshopOffice extends LazyCatAct {
         /**
          * 最重要的一步  首先获取到服务器的信息  进行数据的整理和初始化
          */
-        XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder();
-        xmlInstance.initDom();
+        XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(true);
         xmlInstance.setXmlTree(LocalAction.ACTION, getshopAction);
         xmlInstance.setXmlTree(LocalAction.ACTION_SEARCHKEY.ACTION_KEYWORD, shopmesage);
-        if (userToolsInstance.isLogin()) {
-            xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, userToolsInstance
-                    .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE
-                            .ACTION_LOCALUSERPAGE_ACCOUNT));
-            xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_TOKEN, userToolsInstance
-                    .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE
-                            .ACTION_LOCALUSERPAGE_TOKEN));
-        } else {
-            xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, "");
-            xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_TOKEN, "");
-
-        }
         xmlInstance.overDom();
         Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GET_SHOPVALUES,
                 new ProgramInterface() {
@@ -452,14 +439,7 @@ public class ShowshopOffice extends LazyCatAct {
          * 用户的地址是不能由用户自己修改的 只能用户使用客服服务进行修改 并且需要重新登录
          *
          */
-        XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder();
-        xmlInstance.initDom();
-        xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, userToolsInstance
-                .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE
-                        .ACTION_LOCALUSERPAGE_ACCOUNT));/*存入账户*/
-        xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_TOKEN, userToolsInstance
-                .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_TOKEN)
-        );/*存入密码*/
+        XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(true);
         xmlInstance.overDom();
         Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GETUSER_VALUES,
                 new ProgramInterface() {
@@ -1076,8 +1056,7 @@ public class ShowshopOffice extends LazyCatAct {
      * 提交订单数据信息到服务器
      */
     private void toSendOrder() {
-        XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder();
-        xmlInstance.initDom();
+        XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(true);
         /*标题*/
         xmlInstance.setXmlTree(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_TITLE, SHOP_TITLE
                 .getText().toString().trim());
@@ -1087,13 +1066,6 @@ public class ShowshopOffice extends LazyCatAct {
         /*订购数量*/
         xmlInstance.setXmlTree(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_PAYHOW,
                 select_number.getText().toString().trim());
-        /*请求提交的用户*/
-        xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, userToolsInstance
-                .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE
-                        .ACTION_LOCALUSERPAGE_ACCOUNT));
-        /*请求提交的用户的Token*/
-        xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_TOKEN, userToolsInstance
-                .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_TOKEN));
         /*原始的价格 需要定格 不能以平台的价格随时变动*/
         xmlInstance.setXmlTree(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_TP, shopvalues
                 .getTp());

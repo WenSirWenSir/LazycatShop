@@ -160,7 +160,7 @@ public class SearchAct extends LazyCatAct {
                 } else {
                     /*不为空*/
                     /*模拟网络访问有数据*/
-                    XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder();
+                    XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(false);
                     xmlInstance.initDom();/*初始化dom*/
                     xmlInstance.setXmlTree(LocalAction.ACTION, "0");/*设置XML树结构*/
                     xmlInstance.setXmlTree(LocalAction.ACTION_SEARCHKEY.ACTION_KEYWORD, s
@@ -328,7 +328,7 @@ public class SearchAct extends LazyCatAct {
          * 判断用户是否登录状态
          */
 
-        XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder();
+        XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(false);
         xmlInstance.initDom();
         xmlInstance.setXmlTree(LocalAction.ACTION_LOCALUSERPAGE.ACTION_USER, userAccount);/*用户账户*/
         xmlInstance.setXmlTree(LocalAction.ACTION_LOCALUSERPAGE.ACTION_TOKEN, userToken);/*用户密码*/
