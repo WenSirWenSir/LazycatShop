@@ -55,6 +55,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -1059,4 +1060,38 @@ public class Tools {
 
     }
 
+    /**
+     * 获取一个精确到秒的时间戳
+     *
+     * @return
+     */
+    public String getTimeMillis() {
+        return String.valueOf(System.currentTimeMillis() / 1000);
+
+    }
+
+
+    /**
+     * 时间戳转换成时间
+     *
+     * @return
+     */
+    public static String StamptoDate(String _stamp) {
+/*
+        SimpleDateFormat sdr = new SimpleDateFormat("yyyy年MM月dd日HH时mm分ss秒");
+*/
+        SimpleDateFormat sdr = new SimpleDateFormat("yyyy年MM月dd日HH时");
+        @SuppressWarnings("unused") long lcc = Long.valueOf(_stamp);
+        int i = Integer.parseInt(_stamp);
+        String times = sdr.format(new Date(i * 1000L));
+        return times;
+    }
+
+    /**
+     * 获取过期VIP过期时间戳
+     */
+
+    public static String getVipStamp() {
+        return String.valueOf((System.currentTimeMillis() / 1000) + 2592000);
+    }
 }

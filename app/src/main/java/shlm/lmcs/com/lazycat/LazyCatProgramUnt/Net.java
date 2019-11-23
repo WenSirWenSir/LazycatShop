@@ -260,7 +260,7 @@ public class Net {
                     _refreshDialog.show();
                 }
                 String _data = null;
-                Log.i("Net.java[doPost]", "要提交的XML信息为：" + xmldata);
+                Log.i("Net.java[doPost]", "要提交至"+_url[0]+"的XML信息为：" + xmldata);
                 //构建xml数据信息
                 /*StringBuilder xml = new StringBuilder();
                 xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
