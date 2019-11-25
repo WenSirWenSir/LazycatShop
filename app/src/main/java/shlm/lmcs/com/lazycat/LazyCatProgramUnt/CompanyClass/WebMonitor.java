@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
-import android.widget.Toast;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
@@ -118,11 +117,6 @@ public class WebMonitor {
         intent.setClass(mContext, ShowshopOffice.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);
-        if (in == 0) {
-            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
-        }
     }
 
     /**

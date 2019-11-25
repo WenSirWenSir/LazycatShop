@@ -4,11 +4,11 @@ package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage;
 import android.text.TextUtils;
 
 /**
- * XML½ÚµãĞÅÏ¢
+ * XMLèŠ‚ç‚¹ä¿¡æ¯
  * <p>
- * ·µ»ØµÄĞÅÏ¢ÀàËÆÓÚ
+ * è¿”å›çš„ä¿¡æ¯ç±»ä¼¼äº
  * <fater sign = "values">
- * <name>ÄãºÃÈ«ÊÀ½ç</name>
+ * <name>ä½ å¥½å…¨ä¸–ç•Œ</name>
  * </fater>
  */
 public class XML_PAGE {
@@ -16,56 +16,56 @@ public class XML_PAGE {
     private String _fater_nodex;
 
     /**
-     * ¹¹ÔìXMLµÄ×ÓÎÄ¼şÌå
+     * æ„é€ XMLçš„å­æ–‡ä»¶ä½“
      *
-     * @param fater_node  ¸¸ÎÄ¼şÍ· Èç¹ûÎª¿Õ Ôò»á·µ»ØÒ»¸öËï½Úµã
-     * @param sign        ¸¸ÎÄ¼şµÄ±êÖ¾
-     * @param sign_values ¸¸ÎÄ¼şµÄ±êÖ¾µÄÖµ
+     * @param fater_node  çˆ¶æ–‡ä»¶å¤´ å¦‚æœä¸ºç©º åˆ™ä¼šè¿”å›ä¸€ä¸ªå­™èŠ‚ç‚¹
+     * @param sign        çˆ¶æ–‡ä»¶çš„æ ‡å¿—
+     * @param sign_values çˆ¶æ–‡ä»¶çš„æ ‡å¿—çš„å€¼
      */
     public XML_PAGE(String fater_node, String sign, String sign_values) {
-        this._fater_nodex = fater_node;//×Ó½ÚµãĞÅÏ¢
+        this._fater_nodex = fater_node;//å­èŠ‚ç‚¹ä¿¡æ¯
 
 
         /**
-         * ÅĞ¶ÏÊÇ·ñ´´½¨Ëï½Úµã
+         * åˆ¤æ–­æ˜¯å¦åˆ›å»ºå­™èŠ‚ç‚¹
          *
          */
         if(TextUtils.isEmpty(fater_node)){
-            //Îª¿ÕÊ²Ã´¶¼²»×ö
+            //ä¸ºç©ºä»€ä¹ˆéƒ½ä¸åš
 
         }
         else{
-            //²»Îª¿Õ
+            //ä¸ä¸ºç©º
             if (TextUtils.isEmpty(sign)) {
-                xml.append("<" + fater_node + ">");//¿ªÊ¼½Úµã
+                xml.append("<" + fater_node + ">");//å¼€å§‹èŠ‚ç‚¹
             } else {
-                xml.append("<" + fater_node + " " + sign + "=\"" + sign_values + "\">");//¿ªÊ¼½Úµã
+                xml.append("<" + fater_node + " " + sign + "=\"" + sign_values + "\">");//å¼€å§‹èŠ‚ç‚¹
             }
 
         }
     }
 
     /**
-     * ²åÈëÒ»¸öËï½Úµã
+     * æ’å…¥ä¸€ä¸ªå­™èŠ‚ç‚¹
      */
     public XML_PAGE addGrandsonNode(String node, String value) {
-        xml.append("<" + node + ">" + value + "</" + node + ">");//Ò»¸öËï½ÚµãĞÅÏ¢
+        xml.append("<" + node + ">" + value + "</" + node + ">");//ä¸€ä¸ªå­™èŠ‚ç‚¹ä¿¡æ¯
         return this;
     }
 
 
     /**
-     * »ñÈ¡Ò»¸öÍêÕûµÄXML×Ó½ÚµãĞÅÏ¢
+     * è·å–ä¸€ä¸ªå®Œæ•´çš„XMLå­èŠ‚ç‚¹ä¿¡æ¯
      *
      * @return
      */
     public StringBuilder getXml() {
         if(TextUtils.isEmpty(this._fater_nodex)){
-            //Ê²Ã´¶¼²»×ö
+            //ä»€ä¹ˆéƒ½ä¸åš
         }
         else{
-            xml.append("</" + this._fater_nodex + ">");//±ÕºÏxmlÊµÌå
+            xml.append("</" + this._fater_nodex + ">");//é—­åˆxmlå®ä½“
         }
-        return xml;//»ñÈ¡Ëï½ÚµãĞÅÏ¢
+        return xml;//è·å–å­™èŠ‚ç‚¹ä¿¡æ¯
     }
 }

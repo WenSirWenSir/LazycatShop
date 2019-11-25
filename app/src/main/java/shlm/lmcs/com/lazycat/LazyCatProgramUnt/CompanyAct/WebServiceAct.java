@@ -18,7 +18,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.WebMonitor;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
@@ -40,14 +39,25 @@ public class WebServiceAct extends LazyCatAct {
     private Button ButtonTitle;
     private LinearLayout item;
     private WEB_VALUES_ACT web_values_act;
+    @SuppressLint({"HandlerLeak","ResourceType"})
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (web_values_act != null) {
                 Button bt = (Button) item.getChildAt(0);
-                bt.setText(msg.obj.toString());
+                String St_title = msg.obj.toString();
+                Log.i(MSG,"标题为:" + St_title);
+                String backColor = getResources().getString(R.color.ThemeColor);
+                if (msg.obj.toString().indexOf("[") != -1) {
+                    //存在
+                     St_title = msg.obj.toString().trim().split("\\[")[0];/*未标题*/
+                     backColor = msg.obj.toString().trim().split("\\[")[1];/*一号位为颜色*/
+                }
+                bt.setText(St_title);
+                bt.setTextColor(Color.parseColor("#ffffff"));
+                bt.setBackgroundColor(Color.parseColor(backColor));
                 bt.setTextColor(Color.parseColor(web_values_act.get_TitleColor()));
-                bt.setBackgroundColor(Color.parseColor(web_values_act.get_TitleBackColor()));
+                setStatusBar(backColor);
 
             }
             super.handleMessage(msg);
@@ -84,7 +94,6 @@ public class WebServiceAct extends LazyCatAct {
         ButtonTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView tv = (TextView) v;
             }
         });
         item.addView(ButtonTitle);

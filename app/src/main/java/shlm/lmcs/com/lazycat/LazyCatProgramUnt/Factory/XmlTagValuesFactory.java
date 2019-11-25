@@ -14,6 +14,7 @@ public class XmlTagValuesFactory {
     static Init_btnValues init_btnValues = new Init_btnValues();/*首页的按钮参数信息*/
     static Shopvalues shopvalues = new Shopvalues();/*商品参数信息*/
     static Init_UserCenterValues init_userCenterValues = new Init_UserCenterValues();
+    static Giftshopvalues giftshopvalues = new Giftshopvalues();
 
 
     /**
@@ -23,6 +24,15 @@ public class XmlTagValuesFactory {
      */
     public static Shopvalues getShopvaluesInstance() {
         return shopvalues;
+    }
+
+
+    /**
+     * 获取赠送商品的page
+     * @return
+     */
+    public static Giftshopvalues getGiftshopvalues() {
+        return giftshopvalues;
     }
 
     /**
@@ -614,6 +624,103 @@ public class XmlTagValuesFactory {
         }
 
 
+    }
+
+
+    /**
+     * 赠送商品的值的列表
+     */
+    public static class Giftshopvalues {
+        String title;
+        String condtion;
+        String weight;
+        String company;
+        String spec;
+        String exp;
+        String pd;
+        String stocknumber;
+        String img;
+        String barcode;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getCondtion() {
+            return condtion;
+        }
+
+        public void setCondtion(String condtion) {
+            this.condtion = condtion;
+        }
+
+        public String getWeight() {
+            return weight;
+        }
+
+        public void setWeight(String weight) {
+            this.weight = weight;
+        }
+
+        public String getCompany() {
+            return company;
+        }
+
+        public void setCompany(String company) {
+            this.company = company;
+        }
+
+        public String getSpec() {
+            return spec;
+        }
+
+        public void setSpec(String spec) {
+            this.spec = spec;
+        }
+
+        public String getExp() {
+            return exp;
+        }
+
+        public void setExp(String exp) {
+            this.exp = exp;
+        }
+
+        public String getPd() {
+            return pd;
+        }
+
+        public void setPd(String pd) {
+            this.pd = pd;
+        }
+
+        public String getStocknumber() {
+            return stocknumber;
+        }
+
+        public void setStocknumber(String stocknumber) {
+            this.stocknumber = stocknumber;
+        }
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
+
+        public String getBarcode() {
+            return barcode;
+        }
+
+        public void setBarcode(String barcode) {
+            this.barcode = barcode;
+        }
     }
 
     /**

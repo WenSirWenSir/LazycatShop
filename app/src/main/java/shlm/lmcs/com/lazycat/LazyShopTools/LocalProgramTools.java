@@ -289,7 +289,7 @@ public class LocalProgramTools {
                     return false;
                 }
             } else {
-                return false;
+                return true;
             }
         }
     }

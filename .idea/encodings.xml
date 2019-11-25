@@ -12,7 +12,7 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyPage/WEB_VALUES_ACT.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyPage/WINDOW_PAGE.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyPage/XMLUserAddr.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyPage/XML_PAGE.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyPage/XML_PAGE.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/Monitor.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/Usertools.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/XmlBuilder.java" charset="UTF-8" />
@@ -41,7 +41,6 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopPage/LocalShoppage.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopTools/LocalProgramTools.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/lazyCatLogAct.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/wxTools.java" charset="UTF-8" />
     <file url="file://$USER_HOME$/Downloads/zzbj-5/zzbj/src/com/com/zzbj/MainActivity.java" charset="GB2312" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
