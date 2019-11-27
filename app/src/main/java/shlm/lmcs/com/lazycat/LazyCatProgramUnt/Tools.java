@@ -568,6 +568,28 @@ public class Tools {
         return gradientDrawable;
     }
 
+
+    /**
+     * 生产一个背景布局
+     *
+     * @param _context
+     * @param width
+     * @param StockColor
+     * @param backgroundColor
+     * @param raidus
+     * @return
+     */
+    public static GradientDrawable CreateDrawable(Context _context, int width, int StockColor,
+                                                  int backgroundColor, int raidus) {
+        GradientDrawable gradientDrawable = new GradientDrawable();
+        gradientDrawable.setColor(Color.parseColor(_context.getResources().getString
+                (backgroundColor)));
+        gradientDrawable.setStroke(width, Color.parseColor(_context.getResources().getString
+                (StockColor)));
+        gradientDrawable.setCornerRadius(raidus);
+        return gradientDrawable;
+    }
+
     /**
      * 拨打电话
      *
@@ -998,12 +1020,22 @@ public class Tools {
      * @param in_latitue  起点维度
      * @return
      */
-    public static int getDistance(double _logitude, double _latitue, double in_logitude, double
+    public static int getDistance(String _logitude, String _latitue, String in_logitude, String
             in_latitue) {
-        float[] results = new float[1];
-        Location.distanceBetween(_latitue, _logitude, in_latitue, in_logitude, results);
-        int Distance = new Double(results[0]).intValue();
-        return Distance;
+        try {
+            float[] results = new float[1];
+            Log.i("Tools.java[+]", "计算开始的经度:" + _logitude);
+            Log.i("Tools.java[+]", "计算开始的维度:" + _latitue);
+            Log.i("Tools.java[+]", "计算结束的经度:" + in_logitude);
+            Log.i("Tools.java[+]", "计算结束的维度:" + in_latitue);
+            Location.distanceBetween(Double.valueOf(_latitue), Double.valueOf(_logitude), Double
+                    .valueOf(in_latitue), Double.valueOf(in_logitude), results);
+            int Distance = new Double(results[0]).intValue();
+            return Distance / 1000;
+
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     public static double rad(double d) {

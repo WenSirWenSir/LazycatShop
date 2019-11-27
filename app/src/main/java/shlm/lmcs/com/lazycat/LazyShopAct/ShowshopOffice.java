@@ -3,6 +3,7 @@ package shlm.lmcs.com.lazycat.LazyShopAct;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -313,11 +314,48 @@ public class ShowshopOffice extends LazyCatAct {
                                     .ACTION_SHOPVALUES_BUSINSS)) {
                                 shopvalues.setBusiness(pullParser.nextText().trim());
                             }
+                            /*如果商家登录了 就获取这个值 来判断商品购买数量*/
                             if (tag.equals(LocalAction.ACTION_SHOPVALUES
                                     .ACTION_SHOPVALUES_TOPAYHOW)) {
                                 St_payhow = pullParser.nextText().trim();
                             }
+                            /*商品的品牌信息*/
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                    .ACTION_SHOPVALUES_BRANDADDR)) {
+                                shopvalues.setSt_Brandaddr(pullParser.nextText().trim());
+                            }
+                            /*商品的品牌图片*/
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                    .ACTION_SHOPVALUES_BRANDIMG)) {
+                                shopvalues.setSt_Brandimg(pullParser.nextText().trim());
+                            }
+                            /*判断用户是否登录成功*/
+                            if (tag.equals(LocalAction.ACTION_LOGIN.ACTION_XML_LOGINSTATUS)) {
+                                if (pullParser.nextText().trim().equals("0")) {
+                                    shopvalues.setSt_loginin(true);
+                                } else {
+                                    shopvalues.setSt_loginin(false);
+                                }
+                            }
 
+                            /*获取商家的物理经度*/
+                            if (tag.equals(LocalAction.ACTION_INTERFACE_BUSINESS
+                                    .INTERFACE_BUSINESS_LONG)) {
+                                shopvalues.setSt_BusinessLong(pullParser.nextText().trim());
+                            }
+                            /*获取对接商家的物理维度*/
+                            if (tag.equals(LocalAction.ACTION_INTERFACE_BUSINESS
+                                    .INTERFACE_BUSINESS_LAT)) {
+                                shopvalues.setSt_businessLat(pullParser.nextText().trim());
+                            }
+                            /*判断商家是否为Vip*/
+                            if (tag.equals(LocalAction.ACTION_LOGIN.ACTION_XML_VIPSTATUS)) {
+                                if (pullParser.nextText().trim().equals(LocalValues.NET_ERROR)) {
+                                    shopvalues.setVip(false);
+                                } else {
+                                    shopvalues.setVip(true);
+                                }
+                            }
                         } catch (Exception e) {
 
                         }
@@ -819,19 +857,53 @@ public class ShowshopOffice extends LazyCatAct {
 
     @SuppressLint("ClickableViewAccessibility")
     private void initMainpage() {
-        /*判断商品的状态*/
-        /*获取用户工具类*/
-
         /**
          * 判断是否登录账户
          */
-        if (userToolsInstance.isLogin()) {
+        if (shopvalues.getSt_loginin()) {
+            /*判断用户是否为Vip*/
+            if (shopvalues.getVip()) {
+                TextUnt.with(this, R.id.activity_showshopoffice_deliverVip).setText("Vip超时赔付")
+                        .setBackground(Tools.CreateDrawable(getApplicationContext(), 1, R.color
+                                .colorVip, R.color.colorVip, 5)).setTextColor("#ffffff");
+            } else {
+                TextUnt.with(this, R.id.activity_showshopoffice_deliverVip).setText("Vip超时赔付")
+                        .setBackground(Tools.CreateDrawable(getApplicationContext(), 1, R.color
+                                .colornoVip, R.color.colornoVip, 5)).setTextColor("#ffffff");
+            }
+            /*显示商品的距离*/
+            if (!shopvalues.getSt_BusinessLong().equals("")) {
+                int distance = Tools.getDistance(shopvalues.getSt_BusinessLong(), shopvalues
+                        .getSt_businessLat(), userToolsInstance.GetUserpageOnAction(LocalAction
+                        .ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_SHOPLONG), userToolsInstance
+                        .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE
+                                .ACTION_LOCALUSERPAGE_SHOPLAT));
+                if (shopvalues.get_static().equals(LocalValues.VALUES_SHOPPAGE.RESERVE) ||
+                        shopvalues.get_static().equals(LocalValues.VALUES_SHOPPAGE.WHOLEASALE)) {
+                    //如果商品正在拼团 或者是正在预定 就不显示什么时候到达了
+                    TextUnt.with(this, R.id.activity_showshopoffice_toUsertime).setText("15");
+                } else {
+                    if (distance <= 0) {
+                        /*如果小于一公里  则直接约等于1公里范围内*/
+                        TextUnt.with(this, R.id.activity_showshopoffice_distance).setText("1");
+                        TextUnt.with(this, R.id.activity_showshopoffice_toUsertime).setText("1天");
+                    } else {
+                        /*计算出来的公里数为>2公里*/
+                        TextUnt.with(this, R.id.activity_showshopoffice_toUsertime).setText("2天");
+                        TextUnt.with(this, R.id.activity_showshopoffice_distance).setText(String
+                                .valueOf(distance));
+                    }
+                }
+            } else {
+                /*不显示距离*/
+                findViewById(R.id.activity_showshopoffice_DistanceBody).setVisibility(View.GONE);
+            }
             /*设置批发价格*/
             TextUnt.with(SHOP_TP).setText(shopvalues.getTp());
-            /*设置虚线价格*/
-            TextUnt.with(SHOP_DLP).setText(shopvalues.getDlp()).setMidcourtLine();
             /*设置零售价*/
-            TextUnt.with(SHOP_RETAIL).setText("终端建议售价:" + shopvalues.getRetail() + "元/" +
+            int retail = Integer.valueOf(shopvalues.getRetail()) / Integer.valueOf(shopvalues
+                    .getSpec());
+            TextUnt.with(SHOP_RETAIL).setText("终端建议售价:" + String.valueOf(retail) + "元/" +
                     shopvalues.getSplitUnit());
             /*登录之后 判断是否下单过*/
             Log.i(MSG, "用户购买数量:" + St_payhow);
@@ -855,22 +927,33 @@ public class ShowshopOffice extends LazyCatAct {
                                 .color.ThemeColor), 5)).setTextColor("#ffffff").setTag(true);
 
             }
-
-
         } else {
-            /*设置不能发送订货单*/
+            //没有登录 顺便要删除本地存储的文件
+            userToolsInstance.ClearLocalCach();/*清空本地数据文件*/
+            /*没有登录的情况下 不能设置不能发送订货单*/
             TextUnt.with(btnAccount).setText("未登录,请登录后使用").setBackground(Tools.CreateDrawable(1,
                     "#666666", "#666666", 5)).setTextColor("#ffffff").setTag(false);
             TextUnt.with(SHOP_TP).setText("*.*");
             /*设置批发价格*/
-            TextUnt.with(SHOP_TP).setText("*.*");
-
-            /*设置虚线价格*/
             SHOP_DLP.setVisibility(View.GONE);
             TextUnt.with(SHOP_DLP).setVisibility(false);
             /*设置零售价*/
             TextUnt.with(SHOP_RETAIL).setText("终端建议售价:*.*元/" + shopvalues.getSplitUnit());
 
+        }
+        /*设置品牌图片 如果品牌数据为空 就不要显示了*/
+        if (shopvalues.getSt_Brandaddr().equals("")) {
+            findViewById(R.id.activity_showshopoffice_BrandBody).setVisibility(View.GONE);
+            findViewById(R.id.activity_showshopoffice_BrandTitleBody).setVisibility(View.GONE);
+        } else {
+            TextUnt.with(this, R.id.activity_showshopoffice_Brandaddr).setText(shopvalues
+                    .getSt_Brandaddr());
+            TextUnt.with(this, R.id.activity_showshopoffice_Brandtitle).setText(shopvalues
+                    .getBrand());
+            ImageView brandImg = findViewById(R.id.activity_showshopoffice_BrandImg);
+            Glide.with(getApplicationContext()).load(shopvalues.getSt_Brandimg())
+                    .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(false).into
+                    (brandImg);
         }
         /*设置条码图片*/
         if (shopvalues.getBarcode().equals("") || shopvalues.getBarcode().equals("0") ||
@@ -907,8 +990,18 @@ public class ShowshopOffice extends LazyCatAct {
             case LocalValues.VALUES_SHOPPAGE.NORMAL:
                 /*正常*/
                 TextUnt.with(this, R.id.activity_showshopoffice_static).setVisibility(false);
-                TextUnt.with(SHOP_DLP).setVisibility(false);
-                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(false);
+                /*设置价格颜色*/
+                SHOP_TP.setTextColor(Color.parseColor(getResources().getString(R.color
+                        .colorPrice)));
+                TextUnt.with(this, R.id.activity_showshopoffice_tpSymbol).setTextColor
+                        (getResources().getString(R.color.colorPrice));
+                /**
+                 * 设置虚线价格
+                 */
+                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setTextColor(R.color
+                        .color_dlpsymbol).setVisibility(false);
+                TextUnt.with(this, R.id.activity_showshopoffice_dlp).setTextColor(getString(R
+                        .color.color_dlpsymbol)).setText(shopvalues.getDlp()).setVisibility(false);
                 break;
             case LocalValues.VALUES_SHOPPAGE.PROMOTION:
                 /*促销*/
@@ -916,51 +1009,123 @@ public class ShowshopOffice extends LazyCatAct {
                         .setText(R.string.shop_promotion).setBackground(Tools.CreateDrawable(1,
                         getResources().getString(R.color.colorPromotion), getResources()
                                 .getString(R.color.colorPromotion), 5));
-                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(true)
-                        .setTextColor(getResources().getString(R.color.color_dlpsymbol));
-                TextUnt.with(SHOP_DLP).setVisibility(false);
-                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(false);
-                break;
-            case LocalValues.VALUES_SHOPPAGE.REDUCTION:
-                /*用卷*/
-                TextUnt.with(this, R.id.activity_showshopoffice_static).setVisibility(true)
-                        .setText(R.string.shop_reduction);
-                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(true)
-                        .setTextColor(R.color.color_dlpsymbol);
-                TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
-                        .setTextColor(getString(R.color.color_dlpsymbol)).setText(shopvalues
-                        .getDlp());
-                break;
-            case LocalValues.VALUES_SHOPPAGE.VOLUME:
-                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(false);
+                SHOP_TP.setTextColor(Color.parseColor(getResources().getString(R.color
+                        .colorPromotion)));
+                TextUnt.with(this, R.id.activity_showshopoffice_tpSymbol).setTextColor
+                        (getResources().getString(R.color.colorPromotion));
                 /**
                  * 设置虚线价格
                  */
-                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(true)
-                        .setTextColor(R.color.color_dlpsymbol);
-                TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
-                        .setTextColor(getString(R.color.color_dlpsymbol)).setText(shopvalues
-                        .getDlp());
+                if (shopvalues.getSt_loginin() && !shopvalues.getDlp().equals("0") && !shopvalues
+                        .getDlp().equals("")) {
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility
+                            (true).setTextColor(R.color.color_dlpsymbol).setVisibility(true);
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
+                            .setTextColor(getString(R.color.color_dlpsymbol)).setText(shopvalues
+                            .getDlp()).setMidcourtLine();
+                } else {
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility
+                            (true).setTextColor(R.color.color_dlpsymbol).setVisibility(true);
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
+                            .setTextColor(getString(R.color.color_dlpsymbol)).setText("*.*")
+                            .setMidcourtLine();
+                }
+
+
+                break;
+            case LocalValues.VALUES_SHOPPAGE.REDUCTION:
+                /*设置状态*/
+
+                TextUnt.with(this, R.id.activity_showshopoffice_static).setVisibility(true)
+                        .setText(R.string.shop_reduction).setBackground(Tools.CreateDrawable(1,
+                        getResources().getString(R.color.colorReduction), getResources()
+                                .getString(R.color.colorReduction), 5));
+                SHOP_TP.setTextColor(Color.parseColor(getResources().getString(R.color
+                        .colorReduction)));
+                TextUnt.with(this, R.id.activity_showshopoffice_tpSymbol).setTextColor
+                        (getResources().getString(R.color.colorReduction));
+
+                /**
+                 * 设置虚线价格
+                 */
+                if (shopvalues.getSt_loginin() && !shopvalues.getDlp().equals("0") && !shopvalues
+                        .getDlp().equals("")) {
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility
+                            (true).setTextColor(R.color.color_dlpsymbol).setVisibility(true);
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
+                            .setTextColor(getString(R.color.color_dlpsymbol)).setText(shopvalues
+                            .getDlp()).setMidcourtLine();
+                } else {
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility
+                            (true).setTextColor(R.color.color_dlpsymbol).setVisibility(true);
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
+                            .setTextColor(getString(R.color.color_dlpsymbol)).setText("*.*")
+                            .setMidcourtLine();
+                }
+
+                break;
+            case LocalValues.VALUES_SHOPPAGE.VOLUME:
+                /*设置状态*/
+                TextUnt.with(this, R.id.activity_showshopoffice_static).setVisibility(true)
+                        .setText(R.string.shop_volume).setBackground(Tools.CreateDrawable(1,
+                        getResources().getString(R.color.colorVolumn), getResources().getString(R
+                                .color.colorVolumn), 5));
+                SHOP_TP.setTextColor(Color.parseColor(getResources().getString(R.color
+                        .colorVolumn)));
+                TextUnt.with(this, R.id.activity_showshopoffice_tpSymbol).setTextColor
+                        (getResources().getString(R.color.colorVolumn));
+
+                /**
+                 * 设置虚线价格
+                 */
+                if (shopvalues.getSt_loginin() && !shopvalues.getDlp().equals("0") && !shopvalues
+                        .getDlp().equals("")) {
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility
+                            (true).setTextColor(R.color.color_dlpsymbol).setVisibility(true);
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
+                            .setTextColor(getString(R.color.color_dlpsymbol)).setText(shopvalues
+                            .getDlp()).setMidcourtLine();
+
+                } else {
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility
+                            (true).setTextColor(R.color.color_dlpsymbol).setVisibility(true);
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
+                            .setTextColor(getString(R.color.color_dlpsymbol)).setText("*.*")
+                            .setMidcourtLine();
+
+                }
                 break;
             case LocalValues.VALUES_SHOPPAGE.ONLY_VIP:
                 /*只有VIP可以购买*/
+                TextUnt.with(this, R.id.activity_showshopoffice_static).setVisibility(true)
+                        .setText(R.string.shop_vip).setTextColor("#ffffff").setBackground(Tools
+                        .CreateDrawable(1, getResources().getString(R.color.colorVip),
+                                getResources().getString(R.color.colorVip), 5));
+                SHOP_TP.setTextColor(Color.parseColor(getResources().getString(R.color.colorVip)));
                 TextUnt.with(this, R.id.activity_showshopoffice_tpSymbol).setTextColor
                         (getResources().getString(R.color.colorVip));
-                TextUnt.with(this, R.id.activity_showshopoffice_tp).setTextColor(getResources()
-                        .getString(R.color.colorVip));
+
                 shopvalues.setonlyVipPay(true);
                 /**
                  * 设置虚线价格
                  */
-                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(true)
-                        .setTextColor(R.color.color_dlpsymbol);
-                TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
-                        .setTextColor(getString(R.color.color_dlpsymbol)).setText(shopvalues
-                        .getDlp());
-                TextUnt.with(this, R.id.activity_showshopoffice_static).setVisibility(true)
-                        .setText(R.string.shop_vip).setBackground(Tools.CreateDrawable(1,
-                        getResources().getString(R.color.colorVip), getResources().getString(R
-                                .color.colorVip), 5));
+                if (shopvalues.getSt_loginin() && !shopvalues.getDlp().equals("0") && !shopvalues
+                        .getDlp().equals("")) {
+
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility
+                            (true).setTextColor(R.color.color_dlpsymbol);
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
+                            .setTextColor(getString(R.color.color_dlpsymbol)).setText(shopvalues
+                            .getDlp()).setMidcourtLine();
+
+                } else {
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility
+                            (true).setTextColor(R.color.color_dlpsymbol);
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
+                            .setTextColor(getString(R.color.color_dlpsymbol)).setText("*.*")
+                            .setMidcourtLine();
+
+                }
                 break;
 
             case LocalValues.VALUES_SHOPPAGE.ONLY_ONE:
@@ -968,70 +1133,92 @@ public class ShowshopOffice extends LazyCatAct {
                 TextUnt.with(this, R.id.activity_showshopoffice_static).setVisibility(true)
                         .setText(R.string.shop_only).setTextColor("#ffffff").setBackground(Tools
                         .CreateDrawable(1, getResources().getString(R.color.colorPayonly),
-                                getResources().getString( R.color.colorPayonly),5));
+                                getResources().getString(R.color.colorPayonly), 5));
+                SHOP_TP.setTextColor(Color.parseColor(getResources().getString(R.color
+                        .colorPayonly)));
                 TextUnt.with(this, R.id.activity_showshopoffice_tpSymbol).setTextColor
                         (getResources().getString(R.color.colorPayonly));
+
                 /*隐藏加减BTN*/
                 TextUnt.with(btn_select_del).setTag(false);
                 TextUnt.with(btn_select_add).setTag(false);
                 /**
                  * 设置虚线价格
                  */
-                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(true)
-                        .setTextColor(R.color.color_dlpsymbol);
-                TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
-                        .setTextColor(getString(R.color.color_dlpsymbol)).setText(shopvalues
-                        .getDlp());
-                TextUnt.with(this, R.id.activity_showshopoffice_static).setVisibility(true)
-                        .setText(R.string.shop_vip).setBackground(Tools.CreateDrawable(1,
-                        getResources().getString(R.color.colorVip), getResources().getString(R
-                                .color.colorVip), 5));
+                if (shopvalues.getSt_loginin() && !shopvalues.getDlp().equals("0") && !shopvalues
+                        .getDlp().equals("")) {
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility
+                            (true).setTextColor(R.color.color_dlpsymbol).setVisibility(true);
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
+                            .setTextColor(getString(R.color.color_dlpsymbol)).setText(shopvalues
+                            .getDlp().trim()).setMidcourtLine();
+                } else {
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility
+                            (true).setTextColor(R.color.color_dlpsymbol);
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
+                            .setTextColor(getString(R.color.color_dlpsymbol)).setText("*.*");
+                }
                 break;
             case LocalValues.VALUES_SHOPPAGE.WHOLEASALE:
-                TextUnt.with(SHOP_DLP).setVisibility(true).setText(shopvalues.getDlp())
-                        .setTextColor("#666666").setMidcourtLine();/*设置中划线*/
-                TextUnt.with(SHOP_TP).setTextColor(getResources().getString(R.color
-                        .colorWholeasale));
-                TextUnt.with(this, R.id.activity_showshopoffice_tpSymbol).setTextColor
-                        (getResources().getString(R.color.colorWholeasale));
-                /**
-                 * 设置虚线价格
-                 */
-                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(true)
-                        .setTextColor(R.color.color_dlpsymbol);
-                TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
-                        .setTextColor(getString(R.color.color_dlpsymbol)).setText(shopvalues
-                        .getDlp());
-                TextUnt.with(this, R.id.activity_showshopoffice_static).setVisibility(true)
-                        .setText(R.string.shop_vip).setBackground(Tools.CreateDrawable(1,
-                        getResources().getString(R.color.colorVip), getResources().getString(R
-                                .color.colorVip), 5));
                 /*设置按钮为开启拼团*/
                 TextUnt.with(this, R.id.activity_showshopoffice_btnAccount).setBackground(Tools
                         .CreateDrawable(1, getResources().getString(R.color.colorWholeasale),
                                 getResources().getString(R.color.colorWholeasale), 5)).setText
                         ("我要拼团");
+                TextUnt.with(this, R.id.activity_showshopoffice_tpSymbol).setTextColor
+                        (getResources().getString(R.color.colorWholeasale));
+                SHOP_TP.setTextColor(Color.parseColor(getResources().getString(R.color
+                        .colorWholeasale)));
+                /**
+                 * 设置虚线价格
+                 */
+                if (shopvalues.getSt_loginin() && !shopvalues.getDlp().equals("0") && !shopvalues
+                        .getDlp().equals("")) {
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility
+                            (true).setTextColor(R.color.color_dlpsymbol).setVisibility(true);
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
+                            .setTextColor(getString(R.color.color_dlpsymbol)).setText(shopvalues
+                            .getDlp());
+                    /*设置价格符号的颜色*/
+                } else {
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility
+                            (true).setTextColor(R.color.color_dlpsymbol).setVisibility(true);
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
+                            .setTextColor(getString(R.color.color_dlpsymbol)).setText("*.*");
+                }
                 break;
 
             case LocalValues.VALUES_SHOPPAGE.RESERVE:
                 TextUnt.with(this, R.id.activity_showshopoffice_static).setVisibility(true)
-                        .setText(R.string.shop_reserve).setTextColor("#ffffff").setBackColor(getResources()
-                        .getString(R.color.colorReserve));
-                TextUnt.with(SHOP_TP).setTextColor(getResources().getString(R.color.colorReserve));
-                TextUnt.with(this, R.id.activity_showshopoffice_tpSymbol);
+                        .setText(R.string.shop_reserve).setTextColor("#ffffff").setBackColor
+                        (getResources().getString(R.color.colorReserve));
+                SHOP_TP.setTextColor(Color.parseColor(getResources().getString(R.color
+                        .colorReserve)));
+                TextUnt.with(this, R.id.activity_showshopoffice_tpSymbol).setTextColor(R.color
+                        .colorReserve);
                 /**
                  * 设置虚线价格
                  */
-                TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility(false)
-                        .setTextColor(R.color.color_dlpsymbol);
-                TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(false)
-                        .setTextColor(getString(R.color.color_dlpsymbol)).setText(shopvalues
-                        .getDlp());
-                if (St_payhow.equals("0")) {
-                    TextUnt.with(this, R.id.activity_showshopoffice_btnAccount).setBackground
-                            (Tools.CreateDrawable(1, getResources().getString(R.color
-                                    .colorReserve), getResources().getString(R.color
-                                    .colorReserve), 5)).setText("预定商品");
+                if (shopvalues.getSt_loginin() && !shopvalues.getDlp().equals("0") && !shopvalues
+                        .getDlp().equals("")) {
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility
+                            (true).setTextColor(R.color.color_dlpsymbol).setVisibility(true);
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
+                            .setTextColor(getString(R.color.color_dlpsymbol)).setText(shopvalues
+                            .getDlp()).setMidcourtLine();
+                    if (St_payhow.equals("0")) {
+                        TextUnt.with(this, R.id.activity_showshopoffice_btnAccount).setBackground
+                                (Tools.CreateDrawable(1, getResources().getString(R.color
+                                        .colorReserve), getResources().getString(R.color
+                                        .colorReserve), 5)).setText("预定商品");
+                    }
+
+
+                } else {
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility
+                            (true).setTextColor(R.color.color_dlpsymbol).setVisibility(true);
+                    TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
+                            .setTextColor(getString(R.color.color_dlpsymbol)).setText("*.*");
                 }
                 alertReserve();
                 break;

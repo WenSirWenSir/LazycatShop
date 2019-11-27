@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -46,14 +47,14 @@ public class SearchAct extends LazyCatAct {
     private AutoLineLayout searchLog;
     private EditText input;
     private ListView SearchlogListview;
-    private ArrayList<String> SearchkeyList = new ArrayList<String>();
-
+    private ArrayList<Key_result> SearchkeyList = new ArrayList<Key_result>();
     private LinearLayout SearchViewBody;
     private ImageView btnSearch;
     private TextView btnClear;/*点击清空按钮*/
     private TextView headTitle;/*标题*/
     private String userAccount;/*用户的账户*/
     private String userToken;/*用户的TOKEN*/
+    private Key_result key_result;/*关键字节对*/
     /*热搜*/
     private ArrayList<String> hotTitle;
 
@@ -88,8 +89,6 @@ public class SearchAct extends LazyCatAct {
     private void init() {
         InitPageXml();/*整理编辑框的界面*/
         InitListener();
-
-
         ArrayList<String> text_list2 = new ArrayList<>();
         text_list2.add("流浪地球");
         text_list2.add("逍遥散人");
@@ -98,7 +97,6 @@ public class SearchAct extends LazyCatAct {
         text_list2.add("老番茄");
         text_list2.add("假面骑士ZI-O");
         text_list2.add("信誓旦旦");
-
         ArrayList<LinearLayout> tv_list2 = Tools.handleToarraylist(getApplicationContext(),
                 text_list2, 20, 10, 20, 10, "#e9e9e9", "#666666", 13, new View.OnClickListener() {
             @Override
@@ -120,7 +118,6 @@ public class SearchAct extends LazyCatAct {
      * 创建监听
      */
     private void InitListener() {
-
         /**
          * listview点击的事件
          */
@@ -160,8 +157,7 @@ public class SearchAct extends LazyCatAct {
                 } else {
                     /*不为空*/
                     /*模拟网络访问有数据*/
-                    XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(false);
-                    xmlInstance.initDom();/*初始化dom*/
+                    XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(true);
                     xmlInstance.setXmlTree(LocalAction.ACTION, "0");/*设置XML树结构*/
                     xmlInstance.setXmlTree(LocalAction.ACTION_SEARCHKEY.ACTION_KEYWORD, s
                             .toString().trim());
@@ -171,7 +167,7 @@ public class SearchAct extends LazyCatAct {
                         @Override
                         public void onSucess(String data, int code, WaitDialog.RefreshDialog
                                 _refreshDialog) {
-                            Log.i(MSG, data.toString().trim());
+                            Log.i(MSG, "返回的数据为:" + data.toString().trim());
                             XmlanalysisFactory xml = new XmlanalysisFactory(data.trim());
                             xml.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
                                 @Override
@@ -182,16 +178,28 @@ public class SearchAct extends LazyCatAct {
                                 @Override
                                 public void onStartDocument(String tag) {
                                     SearchkeyList.clear();
-
                                 }
 
                                 @Override
                                 public void onStartTag(String tag, XmlPullParser pullParser,
                                                        Integer id) {
                                     try {
-                                        if (tag.equals("key_word")) {
-                                            SearchkeyList.add(pullParser.nextText().trim());
+
+                                        if (tag.equals(LocalAction.ACTION_SEARCHKEY
+                                                .ACTION_KEY_RESULT)) {
+                                            key_result = new Key_result();
                                         }
+                                        /*商品的关键字搜索回传*/
+                                        if (tag.equals(LocalAction.ACTION_SEARCHKEY
+                                                .ACTION_KEY_RESULT_TITLE)) {
+                                            key_result.setTitle(pullParser.nextText().trim());
+                                        }
+                                        /*商品的状态*/
+                                        if (tag.equals(LocalAction.ACTION_SEARCHKEY
+                                                .ACTION_KEY_RESULT_STATUS)) {
+                                            key_result.setStatus(pullParser.nextText().trim());
+                                        }
+
                                     } catch (Exception e) {
                                         Log.e(MSG, "错误信息:" + e.getMessage());
                                     }
@@ -201,7 +209,9 @@ public class SearchAct extends LazyCatAct {
                                 @Override
                                 public void onEndTag(String tag, XmlPullParser pullParser,
                                                      Integer id) {
-
+                                    if(tag.equals(LocalAction.ACTION_SEARCHKEY.ACTION_KEY_RESULT)){
+                                        SearchkeyList.add(key_result);
+                                    }
                                 }
 
                                 @Override
@@ -243,7 +253,14 @@ public class SearchAct extends LazyCatAct {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LazyCatActStartActivity(SearchShoplist.class, false);
+                if(!TextUtils.isEmpty(input.getText().toString().trim())){
+                    LazyCatStartActivityWithBundler(SearchShoplist.class, true,
+                            LocalAction.WINDOWS_TO_WINDOWS.ACTION_SEARCH_KEY, input
+                                    .getText().toString().trim());
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"错误!检索的名称不能为空",Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -271,9 +288,9 @@ public class SearchAct extends LazyCatAct {
     }
 
     class SearchLogAdapter extends BaseAdapter {
-        private ArrayList<String> list;
+        private ArrayList<Key_result> list;
 
-        public SearchLogAdapter(ArrayList<String> _list) {
+        public SearchLogAdapter(ArrayList<Key_result> _list) {
             this.list = _list;
         }
 
@@ -311,10 +328,55 @@ public class SearchAct extends LazyCatAct {
                 convertView.setTag(_viewpage);
             }
             /*处理文字等*/
-            _viewpage.title.setText(this.list.get(position));
-            _viewpage._static.setBackground(Tools.CreateDrawable(1, "#f30d88", "#ffffff", 5));
+            Log.i(MSG,"标题为:" + this.list.get(position).getTitle().trim());
+            _viewpage.title.setText(this.list.get(position).getTitle().trim());
+            switch (this.list.get(position).getStatus()) {
+                case LocalValues.VALUES_SHOPPAGE.NORMAL:
+                    TextUnt.with(_viewpage._static).setVisibility(false);
+                    break;
+                case LocalValues.VALUES_SHOPPAGE.PROMOTION:
+                    TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
+                            .shop_promotion).setBackground(Tools.CreateDrawable(getApplication(),
+                            1, R.color.colorPromotion, R.color.colorPromotion, 5));
+                    break;
+                case LocalValues.VALUES_SHOPPAGE.REDUCTION:
+                    TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
+                            .shop_reduction).setBackground(Tools.CreateDrawable(getApplication(),
+                            1, R.color.colorReduction, R.color.colorReduction, 5));
 
+                    break;
+                case LocalValues.VALUES_SHOPPAGE.VOLUME:
+                    TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
+                            .shop_volume).setBackground(Tools.CreateDrawable(getApplication(),
+                            1, R.color.colorVolumn, R.color.colorVolumn, 5));
+                    break;
+                case LocalValues.VALUES_SHOPPAGE.ONLY_VIP:
+                    TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
+                            .shop_vip).setBackground(Tools.CreateDrawable(getApplication(),
+                            1, R.color.colorVip, R.color.colorVip, 5));
+
+                    break;
+                case LocalValues.VALUES_SHOPPAGE.ONLY_ONE:
+                    TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
+                            .shop_only).setBackground(Tools.CreateDrawable(getApplication(),
+                            1, R.color.colorPayonly, R.color.colorPayonly, 5));
+
+                    break;
+                case LocalValues.VALUES_SHOPPAGE.WHOLEASALE:
+                    TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
+                            .shop_wholeasale).setBackground(Tools.CreateDrawable(getApplication(),
+                            1, R.color.colorWholeasale, R.color.colorWholeasale, 5));
+
+                    break;
+                case LocalValues.VALUES_SHOPPAGE.RESERVE:
+                    TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
+                            .shop_reserve).setBackground(Tools.CreateDrawable(getApplication(),
+                            1, R.color.colorReserve, R.color.colorReserve, 5));
+
+                    break;
+            }
             return convertView;
+
         }
 
     }
@@ -327,11 +389,7 @@ public class SearchAct extends LazyCatAct {
         /**
          * 判断用户是否登录状态
          */
-
-        XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(false);
-        xmlInstance.initDom();
-        xmlInstance.setXmlTree(LocalAction.ACTION_LOCALUSERPAGE.ACTION_USER, userAccount);/*用户账户*/
-        xmlInstance.setXmlTree(LocalAction.ACTION_LOCALUSERPAGE.ACTION_TOKEN, userToken);/*用户密码*/
+        XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(true);
         xmlInstance.overDom();
         Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_INITSEARCH, new
                 ProgramInterface() {
@@ -430,6 +488,27 @@ public class SearchAct extends LazyCatAct {
     class viewpage {
         TextView title;
         TextView _static;
+    }
+
+    class Key_result {
+        String title;
+        String status;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
     }
 
 }

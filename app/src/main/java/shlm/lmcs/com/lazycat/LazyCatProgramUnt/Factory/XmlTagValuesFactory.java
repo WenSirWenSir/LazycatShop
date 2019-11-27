@@ -29,6 +29,7 @@ public class XmlTagValuesFactory {
 
     /**
      * 获取赠送商品的page
+     *
      * @return
      */
     public static Giftshopvalues getGiftshopvalues() {
@@ -755,6 +756,79 @@ public class XmlTagValuesFactory {
         Boolean isOnlyVipPay;
         Boolean isPaythis;/*判断是否购买*/
         String payHow;/*购买数量*/
+
+        String st_Brandimg;/*品牌图片*/
+        String st_Brandaddr;/*品牌地址*/
+        String st_Brandtitle;/*品牌标题*/
+        String st_BusinessLong;/*对接商家的经度*/
+        String st_businessLat;/*对接商家的维度*/
+        Boolean Vip;
+
+        public Boolean getVip() {
+            return Vip;
+        }
+
+        public void setVip(Boolean vip) {
+            Vip = vip;
+        }
+
+        public String getSt_BusinessLong() {
+            return st_BusinessLong;
+        }
+
+        public void setSt_BusinessLong(String st_BusinessLong) {
+            this.st_BusinessLong = st_BusinessLong;
+        }
+
+        public String getSt_businessLat() {
+            return st_businessLat;
+        }
+
+        public void setSt_businessLat(String st_businessLat) {
+            this.st_businessLat = st_businessLat;
+        }
+
+        boolean st_loginin;/*判断是否登录*/
+
+        public boolean getSt_loginin() {
+            return st_loginin;
+        }
+
+        public void setSt_loginin(boolean st_loginin) {
+            this.st_loginin = st_loginin;
+        }
+
+        public Boolean getOnlyVipPay() {
+            return isOnlyVipPay;
+        }
+
+        public void setOnlyVipPay(Boolean onlyVipPay) {
+            isOnlyVipPay = onlyVipPay;
+        }
+
+        public String getSt_Brandimg() {
+            return st_Brandimg;
+        }
+
+        public void setSt_Brandimg(String st_Brandimg) {
+            this.st_Brandimg = st_Brandimg;
+        }
+
+        public String getSt_Brandaddr() {
+            return st_Brandaddr;
+        }
+
+        public void setSt_Brandaddr(String st_Brandaddr) {
+            this.st_Brandaddr = st_Brandaddr;
+        }
+
+        public String getSt_Brandtitle() {
+            return st_Brandtitle;
+        }
+
+        public void setSt_Brandtitle(String st_Brandtitle) {
+            this.st_Brandtitle = st_Brandtitle;
+        }
 
         public Boolean getPaythis() {
             return isPaythis;

@@ -46,6 +46,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.RefreshScrollView;
 import shlm.lmcs.com.lazycat.LazyShopAct.ScanQRCodeAct;
+import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.ShowshopOffice;
 import shlm.lmcs.com.lazycat.LazyShopPage.LocalPage;
 import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
@@ -309,19 +310,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                 .OnClickListener() {
             @Override
             public void onClick(View v) {
-/*
-                LazyCatFragmetStartAct(WXPayEntryActivity.class);
-*/
-/*
-                String nonce_str = Utils.getOutTradNo();
-                final WxpayinitInstance wxpayinitInstance = new WxpayinitInstance(getContext(),
-                        "支付测试", "APP支付测试", Utils.getOutTradNo(), "1");
-                wxpayinitInstance.startWxPay();
-*/
-
-                /*
                 LazyCatFragmetStartAct(SearchAct.class);
-*/
             }
         });
 
@@ -1130,6 +1119,12 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                                     Log.e(MSG, "bigCenterHeadpageInstantce为NULL没有初始化");
                                 }
                             }
+                            /*获取中间横向图片的点击地址*/
+                            if(tag.equals(LocalPage.BigCenterHeadpageInstance.XML_TAG_CENTER_HEAD_URL)){
+                                if (bigCenterHeadpageInstance != null) {
+                                    bigCenterHeadpageInstance.setHeadurl(pullParser.nextText().trim());
+                                }
+                            }
 
 
                             /**
@@ -1537,6 +1532,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         /**
          * 为所有的ITEM的图片设置监听事件
          */
+        /*设置中间的Item的点击事件*/
         /*设置第二行第二个图片的点击跳转地址*/
         RelativeLayoutUnt.with(item, R.id.fragment_main_secondSmallNavBBody).setOnclick(new View
                 .OnClickListener() {
@@ -1571,7 +1567,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                 toOpenWindowtools.toStart();
             }
         }).setTag(secondSmallNavAPage.getSecondSmallDClickUrl().trim());
-
         /*第三行第一个BODY设置点击事件*/
         RelativeLayoutUnt.with(item, R.id.fragment_main_threeAbody).setOnclick(new View
                 .OnClickListener() {
@@ -1604,7 +1599,15 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                 toOpenWindowtools.toStart();
             }
         }).setTag(threeNavPageInstance.getNavCurl().trim());
-
+        /*设置中间的Item的加载事件*/
+        RelativeLayoutUnt.with(item,R.id.fragment_main_CenterHeadBody).setOnclick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String _url = v.getTag().toString().trim();
+                ToOpenWindowtools toOpenWindowtools = new ToOpenWindowtools(getContext(), _url);
+                toOpenWindowtools.toStart();
+            }
+        }).setTag(bigCenterHeadpageInstance.getHeadurl().trim());
         /*加载第三个导航的第一个竖向的图片*/
         Glide.with(getContext()).load(threeNavPageInstance.getNavAimg()).skipMemoryCache(false)
                 .diskCacheStrategy(DiskCacheStrategy.NONE).into(threeNavAimg);

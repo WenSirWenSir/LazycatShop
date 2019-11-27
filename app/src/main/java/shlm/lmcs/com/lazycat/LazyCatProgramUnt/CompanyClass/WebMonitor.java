@@ -6,11 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
+import android.widget.Toast;
 
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.XmlBuilder;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyShopAct.SearchAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.ShowshopOffice;
 import shlm.lmcs.com.lazycat.LazyShopAct.SystemAct.SystemAddtoVip;
+import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
+import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 
 /**
  * 网页调用的方法
@@ -26,6 +33,7 @@ import shlm.lmcs.com.lazycat.LazyShopAct.SystemAct.SystemAddtoVip;
 public class WebMonitor {
     private Context mContext;
     private Activity mAc;
+    private String MSG = "WebMonitor.java[+]";
 
     public WebMonitor(Context _Context, Activity ac) {
         this.mAc = ac;
@@ -123,9 +131,40 @@ public class WebMonitor {
      * 启动登录
      */
     @JavascriptInterface
-
     public void StartLogin() {
 
+    }
+
+    @JavascriptInterface
+    public void Getvip() {
+        /*获取一个Vip*/
+        LocalProgramTools.UserToolsInstance userToolsInstance = new LocalProgramTools
+                .UserToolsInstance();
+        if(userToolsInstance.isLogin()){
+            XmlBuilder.XmlInstance xmlInstance  =XmlBuilder.getXmlinstanceBuilder(true);
+            xmlInstance.overDom();
+            Net.doPostXml(mContext, LocalValues.HTTP_ADDRS.HTTP_ADDR_GET_EVENT_VIP, new ProgramInterface() {
+                @Override
+                public void onSucess(String data, int code, WaitDialog.RefreshDialog
+                        _refreshDialog) {
+                    Log.i(MSG,"获取Vip登录用户获取到的信息为:" + data.trim());
+                }
+
+                @Override
+                public WaitDialog.RefreshDialog onStartLoad() {
+                    /*初始化一个DIALOG*/
+                    return null;
+                }
+
+                @Override
+                public void onFaile(String data, int code) {
+
+                }
+            },xmlInstance.getXmlTree().trim());
+        }
+        else{
+            Toast.makeText(mContext,"不好意思,您还没有登录云仓库",Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -256,7 +295,7 @@ public class WebMonitor {
     @JavascriptInterface
     public void startWxpay(String payPrice, String attach, String body, String outtradeno) {
         Intent i = new Intent();
-        i.setClass(mContext,SystemAddtoVip.class);
+        i.setClass(mContext, SystemAddtoVip.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(i);
     }

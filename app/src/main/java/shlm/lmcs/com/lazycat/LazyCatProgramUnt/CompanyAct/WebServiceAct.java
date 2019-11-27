@@ -113,6 +113,7 @@ public class WebServiceAct extends LazyCatAct {
         }
         _WebView.addJavascriptInterface(new WebMonitor(getApplicationContext(), this),
                 "webmonitor");
+        _WebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         /*设置不显示滚动条*/
         _WebView.setHorizontalScrollBarEnabled(false);
         _WebView.setVerticalScrollBarEnabled(false);
