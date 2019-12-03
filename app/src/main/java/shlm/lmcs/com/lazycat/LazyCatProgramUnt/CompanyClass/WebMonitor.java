@@ -140,14 +140,22 @@ public class WebMonitor {
         /*获取一个Vip*/
         LocalProgramTools.UserToolsInstance userToolsInstance = new LocalProgramTools
                 .UserToolsInstance();
-        if(userToolsInstance.isLogin()){
-            XmlBuilder.XmlInstance xmlInstance  =XmlBuilder.getXmlinstanceBuilder(true);
+        if (userToolsInstance.isLogin()) {
+            XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(true);
             xmlInstance.overDom();
-            Net.doPostXml(mContext, LocalValues.HTTP_ADDRS.HTTP_ADDR_GET_EVENT_VIP, new ProgramInterface() {
+            LocalValues.HTTP_ADDRS http_addrs = LocalValues.getHttpaddrs(mContext);
+            Net.doPostXml(mContext, http_addrs.HTTP_ADDR_GET_EVENT_VIP, new
+                    ProgramInterface() {
                 @Override
                 public void onSucess(String data, int code, WaitDialog.RefreshDialog
                         _refreshDialog) {
-                    Log.i(MSG,"获取Vip登录用户获取到的信息为:" + data.trim());
+                    if (data.trim().equals(LocalValues.NET_ERROR)) {
+                        Toast.makeText(mContext, "领取Vip失败,请您确定你登录云仓库.并且没有领取过Vip会员", Toast
+                                .LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(mContext, "您已经领取成功啦", Toast.LENGTH_SHORT).show();
+                    }
+                    Log.i(MSG, "获取Vip登录用户获取到的信息为:" + data.trim());
                 }
 
                 @Override
@@ -160,10 +168,9 @@ public class WebMonitor {
                 public void onFaile(String data, int code) {
 
                 }
-            },xmlInstance.getXmlTree().trim());
-        }
-        else{
-            Toast.makeText(mContext,"不好意思,您还没有登录云仓库",Toast.LENGTH_SHORT).show();
+            }, xmlInstance.getXmlTree().trim());
+        } else {
+            Toast.makeText(mContext, "不好意思,您还没有登录云仓库", Toast.LENGTH_SHORT).show();
         }
     }
 

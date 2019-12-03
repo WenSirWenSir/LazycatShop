@@ -94,6 +94,8 @@ public class ShowshopOffice extends LazyCatAct {
     private final static int MSG_CLEAR_COUNT_DOWN_ADAVERT = 1;
     private DisplayMetrics metrics;
     private Boolean IsVip;
+    /*地址工具类*/
+    private LocalValues.HTTP_ADDRS http_addrs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +103,8 @@ public class ShowshopOffice extends LazyCatAct {
         setContentView(R.layout.activity_showshopoffice);
         setTransparentBar();
         userToolsInstance = LocalProgramTools.getUserToolsInstance();
+        /*获取地址工具类*/
+        http_addrs = LocalValues.getHttpaddrs(getApplicationContext());
 
         /**
          * 设置促销的标题
@@ -187,8 +191,8 @@ public class ShowshopOffice extends LazyCatAct {
         xmlInstance.setXmlTree(LocalAction.ACTION, getshopAction);
         xmlInstance.setXmlTree(LocalAction.ACTION_SEARCHKEY.ACTION_KEYWORD, shopmesage);
         xmlInstance.overDom();
-        Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GET_SHOPVALUES,
-                new ProgramInterface() {
+        Net.doPostXml(getApplicationContext(), http_addrs.HTTP_ADDR_GET_SHOPVALUES, new
+                ProgramInterface() {
             @Override
             public void onSucess(String data, int code, final WaitDialog.RefreshDialog
                     _refreshDialog) {
@@ -337,7 +341,6 @@ public class ShowshopOffice extends LazyCatAct {
                                     shopvalues.setSt_loginin(false);
                                 }
                             }
-
                             /*获取商家的物理经度*/
                             if (tag.equals(LocalAction.ACTION_INTERFACE_BUSINESS
                                     .INTERFACE_BUSINESS_LONG)) {
@@ -487,8 +490,8 @@ public class ShowshopOffice extends LazyCatAct {
          */
         XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(true);
         xmlInstance.overDom();
-        Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GETUSER_VALUES,
-                new ProgramInterface() {
+        Net.doPostXml(getApplicationContext(), http_addrs.HTTP_ADDR_GETUSER_VALUES, new
+                ProgramInterface() {
             @Override
             public void onSucess(String data, int code, final WaitDialog.RefreshDialog
                     _refreshDialog) {
@@ -900,11 +903,24 @@ public class ShowshopOffice extends LazyCatAct {
             }
             /*设置批发价格*/
             TextUnt.with(SHOP_TP).setText(shopvalues.getTp());
-            /*设置零售价*/
-            int retail = Integer.valueOf(shopvalues.getRetail()) / Integer.valueOf(shopvalues
-                    .getSpec());
-            TextUnt.with(SHOP_RETAIL).setText("终端建议售价:" + String.valueOf(retail) + "元/" +
-                    shopvalues.getSplitUnit());
+            /*获取零售价*/
+            try {
+                if (shopvalues.getSpec().equals("1")) {
+                    /*为一个价格就不要填了*/
+                    TextUnt.with(SHOP_RETAIL).setText("终端建议售价:" + shopvalues.getRetail() + "元/" +
+                            shopvalues.getSplitUnit());
+                } else {
+                    String retail = Tools.deciMal(Integer.valueOf(shopvalues.getRetail()),
+                            Integer.valueOf(shopvalues.getSpec()));
+                    TextUnt.with(SHOP_RETAIL).setText("终端建议售价:" + String.valueOf(retail) + "元/" +
+                            shopvalues.getSplitUnit());
+                }
+
+            } catch (Exception e) {
+                TextUnt.with(SHOP_RETAIL).setText("终端建议售价:" + shopvalues.getRetail() + "元/" +
+                        shopvalues.getSpec() + shopvalues.getSplitUnit());
+            }
+
             /*登录之后 判断是否下单过*/
             Log.i(MSG, "用户购买数量:" + St_payhow);
             if (!St_payhow.equals("0")) {
@@ -1463,34 +1479,41 @@ public class ShowshopOffice extends LazyCatAct {
          */
 
 
-        View gitShop = LayoutInflater.from(getApplicationContext()).inflate(R.layout
-                .assembly_reservebody, null);
-        LinearLayout gitShopbody = findViewById(R.id.activity_showshopoffice_reserveBody);
-        gitShopbody.addView(gitShop);
-        /*设置重量*/
-        TextUnt.with(gitShop, R.id.assembly_reservebody_weight).setText(giftshopvalues.getWeight());
-        /*设置规格*/
-        TextUnt.with(gitShop, R.id.assembly_reservebody_spec).setText(giftshopvalues.getSpec());
-        /*设置保质期*/
-        TextUnt.with(gitShop, R.id.assembly_reservebody_pd).setText(giftshopvalues.getPd());
-        /*设置单位*/
-        TextUnt.with(gitShop, R.id.assembly_reservebody_company).setText(giftshopvalues
-                .getCompany());
-        /*生产日期*/
-        TextUnt.with(gitShop, R.id.assembly_reservebody_exp).setText(giftshopvalues.getExp());
-        /*设置库存*/
-        TextUnt.with(gitShop, R.id.assembly_reservebody_stocknumber).setText(giftshopvalues
-                .getStocknumber());
-        /*设置规格*/
-        TextUnt.with(gitShop, R.id.assembly_reservebody_msg).setText(giftshopvalues.getCondtion());
-        LinearLayout gitShopvalusbody = gitShop.findViewById(R.id.activity_gitshop_valuesBody);
-        //赠品的边框
-        gitShopvalusbody.setBackground(Tools.CreateDrawable(1, "#efefef", "#efefef", 10));
-        //加载赠品图片
-        ImageView giftimg = gitShop.findViewById(R.id.assembly_reservebody_img);
-        Glide.with(getApplicationContext()).load(LocalValues.HTTP_ADDRS.HTTP_ADDR_IMG_URL +
-                "cuxiao/20190809_a.png").diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(false).into(giftimg);
+        if (TextUtils.isEmpty(giftshopvalues.getTitle())) {
+            Log.i(MSG, "没有赠品信息");
+        } else {
+            View gitShop = LayoutInflater.from(getApplicationContext()).inflate(R.layout
+                    .assembly_reservebody, null);
+            LinearLayout gitShopbody = findViewById(R.id.activity_showshopoffice_reserveBody);
+            gitShopbody.addView(gitShop);
+            /*设置重量*/
+            TextUnt.with(gitShop, R.id.assembly_reservebody_weight).setText(giftshopvalues
+                    .getWeight());
+            /*设置规格*/
+            TextUnt.with(gitShop, R.id.assembly_reservebody_spec).setText(giftshopvalues.getSpec());
+            /*设置保质期*/
+            TextUnt.with(gitShop, R.id.assembly_reservebody_pd).setText(giftshopvalues.getPd());
+            /*设置单位*/
+            TextUnt.with(gitShop, R.id.assembly_reservebody_company).setText(giftshopvalues
+                    .getCompany());
+            /*生产日期*/
+            TextUnt.with(gitShop, R.id.assembly_reservebody_exp).setText(giftshopvalues.getExp());
+            /*设置库存*/
+            TextUnt.with(gitShop, R.id.assembly_reservebody_stocknumber).setText(giftshopvalues
+                    .getStocknumber());
+            /*设置规格*/
+            TextUnt.with(gitShop, R.id.assembly_reservebody_msg).setText(giftshopvalues
+                    .getCondtion());
+            LinearLayout gitShopvalusbody = gitShop.findViewById(R.id.activity_gitshop_valuesBody);
+            //赠品的边框
+            gitShopvalusbody.setBackground(Tools.CreateDrawable(1, "#efefef", "#efefef", 10));
+            //加载赠品图片
+            ImageView giftimg = gitShop.findViewById(R.id.assembly_reservebody_img);
+            Glide.with(getApplicationContext()).load(http_addrs.HTTP_ADDR_IMG_URL +
+                    "cuxiao/20190809_a.png").diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(false).into(giftimg);
+
+        }
     }
 
 
@@ -1590,9 +1613,8 @@ public class ShowshopOffice extends LazyCatAct {
                     LocalValues.VALUES_USERCENTER.IS_NOT_VIP);
         }
         xmlInstance.setXmlTree(LocalAction.ACTION_SENDORDER_SYSTEM.ACTION_ORDER_DISTANCE, "13");
-
         xmlInstance.overDom();
-        Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_SAVEUSERODER, new
+        Net.doPostXml(getApplicationContext(), http_addrs.HTTP_ADDR_SAVEUSERODER, new
                 ProgramInterface() {
             @Override
             public void onSucess(String data, int code, WaitDialog.RefreshDialog _refreshDialog) {

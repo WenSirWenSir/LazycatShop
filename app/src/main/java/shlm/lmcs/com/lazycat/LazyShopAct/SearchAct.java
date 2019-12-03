@@ -59,6 +59,8 @@ public class SearchAct extends LazyCatAct {
     private ArrayList<String> hotTitle;
 
     private LocalProgramTools.UserToolsInstance userToolsInstance;
+    /*获取地址工具类*/
+    private LocalValues.HTTP_ADDRS http_addrs;
 
 
     @SuppressLint({"NewApi", "ResourceType"})
@@ -82,6 +84,8 @@ public class SearchAct extends LazyCatAct {
         headTitle.setText("检索商品");
         userToolsInstance = LocalProgramTools.getUserToolsInstance();/*获取用户工具类*/
         Tools.getFocusable(input);
+        /*获取地址工具类*/
+        http_addrs = LocalValues.getHttpaddrs(getApplicationContext());
         init();
     }
 
@@ -162,7 +166,7 @@ public class SearchAct extends LazyCatAct {
                     xmlInstance.setXmlTree(LocalAction.ACTION_SEARCHKEY.ACTION_KEYWORD, s
                             .toString().trim());
                     xmlInstance.overDom();
-                    Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS
+                    Net.doPostXml(getApplicationContext(), http_addrs
                             .HTTP_ADDR_SEARCH_KEY, new ProgramInterface() {
                         @Override
                         public void onSucess(String data, int code, WaitDialog.RefreshDialog
@@ -391,7 +395,7 @@ public class SearchAct extends LazyCatAct {
          */
         XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(true);
         xmlInstance.overDom();
-        Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_INITSEARCH, new
+        Net.doPostXml(getApplicationContext(), http_addrs.HTTP_ADDR_INITSEARCH, new
                 ProgramInterface() {
             @Override
             public void onSucess(String data, int code, WaitDialog.RefreshDialog _refreshDialog) {

@@ -158,7 +158,8 @@ public class LoginAct extends LazyCatAct {
                     xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, etAccount
                             .getText().toString().trim());
                     xmlInstance.overDom();
-                    Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS
+                    LocalValues.HTTP_ADDRS http_addrs = LocalValues.getHttpaddrs(getApplicationContext());
+                    Net.doPostXml(getApplicationContext(), http_addrs
                             .HTTP_ADDR_SEND_LOGINSMS, new ProgramInterface() {
                         @Override
                         public void onSucess(String data, int code, WaitDialog.RefreshDialog
@@ -248,7 +249,8 @@ public class LoginAct extends LazyCatAct {
                 xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_CODE, etToken.getText()
                         .toString().trim());
                 xmlInstance.overDom();
-                Net.doPostXml(getApplicationContext(), LocalValues.HTTP_ADDRS
+                LocalValues.HTTP_ADDRS http_addrs = LocalValues.getHttpaddrs(getApplicationContext());
+                Net.doPostXml(getApplicationContext(), http_addrs
                         .HTTP_ADDR_INSPECT_LOGIN, new ProgramInterface() {
                     @Override
                     public void onSucess(String data, int code, WaitDialog.RefreshDialog

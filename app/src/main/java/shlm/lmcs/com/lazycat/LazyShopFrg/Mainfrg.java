@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +19,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.tencent.map.geolocation.TencentLocation;
-import com.tencent.map.geolocation.TencentLocationListener;
-import com.tencent.map.geolocation.TencentLocationManager;
-import com.tencent.map.geolocation.TencentLocationRequest;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -55,10 +50,9 @@ import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
 
 import static shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config.Windows.GET_WINDOW_VALUE_SHOP_ACTION;
-import static shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools.isPermission;
 
 @SuppressLint("HandlerLeak")
-public class Mainfrg extends LazyCatFragment implements TencentLocationListener {
+public class Mainfrg extends LazyCatFragment {
     /**
      * -------------------------------------------
      * 显示商品的参数
@@ -81,13 +75,9 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
     /**
      * 腾讯定位模块
      */
-    private TencentLocationRequest LocationRequest;
-    private TencentLocationListener locationListener;
-    private TencentLocationManager locationManager;
+    private AlertDialog alertDialog = null;
     private View item;
     private static final String MSG = "Mainfrg.java[+]";
-    private Double StLong;/*经度*/
-    private Double StLat;/*维度*/
     private String StCitycode;/*获取城市的CODE用来获取地区服务器地址*/
     /**
      * DIALOG
@@ -129,8 +119,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
     private Boolean isLoadEnd = false;/*判断是否加载完毕*/
     private Boolean isLoadShopdone = false;/*判断是否加载过首页推荐的商品了*/
     private int Position = 0;/*设置position用来底部加载*/
-    private AlertDialog alertDialog = null;
-
     private String prepay_id;
 
 
@@ -177,6 +165,8 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
      * 模块数据存储
      */
     private RefreshScrollView _RefreshScrollView;
+    LocalValues.HTTP_ADDRS http_addrs;
+
 
     /**
      * 类的实现
@@ -237,6 +227,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         threeNavCimg = item.findViewById(R.id.fragment_main_threeNavCimg);
         /*判断是否有定位权限 没有定位权限就去申请定位权限*/
         onStartMain();
+        listener(item);
         return item;
 
     }
@@ -247,25 +238,9 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
      */
     @SuppressLint("NewApi")
     private void onStartMain() {
-        if (isPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            StartLocaling();
-        } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            View item = LayoutInflater.from(getContext()).inflate(R.layout.alert_message, null);
-            builder.setView(item);
-            TextView Tv_context = item.findViewById(R.id.alert_messageText);
-            TextUnt.with(Tv_context).setText(getResources().getString(R.string.quitMsg));
-            TextView Tv_btnconfirm = item.findViewById(R.id.alert_messageBtnConfirm);
-            TextUnt.with(Tv_btnconfirm).setTextColor("#ffffff").setBackColor("#f30d65");
-            builder.setCancelable(false);
-            Tv_btnconfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getActivity().finish();
-                }
-            });
-            alertDialog = builder.show();
-        }
+        /*获取地址*/
+        http_addrs = LocalValues.getHttpaddrs(getContext());
+        getConfigXml();
     }
 
 
@@ -363,9 +338,10 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
 
             @Override
             public void onLoadBottom() {
+                Log.e(MSG,"在onLoadBottom");
                 if (!isLoadShopdone) {
-                    Net.doPostXml(getContext(), LocalValues.HTTP_ADDRS
-                            .HTT_ADDR_GETMAINPAGE_SHOWSHOP, new ProgramInterface() {
+                    Net.doPostXml(getContext(), http_addrs.HTT_ADDR_GETMAINPAGE_SHOWSHOP, new
+                            ProgramInterface() {
                         @Override
                         public void onSucess(String data, int code, WaitDialog.RefreshDialog
                                 _refreshDialog) {
@@ -495,7 +471,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                      * 处理首页的商品展示信息 每次加载3个数据
                      */
                     toHandlerShoplist();
-
                 }
             }
 
@@ -624,62 +599,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
 
     }
 
-
-    /**
-     * 判断该地址是否开通服务
-     */
-    @SuppressLint("NewApi")
-    private void getServiceAddr(String CityCode) {
-        Net.doGet(getContext(), Config.HTTP_ADDR.getIsServiceIn(), new Net
-                .onVisitInterServiceListener() {
-            @Override
-            public WaitDialog.RefreshDialog onStartLoad() {/*初始化一个DIALOG*/
-                /*初始化一个DIALOG*/
-                final WaitDialog.RefreshDialog refreshDialog = new WaitDialog.RefreshDialog
-                        (getContext());
-                WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
-                wait_itme_dialogpage.setImg(R.id.item_wait_img);
-                wait_itme_dialogpage.setView(R.layout.item_wait);
-                wait_itme_dialogpage.setCanClose(false);
-                wait_itme_dialogpage.setTitle(R.id.item_wait_title);
-                refreshDialog.Init(wait_itme_dialogpage);
-                refreshDialog.showRefreshDialog("加载中...", false);
-                return refreshDialog;
-            }
-
-            @Override
-            public void onSucess(String tOrgin, final WaitDialog.RefreshDialog _RefreshDialog) {
-                _RefreshDialog.dismiss();
-                if (!TextUtils.isEmpty(tOrgin)) {
-                    /*调试输出*/
-                    LocalProgramTools.ProgramServiceTools programServiceTools = LocalProgramTools
-                            .getServiceToolsInstatnce();
-                    programServiceTools.set_Service(tOrgin.trim());
-                    programServiceTools.SaveService(getContext());/*保存服务器*/
-                    /*不是为空的话 就去访问网络*/
-                    checkPermission();
-                    getConfigXml();/*获取首页的配置文件*/
-                } else {
-                    /*没有地址  没有开放*/
-                    Log.i(MSG, "该地区服务器地址没开放");
-
-                }
-                Log.i(MSG, tOrgin.trim());
-            }
-
-            @Override
-            public void onNotConnect() {
-
-            }
-
-            @Override
-            public void onFail(String tOrgin) {
-
-            }
-        }, Config.HttpAction.ACTION_CITYCODE, CityCode);
-    }
-
-
     /**
      * 获取首页的配置信息
      */
@@ -689,7 +608,7 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
          * 获取地区服务器关于该地址的首页配置信息
          * fragment_main_bigHeadMsg
          */
-        Net.doGet(getContext(), LocalValues.HTTP_ADDRS.HTTP_ADDR_GET_MAINCONFIGPAGE, new Net
+        Net.doGet(getContext(), http_addrs.HTTP_ADDR_GET_MAINCONFIGPAGE, new Net
                 .onVisitInterServiceListener() {
             @Override
             public WaitDialog.RefreshDialog onStartLoad() {
@@ -1120,9 +1039,11 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                                 }
                             }
                             /*获取中间横向图片的点击地址*/
-                            if(tag.equals(LocalPage.BigCenterHeadpageInstance.XML_TAG_CENTER_HEAD_URL)){
+                            if (tag.equals(LocalPage.BigCenterHeadpageInstance
+                                    .XML_TAG_CENTER_HEAD_URL)) {
                                 if (bigCenterHeadpageInstance != null) {
-                                    bigCenterHeadpageInstance.setHeadurl(pullParser.nextText().trim());
+                                    bigCenterHeadpageInstance.setHeadurl(pullParser.nextText()
+                                            .trim());
                                 }
                             }
 
@@ -1369,8 +1290,8 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
                                         .OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Net.doDownloadApk(LocalValues.HTTP_ADDRS
-                                                .HTTP_ADDR_UPDATE_APK, getContext());
+                                        Net.doDownloadApk(http_addrs.HTTP_ADDR_UPDATE_APK,
+                                                getContext());
                                     }
                                 });
                                 UpdateDialog = builder.show();
@@ -1600,7 +1521,8 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
             }
         }).setTag(threeNavPageInstance.getNavCurl().trim());
         /*设置中间的Item的加载事件*/
-        RelativeLayoutUnt.with(item,R.id.fragment_main_CenterHeadBody).setOnclick(new View.OnClickListener() {
+        RelativeLayoutUnt.with(item, R.id.fragment_main_CenterHeadBody).setOnclick(new View
+                .OnClickListener() {
             @Override
             public void onClick(View v) {
                 String _url = v.getTag().toString().trim();
@@ -1620,94 +1542,6 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
 
 
     }
-
-
-    /**
-     * 腾讯地图
-     *
-     * @param tencentLocation
-     * @param i
-     * @param s
-     */
-    @SuppressLint("NewApi")
-    @Override
-    public void onLocationChanged(TencentLocation tencentLocation, int i, String s) {
-        try {
-            if (TencentLocation.ERROR_OK == 0) {
-                //定位成功  就整理界面
-                Log.i(MSG, "获取的地址为:" + tencentLocation.getCityCode());
-                StCitycode = tencentLocation.getCityCode();
-                /*莫名的定位失败就重新打开应用*/
-                if (tencentLocation.getCityCode() == null) {
-                    locationManager.removeUpdates(this);
-                    LocationRequest = null;
-                    /*确定用户的物理地址*/
-                    LocationRequest = TencentLocationRequest.create();
-                    LocationRequest.setInterval(1000);
-                    LocationRequest.setAllowCache(false);
-                    //包含经纬度位置所处的中国大陆行政划区
-                    LocationRequest.setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_POI);//
-                    locationManager = TencentLocationManager.getInstance(getContext());
-                    locationManager.requestLocationUpdates(LocationRequest, this);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    View item = LayoutInflater.from(getContext()).inflate(R.layout.alert_message,
-                            null);
-                    TextView Tv_title = item.findViewById(R.id.alert_messageTitle);
-                    TextUnt.with(Tv_title).setText("错误提示").setTextColor("#f30d65");
-                    TextView Tv_context = item.findViewById(R.id.alert_messageText);
-                    TextUnt.with(Tv_context).setText(getResources().getString(R.string
-                            .ErrorNoCityCode)).setTextColor("#f03d65");
-                    TextView Tv_btnconfirm = item.findViewById(R.id.alert_messageBtnConfirm);
-                    TextUnt.with(Tv_btnconfirm).setText("重新启动").setTextColor("#ffffff")
-                            .setBackColor("#f30d65");
-                    Tv_btnconfirm.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            getActivity().finish();
-                        }
-                    });
-                    builder.setView(item);
-                    //alertDialog = builder.show();
-                } else {
-                    getServiceAddr(StCitycode);
-                    StLong = tencentLocation.getLongitude();/*获取经度*/
-                    StLat = tencentLocation.getLatitude();/*获取维度*/
-                    locationManager.removeUpdates(this);
-                    /**
-                     * 定位成功  获取地区服务器地址
-                     */
-                    listener(item);
-
-                }
-
-            } else {
-                /*定位失败  直接弹出对话框 禁止整理界面*/
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                View item = LayoutInflater.from(getContext()).inflate(R.layout.alert_message, null);
-                TextView Tv_title = item.findViewById(R.id.alert_messageTitle);
-                TextUnt.with(Tv_title).setText("错误提示").setTextColor("#f30d65");
-                /*错误的内容*/
-                TextView Tv_context = item.findViewById(R.id.alert_messageText);
-                Tv_context.setText(getResources().getString(R.string.ErrorLocal));
-                /*知晓的按钮*/
-                TextView Tv_btnConfirm = item.findViewById(R.id.alert_messageBtnConfirm);
-                TextUnt.with(Tv_btnConfirm).setText("我已知晓").setTextColor("#ffffff").setBackColor
-                        ("#f30d65");
-                builder.setView(item);
-                builder.show();
-                Toast.makeText(getContext(), "定位失败,错误原因:" + i, Toast.LENGTH_SHORT).show();
-            }
-
-        } catch (Exception e) {
-            Log.e(MSG, "处理定位的时候发生失败:" + e.getMessage());
-        }
-    }
-
-    @Override
-    public void onStatusUpdate(String s, int i, String s1) {
-
-    }
-
 
     /**
      * 定义一个类 用来存储首页中Big_headImg的参数信息
@@ -1855,22 +1689,4 @@ public class Mainfrg extends LazyCatFragment implements TencentLocationListener 
         }
 
     }
-
-    /**
-     * 获取用户的地理位置
-     */
-    @SuppressLint("NewApi")
-    private void StartLocaling() {
-        /*确定用户的物理地址*/
-        LocationRequest = TencentLocationRequest.create();
-        LocationRequest.setInterval(1000);
-        LocationRequest.setAllowCache(false);
-        //包含经纬度位置所处的中国大陆行政划区
-        LocationRequest.setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_POI);//
-        locationManager = TencentLocationManager.getInstance(getContext());
-        int error = locationManager.requestLocationUpdates(LocationRequest, this);
-        Log.i(MSG, "腾讯地图调用:" + error);
-    }
-
-
 }

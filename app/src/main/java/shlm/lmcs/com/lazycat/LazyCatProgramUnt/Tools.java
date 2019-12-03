@@ -54,6 +54,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -224,6 +225,33 @@ public class Tools {
             return "";
         }
     }
+
+
+    public static void saveService(Context mContext, String service) {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences("Service", 0);
+        try {
+            sharedPreferences.edit().putString("Service", service).commit();
+        } catch (Exception e) {
+            Toast.makeText(mContext, "保存本地服务地址失败", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static String getService(Context mContext) {
+        if (mContext == null) {
+            Log.e(MSG, "错误");
+        } else {
+            SharedPreferences sharedPreferences = mContext.getSharedPreferences("Service", 0);
+            try {
+                return sharedPreferences.getString("Service", "");//如果不存在  就返回一个空字符
+            } catch (Exception e) {
+                Log.i(Config.DEBUG, "LeftCompanyProgram Tools.java[+]" + e.getMessage());
+                return "";
+            }
+        }
+        return "";
+
+    }
+
 
     /**
      * saved user data
@@ -1083,6 +1111,13 @@ public class Tools {
         }
     }
 
+    /**
+     * 两个数字两相减
+     *
+     * @param a
+     * @param b
+     * @return
+     */
     public static String calcTodel(String a, String b) {
         try {
             return String.format("%.2f", Float.parseFloat(a) - Float.parseFloat(b));
@@ -1091,6 +1126,24 @@ public class Tools {
         }
 
     }
+
+    /**
+     * 两个数字相除
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static String deciMal(int a, int b) {
+        try {
+            double resulte = new BigDecimal((float) a / b).setScale(2, BigDecimal.ROUND_HALF_UP)
+                    .doubleValue();
+            return String.valueOf(resulte);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
 
     /**
      * 获取一个精确到秒的时间戳
@@ -1112,7 +1165,7 @@ public class Tools {
 /*
         SimpleDateFormat sdr = new SimpleDateFormat("yyyy年MM月dd日HH时mm分ss秒");
 */
-        SimpleDateFormat sdr = new SimpleDateFormat("yyyy年MM月dd日HH时");
+        SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM-dd/HH");
         @SuppressWarnings("unused") long lcc = Long.valueOf(_stamp);
         int i = Integer.parseInt(_stamp);
         String times = sdr.format(new Date(i * 1000L));

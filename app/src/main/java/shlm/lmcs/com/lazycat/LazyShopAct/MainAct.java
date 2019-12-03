@@ -58,7 +58,7 @@ public class MainAct extends LazyCatAct {
         frameLayout = findViewById(R.id.activity_main_Framelayout);/*管理控件*/
         /*设置监听器*/
         ft.add(R.id.activity_main_Framelayout, mainfrg);
-        ft.commit();
+        ft.commitAllowingStateLoss();
         /*获取定位的DIALOG*/
         //找寻对于的ID号码
         btn_main = findViewById(R.id.activity_main_btn_IcoMain);//主界面
@@ -300,7 +300,10 @@ public class MainAct extends LazyCatAct {
         switch (position) {
             case ICO_FRAGMENT_MAIN:
                 if (mainfrg != null) {
-                    ft.show(mainfrg);
+                    ft.remove(mainfrg);/*先移除*/
+                    mainfrg = null;
+                    mainfrg = new Mainfrg();
+                    ft.add(R.id.activity_main_Framelayout,mainfrg);
                 } else {
                     mainfrg = new Mainfrg();
                     ft.add(R.id.activity_main_Framelayout, mainfrg);
@@ -411,7 +414,7 @@ public class MainAct extends LazyCatAct {
 
                 break;
         }
-        ft.commit();
+        ft.commitAllowingStateLoss();
         /*重新吊起*/
         Log.e(MSG, "MainAct.java[+]重新吊起");
         super.onRestart();

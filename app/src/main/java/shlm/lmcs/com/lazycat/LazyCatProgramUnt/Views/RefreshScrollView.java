@@ -120,8 +120,10 @@ public class RefreshScrollView extends ScrollView {
     }
 
     public void SetLinstener(RefreshScrollViewListener i) {
+        Log.i(MSG,"初始化设置监听事件");
         if (i != null) {
             this._RefreshScrollViewListener = i;
+            Log.i(MSG,"设置滑动监听事件成功");
         } else {
             Log.e(Config.DEBUG, "RefreshScrollView.java[+]监听事件对象为空");
         }
@@ -289,6 +291,9 @@ public class RefreshScrollView extends ScrollView {
             Log.i(Config.DEBUG, "RefreshScrollView.java[+]滑动到底部");
             if (_RefreshScrollViewListener != null) {
                 _RefreshScrollViewListener.onLoadBottom();//滑动到底部
+            }
+            else{
+                Log.e(MSG,"_RefreshScrollViewListener为NULL");
             }
         }
     }
