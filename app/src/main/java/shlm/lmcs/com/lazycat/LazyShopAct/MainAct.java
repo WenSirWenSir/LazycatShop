@@ -70,8 +70,11 @@ public class MainAct extends LazyCatAct {
          * 测试 设置MESSAGE的数量
          */
 
+        TextUnt.with(this,R.id.activity_main_messageNumber).setVisibility(false);
+/*
         findViewById(R.id.activity_main_messageNumber).setBackground(Tools.CreateDrawable(1,
                 "#08c299", "#08c299", 50));
+*/
         /**
          * 设置初始化的界面
          */

@@ -27,9 +27,11 @@ import java.util.List;
 import java.util.Map;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.LOAD_IMAGEPAGE;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.ImageCache;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
+import shlm.lmcs.com.lazycat.R;
 
 /**
  * 网络访问模块  有关于网络访问的监听和提交事件都在这里
@@ -389,8 +391,15 @@ public class Net {
     @SuppressLint("StaticFieldLeak")
     public static void doDownloadApk(final String apk_url, final Context _context) {
         Log.i("Net.java[+]", "开始更新文件");
+        final WaitDialog.RefreshDialog refreshDialog = new WaitDialog.RefreshDialog(_context);
+        WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+        wait_itme_dialogpage.setImg(R.id.item_wait_img);
+        wait_itme_dialogpage.setView(R.layout.item_wait);
+        wait_itme_dialogpage.setCanClose(false);
+        wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+        refreshDialog.Init(wait_itme_dialogpage);
+        refreshDialog.showRefreshDialog("请稍后...", false);
         new AsyncTask<String, Void, Boolean>() {
-
             @Override
             protected Boolean doInBackground(String... strings) {
                 URL http_url;
@@ -428,17 +437,19 @@ public class Net {
 
             @Override
             protected void onPostExecute(Boolean aBoolean) {
+                refreshDialog.dismiss();
                 if (aBoolean) {
                     /*开始要求用户安装新的程序*/
                     Log.i("Net.java[+]", "下载APK成功");
                     Intent i = new Intent();
-                    Uri contentUr = FileProvider.getUriForFile(_context, "shlm.lmcs.com.lazycat" +
-                            ".fileprovider", new File(Environment.getExternalStorageDirectory() +
-                            "/yunCanku.apk"));
+                    Uri contentUr = FileProvider.getUriForFile(_context, "shlm.lmcs.com.lazycat"
+                            + ".fileprovider", new File(Environment.getExternalStorageDirectory()
+                            + "/yunCanku.apk"));
                     Log.i("Net.java[+]", contentUr.toString());
                     i.setDataAndType(contentUr, "application/vnd.android.package-archive");
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION|Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent
+                            .FLAG_GRANT_READ_URI_PERMISSION);
                     _context.startActivity(i);
                 } else {
                     Toast.makeText(_context, "无法下载更新文件", Toast.LENGTH_SHORT).show();

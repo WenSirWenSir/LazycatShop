@@ -79,8 +79,6 @@ public class lazyCatLogAct extends LazyCatAct {
         /**
          * 测试代码区
          */
-        TextUnt.with(this, R.id.sha1).setText(sHA1(getApplicationContext()));
-        Log.e(MSG, "sh1值为:" + sHA1(getApplicationContext()));
         aMapLocationClientOption = new AMapLocationClientOption();
         mapLocationClient = new AMapLocationClient(getApplicationContext());
         aMapLocationClientOption.setNeedAddress(true);

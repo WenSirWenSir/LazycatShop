@@ -153,6 +153,7 @@ public class WebMonitor {
                         Toast.makeText(mContext, "领取Vip失败,请您确定你登录云仓库.并且没有领取过Vip会员", Toast
                                 .LENGTH_SHORT).show();
                     } else {
+
                         Toast.makeText(mContext, "您已经领取成功啦", Toast.LENGTH_SHORT).show();
                     }
                     Log.i(MSG, "获取Vip登录用户获取到的信息为:" + data.trim());

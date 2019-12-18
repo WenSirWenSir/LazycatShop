@@ -69,7 +69,7 @@ public class ShowshopOffice extends LazyCatAct {
     private TextView SHOP_EXP;/*商品的生产日期*/
     private TextView SHOP_SPEC;/*商品的品牌*/
     private TextView SHOP_GRADE;/*商品的等级*/
-    private TextView SHOP_BARCODE;/*商品的条码*/
+    private TextView SHOP_WEIGHT;/*商品的条码*/
     private TextView SHOP_RETAIL;/*商品的零售价格*/
     private TextView SHOP_SHOWBRAND;/*商品显示的品牌*/
     private TextView SHOP_BUSINESS;/*商品的供货单位*/
@@ -105,6 +105,7 @@ public class ShowshopOffice extends LazyCatAct {
         userToolsInstance = LocalProgramTools.getUserToolsInstance();
         /*获取地址工具类*/
         http_addrs = LocalValues.getHttpaddrs(getApplicationContext());
+        /*清空赠品*/
 
         /**
          * 设置促销的标题
@@ -130,7 +131,7 @@ public class ShowshopOffice extends LazyCatAct {
         /*商品的等级*/
         SHOP_GRADE = findViewById(R.id.activity_showshopoffice_grade);
         /*商品的条码*/
-        SHOP_BARCODE = findViewById(R.id.activity_showshopoffice_barcode);
+        SHOP_WEIGHT = findViewById(R.id.activity_showshopoffice_weight);
         /*商品的零售价格*/
         SHOP_RETAIL = findViewById(R.id.activity_showshopoffice_retail);
         /*显示虚线的价格*/
@@ -198,6 +199,7 @@ public class ShowshopOffice extends LazyCatAct {
                     _refreshDialog) {
                 Log.i(MSG, "商品数据:" + data.trim());
                 _refreshDialog.dismiss();
+                shopData = "";
                 shopData = data.trim();
                 XmlanalysisFactory xml = new XmlanalysisFactory(data.trim());
                 xml.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
@@ -359,6 +361,16 @@ public class ShowshopOffice extends LazyCatAct {
                                     shopvalues.setVip(true);
                                 }
                             }
+                            /*获取商品的库存数量*/
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                    .ACTION_SHOPVALUES_STOCKNUMBER)) {
+                                shopvalues.setShopStocknumber(pullParser.nextText().trim());
+                            }
+                            /*商品的重量符号*/
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                    .ACTION_SHOPVALUES_WEIGHTSYMBOL)) {
+                                shopvalues.setWeightSymbol(pullParser.nextText().trim());
+                            }
                         } catch (Exception e) {
 
                         }
@@ -367,17 +379,15 @@ public class ShowshopOffice extends LazyCatAct {
 
                     @Override
                     public void onEndTag(String tag, XmlPullParser pullParser, Integer id) {
-                        if (tag.equals(LocalAction.ACTION_SHOPVALUES.ACTION_SHOPVALUES_START)) {
-                            /*处理完毕了*/
-                            initMainpage();
-                            listener();
-                        }
 
                     }
 
                     @Override
                     public void onEndDocument() {
-                        /*文档处理完毕 就关闭显示的等待的LOGO*/
+                        /*处理完毕了*/
+                        initMainpage();
+                        getGiftshop(); /*判断该商品是不是有赠品信息*/
+                        listener();
 
                     }
                 });
@@ -459,19 +469,25 @@ public class ShowshopOffice extends LazyCatAct {
             @Override
             public void onClick(View v) {
                 TextView tv = (TextView) v;
-                if ((Boolean) v.getTag()) {
+                if (tv.getText().toString().trim().indexOf("商品库存不足") != -1) {
+                    Toast.makeText(getApplicationContext(), "不好意思,商品库存不足暂时不支持供货!", Toast
+                            .LENGTH_SHORT).show();
+
+                } else if (tv.getText().toString().trim().indexOf("通知仓库发货") != -1) {
                     showOrderConfirm();
-                } else {
-                    /*判断是否为发送订单了*/
-                    if (tv.getText().toString().trim().indexOf("仓库发货") != -1 || tv.getText()
-                            .toString().trim().indexOf("您已经预定") != -1) {
-                        Toast.makeText(getApplicationContext(), "您已成功提交,暂不支持补单哦!", Toast
-                                .LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "您没有登录,请您登录后发送订货单", Toast
-                                .LENGTH_SHORT).show();
-                    }
+                } else if (tv.getText().toString().trim().indexOf("仓库发货") != -1 || tv.getText()
+                        .toString().trim().indexOf("您已经预定") != -1) {
+                    Toast.makeText(getApplicationContext(), "您已成功提交,暂不支持补单哦!", Toast.LENGTH_LONG)
+                            .show();
+                } else if (tv.getText().toString().trim().indexOf("拼团") != -1) {
+                    showOrderConfirm();
+                } else if (tv.getText().toString().trim().indexOf("预定") != -1) {
+                    showOrderConfirm();
+                } else if (tv.getText().toString().trim().indexOf("登录") != -1) {
+                    Toast.makeText(getApplicationContext(), "您没有登录,请您登录后发送订货单", Toast
+                            .LENGTH_SHORT).show();
                 }
+
 
             }
         });
@@ -866,11 +882,11 @@ public class ShowshopOffice extends LazyCatAct {
         if (shopvalues.getSt_loginin()) {
             /*判断用户是否为Vip*/
             if (shopvalues.getVip()) {
-                TextUnt.with(this, R.id.activity_showshopoffice_deliverVip).setText("Vip超时赔付")
+                TextUnt.with(this, R.id.activity_showshopoffice_deliverVip).setText("Vip售后保障")
                         .setBackground(Tools.CreateDrawable(getApplicationContext(), 1, R.color
                                 .colorVip, R.color.colorVip, 5)).setTextColor("#ffffff");
             } else {
-                TextUnt.with(this, R.id.activity_showshopoffice_deliverVip).setText("Vip超时赔付")
+                TextUnt.with(this, R.id.activity_showshopoffice_deliverVip).setText("Vip售后保障")
                         .setBackground(Tools.CreateDrawable(getApplicationContext(), 1, R.color
                                 .colornoVip, R.color.colornoVip, 5)).setTextColor("#ffffff");
             }
@@ -938,9 +954,20 @@ public class ShowshopOffice extends LazyCatAct {
 
                 }
             } else {
-                TextUnt.with(btnAccount).setText("通知仓库发货").setBackground(Tools.CreateDrawable(1,
-                        getResources().getString(R.color.ThemeColor), getResources().getString(R
-                                .color.ThemeColor), 5)).setTextColor("#ffffff").setTag(true);
+                Log.i(MSG, "存库数量:" + Integer.valueOf(shopvalues.getShopStocknumber()));
+                if (Integer.valueOf(shopvalues.getShopStocknumber()) >= 1) {
+                    TextUnt.with(btnAccount).setText("通知仓库发货").setBackground(Tools.CreateDrawable
+                            (1, getResources().getString(R.color.ThemeColor), getResources()
+                                    .getString(R.color.ThemeColor), 5)).setTextColor("#ffffff")
+                            .setTag(true);
+
+                } else {
+                    TextUnt.with(btnAccount).setText("商品库存不足").setBackground(Tools.CreateDrawable
+                            (1, getResources().getString(R.color.colornoVip), getResources()
+                                    .getString(R.color.colornoVip), 5)).setTextColor("#666666");
+
+
+                }
 
             }
         } else {
@@ -1018,6 +1045,23 @@ public class ShowshopOffice extends LazyCatAct {
                         .color_dlpsymbol).setVisibility(false);
                 TextUnt.with(this, R.id.activity_showshopoffice_dlp).setTextColor(getString(R
                         .color.color_dlpsymbol)).setText(shopvalues.getDlp()).setVisibility(false);
+                /*设置VIP减少的价格*/
+                /*不显示VIP商品的减少的价格*/
+                if(shopvalues.getVip()){
+                    /*如果是Vip就设置成VIP的颜色*/
+                    findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.VISIBLE);
+                    findViewById(R.id.activity_showshopoffice_vipTpBody).setBackground(Tools
+                            .CreateDrawable(1, getResources().getString(R.color.colorVip),
+                                    getResources().getString(R.color.colorVip), 20));
+
+                }
+                else{
+                    /*如果是不是Vip就设置成不是VIP的颜色*/
+                    findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.VISIBLE);
+                    findViewById(R.id.activity_showshopoffice_vipTpBody).setBackground(Tools
+                            .CreateDrawable(1, getResources().getString(R.color.colornoVip),
+                                    getResources().getString(R.color.colornoVip), 20));
+                }
                 break;
             case LocalValues.VALUES_SHOPPAGE.PROMOTION:
                 /*促销*/
@@ -1047,11 +1091,11 @@ public class ShowshopOffice extends LazyCatAct {
                             .setMidcourtLine();
                 }
 
-
+                /*不显示VIP商品的减少的价格*/
+                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.GONE);
                 break;
             case LocalValues.VALUES_SHOPPAGE.REDUCTION:
                 /*设置状态*/
-
                 TextUnt.with(this, R.id.activity_showshopoffice_static).setVisibility(true)
                         .setText(R.string.shop_reduction).setBackground(Tools.CreateDrawable(1,
                         getResources().getString(R.color.colorReduction), getResources()
@@ -1078,7 +1122,8 @@ public class ShowshopOffice extends LazyCatAct {
                             .setTextColor(getString(R.color.color_dlpsymbol)).setText("*.*")
                             .setMidcourtLine();
                 }
-
+                /*不显示VIP商品的减少的价格*/
+                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.GONE);
                 break;
             case LocalValues.VALUES_SHOPPAGE.VOLUME:
                 /*设置状态*/
@@ -1110,6 +1155,8 @@ public class ShowshopOffice extends LazyCatAct {
                             .setMidcourtLine();
 
                 }
+                /*不显示VIP商品的减少的价格*/
+                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.GONE);
                 break;
             case LocalValues.VALUES_SHOPPAGE.ONLY_VIP:
                 /*只有VIP可以购买*/
@@ -1142,6 +1189,8 @@ public class ShowshopOffice extends LazyCatAct {
                             .setMidcourtLine();
 
                 }
+                /*不显示VIP商品的减少的价格*/
+                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.GONE);
                 break;
 
             case LocalValues.VALUES_SHOPPAGE.ONLY_ONE:
@@ -1174,6 +1223,8 @@ public class ShowshopOffice extends LazyCatAct {
                     TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
                             .setTextColor(getString(R.color.color_dlpsymbol)).setText("*.*");
                 }
+                /*不显示VIP商品的减少的价格*/
+                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.GONE);
                 break;
             case LocalValues.VALUES_SHOPPAGE.WHOLEASALE:
                 /*设置按钮为开启拼团*/
@@ -1194,7 +1245,7 @@ public class ShowshopOffice extends LazyCatAct {
                             (true).setTextColor(R.color.color_dlpsymbol).setVisibility(true);
                     TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
                             .setTextColor(getString(R.color.color_dlpsymbol)).setText(shopvalues
-                            .getDlp());
+                            .getDlp()).setMidcourtLine();
                     /*设置价格符号的颜色*/
                 } else {
                     TextUnt.with(this, R.id.activity_showshopoffice_dlpSymbol).setVisibility
@@ -1202,6 +1253,8 @@ public class ShowshopOffice extends LazyCatAct {
                     TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
                             .setTextColor(getString(R.color.color_dlpsymbol)).setText("*.*");
                 }
+                /*不显示VIP商品的减少的价格*/
+                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.GONE);
                 break;
 
             case LocalValues.VALUES_SHOPPAGE.RESERVE:
@@ -1236,6 +1289,8 @@ public class ShowshopOffice extends LazyCatAct {
                     TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
                             .setTextColor(getString(R.color.color_dlpsymbol)).setText("*.*");
                 }
+                /*不显示VIP商品的减少的价格*/
+                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.GONE);
                 alertReserve();
                 break;
         }
@@ -1252,8 +1307,9 @@ public class ShowshopOffice extends LazyCatAct {
         TextUnt.with(SHOP_SPEC).setText("箱规:" + shopvalues.getSpec() + shopvalues.getSplitUnit());
         /*设置等级*/
         TextUnt.with(SHOP_GRADE).setText("等级:" + shopvalues.getGrade());
-        /*设置条码*/
-        TextUnt.with(SHOP_BARCODE).setText("条码:" + shopvalues.getBarcode());
+        /*设置商品重量*/
+        TextUnt.with(SHOP_WEIGHT).setText("重量:" + shopvalues.getWeight() + shopvalues
+                .getWeightSymbol() + "/" + shopvalues.getSplitUnit());
         /*设置要显示的品牌*/
         TextUnt.with(SHOP_SHOWBRAND).setText(shopvalues.getBrand());
         /*设置起订按钮*/
@@ -1367,12 +1423,12 @@ public class ShowshopOffice extends LazyCatAct {
         });
     }
 
-
-    /**
-     * 弹出一个提示框 提示用户该商品是预定商品
-     */
-    private void alertReserve() {
+    private void getGiftshop() {
+        /**
+         * 载入赠品信息
+         */
         giftshopvalues = XmlTagValuesFactory.getGiftshopvalues();
+        giftshopvalues.clear();
         XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(shopData);
         /*处理赠品数据*/
         xmlanalysisFactory.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
@@ -1392,7 +1448,16 @@ public class ShowshopOffice extends LazyCatAct {
 
                     /*赠品的标题*/
                     if (tag.equals(LocalAction.ACTION_GIFTSHOP.GIFT_TITLE)) {
+                        String a = pullParser.nextText().trim();
+                        Log.i(MSG, "赠品信息:" + a);
+                        if (TextUtils.isEmpty(a)) {
+                            giftshopvalues.setTitle("");
+                        } else {
+                            giftshopvalues.setTitle(a);
+                        }
+                        /*
                         giftshopvalues.setTitle(pullParser.nextText().trim());
+*/
                     }
                     /*赠品的规则*/
                     if (tag.equals(LocalAction.ACTION_GIFTSHOP.GIFT_CONDTION)) {
@@ -1447,6 +1512,13 @@ public class ShowshopOffice extends LazyCatAct {
 
             }
         });
+    }
+
+
+    /**
+     * 弹出一个提示框 提示用户该商品是预定商品
+     */
+    private void alertReserve() {
         /*赠品标题的边框*/
         AlertDialog.Builder builder = new AlertDialog.Builder(ShowshopOffice.this);
         View item = LayoutInflater.from(getApplicationContext()).inflate(R.layout.alert_message,
@@ -1474,14 +1546,10 @@ public class ShowshopOffice extends LazyCatAct {
      * 初始化 商品赠品的界面
      */
     private void handlerGiftshop() {
-        /**
-         * 载入赠品信息
-         */
-
-
         if (TextUtils.isEmpty(giftshopvalues.getTitle())) {
             Log.i(MSG, "没有赠品信息");
         } else {
+            Log.i(MSG, "有赠品信息" + giftshopvalues.getTitle());
             View gitShop = LayoutInflater.from(getApplicationContext()).inflate(R.layout
                     .assembly_reservebody, null);
             LinearLayout gitShopbody = findViewById(R.id.activity_showshopoffice_reserveBody);
@@ -1510,7 +1578,7 @@ public class ShowshopOffice extends LazyCatAct {
             //加载赠品图片
             ImageView giftimg = gitShop.findViewById(R.id.assembly_reservebody_img);
             Glide.with(getApplicationContext()).load(http_addrs.HTTP_ADDR_IMG_URL +
-                    "cuxiao/20190809_a.png").diskCacheStrategy(DiskCacheStrategy.NONE)
+                    giftshopvalues.getImg()).diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(false).into(giftimg);
 
         }
@@ -1679,4 +1747,11 @@ public class ShowshopOffice extends LazyCatAct {
         }, xmlInstance.getXmlTree().trim());
     }
 
+
+    @Override
+    protected void onDestroy() {
+        giftshopvalues = null;
+        System.gc();
+        super.onDestroy();
+    }
 }

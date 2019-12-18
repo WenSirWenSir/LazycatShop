@@ -632,16 +632,16 @@ public class XmlTagValuesFactory {
      * 赠送商品的值的列表
      */
     public static class Giftshopvalues {
-        String title;
-        String condtion;
-        String weight;
-        String company;
-        String spec;
-        String exp;
-        String pd;
-        String stocknumber;
-        String img;
-        String barcode;
+        String title = "";
+        String condtion = "";
+        String weight = "";
+        String company = "";
+        String spec = "";
+        String exp = "";
+        String pd = "";
+        String stocknumber = "";
+        String img = "";
+        String barcode = "";
 
         public String getTitle() {
             return title;
@@ -722,6 +722,9 @@ public class XmlTagValuesFactory {
         public void setBarcode(String barcode) {
             this.barcode = barcode;
         }
+        public void clear(){
+            this.title = "";
+        }
     }
 
     /**
@@ -745,6 +748,25 @@ public class XmlTagValuesFactory {
         String price;
         String retail;/*零售价格*/
         String business;/*商品的对接供货商家*/
+        String shopStocknumber;/*商品的库存*/
+        String weightSymbol;
+
+
+        public String getWeightSymbol() {
+            return weightSymbol;
+        }
+
+        public void setWeightSymbol(String weightSymbol) {
+            this.weightSymbol = weightSymbol;
+        }
+
+        public String getShopStocknumber() {
+            return shopStocknumber;
+        }
+
+        public void setShopStocknumber(String shopStocknumber) {
+            this.shopStocknumber = shopStocknumber;
+        }
 
         String _static;/*状态*/
         String su;/*起订*/
