@@ -338,7 +338,7 @@ public class Mainfrg extends LazyCatFragment {
 
             @Override
             public void onLoadBottom() {
-                Log.e(MSG,"在onLoadBottom");
+                Log.e(MSG, "在onLoadBottom");
                 if (!isLoadShopdone) {
                     Net.doPostXml(getContext(), http_addrs.HTT_ADDR_GETMAINPAGE_SHOWSHOP, new
                             ProgramInterface() {
@@ -530,7 +530,7 @@ public class Mainfrg extends LazyCatFragment {
     /**
      * 整理界面
      */
-    @SuppressLint("NewApi")
+    @SuppressLint({"NewApi", "ResourceType"})
     private void toHandlerShoplist() {
         for (int i = 0; i < 3; i++) {
             try {
@@ -584,12 +584,15 @@ public class Mainfrg extends LazyCatFragment {
                     Glide.with(getContext()).load("http://f.freep.cn/583105/SHOP_DATABASE/" +
                             showList.get(Position).get_img().trim()).skipMemoryCache(false)
                             .diskCacheStrategy(DiskCacheStrategy.NONE).into(ItemShopimg);
-                    //*进行数据判断 用户是否收藏过该商品 如果没有就设置为灰色*//*
+                    /*设置加盟的赠送的内容*/
+                    shopItem.findViewById(R.id.item_mainshoplist_vipTpBody).setBackground(Tools
+                            .CreateDrawable(1, getResources().getString(R.color.colorVip),
+                                    getResources().getString(R.color.colorVip), 20));                    //*进行数据判断 用户是否收藏过该商品 如果没有就设置为灰色*//*
+
                     refreshBody.addView(shopItem);
                 } else {
 
-                }
-                Position++;
+                } Position++;
             } catch (Exception e) {
                 Log.e(MSG, "整理商品界面错误,错误原因:" + e.getMessage());
 

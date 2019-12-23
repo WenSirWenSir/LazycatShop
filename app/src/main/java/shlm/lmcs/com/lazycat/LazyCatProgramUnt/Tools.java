@@ -1,6 +1,7 @@
 package shlm.lmcs.com.lazycat.LazyCatProgramUnt;
 
 import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -1178,5 +1179,26 @@ public class Tools {
 
     public static String getVipStamp() {
         return String.valueOf((System.currentTimeMillis() / 1000) + 2592000);
+    }
+
+
+    /**
+     * 执行数字增加动画
+     * @param _start
+     * @param _end
+     * @param _tv
+     */
+    public static void NumberAddAnimator(Float _start,Float _end,final TextView _tv){
+        ValueAnimator animator = ValueAnimator.ofFloat(_start,_end);
+        animator.setDuration(1500);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @SuppressLint("DefaultLocale")
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                _tv.setText(String.format("%.2f", Float.valueOf(animation.getAnimatedValue().toString())));
+
+            }
+        });
+        animator.start();
     }
 }
