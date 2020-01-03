@@ -17,7 +17,6 @@ public class Monitor {
 
     public void SaveTag(int _tag) {
         this.tag = _tag;
-
     }
 
     /**

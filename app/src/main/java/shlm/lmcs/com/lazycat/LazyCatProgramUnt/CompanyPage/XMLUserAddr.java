@@ -1,13 +1,10 @@
 package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage;
 
 
-/**
- * 解析XML的时候的USER的表格
- */
 public class XMLUserAddr {
 
     private String USER_NAME, USER_TEL, USER_ADDR, PHYSICS_ADDR, ADDR_IN, USER_SEX, USER_YEAR,
-            DEFAULT_ADDR = "";//缺省值
+            DEFAULT_ADDR = "";
 
 
     public String getDEFAULT_ADDR() {

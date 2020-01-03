@@ -38,6 +38,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.ScrollViewBiggerPhoto;
 import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
+import shlm.lmcs.com.lazycat.LazyShopVip.SystemVip;
 import shlm.lmcs.com.lazycat.R;
 
 @SuppressLint({"ResourceType", "NewApi", "HandlerLeak"})
@@ -106,7 +107,13 @@ public class ShowshopOffice extends LazyCatAct {
         /*获取地址工具类*/
         http_addrs = LocalValues.getHttpaddrs(getApplicationContext());
         /*清空赠品*/
-
+        SystemVip systemVip = new SystemVip(ShowshopOffice.this);
+        systemVip.Start(new SystemVip.OnVipcheck() {
+            @Override
+            public void onCheckdone(int _vip) {
+                Log.i(MSG,"Vip状态:" + _vip);
+            }
+        });
         /**
          * 设置促销的标题
          */
@@ -370,6 +377,12 @@ public class ShowshopOffice extends LazyCatAct {
                             if (tag.equals(LocalAction.ACTION_SHOPVALUES
                                     .ACTION_SHOPVALUES_WEIGHTSYMBOL)) {
                                 shopvalues.setWeightSymbol(pullParser.nextText().trim());
+                            }
+
+                            /*获取Vip加盟商的价格 用来计算积分*/
+                            if (tag.equals(LocalAction.ACTION_SHOPVALUES
+                                    .ACTION_SHOPVALUES_VIP_TP)) {
+                                shopvalues.setViptp(pullParser.nextText().trim());
                             }
                         } catch (Exception e) {
 
@@ -917,6 +930,18 @@ public class ShowshopOffice extends LazyCatAct {
                 /*不显示距离*/
                 findViewById(R.id.activity_showshopoffice_DistanceBody).setVisibility(View.GONE);
             }
+            /*计算加盟商的差价的积分并显示*/
+            if(shopvalues.getViptp().equals("") || shopvalues.getViptp().equals("0")){
+                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.GONE);
+            }
+            else{
+                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.VISIBLE);
+                Float integral = (Float.parseFloat(shopvalues.getTp()) - Float.parseFloat(shopvalues
+                        .getViptp())) * 10;
+                TextUnt.with(this, R.id.activity_showshopoffice_vipIntegral).setText(String.valueOf
+                        (integral));
+
+            }
             /*设置批发价格*/
             TextUnt.with(SHOP_TP).setText(shopvalues.getTp());
             /*获取零售价*/
@@ -1047,17 +1072,18 @@ public class ShowshopOffice extends LazyCatAct {
                         .color.color_dlpsymbol)).setText(shopvalues.getDlp()).setVisibility(false);
                 /*设置VIP减少的价格*/
                 /*不显示VIP商品的减少的价格*/
-                if(shopvalues.getVip()){
+                if (shopvalues.getVip()) {
                     /*如果是Vip就设置成VIP的颜色*/
-                    findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.VISIBLE);
+                    findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View
+                            .VISIBLE);
                     findViewById(R.id.activity_showshopoffice_vipTpBody).setBackground(Tools
                             .CreateDrawable(1, getResources().getString(R.color.colorVip),
                                     getResources().getString(R.color.colorVip), 20));
 
-                }
-                else{
+                } else {
                     /*如果是不是Vip就设置成不是VIP的颜色*/
-                    findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.VISIBLE);
+                    findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View
+                            .VISIBLE);
                     findViewById(R.id.activity_showshopoffice_vipTpBody).setBackground(Tools
                             .CreateDrawable(1, getResources().getString(R.color.colornoVip),
                                     getResources().getString(R.color.colornoVip), 20));

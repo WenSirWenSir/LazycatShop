@@ -13,7 +13,6 @@ public class AutoLineLayout extends ViewGroup {
     public AutoLineLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
     public AutoLineLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }

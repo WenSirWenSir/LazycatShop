@@ -3,6 +3,7 @@ package shlm.lmcs.com.lazycat.LazyShopFrg;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bigkoo.convenientbanner.holder.Holder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
@@ -98,7 +102,6 @@ public class Mainfrg extends LazyCatFragment {
     private TextView _headTitle;/*顶部标题*/
     private LinearLayout refreshBody;/*滑动控件的Body*/
     private LinearLayout _Refreshhead;/*滑动控件的头部的广告*/
-    private ImageView bigHead_img;/*头部第一个Img的控件*/
     private LocalPage.SecondSmallNavAPage secondSmallNavAPage;
     private LocalPage.BigCenterHeadpageInstance bigCenterHeadpageInstance;
     private LocalPage.ThreeNavPageInstance threeNavPageInstance;
@@ -110,6 +113,8 @@ public class Mainfrg extends LazyCatFragment {
     private ImageView threeNavBimg;/*第三排的第二个竖向的图片*/
     private ImageView threeNavCimg;/*第三排的第四个竖向的图片*/
     private ImageView _RefreshheadImg;/*滑动的控件的图片的控件*/
+
+    private ConvenientBanner banner;
     private String ProgramVersion;/*应用程序版本号*/
     private String ProgramNewSize;/*更新的文件的大小*/
     private String ProgramVersionText;/*更新之后的一些简介*/
@@ -120,7 +125,7 @@ public class Mainfrg extends LazyCatFragment {
     private Boolean isLoadShopdone = false;/*判断是否加载过首页推荐的商品了*/
     private int Position = 0;/*设置position用来底部加载*/
     private String prepay_id;
-
+    private ArrayList<String> big_headimgs = new ArrayList<>();
 
     /**
      * TAG值
@@ -160,7 +165,6 @@ public class Mainfrg extends LazyCatFragment {
     private String fourBigtitleColor;
     private String fourSmalltitle;
     private String fourSmalltitleColor;
-    private String marquee_forever;/*跑马灯的数字*/
     /**
      * 模块数据存储
      */
@@ -207,8 +211,6 @@ public class Mainfrg extends LazyCatFragment {
         _Refreshhead = item.findViewById(R.id.fragment_main_refreshHead);
         /*滑动控件的头部的图片控件*/
         _RefreshheadImg = item.findViewById(R.id.fragment_main_refreshHeadImg);
-        /*头部第一个Image的广告控件*/
-        bigHead_img = item.findViewById(R.id.fragment_main_bigHeadMsg);
         /*第二个导航的第一个子导航*/
         secondNavAimg = item.findViewById(R.id.fragment_main_secondSmallNavAimg);
         /*第二个导航的第二个子导航*/
@@ -225,6 +227,8 @@ public class Mainfrg extends LazyCatFragment {
         threeNavBimg = item.findViewById(R.id.fragment_main_threeNavBimg);
         /*第三排的第三个竖向的图片*/
         threeNavCimg = item.findViewById(R.id.fragment_main_threeNavCimg);
+        /*banner控件*/
+        banner = item.findViewById(R.id.fragment_main_banner);
         /*判断是否有定位权限 没有定位权限就去申请定位权限*/
         onStartMain();
         listener(item);
@@ -252,20 +256,6 @@ public class Mainfrg extends LazyCatFragment {
     @SuppressLint({"NewApi", "ResourceType"})
     private void listener(View item) {
 
-/**
- * 第一个横向大图片的点击事件
- */
-        bigHead_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WEB_VALUES_ACT web_values_act = new WEB_VALUES_ACT(bigheadImg.getOnClick_url()
-                        .trim());
-                web_values_act.set_StaticColor(getResources().getString(R.color.ThemeColor));
-                web_values_act.set_TitleColor("#ffffff");
-                web_values_act.set_TitleBackColor(getResources().getString(R.color.ThemeColor));
-                LazyCatFragmentStartWevact(web_values_act);
-            }
-        });
         /**
          * 第二排导航的第一个横向的图片的点击事件
          */
@@ -587,12 +577,14 @@ public class Mainfrg extends LazyCatFragment {
                     /*设置加盟的赠送的内容*/
                     shopItem.findViewById(R.id.item_mainshoplist_vipTpBody).setBackground(Tools
                             .CreateDrawable(1, getResources().getString(R.color.colorVip),
-                                    getResources().getString(R.color.colorVip), 20));                    //*进行数据判断 用户是否收藏过该商品 如果没有就设置为灰色*//*
+                                    getResources().getString(R.color.colorVip), 20));
+                    //*进行数据判断 用户是否收藏过该商品 如果没有就设置为灰色*//*
 
                     refreshBody.addView(shopItem);
                 } else {
 
-                } Position++;
+                }
+                Position++;
             } catch (Exception e) {
                 Log.e(MSG, "整理商品界面错误,错误原因:" + e.getMessage());
 
@@ -669,10 +661,6 @@ public class Mainfrg extends LazyCatFragment {
                                 ProgramVersionText = pullParser.nextText().trim();
                             }
 
-                            /*跑马灯的内容*/
-                            if (tag.equals(LocalAction.ACTION_MAINPAGE.ACTION_MARQUEE_FOREVER)) {
-                                marquee_forever = pullParser.nextText().trim();
-                            }
                             /*设置下拉的图片*/
                             if (tag.equals(LocalAction.ACTION_MAINPAGE
                                     .ACTION_MAINFRGPAG_LOADINGIMG)) {
@@ -689,7 +677,12 @@ public class Mainfrg extends LazyCatFragment {
                             }
                             /*设置图片*/
                             if (tag.equals(bigheadImg.getTAG_SHOW_IMG())) {
-                                bigheadImg.setShowImg(pullParser.nextText().trim());
+                                String addrs = pullParser.nextText().trim();
+                                big_headimgs.clear();
+                                big_headimgs.add(addrs);
+                                big_headimgs.add(addrs);
+                                big_headimgs.add(addrs);
+                                big_headimgs.add(addrs);
                             }
 
 
@@ -1329,6 +1322,17 @@ public class Mainfrg extends LazyCatFragment {
     @SuppressLint("NewApi")
     private void InitMainPage() {
 
+
+        /**
+         * 整理首页左右切换的Banner
+         */
+        banner.setPages(new CBViewHolderCreator() {
+            @Override
+            public bannerHolder createHolder() {
+                return new bannerHolder();
+            }
+        }, big_headimgs).setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign
+                .ALIGN_PARENT_RIGHT).startTurning(3000);
         /**
          * 设置加载的下拉加载的图片地址和点击事件
          */
@@ -1336,9 +1340,6 @@ public class Mainfrg extends LazyCatFragment {
         _RefreshScrollView.SetHeadView(LoadingImgurl, LoadingOnclick, headView, 100, R.id
                 .fragment_main_Headprogressbar, R.id.fragment_main_refreshHeadImg);
         userToolsInstance = LocalProgramTools.getUserToolsInstance();
-        /*设置跑马灯的文字*/
-        /*marquee_forever*/
-        TextUnt.with(item, R.id.fragment_main_marqueeTitle).setText(marquee_forever);
         /*设置第一个大标题*/
         TextUnt.with(item, R.id.fragment_main_oneBigtitle).setText(oneBigtitle).setTextColor
                 (oneBigtitleColor);
@@ -1363,9 +1364,6 @@ public class Mainfrg extends LazyCatFragment {
         /*设置第四个小标题*/
         TextUnt.with(item, R.id.fragment_main_fourSmalltitle).setText(fourSmalltitle)
                 .setTextColor(fourSmalltitleColor);
-        /*加载顶部的第一个Big_headimg*/
-        Glide.with(getContext()).load(bigheadImg.getShowImg()).diskCacheStrategy
-                (DiskCacheStrategy.NONE).skipMemoryCache(false).into(bigHead_img);
 
         /**
          * 整理第二个图片导航
@@ -1374,8 +1372,6 @@ public class Mainfrg extends LazyCatFragment {
         Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallAimgUrl().trim())
                 .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
                 (secondNavAimg);
-
-
         /*加载横向的第二个图片*/
         Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallBimgUrl().trim())
                 .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
@@ -1691,5 +1687,25 @@ public class Mainfrg extends LazyCatFragment {
             this._businessimg = _businessimg;
         }
 
+    }
+
+    public class bannerHolder implements Holder<String> {
+        private ImageView img;
+
+        @Override
+        public View createView(Context context) {
+            img = new ImageView(context);
+            img.setAdjustViewBounds(true);
+            img.setScaleType(ImageView.ScaleType.FIT_XY);
+            return img;
+        }
+
+        @SuppressLint("NewApi")
+        @Override
+        public void UpdateUI(Context context, int position, String data) {
+            Log.i(MSG, "Banner图片URL地址:" + data);
+            Glide.with(getContext()).load(data.trim()).into(img);
+
+        }
     }
 }

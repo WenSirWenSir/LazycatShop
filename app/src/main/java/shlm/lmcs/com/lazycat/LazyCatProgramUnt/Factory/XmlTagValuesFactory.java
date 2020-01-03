@@ -722,7 +722,8 @@ public class XmlTagValuesFactory {
         public void setBarcode(String barcode) {
             this.barcode = barcode;
         }
-        public void clear(){
+
+        public void clear() {
             this.title = "";
         }
     }
@@ -750,8 +751,16 @@ public class XmlTagValuesFactory {
         String business;/*商品的对接供货商家*/
         String shopStocknumber;/*商品的库存*/
         String weightSymbol;
+        String viptp;/*Vip的价格*/
 
 
+        public String getViptp() {
+            return viptp;
+        }
+
+        public void setViptp(String viptp) {
+            this.viptp = viptp;
+        }
         public String getWeightSymbol() {
             return weightSymbol;
         }
