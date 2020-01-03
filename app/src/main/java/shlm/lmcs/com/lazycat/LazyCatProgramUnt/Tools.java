@@ -1189,6 +1189,7 @@ public class Tools {
      * @param _tv
      */
     public static void NumberAddAnimator(Float _start,Float _end,final TextView _tv){
+        Log.i(MSG,"调试输出:" + _end);
         ValueAnimator animator = ValueAnimator.ofFloat(_start,_end);
         animator.setDuration(1500);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {

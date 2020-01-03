@@ -111,7 +111,12 @@ public class ShowshopOffice extends LazyCatAct {
         systemVip.Start(new SystemVip.OnVipcheck() {
             @Override
             public void onCheckdone(int _vip) {
-                Log.i(MSG,"Vip状态:" + _vip);
+                if (_vip == SystemVip.USER_IS_VIP) {
+                    IsVip = true;
+
+                } else {
+                    IsVip = false;
+                }
             }
         });
         /**
@@ -512,129 +517,33 @@ public class ShowshopOffice extends LazyCatAct {
      */
     private void showOrderConfirm() {
         /**
-         * 重新获取用户的信息
-         *
-         * 用户的地址是不能由用户自己修改的 只能用户使用客服服务进行修改 并且需要重新登录
-         *
+         * 判断该商品是不是VIP专享
          */
-        XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(true);
-        xmlInstance.overDom();
-        Net.doPostXml(getApplicationContext(), http_addrs.HTTP_ADDR_GETUSER_VALUES, new
-                ProgramInterface() {
-            @Override
-            public void onSucess(String data, int code, final WaitDialog.RefreshDialog
-                    _refreshDialog) {
-                Log.i(MSG, "重新获取用户信息的请求:" + data.trim());
-                _refreshDialog.dismiss();
-                if (data.trim().equals(LocalValues.VALUES_LOGIN.LOGIN_ERROR)) {
-                    Toast.makeText(getApplicationContext(), "登录过期,请重新登录", Toast.LENGTH_SHORT)
-                            .show();
-                    if (userToolsInstance != null) {
-                        userToolsInstance.ClearLocalCach();
+        if (shopvalues.get_static().equals(LocalValues.VALUES_SHOPPAGE.ONLY_VIP)) {
+            if (IsVip) {
+                AlertOrderPage();
+            } else {
+                /*不是VIP*/
+                AlertDialog.Builder builder = new AlertDialog.Builder(ShowshopOffice.this);
+                View item = LayoutInflater.from(getApplicationContext()).inflate(R.layout
+                        .alert_message, null);
+                builder.setView(item);
+                TextUnt.with(item, R.id.alert_messageTitle).setText("提交订货单失败");
+                TextUnt.with(item, R.id.alert_messageText).setText(getResources().getString(R
+                        .string.onVipcantOrder));
+                TextUnt.with(item, R.id.alert_messageBtnConfirm).setText("我已了解").setTag(builder
+                        .show()).setOnClick(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog alertDialog = (AlertDialog) v.getTag();
+                        alertDialog.dismiss();
+
                     }
-
-                } else {
-                    XmlanalysisFactory xmlanalysisFactory = new XmlanalysisFactory(data.trim());
-                    xmlanalysisFactory.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
-                        @Override
-                        public void onFaile() {
-
-                        }
-
-                        @Override
-                        public void onStartDocument(String tag) {
-
-                        }
-
-                        @Override
-                        public void onStartTag(String tag, XmlPullParser pullParser, Integer id) {
-                            /*判断是否是Vip客户*/
-                            try {
-                                if (tag.equals(LocalAction.ACTION_LOCALUSERPAGE
-                                        .ACTION_LOCALUSERPAGE_VIPSTATUS)) {
-                                    if (pullParser.nextText().trim().equals(LocalValues
-                                            .VALUES_USERCENTER.IS_VIP)) {
-                                        IsVip = true;
-                                    } else {
-                                        IsVip = false;
-                                    }
-                                }
-                            } catch (Exception e) {
-
-                            }
-
-                        }
-
-                        @Override
-                        public void onEndTag(String tag, XmlPullParser pullParser, Integer id) {
-
-                        }
-
-                        @Override
-                        public void onEndDocument() {
-                            _refreshDialog.dismiss();
-                            /*判断是否是VIP专属的订单  如果是  就只能是VIP才能订购*/
-                            if (shopvalues.get_static().equals(LocalValues.VALUES_SHOPPAGE
-                                    .ONLY_VIP)) {
-                                if (IsVip) {
-                                    AlertOrderPage();
-
-                                } else {
-                                    /*不是VIP*/
-
-                                    AlertDialog.Builder builder = new AlertDialog.Builder
-                                            (ShowshopOffice.this);
-                                    View item = LayoutInflater.from(getApplicationContext())
-                                            .inflate(R.layout.alert_message, null);
-                                    builder.setView(item);
-                                    TextUnt.with(item, R.id.alert_messageTitle).setText("提交订货单失败");
-                                    TextUnt.with(item, R.id.alert_messageText).setText
-                                            (getResources().getString(R.string.onVipcantOrder));
-                                    TextUnt.with(item, R.id.alert_messageBtnConfirm).setText
-                                            ("我已了解").setTag(builder.show()).setOnClick(new View
-                                            .OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            AlertDialog alertDialog = (AlertDialog) v.getTag();
-                                            alertDialog.dismiss();
-
-                                        }
-                                    });
-                                }
-                            } else {
-                                AlertOrderPage();
-                            }
-
-
-                        }
-                    });
-
-                }
+                });
             }
-
-
-            @Override
-            public WaitDialog.RefreshDialog onStartLoad() {
-                /*初始化一个DIALOG*/
-                final WaitDialog.RefreshDialog refreshDialog = new WaitDialog.RefreshDialog
-                        (ShowshopOffice.this);
-                WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
-                wait_itme_dialogpage.setImg(R.id.item_wait_img);
-                wait_itme_dialogpage.setView(R.layout.item_wait);
-                wait_itme_dialogpage.setCanClose(false);
-                wait_itme_dialogpage.setTitle(R.id.item_wait_title);
-                refreshDialog.Init(wait_itme_dialogpage);
-                refreshDialog.showRefreshDialog("加载中...", false);
-                return refreshDialog;
-            }
-
-            @Override
-            public void onFaile(String data, int code) {
-
-            }
-        }, xmlInstance.getXmlTree());
-
-
+        } else {
+            AlertOrderPage();
+        }
     }
 
 
@@ -851,7 +760,6 @@ public class ShowshopOffice extends LazyCatAct {
                     ("#ffffff").setText("Vip");
         }
         /*确定通知仓库发货的按钮*/
-
         TextUnt.with(confirmdeliverItem, R.id.assembly_confirmdeliver_BtnSendorder).setOnClick
                 (new View.OnClickListener() {
             @Override
@@ -894,14 +802,14 @@ public class ShowshopOffice extends LazyCatAct {
          */
         if (shopvalues.getSt_loginin()) {
             /*判断用户是否为Vip*/
-            if (shopvalues.getVip()) {
-                TextUnt.with(this, R.id.activity_showshopoffice_deliverVip).setText("Vip售后保障")
+            if (IsVip) {
+                TextUnt.with(this, R.id.activity_showshopoffice_deliverVip).setText("商品售后保障")
                         .setBackground(Tools.CreateDrawable(getApplicationContext(), 1, R.color
-                                .colorVip, R.color.colorVip, 5)).setTextColor("#ffffff");
+                                .colorVip, R.color.colorVip, 50)).setTextColor("#ffffff");
             } else {
                 TextUnt.with(this, R.id.activity_showshopoffice_deliverVip).setText("Vip售后保障")
                         .setBackground(Tools.CreateDrawable(getApplicationContext(), 1, R.color
-                                .colornoVip, R.color.colornoVip, 5)).setTextColor("#ffffff");
+                                .colornoVip, R.color.colornoVip, 50)).setTextColor("#ffffff");
             }
             /*显示商品的距离*/
             if (!shopvalues.getSt_BusinessLong().equals("")) {
@@ -931,16 +839,17 @@ public class ShowshopOffice extends LazyCatAct {
                 findViewById(R.id.activity_showshopoffice_DistanceBody).setVisibility(View.GONE);
             }
             /*计算加盟商的差价的积分并显示*/
-            if(shopvalues.getViptp().equals("") || shopvalues.getViptp().equals("0")){
+            if (shopvalues.getViptp().equals("") || shopvalues.getViptp().equals("0")) {
+                Log.e(MSG, "商品没有设置VIP加盟的价格");
                 findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.GONE);
-            }
-            else{
-                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.VISIBLE);
-                Float integral = (Float.parseFloat(shopvalues.getTp()) - Float.parseFloat(shopvalues
-                        .getViptp())) * 10;
-                TextUnt.with(this, R.id.activity_showshopoffice_vipIntegral).setText(String.valueOf
-                        (integral));
-
+            } else {
+                Float integral = (Float.parseFloat(shopvalues.getTp()) - Float.parseFloat
+                        (shopvalues.getViptp())) * 10;
+                findViewById(R.id.activity_showshopoffice_vipTpBody).setBackground(Tools
+                        .CreateDrawable(1, getResources().getString(R.color.colorVip),
+                                getResources().getString(R.color.colorVip), 50));
+                TextUnt.with(this, R.id.activity_showshopoffice_vipIntegral).setText(String
+                        .valueOf(integral));
             }
             /*设置批发价格*/
             TextUnt.with(SHOP_TP).setText(shopvalues.getTp());
@@ -990,8 +899,6 @@ public class ShowshopOffice extends LazyCatAct {
                     TextUnt.with(btnAccount).setText("商品库存不足").setBackground(Tools.CreateDrawable
                             (1, getResources().getString(R.color.colornoVip), getResources()
                                     .getString(R.color.colornoVip), 5)).setTextColor("#666666");
-
-
                 }
 
             }
@@ -1049,7 +956,6 @@ public class ShowshopOffice extends LazyCatAct {
         params.setMargins(15, 0, 0, 0);
         tp.setLayoutParams(params);
         otherMessage.addView(tp);
-
         /*界面初始化*/
         TextUnt.with(SHOP_BUSINESS).setText("云仓库专送");
         TextUnt.with(SHOP_TITLE).setText(shopvalues.getTitle());
@@ -1071,23 +977,6 @@ public class ShowshopOffice extends LazyCatAct {
                 TextUnt.with(this, R.id.activity_showshopoffice_dlp).setTextColor(getString(R
                         .color.color_dlpsymbol)).setText(shopvalues.getDlp()).setVisibility(false);
                 /*设置VIP减少的价格*/
-                /*不显示VIP商品的减少的价格*/
-                if (shopvalues.getVip()) {
-                    /*如果是Vip就设置成VIP的颜色*/
-                    findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View
-                            .VISIBLE);
-                    findViewById(R.id.activity_showshopoffice_vipTpBody).setBackground(Tools
-                            .CreateDrawable(1, getResources().getString(R.color.colorVip),
-                                    getResources().getString(R.color.colorVip), 20));
-
-                } else {
-                    /*如果是不是Vip就设置成不是VIP的颜色*/
-                    findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View
-                            .VISIBLE);
-                    findViewById(R.id.activity_showshopoffice_vipTpBody).setBackground(Tools
-                            .CreateDrawable(1, getResources().getString(R.color.colornoVip),
-                                    getResources().getString(R.color.colornoVip), 20));
-                }
                 break;
             case LocalValues.VALUES_SHOPPAGE.PROMOTION:
                 /*促销*/
@@ -1116,9 +1005,7 @@ public class ShowshopOffice extends LazyCatAct {
                             .setTextColor(getString(R.color.color_dlpsymbol)).setText("*.*")
                             .setMidcourtLine();
                 }
-
                 /*不显示VIP商品的减少的价格*/
-                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.GONE);
                 break;
             case LocalValues.VALUES_SHOPPAGE.REDUCTION:
                 /*设置状态*/
@@ -1130,7 +1017,6 @@ public class ShowshopOffice extends LazyCatAct {
                         .colorReduction)));
                 TextUnt.with(this, R.id.activity_showshopoffice_tpSymbol).setTextColor
                         (getResources().getString(R.color.colorReduction));
-
                 /**
                  * 设置虚线价格
                  */
@@ -1149,7 +1035,6 @@ public class ShowshopOffice extends LazyCatAct {
                             .setMidcourtLine();
                 }
                 /*不显示VIP商品的减少的价格*/
-                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.GONE);
                 break;
             case LocalValues.VALUES_SHOPPAGE.VOLUME:
                 /*设置状态*/
@@ -1182,7 +1067,6 @@ public class ShowshopOffice extends LazyCatAct {
 
                 }
                 /*不显示VIP商品的减少的价格*/
-                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.GONE);
                 break;
             case LocalValues.VALUES_SHOPPAGE.ONLY_VIP:
                 /*只有VIP可以购买*/
@@ -1216,7 +1100,6 @@ public class ShowshopOffice extends LazyCatAct {
 
                 }
                 /*不显示VIP商品的减少的价格*/
-                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.GONE);
                 break;
 
             case LocalValues.VALUES_SHOPPAGE.ONLY_ONE:
@@ -1250,7 +1133,6 @@ public class ShowshopOffice extends LazyCatAct {
                             .setTextColor(getString(R.color.color_dlpsymbol)).setText("*.*");
                 }
                 /*不显示VIP商品的减少的价格*/
-                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.GONE);
                 break;
             case LocalValues.VALUES_SHOPPAGE.WHOLEASALE:
                 /*设置按钮为开启拼团*/
@@ -1279,8 +1161,6 @@ public class ShowshopOffice extends LazyCatAct {
                     TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
                             .setTextColor(getString(R.color.color_dlpsymbol)).setText("*.*");
                 }
-                /*不显示VIP商品的减少的价格*/
-                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.GONE);
                 break;
 
             case LocalValues.VALUES_SHOPPAGE.RESERVE:
@@ -1315,8 +1195,6 @@ public class ShowshopOffice extends LazyCatAct {
                     TextUnt.with(this, R.id.activity_showshopoffice_dlp).setVisibility(true)
                             .setTextColor(getString(R.color.color_dlpsymbol)).setText("*.*");
                 }
-                /*不显示VIP商品的减少的价格*/
-                findViewById(R.id.activity_showshopoffice_vipTpBody).setVisibility(View.GONE);
                 alertReserve();
                 break;
         }
@@ -1715,7 +1593,7 @@ public class ShowshopOffice extends LazyCatAct {
                 Log.i(MSG, "提交订单的返回信息:" + data.trim());
                 JsonEndata jsonEndata = new JsonEndata(data.trim());
                 if (jsonEndata.getJsonKeyValue(LocalAction.JSON_ACTION.ACTION_JSON_RETURN_MSG)
-                        .equals(LocalValues.NET_ERROR) && !TextUtils.isEmpty(data.trim())) {
+                        .equals(LocalValues.NET_ERROR) && !TextUtils.isEmpty(data.trim()) && !data.equals("1")) {
                     Toast.makeText(getApplicationContext(), "错误,订单提交失败", Toast.LENGTH_SHORT).show();
                     _refreshDialog.dismiss();
                     init();

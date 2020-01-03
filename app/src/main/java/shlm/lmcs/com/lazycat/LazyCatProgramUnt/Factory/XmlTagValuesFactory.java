@@ -113,11 +113,19 @@ public class XmlTagValuesFactory {
         private String St_userVipoverDate;/*VIP的过期时间*/
         private String St_img;
         private String St_coupon;/*抵用券数量*/
-        private String St_integer;/*积分数量*/
         private String St_rechargerecord;/*充值记录*/
         private String St_transaction;/*交易记录*/
         private String St_sendsystem;/*通知发货数量*/
         private String St_deliver;/*正在配送数量*/
+        private String St_integral;/*显示积分*/
+
+        public String getSt_integral() {
+            return St_integral;
+        }
+
+        public void setSt_integral(String st_integral) {
+            St_integral = st_integral;
+        }
 
         public String getSt_img() {
             return St_img;
@@ -133,14 +141,6 @@ public class XmlTagValuesFactory {
 
         public void setSt_coupon(String st_coupon) {
             St_coupon = st_coupon;
-        }
-
-        public String getSt_integer() {
-            return St_integer;
-        }
-
-        public void setSt_integer(String st_integer) {
-            St_integer = st_integer;
         }
 
         public String getSt_rechargerecord() {
