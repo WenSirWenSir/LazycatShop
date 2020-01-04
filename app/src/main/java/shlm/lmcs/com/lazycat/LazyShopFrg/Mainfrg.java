@@ -1703,7 +1703,6 @@ public class Mainfrg extends LazyCatFragment {
         @SuppressLint("NewApi")
         @Override
         public void UpdateUI(Context context, int position, String data) {
-            Log.i(MSG, "Banner图片URL地址:" + data);
             Glide.with(getContext()).load(data.trim()).into(img);
 
         }
