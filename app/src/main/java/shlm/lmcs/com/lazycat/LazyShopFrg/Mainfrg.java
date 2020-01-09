@@ -1321,8 +1321,6 @@ public class Mainfrg extends LazyCatFragment {
      */
     @SuppressLint("NewApi")
     private void InitMainPage() {
-
-
         /**
          * 整理首页左右切换的Banner
          */
@@ -1692,10 +1690,12 @@ public class Mainfrg extends LazyCatFragment {
     public class bannerHolder implements Holder<String> {
         private ImageView img;
 
+        @SuppressLint("NewApi")
         @Override
         public View createView(Context context) {
             img = new ImageView(context);
             img.setAdjustViewBounds(true);
+            img.setBackground(Tools.CreateDrawable(1,"#ffffff","#ffffff",30));
             img.setScaleType(ImageView.ScaleType.FIT_XY);
             return img;
         }
