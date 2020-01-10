@@ -18,6 +18,7 @@ import android.widget.Toast;
 import org.xmlpull.v1.XmlPullParser;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.EditTextUnt;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.XmlBuilder;
@@ -38,6 +39,8 @@ public class LoginAct extends LazyCatAct {
     private String MSG = "LoginAct.java[+]";
     private LinearLayout LLSelectBody;
     private RelativeLayout RLLoginBody;
+    /*是否需要发送短信*/
+    private Boolean isSendSMS = true;
     /**
      * 消失和显示的动画
      */
@@ -87,6 +90,16 @@ public class LoginAct extends LazyCatAct {
     }
 
     private void Listener() {
+
+        /**
+         * 点击仓库的标题 就可以取消发送短信
+         */
+        findViewById(R.id.activity_login_ico).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isSendSMS = false;
+            }
+        });
         /**
          * 关闭界面
          */
@@ -153,45 +166,63 @@ public class LoginAct extends LazyCatAct {
                     /**
                      * 发送登录验证码
                      */
-                    XmlBuilder.XmlInstance xmlInstance = new XmlBuilder.XmlInstance();
-                    xmlInstance.initDom();
-                    xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, etAccount
-                            .getText().toString().trim());
-                    xmlInstance.overDom();
-                    LocalValues.HTTP_ADDRS http_addrs = LocalValues.getHttpaddrs(getApplicationContext());
-                    Net.doPostXml(getApplicationContext(), http_addrs
-                            .HTTP_ADDR_SEND_LOGINSMS, new ProgramInterface() {
-                        @Override
-                        public void onSucess(String data, int code, WaitDialog.RefreshDialog
-                                _refreshDialog) {
-                            Log.i(MSG, "发送短信验证码提示:" + data.trim());
-                            try {
-                                JsonEndata jsonEndata = new JsonEndata(data.trim());
-                                if (jsonEndata.getJsonKeyValue("return_code").equals("00000")) {
-                                    Toast.makeText(getApplicationContext(), "短信验证码发送成功", Toast
-                                            .LENGTH_SHORT).show();
-                                } else if (jsonEndata.getJsonKeyValue("return_code").equals
-                                        ("00001")) {
-                                    Toast.makeText(getApplicationContext(), "该账户没有在仓库网络注册过¬",
+
+                    if (isSendSMS) {
+                        XmlBuilder.XmlInstance xmlInstance = new XmlBuilder.XmlInstance();
+                        xmlInstance.initDom();
+                        xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, etAccount
+                                .getText().toString().trim());
+                        xmlInstance.overDom();
+                        LocalValues.HTTP_ADDRS http_addrs = LocalValues.getHttpaddrs
+                                (getApplicationContext());
+                        Net.doPostXml(getApplicationContext(), http_addrs
+                                .HTTP_ADDR_SEND_LOGINSMS, new ProgramInterface() {
+                            @Override
+                            public void onSucess(String data, int code, WaitDialog.RefreshDialog
+                                    _refreshDialog) {
+                                _refreshDialog.dismiss();
+                                Log.i(MSG, "发送短信验证码提示:" + data.trim());
+                                try {
+                                    JsonEndata jsonEndata = new JsonEndata(data.trim());
+                                    if (jsonEndata.getJsonKeyValue("return_code").equals("00000")) {
+                                        Toast.makeText(getApplicationContext(), "短信验证码发送成功",
+                                                Toast.LENGTH_SHORT).show();
+                                    } else if (jsonEndata.getJsonKeyValue("return_code").equals
+                                            ("00001")) {
+                                        Toast.makeText(getApplicationContext(), "该账户没有在仓库网络注册过¬",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (Exception e) {
+                                    Log.e(MSG, "请求发送登录验证码失败");
+                                    Toast.makeText(getApplicationContext(), "提交信息错误,请联系管理人员",
                                             Toast.LENGTH_SHORT).show();
                                 }
-                            } catch (Exception e) {
-                                Log.e(MSG, "请求发送登录验证码失败");
-                                Toast.makeText(getApplicationContext(), "提交信息错误,请联系管理人员", Toast
-                                        .LENGTH_SHORT).show();
                             }
-                        }
 
-                        @Override
-                        public WaitDialog.RefreshDialog onStartLoad() {
-                            return null;
-                        }
+                            @Override
+                            public WaitDialog.RefreshDialog onStartLoad() {
+                                final WaitDialog.RefreshDialog refreshDialog = new WaitDialog
+                                        .RefreshDialog(LoginAct.this);
+                                WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new
+                                        WAIT_ITME_DIALOGPAGE();
+                                wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                                wait_itme_dialogpage.setView(R.layout.item_wait);
+                                wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+                                refreshDialog.Init(wait_itme_dialogpage);
+                                refreshDialog.showRefreshDialog("请稍后...", false);
+                                return refreshDialog;
+                            }
 
-                        @Override
-                        public void onFaile(String data, int code) {
+                            @Override
+                            public void onFaile(String data, int code) {
 
-                        }
-                    }, xmlInstance.getXmlTree().trim());
+                            }
+                        }, xmlInstance.getXmlTree().trim());
+                    } else {
+                        Toast.makeText(getApplicationContext(), "请输入6位业务登录密码", Toast.LENGTH_SHORT).show();
+                        Log.i(MSG, "不需要发送短信");
+                    }
+
                 }
 
             }
@@ -249,12 +280,14 @@ public class LoginAct extends LazyCatAct {
                 xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_CODE, etToken.getText()
                         .toString().trim());
                 xmlInstance.overDom();
-                LocalValues.HTTP_ADDRS http_addrs = LocalValues.getHttpaddrs(getApplicationContext());
-                Net.doPostXml(getApplicationContext(), http_addrs
-                        .HTTP_ADDR_INSPECT_LOGIN, new ProgramInterface() {
+                LocalValues.HTTP_ADDRS http_addrs = LocalValues.getHttpaddrs
+                        (getApplicationContext());
+                Net.doPostXml(getApplicationContext(), http_addrs.HTTP_ADDR_INSPECT_LOGIN, new
+                        ProgramInterface() {
                     @Override
                     public void onSucess(String data, int code, WaitDialog.RefreshDialog
                             _refreshDialog) {
+                        _refreshDialog.dismiss();
                         Log.i(MSG, "登录验证码检查返回数据：" + data.trim());
                         if (data.trim().equals("-1")) {
                             Toast.makeText(getApplicationContext(), "登录失败!", Toast.LENGTH_SHORT)
@@ -367,7 +400,15 @@ public class LoginAct extends LazyCatAct {
 
                     @Override
                     public WaitDialog.RefreshDialog onStartLoad() {
-                        return null;
+                        final WaitDialog.RefreshDialog refreshDialog = new WaitDialog
+                                .RefreshDialog(LoginAct.this);
+                        WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
+                        wait_itme_dialogpage.setImg(R.id.item_wait_img);
+                        wait_itme_dialogpage.setView(R.layout.item_wait);
+                        wait_itme_dialogpage.setTitle(R.id.item_wait_title);
+                        refreshDialog.Init(wait_itme_dialogpage);
+                        refreshDialog.showRefreshDialog("请稍后...", false);
+                        return refreshDialog;
                     }
 
                     @Override

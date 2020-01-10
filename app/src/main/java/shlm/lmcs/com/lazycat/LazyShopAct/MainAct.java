@@ -21,6 +21,7 @@ import shlm.lmcs.com.lazycat.LazyShopFrg.Classifyfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Mainfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Messagefrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.UserCenterfrg;
+import shlm.lmcs.com.lazycat.LazyShopVip.SystemVip;
 import shlm.lmcs.com.lazycat.R;
 
 public class MainAct extends LazyCatAct {
@@ -66,11 +67,22 @@ public class MainAct extends LazyCatAct {
         btn_classify = findViewById(R.id.activity_main_btn_IcoClassify);//分类界面
         btn_usercenter = findViewById(R.id.activity_main_btn_IcoUserCenter);//个人中心
 
+
+        /**
+         * 初始化  更新用户的信息  怕vip过期
+         */
+        SystemVip systemVip = new SystemVip(MainAct.this);
+        systemVip.Start(new SystemVip.OnVipcheck() {
+            @Override
+            public void onCheckdone(int _vip) {
+
+            }
+        });
         /**
          * 测试 设置MESSAGE的数量
          */
 
-        TextUnt.with(this,R.id.activity_main_messageNumber).setVisibility(false);
+        TextUnt.with(this, R.id.activity_main_messageNumber).setVisibility(false);
 /*
         findViewById(R.id.activity_main_messageNumber).setBackground(Tools.CreateDrawable(1,
                 "#08c299", "#08c299", 50));
@@ -306,7 +318,7 @@ public class MainAct extends LazyCatAct {
                     ft.remove(mainfrg);/*先移除*/
                     mainfrg = null;
                     mainfrg = new Mainfrg();
-                    ft.add(R.id.activity_main_Framelayout,mainfrg);
+                    ft.add(R.id.activity_main_Framelayout, mainfrg);
                 } else {
                     mainfrg = new Mainfrg();
                     ft.add(R.id.activity_main_Framelayout, mainfrg);
