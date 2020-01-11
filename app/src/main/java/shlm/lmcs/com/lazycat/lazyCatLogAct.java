@@ -32,7 +32,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyShopAct.MainAct;
-import shlm.lmcs.com.lazycat.LazyShopAct.PromotionAct;
+import shlm.lmcs.com.lazycat.LazyShopAct.SystemAct.SystemGuidepage;
 import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
 
 import static shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools.isPermission;
@@ -66,7 +66,11 @@ public class lazyCatLogAct extends LazyCatAct {
                 //refreshDialog.dismiss();
                 //进入主界面
                 if (true) {
-                    LazyCatActStartActivity(PromotionAct.class, true);
+                    /*判断是否已经引导过了 */
+                    if (Tools.getGuidetoken(getApplicationContext()).equals("1")) {
+                        //没有引导过
+                        LazyCatActStartActivity(SystemGuidepage.class, true);
+                    }
                 } else {
                     LazyCatActStartActivity(MainAct.class, true);
 
@@ -93,7 +97,6 @@ public class lazyCatLogAct extends LazyCatAct {
 /*
         mapLocationClient.startLocation();
 */
-        getServiceAddr("123");
 
         mapLocationClient.setLocationListener(new AMapLocationListener() {
             @Override
@@ -104,7 +107,6 @@ public class lazyCatLogAct extends LazyCatAct {
                         Toast.makeText(getApplicationContext(),aMapLocation.getAdCode(),Toast
                         .LENGTH_SHORT).show();
 */
-                        getServiceAddr(aMapLocation.getAdCode());
                         Log.i(MSG, "定位成功:" + aMapLocation.getLongitude());
 
                     } else {
@@ -157,6 +159,10 @@ public class lazyCatLogAct extends LazyCatAct {
                 }
             }, 3000);
 
+            /**
+             * 展示引导界面  引导用户了解云仓库的运营模式
+             */
+
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(lazyCatLogAct.this);
             View item = LayoutInflater.from(lazyCatLogAct.this).inflate(R.layout.alert_message,
@@ -183,6 +189,8 @@ public class lazyCatLogAct extends LazyCatAct {
                 alertDialog = builder.show();
             }
         }
+
+
 
 
     }
@@ -252,11 +260,4 @@ public class lazyCatLogAct extends LazyCatAct {
     }
 
 
-    /**
-     * 判断该地址是否开通服务
-     */
-    @SuppressLint({"NewApi", "StaticFieldLeak"})
-    private void getServiceAddr(String CityCode) {
-
-    }
 }

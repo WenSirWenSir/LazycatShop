@@ -227,6 +227,27 @@ public class Tools {
         }
     }
 
+    public static String getGuidetoken(Context _context) {
+        SharedPreferences sharedPreferences = _context.getSharedPreferences("Guide", 0);
+        try {
+            return sharedPreferences.getString("isGuide", "1");//如果不存在  就返回一个1如果是0就表示引导过了
+        } catch (Exception e) {
+            Log.i(Config.DEBUG, "LeftCompanyProgram Tools.java[+]" + e.getMessage());
+            return "";
+        }
+    }
+
+    /**
+     * 保存是否引导
+     */
+    public static void saveGuidetoken(Context _context, String _string) {
+        SharedPreferences sharedPreferences = _context.getSharedPreferences("Guide", 0);
+        try {
+            sharedPreferences.edit().putString("isGuide", _string).commit();
+        } catch (Exception e) {
+        }
+    }
+
 
     public static void saveService(Context mContext, String service) {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences("Service", 0);
@@ -1011,7 +1032,6 @@ public class Tools {
     }
 
 
-
     /**
      * 设置一个SVG的颜色
      *
@@ -1186,19 +1206,21 @@ public class Tools {
 
     /**
      * 执行数字增加动画
+     *
      * @param _start
      * @param _end
      * @param _tv
      */
-    public static void NumberAddAnimator(Float _start,Float _end,final TextView _tv){
-        Log.i(MSG,"调试输出:" + _end);
-        ValueAnimator animator = ValueAnimator.ofFloat(_start,_end);
+    public static void NumberAddAnimator(Float _start, Float _end, final TextView _tv) {
+        Log.i(MSG, "调试输出:" + _end);
+        ValueAnimator animator = ValueAnimator.ofFloat(_start, _end);
         animator.setDuration(1500);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @SuppressLint("DefaultLocale")
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                _tv.setText(String.format("%.2f", Float.valueOf(animation.getAnimatedValue().toString())));
+                _tv.setText(String.format("%.2f", Float.valueOf(animation.getAnimatedValue()
+                        .toString())));
 
             }
         });

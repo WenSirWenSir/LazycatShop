@@ -20,33 +20,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a52fcd4-d8d6-4277-af4b-2d758702a440" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemIntegralDetiled.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/a_2019.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_integraldetiled.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_integraldetiled.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_makeramen_roundedimageview_2_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemGuidepage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Vipexclusivefrg.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_page_indicator.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_page_indicator_focused.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ico_navvip.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_vipexclusive.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/systemguidepage.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/taskJars.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/taskJars.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/LoginAct.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/LoginAct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Tools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/MainAct.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/MainAct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemAddtoVip.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemAddtoVip.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemIntegralPostal.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemIntegralPostal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/UserCenterfrg.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/UserCenterfrg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalValues.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalValues.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopVip/SystemVip.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopVip/SystemVip.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Messagefrg.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/lazyCatLogAct.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/lazyCatLogAct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_addbandcard.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_addbandcard.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_integralpostal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_integralpostal.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_message.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_message.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -124,78 +130,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="lazyCatLogAct.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/lazyCatLogAct.java">
+      <file leaf-file-name="Vipexclusivefrg.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Vipexclusivefrg.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="471">
-              <caret line="70" column="47" selection-start-line="70" selection-start-column="47" selection-end-line="70" selection-end-column="47" />
+            <state relative-caret-position="606">
+              <caret line="48" column="37" selection-start-line="48" selection-start-column="37" selection-end-line="48" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1299#1551#0" expanded="true" />
+                <element signature="e#1550#1551#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainAct.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/MainAct.java">
+      <file leaf-file-name="fragment_vipexclusive.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_vipexclusive.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="407">
-              <caret line="73" column="40" selection-start-line="73" selection-start-column="40" selection-end-line="73" selection-end-column="40" />
+            <state relative-caret-position="121">
+              <caret line="13" column="56" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="56" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SystemIntegralDeposit.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemIntegralDeposit.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1110">
-              <caret line="53" column="25" selection-start-line="53" selection-start-column="10" selection-end-line="53" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SystemIntegralPostal.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemIntegralPostal.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="50">
-              <caret line="76" column="68" selection-start-line="76" selection-start-column="68" selection-end-line="76" selection-end-column="68" />
-              <folding>
-                <element signature="e#6844#7050#0" expanded="true" />
-                <element signature="e#7049#7050#0" expanded="true" />
-                <element signature="e#7177#11148#0" expanded="true" />
-                <element signature="e#11147#11148#0" expanded="true" />
-                <element signature="e#11272#12310#0" expanded="true" />
-                <element signature="e#11963#12261#0" expanded="true" />
-                <element signature="e#12260#12261#0" expanded="true" />
-                <element signature="e#12309#12310#0" expanded="true" />
-                <element signature="e#12435#12708#0" expanded="true" />
-                <element signature="e#12707#12708#0" expanded="true" />
-                <element signature="e#12833#13432#0" expanded="true" />
-                <element signature="e#13177#13381#0" expanded="true" />
-                <element signature="e#13380#13381#0" expanded="true" />
-                <element signature="e#13431#13432#0" expanded="true" />
-                <element signature="e#13556#13766#0" expanded="true" />
-                <element signature="e#13765#13766#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LocalValues.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalValues.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="101">
-              <caret line="317" lean-forward="true" selection-start-line="317" selection-end-line="317" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WaitDialog.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/WaitDialog.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="65">
-              <caret line="73" selection-start-line="73" selection-end-line="73" />
-            </state>
+          <provider editor-type-id="android-designer2">
+            <state />
           </provider>
         </entry>
       </file>
@@ -214,9 +171,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>IsVip</find>
-      <find>activity_showshopoffice_vipTpBody</find>
-      <find>shop_list</find>
       <find>shopvalues</find>
       <find>item_serchshoplist_vipTpBody</find>
       <find>TvIntegral</find>
@@ -244,6 +198,9 @@
       <find>订单</find>
       <find>退出</find>
       <find>finish</find>
+      <find>NiceImageView</find>
+      <find>bannerHolder</find>
+      <find>messageFr</find>
     </findStrings>
   </component>
   <component name="GenerateSignedApkSettings">
@@ -2510,15 +2467,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/xml/file_paths.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyPage/XMLUserAddr.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyPage/USER_KEY_PAGE.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_wxpayentry.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/wxapi/WXPayEntryActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/item_sendsystemorderact_list.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/border_angle.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_systemaddtovip.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/handlerText.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopSystemMonitor/SystemMonitor.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopMonitor/Monitor.java" />
@@ -2536,19 +2484,14 @@
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalAction.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_integraldeposit.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemIntegralDeposit.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_message.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/BrowseAct.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Tools.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CAMER.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemAddBankcard.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/ico_vipintegral.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/item_showvip.xml" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemAddtoVip.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_addbandcard.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_integralpostal.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/item_integraldetiled.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_integraldetiled.xml" />
@@ -2557,10 +2500,24 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/UserCenterfrg.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/LoginAct.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/lazyCatLogAct.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopVip/SystemVip.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/MainAct.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemIntegralPostal.java" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_page_indicator.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Tools.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/systemguidepage.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/lazyCatLogAct.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemGuidepage.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Messagefrg.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Vipexclusive.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/MainAct.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_message.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_vipexclusive.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Vipexclusivefrg.java" />
       </list>
     </option>
   </component>
@@ -2576,6 +2533,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -2592,31 +2551,57 @@
               <item name="lazyCat" type="b2602c69:ProjectViewProjectNode" />
               <item name="lazyCat" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="lazyCat" type="b2602c69:ProjectViewProjectNode" />
               <item name="lazyCat" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="intermediates" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="lazyCat" type="b2602c69:ProjectViewProjectNode" />
               <item name="lazyCat" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="gradle" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="intermediates" type="462c0819:PsiDirectoryNode" />
+              <item name="merged_assets" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="lazyCat" type="b2602c69:ProjectViewProjectNode" />
               <item name="lazyCat" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="gradle" type="462c0819:PsiDirectoryNode" />
-              <item name="wrapper" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="intermediates" type="462c0819:PsiDirectoryNode" />
+              <item name="merged_assets" type="462c0819:PsiDirectoryNode" />
+              <item name="release" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="lazyCat" type="b2602c69:ProjectViewProjectNode" />
+              <item name="lazyCat" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="intermediates" type="462c0819:PsiDirectoryNode" />
+              <item name="merged_assets" type="462c0819:PsiDirectoryNode" />
+              <item name="release" type="462c0819:PsiDirectoryNode" />
+              <item name="mergeReleaseAssets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="lazyCat" type="b2602c69:ProjectViewProjectNode" />
+              <item name="lazyCat" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="intermediates" type="462c0819:PsiDirectoryNode" />
+              <item name="merged_assets" type="462c0819:PsiDirectoryNode" />
+              <item name="release" type="462c0819:PsiDirectoryNode" />
+              <item name="mergeReleaseAssets" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -2645,21 +2630,6 @@
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="lazycat" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="LazyShopAct" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="lazycat" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="LazyShopAct" type="462c0819:PsiDirectoryNode" />
-              <item name="SystemAct" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="lazycat" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="LazyShopFrg" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -2667,7 +2637,7 @@
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="lazycat" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="LazyShopVip" type="462c0819:PsiDirectoryNode" />
+              <item name="LazyShopMonitor" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="lazyCat" type="1abcf292:AndroidViewProjectNode" />
@@ -2694,7 +2664,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2712,9 +2681,8 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/src/main/res/xml" />
-      <recent name="$PROJECT_DIR$/app/src/main/assets/font" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
@@ -2728,8 +2696,9 @@
       <recent name="shlm.lmcs.com.lazycat.LazyShopView" />
       <recent name="shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools" />
     </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/xml" />
+      <recent name="$PROJECT_DIR$/app/src/main/assets/font" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -2989,17 +2958,18 @@
       <window_info anchor="bottom" id="Run" order="8" weight="0.32827586" />
       <window_info anchor="bottom" id="Version Control" order="3" weight="0.32965517" />
       <window_info anchor="bottom" id="Terminal" order="5" weight="0.32965517" />
-      <window_info active="true" anchor="bottom" id="Logcat" order="4" sideWeight="0.4983845" visible="true" weight="0.6937931" />
+      <window_info anchor="bottom" id="Logcat" order="4" sideWeight="0.4983845" weight="0.69655174" />
       <window_info id="Captures" order="7" weight="0.24959612" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="Designer" order="0" />
-      <window_info content_ui="combo" id="Project" order="4" sideWeight="0.4813793" visible="true" weight="0.24959612" />
+      <window_info content_ui="combo" id="Project" order="4" sideWeight="0.4813793" weight="0.24959612" />
       <window_info anchor="bottom" id="Build" order="0" weight="0.32689655" />
+      <window_info anchor="bottom" id="Find" order="7" weight="0.32965517" />
       <window_info anchor="right" id="Gradle" order="4" weight="0.32956383" />
       <window_info id="Structure" order="5" sideWeight="0.51082253" side_tool="true" weight="0.24959612" />
+      <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
       <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" weight="0.546042" />
       <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" id="Assistant" order="10" weight="0.32956383" />
       <window_info anchor="right" id="StringPreview" order="0" />
@@ -3009,7 +2979,6 @@
       <window_info anchor="right" id="Ant Build" order="7" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="7" weight="0.32965517" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="StringPreview" order="0" />
@@ -3029,20 +2998,20 @@
       <window_info anchor="bottom" id="Event Log" order="2" sideWeight="0.5016155" side_tool="true" weight="0.6937931" />
       <window_info anchor="right" id="Preview" order="2" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="7" weight="0.32965517" />
       <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" weight="0.546042" />
       <window_info anchor="right" id="Assistant" order="10" weight="0.32956383" />
-      <window_info anchor="bottom" id="Logcat" order="4" sideWeight="0.4983845" visible="true" weight="0.6937931" />
+      <window_info anchor="bottom" id="Logcat" order="4" sideWeight="0.4983845" weight="0.69655174" />
       <window_info anchor="bottom" id="Version Control" order="3" weight="0.32965517" />
       <window_info anchor="bottom" id="Terminal" order="5" weight="0.32965517" />
       <window_info anchor="right" id="Gradle" order="4" weight="0.32956383" />
-      <window_info active="true" content_ui="combo" id="Project" order="4" sideWeight="0.4813793" visible="true" weight="0.24959612" />
+      <window_info content_ui="combo" id="Project" order="4" sideWeight="0.4813793" visible="true" weight="0.24959612" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="TODO" order="12" weight="0.32965517" />
       <window_info anchor="right" id="Palette&#9;" order="9" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info id="Structure" order="5" sideWeight="0.51082253" side_tool="true" weight="0.24959612" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="7" weight="0.32965517" />
       <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
     </layout-to-restore>
   </component>
@@ -3055,74 +3024,11 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_systemaddtovip.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="61">
-          <caret line="89" column="32" selection-start-line="89" selection-start-column="32" selection-end-line="89" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/assembly_searchact_showsearchitem.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchAct.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="325" column="48" selection-start-line="325" selection-start-column="48" selection-end-line="325" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_searchshoplist.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="152" column="50" lean-forward="true" selection-start-line="152" selection-start-column="50" selection-end-line="152" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SearchShoplist.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="368" column="42" selection-start-line="368" selection-start-column="42" selection-end-line="368" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2418">
-          <caret line="136" column="24" selection-start-line="136" selection-start-column="24" selection-end-line="136" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/CompanyTools/handlerText.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="30" column="30" lean-forward="true" selection-start-line="30" selection-start-column="30" selection-end-line="30" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-28/android/view/LayoutInflater.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="66" column="22" selection-start-line="66" selection-start-column="22" selection-end-line="66" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_messageview.xml">
-      <provider selected="true" editor-type-id="android-designer2">
+      <provider editor-type-id="text-editor">
         <state />
       </provider>
-      <provider editor-type-id="text-editor">
+      <provider selected="true" editor-type-id="android-designer2">
         <state />
       </provider>
     </entry>
@@ -3133,44 +3039,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Messagefrg.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-166">
-          <caret line="34" column="21" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/BrowseAct.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="67" column="17" lean-forward="true" selection-start-line="67" selection-start-column="17" selection-end-line="67" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="1697" column="23" selection-start-line="1697" selection-start-column="23" selection-end-line="1697" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_message.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="58" column="21" selection-start-line="58" selection-start-column="21" selection-end-line="58" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_main.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="106" column="53" selection-start-line="106" selection-start-column="33" selection-end-line="106" selection-end-column="53" />
         </state>
       </provider>
     </entry>
@@ -3201,42 +3073,23 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_integraldeposit.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="356">
           <caret line="53" column="73" selection-start-line="53" selection-start-column="37" selection-end-line="53" selection-end-column="73" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_showvip.xml">
-      <provider editor-type-id="android-designer2">
+      <provider selected="true" editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_showvip.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="385">
           <caret line="138" column="49" selection-start-line="138" selection-start-column="29" selection-end-line="138" selection-end-column="49" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
+      <provider editor-type-id="android-designer2">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Tools.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="886" column="7" selection-start-line="886" selection-start-column="7" selection-end-line="886" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/WxPay/WxpayinitInstance.java">
@@ -3253,49 +3106,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="156" column="48" lean-forward="true" selection-start-line="156" selection-start-column="48" selection-end-line="156" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_addbandcard.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="211">
           <caret line="102" column="20" lean-forward="true" selection-start-line="102" selection-start-column="20" selection-end-line="102" selection-end-column="20" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/assembly_act_head.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="16" column="47" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/2020_1_9_b.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_integraldetiled.xml">
       <provider selected="true" editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/2020_1_9_b.png" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_integraldetiled.xml">
       <provider editor-type-id="text-editor">
         <state relative-caret-position="481">
           <caret line="100" column="34" selection-start-line="100" selection-start-column="34" selection-end-line="100" selection-end-column="34" />
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalAction.java">
@@ -3306,13 +3135,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_integraldetiled.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="263">
           <caret line="16" selection-start-line="16" selection-end-line="16" />
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemAddtoVip.java">
@@ -3327,13 +3156,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/alert_message.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="311">
           <caret line="45" column="24" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
@@ -3365,13 +3194,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="29" column="47" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="47" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/UserCenterfrg.java">
@@ -3406,55 +3235,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/lazyCatLogAct.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="471">
-          <caret line="70" column="47" selection-start-line="70" selection-start-column="47" selection-end-line="70" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/WaitDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="65">
-          <caret line="73" selection-start-line="73" selection-end-line="73" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemIntegralDetiled.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="283">
           <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/MainAct.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="407">
-          <caret line="73" column="40" selection-start-line="73" selection-start-column="40" selection-end-line="73" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemIntegralDeposit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1110">
-          <caret line="53" column="25" selection-start-line="53" selection-start-column="10" selection-end-line="53" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_integralpostal.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="232">
           <caret line="171" column="28" selection-start-line="171" selection-start-column="28" selection-end-line="171" selection-end-column="28" />
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopVip/SystemVip.java">
@@ -3464,35 +3259,204 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemIntegralPostal.java">
+    <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="76" column="68" selection-start-line="76" selection-start-column="68" selection-end-line="76" selection-end-column="68" />
-          <folding>
-            <element signature="e#6844#7050#0" expanded="true" />
-            <element signature="e#7049#7050#0" expanded="true" />
-            <element signature="e#7177#11148#0" expanded="true" />
-            <element signature="e#11147#11148#0" expanded="true" />
-            <element signature="e#11272#12310#0" expanded="true" />
-            <element signature="e#11963#12261#0" expanded="true" />
-            <element signature="e#12260#12261#0" expanded="true" />
-            <element signature="e#12309#12310#0" expanded="true" />
-            <element signature="e#12435#12708#0" expanded="true" />
-            <element signature="e#12707#12708#0" expanded="true" />
-            <element signature="e#12833#13432#0" expanded="true" />
-            <element signature="e#13177#13381#0" expanded="true" />
-            <element signature="e#13380#13381#0" expanded="true" />
-            <element signature="e#13431#13432#0" expanded="true" />
-            <element signature="e#13556#13766#0" expanded="true" />
-            <element signature="e#13765#13766#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="552">
+          <caret line="23" column="33" lean-forward="true" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="30" column="44" lean-forward="true" selection-start-line="30" selection-start-column="44" selection-end-line="30" selection-end-column="44" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopValues/LocalValues.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="101">
-          <caret line="317" lean-forward="true" selection-start-line="317" selection-end-line="317" />
+        <state relative-caret-position="235">
+          <caret line="215" lean-forward="true" selection-start-line="215" selection-end-line="215" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemIntegralPostal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="76" column="68" selection-start-line="76" selection-start-column="68" selection-end-line="76" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemIntegralDeposit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="53" column="25" selection-start-line="53" selection-start-column="10" selection-end-line="53" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Factory/WaitDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="73" selection-start-line="73" selection-end-line="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_main.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="95" column="15" selection-start-line="95" selection-start-column="15" selection-end-line="95" selection-end-column="15" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_page_indicator.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyCatProgramUnt/Tools.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="229" column="25" selection-start-line="229" selection-start-column="25" selection-end-line="229" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="158" column="50" lean-forward="true" selection-start-line="158" selection-start-column="50" selection-end-line="158" selection-end-column="50" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/SystemAct/SystemGuidepage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="65" column="58" selection-start-line="65" selection-start-column="58" selection-end-line="65" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1455#1620#0" expanded="true" />
+            <element signature="e#1619#1620#0" expanded="true" />
+            <element signature="e#1921#2107#0" expanded="true" />
+            <element signature="e#2106#2107#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/lazyCatLogAct.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="74" selection-start-line="74" selection-end-line="75" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/systemguidepage.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Mainfrg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="1691" column="47" selection-start-line="1691" selection-start-column="41" selection-end-line="1691" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/btn_message.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="66" column="35" selection-start-line="66" selection-start-column="35" selection-end-line="66" selection-end-column="35" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Vipexclusive.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Messagefrg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2762">
+          <caret line="41" column="31" lean-forward="true" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopAct/MainAct.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="271" column="18" lean-forward="true" selection-start-line="271" selection-start-column="18" selection-end-line="271" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/assembly_act_head.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_message.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="70" column="23" selection-start-line="70" selection-start-column="23" selection-end-line="70" selection-end-column="23" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_vipexclusive.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="13" column="56" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="56" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/shlm/lmcs/com/lazycat/LazyShopFrg/Vipexclusivefrg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="606">
+          <caret line="48" column="37" selection-start-line="48" selection-start-column="37" selection-end-line="48" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1299#1551#0" expanded="true" />
+            <element signature="e#1550#1551#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

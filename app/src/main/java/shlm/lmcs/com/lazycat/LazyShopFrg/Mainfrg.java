@@ -23,6 +23,7 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -1330,7 +1331,8 @@ public class Mainfrg extends LazyCatFragment {
                 return new bannerHolder();
             }
         }, big_headimgs).setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign
-                .ALIGN_PARENT_RIGHT).startTurning(3000);
+                .ALIGN_PARENT_RIGHT).setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable
+                .ic_page_indicator_focused}).startTurning(3000);
         /**
          * 设置加载的下拉加载的图片地址和点击事件
          */
@@ -1688,15 +1690,16 @@ public class Mainfrg extends LazyCatFragment {
     }
 
     public class bannerHolder implements Holder<String> {
-        private ImageView img;
+        private RoundedImageView img;
 
         @SuppressLint("NewApi")
         @Override
         public View createView(Context context) {
-            img = new ImageView(context);
+
+            img = new RoundedImageView(context);
             img.setAdjustViewBounds(true);
-            img.setBackground(Tools.CreateDrawable(1,"#ffffff","#ffffff",30));
             img.setScaleType(ImageView.ScaleType.FIT_XY);
+            img.setCornerRadius((float) 20);
             return img;
         }
 

@@ -19,8 +19,8 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.FragmentLR;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Classifyfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Mainfrg;
-import shlm.lmcs.com.lazycat.LazyShopFrg.Messagefrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.UserCenterfrg;
+import shlm.lmcs.com.lazycat.LazyShopFrg.Vipexclusivefrg;
 import shlm.lmcs.com.lazycat.LazyShopVip.SystemVip;
 import shlm.lmcs.com.lazycat.R;
 
@@ -30,7 +30,7 @@ public class MainAct extends LazyCatAct {
     private Mainfrg mainfrg;
     private Classifyfrg classifyfrg;
     private UserCenterfrg usercneterfrg;
-    private Messagefrg messagefrg;
+    private Vipexclusivefrg vipexclusivefrg;
     private FragmentLR frameLayout;
     private int lr_downX;/*滑动定点*/
     private boolean is_main, is_cart, is_user;/*判断是哪个导航被点击*/
@@ -120,7 +120,7 @@ public class MainAct extends LazyCatAct {
                 /*开始隐藏其它的导航*/
                 ImageView cart = (ImageView) btn_message.getChildAt(0);
                 cart.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable
-                        .btn_message, "#a9a9a9"));
+                        .ico_navvip, "#a9a9a9"));
                 TextView cart_title = (TextView) btn_message.getChildAt(1);
                 cart_title.setTextColor(Color.parseColor("#a9a9a9"));
                 /*用户自己的界面*/
@@ -163,7 +163,7 @@ public class MainAct extends LazyCatAct {
                 });
                 ImageView img = (ImageView) rl.getChildAt(0);
                 img.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable
-                        .btn_message, "#08c299"));
+                        .ico_navvip, "#08c299"));
                 /*隐藏其它的界面*/
                 TextView title = (TextView) rl.getChildAt(1);
                 title.setTextColor(Color.parseColor("#08c299"));
@@ -223,7 +223,7 @@ public class MainAct extends LazyCatAct {
                 TextUnt.with(delivery_title).setTextColor("#a9a9a9");
                 ImageView delivery_img = (ImageView) btn_message.getChildAt(0);
                 delivery_img.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R
-                        .drawable.btn_message, "#a9a9a9"));
+                        .drawable.ico_navvip, "#a9a9a9"));
 
             }
         });
@@ -254,7 +254,7 @@ public class MainAct extends LazyCatAct {
                 main_title.setTextColor(Color.parseColor("#a9a9a9"));
                 ImageView cart = (ImageView) btn_message.getChildAt(0);
                 cart.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R.drawable
-                        .btn_message, "#a9a9a9"));
+                        .ico_navvip, "#a9a9a9"));
                 TextView cart_title = (TextView) btn_message.getChildAt(1);
                 cart_title.setTextColor(Color.parseColor("#a9a9a9"));
 
@@ -325,15 +325,15 @@ public class MainAct extends LazyCatAct {
                 }
                 break;
             case ICO_FRAGMENT_DELIVERY:
-                if (messagefrg != null) {
-                    ft.remove(messagefrg);/*先移除messagefrg*/
-                    messagefrg = null;
-                    messagefrg = new Messagefrg();
-                    ft.add(R.id.activity_main_Framelayout, messagefrg);
+                if (vipexclusivefrg != null) {
+                    ft.remove(vipexclusivefrg);/*先移除messagefrg*/
+                    vipexclusivefrg = null;
+                    vipexclusivefrg = new Vipexclusivefrg();
+                    ft.add(R.id.activity_main_Framelayout, vipexclusivefrg);
 
                 } else {
-                    messagefrg = new Messagefrg();
-                    ft.add(R.id.activity_main_Framelayout, messagefrg);
+                    vipexclusivefrg = new Vipexclusivefrg();
+                    ft.add(R.id.activity_main_Framelayout, vipexclusivefrg);
                 }
                 break;
             case ICO_FRAGMENT_MESSAGE:
@@ -366,8 +366,8 @@ public class MainAct extends LazyCatAct {
         if (mainfrg != null) {
             ft.hide(mainfrg);
         }
-        if (messagefrg != null) {
-            ft.hide(messagefrg);
+        if (vipexclusivefrg != null) {
+            ft.hide(vipexclusivefrg);
         }
         if (usercneterfrg != null) {
             ft.hide(usercneterfrg);
@@ -396,15 +396,15 @@ public class MainAct extends LazyCatAct {
                 }
                 break;
             case ICO_FRAGMENT_DELIVERY:
-                if (messagefrg != null) {
-                    ft.remove(messagefrg);/*先移除messagefrg*/
-                    messagefrg = null;
-                    messagefrg = new Messagefrg();
-                    ft.add(R.id.activity_main_Framelayout, messagefrg);
+                if (vipexclusivefrg != null) {
+                    ft.remove(vipexclusivefrg);/*先移除messagefrg*/
+                    vipexclusivefrg = null;
+                    vipexclusivefrg = new Vipexclusivefrg();
+                    ft.add(R.id.activity_main_Framelayout, vipexclusivefrg);
 
                 } else {
-                    messagefrg = new Messagefrg();
-                    ft.add(R.id.activity_main_Framelayout, messagefrg);
+                    vipexclusivefrg = new Vipexclusivefrg();
+                    ft.add(R.id.activity_main_Framelayout, vipexclusivefrg);
                 }
                 break;
             case ICO_FRAGMENT_MESSAGE:
