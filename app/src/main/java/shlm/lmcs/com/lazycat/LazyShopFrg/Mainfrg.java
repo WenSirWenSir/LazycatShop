@@ -574,7 +574,7 @@ public class Mainfrg extends LazyCatFragment {
 
                     Glide.with(getContext()).load("http://f.freep.cn/583105/SHOP_DATABASE/" +
                             showList.get(Position).get_img().trim()).skipMemoryCache(false)
-                            .diskCacheStrategy(DiskCacheStrategy.NONE).into(ItemShopimg);
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ItemShopimg);
                     /*设置加盟的赠送的内容*/
                     shopItem.findViewById(R.id.item_mainshoplist_vipTpBody).setBackground(Tools
                             .CreateDrawable(1, getResources().getString(R.color.colorVip),
@@ -1370,23 +1370,23 @@ public class Mainfrg extends LazyCatFragment {
          */
         /*加载横向的第一个图片*/
         Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallAimgUrl().trim())
-                .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
+                .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.SOURCE).into
                 (secondNavAimg);
         /*加载横向的第二个图片*/
         Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallBimgUrl().trim())
-                .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
+                .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.SOURCE).into
                 (secondNavBimg);
         /*加载竖向的第一个图片*/
         Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallCimgUrl().trim())
-                .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
+                .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.SOURCE).into
                 (secondNavCimg);
         /*加载竖向的第二个图片*/
         Glide.with(getContext()).load(secondSmallNavAPage.getSecondSmallDimgUrl().trim())
-                .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
+                .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.SOURCE).into
                 (secondNavDimg);
         /*加载中间的导航的图片*/
         Glide.with(getContext()).load(bigCenterHeadpageInstance.getHeadimg().trim())
-                .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into
+                .skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.SOURCE).into
                 (CenterHeadpageImg);
 
         /*第一个图片的标题*/
@@ -1531,13 +1531,13 @@ public class Mainfrg extends LazyCatFragment {
         }).setTag(bigCenterHeadpageInstance.getHeadurl().trim());
         /*加载第三个导航的第一个竖向的图片*/
         Glide.with(getContext()).load(threeNavPageInstance.getNavAimg()).skipMemoryCache(false)
-                .diskCacheStrategy(DiskCacheStrategy.NONE).into(threeNavAimg);
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE).into(threeNavAimg);
         /*加载第三个导航的第二个竖向图片*/
         Glide.with(getContext()).load(threeNavPageInstance.getNavBimg()).skipMemoryCache(false)
-                .diskCacheStrategy(DiskCacheStrategy.NONE).into(threeNavBimg);
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE).into(threeNavBimg);
         /*加载第三个导航的第二个竖向图片*/
         Glide.with(getContext()).load(threeNavPageInstance.getNavCimg()).skipMemoryCache(false)
-                .diskCacheStrategy(DiskCacheStrategy.NONE).into(threeNavCimg);
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE).into(threeNavCimg);
 
 
     }

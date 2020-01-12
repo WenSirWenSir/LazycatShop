@@ -240,10 +240,11 @@ public class Tools {
     /**
      * 保存是否引导
      */
-    public static void saveGuidetoken(Context _context, String _string) {
+    public static void saveGuidetoken(Context _context) {
         SharedPreferences sharedPreferences = _context.getSharedPreferences("Guide", 0);
         try {
-            sharedPreferences.edit().putString("isGuide", _string).commit();
+            //保存已经引导过了
+            sharedPreferences.edit().putString("isGuide", "0").commit();
         } catch (Exception e) {
         }
     }

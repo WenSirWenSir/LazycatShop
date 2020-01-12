@@ -32,6 +32,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyShopAct.MainAct;
+import shlm.lmcs.com.lazycat.LazyShopAct.PromotionAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.SystemAct.SystemGuidepage;
 import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
 
@@ -70,6 +71,9 @@ public class lazyCatLogAct extends LazyCatAct {
                     if (Tools.getGuidetoken(getApplicationContext()).equals("1")) {
                         //没有引导过
                         LazyCatActStartActivity(SystemGuidepage.class, true);
+                    } else {
+                        //引导过了  进入广告界面
+                        LazyCatActStartActivity(PromotionAct.class, true);
                     }
                 } else {
                     LazyCatActStartActivity(MainAct.class, true);
@@ -189,8 +193,6 @@ public class lazyCatLogAct extends LazyCatAct {
                 alertDialog = builder.show();
             }
         }
-
-
 
 
     }
