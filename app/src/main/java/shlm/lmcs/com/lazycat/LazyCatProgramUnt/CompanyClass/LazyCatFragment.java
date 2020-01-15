@@ -70,4 +70,8 @@ public class LazyCatFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 字体不跟随系统的设置
+     */
 }

@@ -3,6 +3,8 @@ package shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
@@ -204,4 +206,15 @@ public class LazyCatAct extends Activity {
 
     }
 
+    /**
+     * 重写使app字体大小不跟随系统
+     */
+    @Override
+    public Resources getResources() {
+        Resources res = super.getResources();
+        Configuration config = new Configuration();
+        config.setToDefaults();
+        res.updateConfiguration(config, res.getDisplayMetrics());
+        return res;
+    }
 }
