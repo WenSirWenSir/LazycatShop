@@ -18,7 +18,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.FragmentLR;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Classifyfrg;
-import shlm.lmcs.com.lazycat.LazyShopFrg.Mainfrg;
+import shlm.lmcs.com.lazycat.LazyShopFrg.Recomdfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.UserCenterfrg;
 import shlm.lmcs.com.lazycat.LazyShopFrg.Vipexclusivefrg;
 import shlm.lmcs.com.lazycat.LazyShopVip.SystemVip;
@@ -31,19 +31,19 @@ import shlm.lmcs.com.lazycat.R;
 public class MainAct extends LazyCatAct {
     private FragmentTransaction ft;
     private RelativeLayout btn_main, btn_vip, btn_usercenter, btn_recomd;
-    private Mainfrg mainfrg;
-    private Classifyfrg classifyfrg;
-    private UserCenterfrg usercneterfrg;
-    private Vipexclusivefrg vipexclusivefrg;
+    private Classifyfrg classifyfrg;/*分类界面就是主界面*/
+    private UserCenterfrg usercneterfrg;/*用户中心界面*/
+    private Vipexclusivefrg vipexclusivefrg;/*vip的展示界面*/
+    private Recomdfrg recomfrg;/*促销的界面*/
     private FragmentLR frameLayout;
     private int lr_downX;/*滑动定点*/
     private boolean is_main, is_cart, is_user;/*判断是哪个导航被点击*/
     private int lr_countX;/*滑动距离*/
     private String MSG = "MainAct.java[+]";
     private final static int ICO_FRAGMENT_MAIN = 0;
-    private final static int ICO_FRAGMENT_DELIVERY = 1;
-    private final static int ICO_FRAGMENT_USERCENTER = 2;
-    private final static int ICO_FRAGMENT_MESSAGE = 3;
+    private final static int ICO_FRAGMENT_VIP = 1;
+    private final static int ICO_FRAGMENT_RECOMD = 2;
+    private final static int ICO_FRAGMENT_ME = 3;
     private int now_fragment;/*判断是哪一个FRAGMENT*/
 
     @Override
@@ -155,8 +155,8 @@ public class MainAct extends LazyCatAct {
             public void onClick(View v) {
                 ClearallIcoBackground();
                 hideFragment();
-                showFragment(ICO_FRAGMENT_DELIVERY);
-                now_fragment = ICO_FRAGMENT_DELIVERY;
+                showFragment(ICO_FRAGMENT_VIP);
+                now_fragment = ICO_FRAGMENT_VIP;
                 final RelativeLayout rl = (RelativeLayout) v;
                 rl.post(new Runnable() {
                     @Override
@@ -194,8 +194,8 @@ public class MainAct extends LazyCatAct {
             public void onClick(View v) {
                 ClearallIcoBackground();
                 hideFragment();
-                showFragment(ICO_FRAGMENT_MESSAGE);
-                now_fragment = ICO_FRAGMENT_MESSAGE;
+                showFragment(ICO_FRAGMENT_RECOMD);
+                now_fragment = ICO_FRAGMENT_RECOMD;
                 final RelativeLayout rl = (RelativeLayout) v;
                 rl.post(new Runnable() {
                     @Override
@@ -237,8 +237,8 @@ public class MainAct extends LazyCatAct {
                 ClearallIcoBackground();
                 final RelativeLayout rl = (RelativeLayout) v;
                 hideFragment();
-                showFragment(ICO_FRAGMENT_USERCENTER);
-                now_fragment = ICO_FRAGMENT_USERCENTER;
+                showFragment(ICO_FRAGMENT_ME);
+                now_fragment = ICO_FRAGMENT_ME;
                 rl.post(new Runnable() {
                     @Override
                     public void run() {
@@ -324,11 +324,15 @@ public class MainAct extends LazyCatAct {
                     classifyfrg = new Classifyfrg();
                     ft.add(R.id.activity_main_Framelayout, classifyfrg);
                 } else {
-                    mainfrg = new Mainfrg();
-                    ft.add(R.id.activity_main_Framelayout, mainfrg);
+                    classifyfrg = new Classifyfrg();
+                    ft.add(R.id.activity_main_Framelayout, classifyfrg);
                 }
                 break;
-            case ICO_FRAGMENT_DELIVERY:
+
+            /**
+             * 展示VIP界面
+             */
+            case ICO_FRAGMENT_VIP:
                 if (vipexclusivefrg != null) {
                     ft.remove(vipexclusivefrg);/*先移除messagefrg*/
                     vipexclusivefrg = null;
@@ -340,15 +344,15 @@ public class MainAct extends LazyCatAct {
                     ft.add(R.id.activity_main_Framelayout, vipexclusivefrg);
                 }
                 break;
-            case ICO_FRAGMENT_MESSAGE:
-                if (classifyfrg != null) {
-                    ft.show(classifyfrg);
+            case ICO_FRAGMENT_RECOMD:
+                if (recomfrg != null) {
+                    ft.show(recomfrg);
                 } else {
-                    classifyfrg = new Classifyfrg();
-                    ft.add(R.id.activity_main_Framelayout, classifyfrg);
+                    recomfrg = new Recomdfrg();
+                    ft.add(R.id.activity_main_Framelayout, recomfrg);
                 }
                 break;
-            case ICO_FRAGMENT_USERCENTER:
+            case ICO_FRAGMENT_ME:
                 if (usercneterfrg != null) {
                     ft.remove(usercneterfrg);
                     usercneterfrg = null;
@@ -367,8 +371,8 @@ public class MainAct extends LazyCatAct {
 
     private void hideFragment() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        if (mainfrg != null) {
-            ft.hide(mainfrg);
+        if (classifyfrg != null) {
+            ft.hide(classifyfrg);
         }
         if (vipexclusivefrg != null) {
             ft.hide(vipexclusivefrg);

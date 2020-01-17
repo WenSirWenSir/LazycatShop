@@ -161,7 +161,7 @@ public class lazyCatLogAct extends LazyCatAct {
                 public void run() {
                     handler.sendMessage(new Message());
                 }
-            }, 3000);
+            }, 1600);
 
             /**
              * 展示引导界面  引导用户了解云仓库的运营模式
@@ -211,7 +211,7 @@ public class lazyCatLogAct extends LazyCatAct {
                     public void run() {
                         handler.sendMessage(new Message());
                     }
-                }, 3000);
+                }, 1600);
             } else {
                 /*地址获取失败 直接告知 并且退出程序*/
                 final AlertDialog alertDialog;
