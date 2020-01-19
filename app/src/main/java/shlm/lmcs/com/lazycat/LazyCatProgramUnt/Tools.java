@@ -71,6 +71,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.XMLUserAddr;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.FastBlur;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
+import shlm.lmcs.com.lazycat.LazyShopView.SystemTextView;
 
 
 /**
@@ -792,7 +793,7 @@ public class Tools {
         ArrayList<LinearLayout> textViews = new ArrayList<LinearLayout>();
         for (int i = 0; i < text_list.size(); i++) {
             LinearLayout layout = new LinearLayout(context);
-            TextView tv = new TextView(context);
+            SystemTextView tv = new SystemTextView(context);
             tv.setText(text_list.get(i));
             tv.setPadding(left, top, right, bottom);
             layout.addView(tv);
