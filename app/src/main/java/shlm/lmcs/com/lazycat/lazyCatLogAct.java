@@ -14,12 +14,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -35,6 +32,7 @@ import shlm.lmcs.com.lazycat.LazyShopAct.MainAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.PromotionAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.SystemAct.SystemGuidepage;
 import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
+import shlm.lmcs.com.lazycat.TerminalSystemMO.Record.SystemVs;
 
 import static shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools.isPermission;
 
@@ -87,42 +85,7 @@ public class lazyCatLogAct extends LazyCatAct {
         /**
          * 测试代码区
          */
-        aMapLocationClientOption = new AMapLocationClientOption();
-        mapLocationClient = new AMapLocationClient(getApplicationContext());
-        aMapLocationClientOption.setNeedAddress(true);
-        aMapLocationClientOption.setInterval(1000);
-        /*关闭缓存*/
-        aMapLocationClientOption.setLocationCacheEnable(false);
-        /*设置超时*/
-        aMapLocationClientOption.setHttpTimeOut(20000);
-        aMapLocationClientOption.setLocationMode(AMapLocationClientOption.AMapLocationMode
-                .Hight_Accuracy);
-        mapLocationClient.setLocationOption(aMapLocationClientOption);
-/*
-        mapLocationClient.startLocation();
-*/
-
-        mapLocationClient.setLocationListener(new AMapLocationListener() {
-            @Override
-            public void onLocationChanged(AMapLocation aMapLocation) {
-                if (aMapLocation != null) {
-                    if (aMapLocation.getErrorCode() == 0) {
-/*
-                        Toast.makeText(getApplicationContext(),aMapLocation.getAdCode(),Toast
-                        .LENGTH_SHORT).show();
-*/
-                        Log.i(MSG, "定位成功:" + aMapLocation.getLongitude());
-
-                    } else {
-                        Log.e(MSG, "定位失败");
-                    }
-                    mapLocationClient.stopLocation();
-                } else {
-                    Toast.makeText(getApplicationContext(), "定位失败", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
+        SystemVs._start(lazyCatLogAct.this);
         /*找到Ico控件*/
         log_title = findViewById(R.id.activity_lazy_log_title);/*控件图标*/
         log_context = findViewById(R.id.activity_lazy_log_context);/*控件的内容CangKu Service*/

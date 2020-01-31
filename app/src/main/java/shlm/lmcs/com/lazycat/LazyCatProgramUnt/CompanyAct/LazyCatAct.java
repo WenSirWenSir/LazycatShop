@@ -217,4 +217,13 @@ public class LazyCatAct extends Activity {
         res.updateConfiguration(config, res.getDisplayMetrics());
         return res;
     }
+
+    public void setBackListener(int _viewId) {
+        this.findViewById(_viewId).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
 }

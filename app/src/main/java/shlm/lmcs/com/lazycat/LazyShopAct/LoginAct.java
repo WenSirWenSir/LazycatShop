@@ -175,7 +175,7 @@ public class LoginAct extends LazyCatAct {
                         xmlInstance.overDom();
                         LocalValues.HTTP_ADDRS http_addrs = LocalValues.getHttpaddrs
                                 (getApplicationContext());
-                        Net.doPostXml(getApplicationContext(), http_addrs
+                        Net.doPostXml( http_addrs
                                 .HTTP_ADDR_SEND_LOGINSMS, new ProgramInterface() {
                             @Override
                             public void onSucess(String data, int code, WaitDialog.RefreshDialog
@@ -282,7 +282,7 @@ public class LoginAct extends LazyCatAct {
                 xmlInstance.overDom();
                 LocalValues.HTTP_ADDRS http_addrs = LocalValues.getHttpaddrs
                         (getApplicationContext());
-                Net.doPostXml(getApplicationContext(), http_addrs.HTTP_ADDR_INSPECT_LOGIN, new
+                Net.doPostXml( http_addrs.HTTP_ADDR_INSPECT_LOGIN, new
                         ProgramInterface() {
                     @Override
                     public void onSucess(String data, int code, WaitDialog.RefreshDialog

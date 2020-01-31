@@ -166,7 +166,7 @@ public class SearchAct extends LazyCatAct {
                     xmlInstance.setXmlTree(LocalAction.ACTION_SEARCHKEY.ACTION_KEYWORD, s
                             .toString().trim());
                     xmlInstance.overDom();
-                    Net.doPostXml(getApplicationContext(), http_addrs
+                    Net.doPostXml( http_addrs
                             .HTTP_ADDR_SEARCH_KEY, new ProgramInterface() {
                         @Override
                         public void onSucess(String data, int code, WaitDialog.RefreshDialog
@@ -395,7 +395,7 @@ public class SearchAct extends LazyCatAct {
          */
         XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(true);
         xmlInstance.overDom();
-        Net.doPostXml(getApplicationContext(), http_addrs.HTTP_ADDR_INITSEARCH, new
+        Net.doPostXml( http_addrs.HTTP_ADDR_INITSEARCH, new
                 ProgramInterface() {
             @Override
             public void onSucess(String data, int code, WaitDialog.RefreshDialog _refreshDialog) {

@@ -1,5 +1,6 @@
 package shlm.lmcs.com.lazycat.LazyCatProgramUnt;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -1227,5 +1228,23 @@ public class Tools {
             }
         });
         animator.start();
+    }
+
+
+    /**
+     * 获取手机的IMEI
+     * @param _context
+     * @return
+     */
+    public static String toGetIMEI(Context _context) {
+        TelephonyManager telephonyManager = (TelephonyManager) _context.getSystemService(_context.TELEPHONY_SERVICE);
+        if (ActivityCompat.checkSelfPermission(_context, Manifest.permission.READ_PHONE_STATE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            return "";
+        } else {
+            String imei = telephonyManager.getDeviceId();
+            return imei;
+        }
+
     }
 }

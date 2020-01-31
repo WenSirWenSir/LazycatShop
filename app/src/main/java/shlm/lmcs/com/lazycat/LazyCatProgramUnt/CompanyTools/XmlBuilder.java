@@ -57,7 +57,6 @@ public class XmlBuilder {
         this.mParcel = parcel;
     }
 
-
     /**
      * 获取XML文件体
      *

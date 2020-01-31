@@ -246,15 +246,19 @@ public class Net {
     /**
      * 用POST方式提交XML数据信息
      *
-     * @param mContext         上下文
      * @param url              地址
      * @param programInterface 接口信息
      * @param xmldata          xml数据
      */
-    public static void doPostXml(final Context mContext, String url, final ProgramInterface
-            programInterface, final String xmldata) {
+    public static void doPostXml(String url, final ProgramInterface programInterface, final
+    String xmldata) {
         final WaitDialog.RefreshDialog _refreshDialog;
-        _refreshDialog = programInterface.onStartLoad();
+        if(programInterface != null){
+            _refreshDialog = programInterface.onStartLoad();
+        }
+        else{
+            _refreshDialog = null;
+        }
         new AsyncTask<String, Void, String>() {
             @Override
             protected String doInBackground(String... _url) {

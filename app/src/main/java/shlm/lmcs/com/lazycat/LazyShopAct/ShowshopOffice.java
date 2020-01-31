@@ -3,6 +3,7 @@ package shlm.lmcs.com.lazycat.LazyShopAct;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.lid.lib.LabelTextView;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -34,6 +36,8 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.JsonEndata;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Net;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Views.ScrollViewBiggerPhoto;
+import shlm.lmcs.com.lazycat.LazyShopSystemMonitor.SystemMonitor;
+import shlm.lmcs.com.lazycat.LazyShopSystemUtils.SystemShop;
 import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
@@ -105,25 +109,6 @@ public class ShowshopOffice extends LazyCatAct {
         userToolsInstance = LocalProgramTools.getUserToolsInstance();
         /*获取地址工具类*/
         http_addrs = LocalValues.getHttpaddrs(getApplicationContext());
-        /*清空赠品*/
-        SystemVip systemVip = new SystemVip(ShowshopOffice.this);
-        systemVip.Start(new SystemVip.OnVipcheck() {
-            @Override
-            public void onCheckdone(int _vip) {
-                if (_vip == SystemVip.USER_IS_VIP) {
-                    IsVip = true;
-
-                } else {
-                    IsVip = false;
-                }
-            }
-        });
-        /**
-         * 设置促销的标题
-         */
-        findViewById(R.id.activity_showshopoffice_progrm_title).setBackground(Tools
-                .CreateDrawable(1, getResources().getString(R.color.ThemeColor), getResources()
-                        .getString(R.color.ThemeColor), 5));
         otherMessage = findViewById(R.id.activity_showshopoffice_otherMessagebody);/*其他一些基本信息的BODY*/
         /*滑动增大图片控件*/
         scrollViewBiggerPhoto = findViewById(R.id.activity_showshopoffice_scrollview);
@@ -202,8 +187,7 @@ public class ShowshopOffice extends LazyCatAct {
         xmlInstance.setXmlTree(LocalAction.ACTION, getshopAction);
         xmlInstance.setXmlTree(LocalAction.ACTION_SEARCHKEY.ACTION_KEYWORD, shopmesage);
         xmlInstance.overDom();
-        Net.doPostXml(getApplicationContext(), http_addrs.HTTP_ADDR_GET_SHOPVALUES, new
-                ProgramInterface() {
+        Net.doPostXml(http_addrs.HTTP_ADDR_GET_SHOPVALUES, new ProgramInterface() {
             @Override
             public void onSucess(String data, int code, final WaitDialog.RefreshDialog
                     _refreshDialog) {
@@ -487,18 +471,13 @@ public class ShowshopOffice extends LazyCatAct {
                 if (tv.getText().toString().trim().indexOf("商品库存不足") != -1) {
                     Toast.makeText(getApplicationContext(), "不好意思,商品库存不足暂时不支持供货!", Toast
                             .LENGTH_SHORT).show();
-
                 } else if (tv.getText().toString().trim().indexOf("通知仓库发货") != -1) {
                     showOrderConfirm();
                 } else if (tv.getText().toString().trim().indexOf("仓库发货") != -1 || tv.getText()
                         .toString().trim().indexOf("您已经预定") != -1) {
                     Toast.makeText(getApplicationContext(), "您已成功提交,暂不支持补单哦!", Toast.LENGTH_LONG)
                             .show();
-                } else if (tv.getText().toString().trim().indexOf("拼团") != -1) {
-                    showOrderConfirm();
-                } else if (tv.getText().toString().trim().indexOf("预定") != -1) {
-                    showOrderConfirm();
-                } else if (tv.getText().toString().trim().indexOf("登录") != -1) {
+                } else {
                     Toast.makeText(getApplicationContext(), "您没有登录,请您登录后发送订货单", Toast
                             .LENGTH_SHORT).show();
                 }
@@ -516,31 +495,51 @@ public class ShowshopOffice extends LazyCatAct {
         /**
          * 判断该商品是不是VIP专享
          */
-        if (shopvalues.get_static().equals(LocalValues.VALUES_SHOPPAGE.ONLY_VIP)) {
-            if (IsVip) {
-                AlertOrderPage();
-            } else {
-                /*不是VIP*/
-                AlertDialog.Builder builder = new AlertDialog.Builder(ShowshopOffice.this);
-                View item = LayoutInflater.from(getApplicationContext()).inflate(R.layout
-                        .alert_message, null);
-                builder.setView(item);
-                TextUnt.with(item, R.id.alert_messageTitle).setText("提交订货单失败");
-                TextUnt.with(item, R.id.alert_messageText).setText(getResources().getString(R
-                        .string.onVipcantOrder));
-                TextUnt.with(item, R.id.alert_messageBtnConfirm).setText("我已了解").setTag(builder
-                        .show()).setOnClick(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AlertDialog alertDialog = (AlertDialog) v.getTag();
-                        alertDialog.dismiss();
+        /**
+         * 判断是否为VIP账户
+         */
+        SystemVip systemVip = new SystemVip(ShowshopOffice.this);
+        systemVip.Start(new SystemVip.OnVipcheck() {
+            @Override
+            public void onCheckdone(int _vip) {
+                if (_vip == SystemVip.USER_IS_VIP) {
+                    IsVip = true;
+                } else if (_vip == SystemVip.USER_NOT_VIP) {
+                    IsVip = false;
+                } else if (_vip == SystemVip.USER_NO_LOGIN) {
+                    //不做处理  是没有登录的界面  用来处理
+                    SystemMonitor.SaveTag(ShowshopOffice.this, SystemMonitor.TAG_LOG, MSG,
+                            "用户没有登录,点击了发送订货单");
+                }
 
-                    }
-                });
+                if (shopvalues.get_static().equals(LocalValues.VALUES_SHOPPAGE.ONLY_VIP) &&
+                        !IsVip) {
+                    /**
+                     * 不是VIP  就告诉用户不能订购商品
+                     */
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ShowshopOffice.this);
+                    View item = LayoutInflater.from(getApplicationContext()).inflate(R.layout
+                            .alert_message, null);
+                    builder.setView(item);
+                    TextUnt.with(item, R.id.alert_messageTitle).setText("购买限制");
+                    TextUnt.with(item, R.id.alert_messageText).setText(getResources().getString(R
+                            .string.onVipcantOrder));
+                    TextUnt.with(item, R.id.alert_messageBtnConfirm).setText("我已了解").setTag
+                            (builder.show()).setOnClick(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AlertDialog alertDialog = (AlertDialog) v.getTag();
+                            alertDialog.dismiss();
+
+                        }
+                    });
+                } else {
+                    /*不是VIP的商品提交数据*/
+                    AlertOrderPage();
+                }
             }
-        } else {
-            AlertOrderPage();
-        }
+        });
+
     }
 
 
@@ -558,12 +557,14 @@ public class ShowshopOffice extends LazyCatAct {
                 .assembly_confirmdeliver, null);
         builder.setView(confirmdeliverItem);
         /*设置标题*/
-
         TextUnt.with(confirmdeliverItem, R.id.assembly_confirmdeliverShopname).setText(shopvalues
                 .getTitle());
         /*设置图片*/
         ImageView deliverShopimg = confirmdeliverItem.findViewById(R.id
                 .assembly_confirmdeliverShopimg);
+        /*设置标题的黄色的图片*/
+        LabelTextView labelTextView = confirmdeliverItem.findViewById(R.id
+                .assembly_confirmdeliverLabel);
         /*设置图片*/
         Glide.with(getApplicationContext()).load("http://f.freep" + "" + "" + "" + "" + "" + "" +
                 ".cn/583105/SHOP_DATABASE/" + shopvalues.getImg()).into(deliverShopimg);
@@ -601,10 +602,10 @@ public class ShowshopOffice extends LazyCatAct {
         float deliverTotal = Math.round(Float.valueOf(select_number.getText().toString().trim())
                 * Float.valueOf(shopvalues.getTp().trim()) * 100) / 100;
 
-        /*设置总和*/
+        /*设置支付价格的总和*/
         TextUnt.with(confirmdeliverItem, R.id.assembly_confirmedliverTotal).setText(Tools
                 .calcToRide(select_number.getText().toString().trim(), shopvalues.getTp().trim())
-        ).setTextColor(getResources().getString(R.color.colorPrice));
+        ).setTextColor(getResources().getString(R.color.ThemeColor));
 
         /**
          * 判断用户是否为VIP
@@ -617,8 +618,17 @@ public class ShowshopOffice extends LazyCatAct {
             TextUnt.with(confirmdeliverItem, R.id.assembly_confirmdeliverShopVipMsg)
                     .setBackground(Tools.CreateDrawable(1, getResources().getString(R.color
                             .colorVip), getResources().getString(R.color.colorVip), 5))
-                    .setTextColor("#ffffff").setText(getResources().getString(R.string.isVipmsg));
-            /*设置Vip图标*/
+                    .setTextColor("#ffffff").setText(getResources().getString(R.string.isVipmsg))
+                    .setVisibility(true);
+            /*设置价格的符号的颜色*/
+            TextUnt.with(confirmdeliverItem, R.id.assembly_confirmdeliver_TotalSymbol)
+                    .setTextColor(getResources().getString(R.color.colorVip));
+            /*设置统计总额的颜色*/
+            TextUnt.with(confirmdeliverItem, R.id.assembly_confirmedliverTotal)
+                    .setTextColor(getResources().getString(R.color.colorVip));
+            /*设置Vip图标显示*/
+            deliverShopequity.setVisibility(View.VISIBLE);
+            /*设置VIP图片的颜色*/
             deliverShopequity.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R
                     .drawable.ico_equity, getResources().getString(R.color.colorVip)));
             /*设置名字旁边的图标*/
@@ -631,62 +641,72 @@ public class ShowshopOffice extends LazyCatAct {
              */
             TextUnt.with(confirmdeliverItem, R.id.assembly_confirmdeliver_BtnSendorder)
                     .setBackground(Tools.CreateDrawable(1, getResources().getString(R.color
-                            .colorVip), getResources().getString(R.color.colorVip), 10))
-                    .setTextColor("#000000").setText("我已知晓");
+                            .colorVip), getResources().getString(R.color.colorVip), 5))
+                    .setTextColor("#000000").setText("确定订单");
+            /*设置Label的背景颜色*/
+            labelTextView.setLabelBackgroundColor(Color.parseColor(getResources().getString(R
+                    .color.colorVip)));
         } else {
             /*不是Vip*/
             TextUnt.with(confirmdeliverItem, R.id.assembly_confirmdeliverShopVipMsg)
                     .setBackground(Tools.CreateDrawable(1, getResources().getString(R.color
                             .colornoVip), getResources().getString(R.color.colornoVip), 5))
-                    .setTextColor("#ffffff").setText(getResources().getString(R.string.noVipmsg));
-            deliverShopequity.setImageDrawable(Tools.setSvgColor(getApplicationContext(), R
-                    .drawable.ico_equity, getResources().getString(R.color.colornoVip)));
+                    .setTextColor("#ffffff").setVisibility(false);
+            /*设置价格的符号的颜色*/
+            TextUnt.with(confirmdeliverItem, R.id.assembly_confirmdeliver_TotalSymbol)
+                    .setTextColor(getResources().getString(R.color.ThemeColor));
+            /*设置统计总额的颜色*/
+            TextUnt.with(confirmdeliverItem, R.id.assembly_confirmedliverTotal)
+                    .setTextColor(getResources().getString(R.color.ThemeColor));
+
+            /*设置Vip图标不显示*/
+            deliverShopequity.setVisibility(View.GONE);
             /*设置名字旁边的图标*/
             TextUnt.with(confirmdeliverItem, R.id.assembly_confirmdeliverIcoVip).setBackground
                     (Tools.CreateDrawable(1, getResources().getString(R.color.colornoVip),
                             getResources().getString(R.color.colornoVip), 5)).setTextColor
                     ("#ffffff").setText("Vip");
+            /*设置Label的背景颜色*/
+            labelTextView.setLabelBackgroundColor(Color.parseColor(getResources().getString(R
+                    .color.ThemeColor)));
             /**
              * 设置VIP专属的点击确定的按钮
              */
             TextUnt.with(confirmdeliverItem, R.id.assembly_confirmdeliver_BtnSendorder)
                     .setBackground(Tools.CreateDrawable(1, getResources().getString(R.color
-                            .ThemeColor), getResources().getString(R.color.ThemeColor), 10))
-                    .setTextColor("#ffffff").setText("我已知晓");
+                            .ThemeColor), getResources().getString(R.color.ThemeColor), 5))
+                    .setTextColor("#ffffff").setText("确定订单");
         }
         /*确定通知仓库发货的按钮*/
         TextUnt.with(confirmdeliverItem, R.id.assembly_confirmdeliver_BtnSendorder).setOnClick
                 (new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog Ad = (AlertDialog) v.getTag();
-                Ad.dismiss();/*关闭确认订单界面*/
-                /*开始整理数据*/
-                if (IsVip) {
-                    toSendOrder();
-                } else {
-                    final AlertDialog alertDialog;
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(ShowshopOffice.this);
-                    View item = LayoutInflater.from(getApplicationContext()).inflate(R.layout
-                            .alert_message, null);
-                    builder1.setView(item);
-                    alertDialog = builder1.show();
-                    TextUnt.with(item, R.id.alert_messageText).setText(getResources().getString(R
-                            .string.noVipnoSerivce));
-                    TextUnt.with(item, R.id.alert_messageBtnConfirm).setTag(alertDialog)
-                            .setOnClick(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            AlertDialog Ad = (AlertDialog) v.getTag();
-                            Ad.dismiss();
-                            toSendOrder();
-                        }
-                    }).setTag(alertDialog).setText("我已知晓,确定提交");
+                AlertDialog ab = (AlertDialog) v.getTag();
+                ab.dismiss();/*销毁用户确定的订单*/
+                SystemShop._Savepage savepage = SystemShop.getSavepageInstance();
+                savepage._onlyid = shopvalues.getOnlyid();
+                savepage._payhow = "10000";
+                SystemShop.SaveOrder(ShowshopOffice.this, savepage, new SystemShop._SaveInterface
+                        () {
+                    @Override
+                    public void _saveOk() {
 
-                }
+                    }
+
+                    @Override
+                    public void _saveError() {
+
+                    }
+
+                    @Override
+                    public void _saveNotLogin() {
+                        Toast.makeText(getApplicationContext(), "不好意思,您没有登录云仓库哦", Toast
+                                .LENGTH_SHORT).show();
+                    }
+                });
             }
         }).setTag(builder.show());
-
         builder.setCancelable(false);
     }
 
@@ -1094,8 +1114,7 @@ public class ShowshopOffice extends LazyCatAct {
         }
         xmlInstance.setXmlTree(LocalAction.ACTION_SENDORDER_SYSTEM.ACTION_ORDER_DISTANCE, "13");
         xmlInstance.overDom();
-        Net.doPostXml(getApplicationContext(), http_addrs.HTTP_ADDR_SAVEUSERODER, new
-                ProgramInterface() {
+        Net.doPostXml(http_addrs.HTTP_ADDR_SAVEUSERODER, new ProgramInterface() {
             @Override
             public void onSucess(String data, int code, WaitDialog.RefreshDialog _refreshDialog) {
                 Log.i(MSG, "提交订单的返回信息:" + data.trim());
@@ -1108,6 +1127,11 @@ public class ShowshopOffice extends LazyCatAct {
                     init();
 
                 } else {
+                    /*开始向服务器记录一个信息*/
+                    SystemMonitor.SaveTag(ShowshopOffice.this, SystemMonitor.TAG_LOG, MSG, "用户:"
+                            + userToolsInstance.GetUserpageOnAction(LocalAction
+                            .ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_ACCOUNT) + "|购买商品:" +
+                            shopvalues.getTitle());
                     /*重新出现一个对话框 提示用户已经提交成功*/
                     AlertDialog.Builder builder = new AlertDialog.Builder(ShowshopOffice.this);
                     View item = LayoutInflater.from(getApplicationContext()).inflate(R.layout

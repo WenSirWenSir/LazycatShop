@@ -1,0 +1,1 @@
+package shlm.lmcs.com.lazycat.TerminalSystemMO.Feed;public class IntegralFeed {}

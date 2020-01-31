@@ -144,7 +144,7 @@ public class WebMonitor {
             XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(true);
             xmlInstance.overDom();
             LocalValues.HTTP_ADDRS http_addrs = LocalValues.getHttpaddrs(mContext);
-            Net.doPostXml(mContext, http_addrs.HTTP_ADDR_GET_EVENT_VIP, new
+            Net.doPostXml(http_addrs.HTTP_ADDR_GET_EVENT_VIP, new
                     ProgramInterface() {
                 @Override
                 public void onSucess(String data, int code, WaitDialog.RefreshDialog
