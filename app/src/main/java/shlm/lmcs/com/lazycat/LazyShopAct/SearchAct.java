@@ -37,6 +37,7 @@ import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalAction;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.R;
+import shlm.lmcs.com.lazycat.TerminalSystemMO.Record.Useroperaction.System.Search;
 
 /**
  * 搜索界面
@@ -166,8 +167,7 @@ public class SearchAct extends LazyCatAct {
                     xmlInstance.setXmlTree(LocalAction.ACTION_SEARCHKEY.ACTION_KEYWORD, s
                             .toString().trim());
                     xmlInstance.overDom();
-                    Net.doPostXml( http_addrs
-                            .HTTP_ADDR_SEARCH_KEY, new ProgramInterface() {
+                    Net.doPostXml(http_addrs.HTTP_ADDR_SEARCH_KEY, new ProgramInterface() {
                         @Override
                         public void onSucess(String data, int code, WaitDialog.RefreshDialog
                                 _refreshDialog) {
@@ -213,7 +213,8 @@ public class SearchAct extends LazyCatAct {
                                 @Override
                                 public void onEndTag(String tag, XmlPullParser pullParser,
                                                      Integer id) {
-                                    if(tag.equals(LocalAction.ACTION_SEARCHKEY.ACTION_KEY_RESULT)){
+                                    if (tag.equals(LocalAction.ACTION_SEARCHKEY
+                                            .ACTION_KEY_RESULT)) {
                                         SearchkeyList.add(key_result);
                                     }
                                 }
@@ -257,13 +258,15 @@ public class SearchAct extends LazyCatAct {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!TextUtils.isEmpty(input.getText().toString().trim())){
-                    LazyCatStartActivityWithBundler(SearchShoplist.class, true,
-                            LocalAction.WINDOWS_TO_WINDOWS.ACTION_SEARCH_KEY, input
-                                    .getText().toString().trim());
-                }
-                else{
-                    Toast.makeText(getApplicationContext(),"错误!检索的名称不能为空",Toast.LENGTH_LONG).show();
+                if (!TextUtils.isEmpty(input.getText().toString().trim())) {
+                    /*记录系统商品的搜索记录*/
+                    Search._saveSearch(SearchAct.this, input.getText().toString().trim());
+                    LazyCatStartActivityWithBundler(SearchShoplist.class, true, LocalAction
+                            .WINDOWS_TO_WINDOWS.ACTION_SEARCH_KEY, input.getText().toString()
+                            .trim());
+                } else {
+                    Toast.makeText(getApplicationContext(), "错误!检索的名称不能为空", Toast.LENGTH_LONG)
+                            .show();
                 }
             }
         });
@@ -332,7 +335,7 @@ public class SearchAct extends LazyCatAct {
                 convertView.setTag(_viewpage);
             }
             /*处理文字等*/
-            Log.i(MSG,"标题为:" + this.list.get(position).getTitle().trim());
+            Log.i(MSG, "标题为:" + this.list.get(position).getTitle().trim());
             _viewpage.title.setText(this.list.get(position).getTitle().trim());
             switch (this.list.get(position).getStatus()) {
                 case LocalValues.VALUES_SHOPPAGE.NORMAL:
@@ -351,25 +354,25 @@ public class SearchAct extends LazyCatAct {
                     break;
                 case LocalValues.VALUES_SHOPPAGE.VOLUME:
                     TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
-                            .shop_volume).setBackground(Tools.CreateDrawable(getApplication(),
-                            1, R.color.colorVolumn, R.color.colorVolumn, 5));
+                            .shop_volume).setBackground(Tools.CreateDrawable(getApplication(), 1,
+                            R.color.colorVolumn, R.color.colorVolumn, 5));
                     break;
                 case LocalValues.VALUES_SHOPPAGE.ONLY_VIP:
                     TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
-                            .shop_vip).setBackground(Tools.CreateDrawable(getApplication(),
-                            1, R.color.colorVip, R.color.colorVip, 5));
+                            .shop_vip).setBackground(Tools.CreateDrawable(getApplication(), 1, R
+                            .color.colorVip, R.color.colorVip, 5));
 
                     break;
                 case LocalValues.VALUES_SHOPPAGE.ONLY_ONE:
                     TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
-                            .shop_only).setBackground(Tools.CreateDrawable(getApplication(),
-                            1, R.color.colorPayonly, R.color.colorPayonly, 5));
+                            .shop_only).setBackground(Tools.CreateDrawable(getApplication(), 1, R
+                            .color.colorPayonly, R.color.colorPayonly, 5));
 
                     break;
                 case LocalValues.VALUES_SHOPPAGE.WHOLEASALE:
                     TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
-                            .shop_wholeasale).setBackground(Tools.CreateDrawable(getApplication(),
-                            1, R.color.colorWholeasale, R.color.colorWholeasale, 5));
+                            .shop_wholeasale).setBackground(Tools.CreateDrawable(getApplication()
+                            , 1, R.color.colorWholeasale, R.color.colorWholeasale, 5));
 
                     break;
                 case LocalValues.VALUES_SHOPPAGE.RESERVE:
@@ -395,8 +398,7 @@ public class SearchAct extends LazyCatAct {
          */
         XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(true);
         xmlInstance.overDom();
-        Net.doPostXml( http_addrs.HTTP_ADDR_INITSEARCH, new
-                ProgramInterface() {
+        Net.doPostXml(http_addrs.HTTP_ADDR_INITSEARCH, new ProgramInterface() {
             @Override
             public void onSucess(String data, int code, WaitDialog.RefreshDialog _refreshDialog) {
                 Log.i(MSG, data.trim());

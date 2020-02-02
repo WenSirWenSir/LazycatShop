@@ -33,6 +33,7 @@ import shlm.lmcs.com.lazycat.LazyShopAct.PromotionAct;
 import shlm.lmcs.com.lazycat.LazyShopAct.SystemAct.SystemGuidepage;
 import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
 import shlm.lmcs.com.lazycat.TerminalSystemMO.Record.SystemVs;
+import shlm.lmcs.com.lazycat.TerminalSystemOS.OS;
 
 import static shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools.isPermission;
 
@@ -85,6 +86,24 @@ public class lazyCatLogAct extends LazyCatAct {
         /**
          * 测试代码区
          */
+
+        OS._saveOrder(lazyCatLogAct.this, "1", "onlyid", "122", new OS.onSaveorder() {
+            @Override
+            public void onSaveOk() {
+
+            }
+
+            @Override
+            public void onSaveError() {
+
+            }
+
+            @Override
+            public void onSaveNologin() {
+
+            }
+        });
+        /*保存系统的访问记录*/
         SystemVs._start(lazyCatLogAct.this);
         /*找到Ico控件*/
         log_title = findViewById(R.id.activity_lazy_log_title);/*控件图标*/

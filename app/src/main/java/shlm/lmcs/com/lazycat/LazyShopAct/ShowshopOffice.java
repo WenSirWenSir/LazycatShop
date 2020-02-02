@@ -44,6 +44,7 @@ import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.LazyShopView.SystemTextView;
 import shlm.lmcs.com.lazycat.LazyShopVip.SystemVip;
 import shlm.lmcs.com.lazycat.R;
+import shlm.lmcs.com.lazycat.TerminalSystemMO.Record.Useroperaction.Shop.See;
 
 @SuppressLint({"ResourceType", "NewApi", "HandlerLeak"})
 public class ShowshopOffice extends LazyCatAct {
@@ -51,6 +52,7 @@ public class ShowshopOffice extends LazyCatAct {
     private Boolean isShowCart = false;/*记录是否把cart展开*/
     private String shopmesage;/*关于商品的信息*/
     private String getshopAction;/*获取商品的方式 1条码查找 2 名称查找 3 模糊查找 4 唯一识别号查找*/
+
 
     /**
      * 记录商品回传的信息
@@ -624,8 +626,8 @@ public class ShowshopOffice extends LazyCatAct {
             TextUnt.with(confirmdeliverItem, R.id.assembly_confirmdeliver_TotalSymbol)
                     .setTextColor(getResources().getString(R.color.colorVip));
             /*设置统计总额的颜色*/
-            TextUnt.with(confirmdeliverItem, R.id.assembly_confirmedliverTotal)
-                    .setTextColor(getResources().getString(R.color.colorVip));
+            TextUnt.with(confirmdeliverItem, R.id.assembly_confirmedliverTotal).setTextColor
+                    (getResources().getString(R.color.colorVip));
             /*设置Vip图标显示*/
             deliverShopequity.setVisibility(View.VISIBLE);
             /*设置VIP图片的颜色*/
@@ -656,8 +658,8 @@ public class ShowshopOffice extends LazyCatAct {
             TextUnt.with(confirmdeliverItem, R.id.assembly_confirmdeliver_TotalSymbol)
                     .setTextColor(getResources().getString(R.color.ThemeColor));
             /*设置统计总额的颜色*/
-            TextUnt.with(confirmdeliverItem, R.id.assembly_confirmedliverTotal)
-                    .setTextColor(getResources().getString(R.color.ThemeColor));
+            TextUnt.with(confirmdeliverItem, R.id.assembly_confirmedliverTotal).setTextColor
+                    (getResources().getString(R.color.ThemeColor));
 
             /*设置Vip图标不显示*/
             deliverShopequity.setVisibility(View.GONE);
@@ -712,6 +714,8 @@ public class ShowshopOffice extends LazyCatAct {
 
     @SuppressLint("ClickableViewAccessibility")
     private void initMainpage() {
+        /*开始记录用户的点击商品信息*/
+        See._saveSee(ShowshopOffice.this, shopvalues.getOnlyid());
         /**
          * 判断是否登录账户
          */
@@ -889,6 +893,7 @@ public class ShowshopOffice extends LazyCatAct {
          *  开始访问网络图片
          */
         photo.setImageDrawable(null);
+        /*设置PHOTO的宽度和高度*/
         Glide.with(getApplicationContext()).load("http://f.freep.cn/583105/SHOP_DATABASE/" +
                 shopvalues.getImg()).into(photo);
         /*数量减少*/
@@ -1026,12 +1031,11 @@ public class ShowshopOffice extends LazyCatAct {
         /*重新计算图片的高度实现开场动画*/
         final ViewGroup.LayoutParams photoParams = photo.getLayoutParams();
         window_height = metrics.heightPixels;
-        photoParams.height = metrics.heightPixels;
+        photoParams.height =  metrics.heightPixels;
         photoParams.width = metrics.widthPixels;
         photo.setLayoutParams(photoParams);
         /*图片边框动画*/
-        ValueAnimator anim = ValueAnimator.ofInt(metrics.heightPixels, metrics.heightPixels * 8 /
-                16);
+        ValueAnimator anim = ValueAnimator.ofInt(metrics.heightPixels, metrics.widthPixels);
         anim.setDuration(1000);
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override

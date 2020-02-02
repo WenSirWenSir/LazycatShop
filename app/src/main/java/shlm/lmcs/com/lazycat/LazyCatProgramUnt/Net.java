@@ -28,7 +28,6 @@ import java.util.Map;
 
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.LOAD_IMAGEPAGE;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WAIT_ITME_DIALOGPAGE;
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.ImageCache;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.R;
@@ -46,7 +45,6 @@ public class Net {
     private String tUrl = "";
     private StringBuffer mKvsBuffer = new StringBuffer();
     private Net.onVisitInterServiceListener mOnVisitInterServiceListener;
-    private ImageCache imageCache;
     private int VisitInterMethod;
 
     /**

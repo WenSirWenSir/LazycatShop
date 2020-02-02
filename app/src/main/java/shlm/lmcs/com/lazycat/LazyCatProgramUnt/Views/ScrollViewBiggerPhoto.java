@@ -39,7 +39,7 @@ public class ScrollViewBiggerPhoto extends ScrollView {
         /*设置控件的高度和宽度*/
         ViewGroup.LayoutParams params = this.img_body.getLayoutParams();
         params.width = this.metrics.widthPixels;
-        params.height = this.metrics.heightPixels * 8 / 16;
+        params.height = this.metrics.widthPixels;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ScrollViewBiggerPhoto extends ScrollView {
                     /*开始处理放大*/
                     if (params != null) {
                         params.width = this.metrics.widthPixels + distance;
-                        params.height = (this.metrics.heightPixels + distance) * 8 / 16;
+                        params.height = (this.metrics.widthPixels + distance) ;
                         Log.e(Config.DEBUG, "ScrollViewBiggerPhoto.java[+]改变的屏幕高度:" + params
                                 .height + "改变屏幕的宽度:" + params.width);
                         this.img_body.setLayoutParams(params);
@@ -93,7 +93,7 @@ public class ScrollViewBiggerPhoto extends ScrollView {
         try {
             ViewGroup.LayoutParams params = this.img_body.getLayoutParams();
             params.width = this.metrics.widthPixels;
-            params.height = this.metrics.heightPixels * 8 / 16;
+            params.height = this.metrics.widthPixels;
             this.img_body.setLayoutParams(params);
         } catch (Exception e) {
             Log.e(MSG, e.getMessage());

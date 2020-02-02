@@ -1,1 +1,0 @@
-package shlm.lmcs.com.lazycat.TerminalSystemMO.Record.User;public class Search {}

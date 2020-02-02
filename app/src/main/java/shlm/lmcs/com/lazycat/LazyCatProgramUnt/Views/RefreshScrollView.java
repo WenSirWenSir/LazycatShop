@@ -17,7 +17,6 @@ import android.widget.ScrollView;
 
 import com.bumptech.glide.Glide;
 
-import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.ImageCache;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Config;
 
 /**
@@ -32,7 +31,6 @@ public class RefreshScrollView extends ScrollView {
     public static int CAN_REFRESH = 0;
     public static int ING_REFRESH = 1;
     public static int RUNNOW_REFRESH = 2;
-    private ImageCache imageCache;
     private int _downY;//记录距离
     private int _downH;//记录高度
     private int lr_downCount;/*左右滑动的距离*/
@@ -77,7 +75,6 @@ public class RefreshScrollView extends ScrollView {
     }
 
     private void init() {
-        imageCache = new ImageCache(getContext());
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {

@@ -1,1 +1,0 @@
-package shlm.lmcs.com.lazycat.TerminalSystemMO.Record.System;public class UserComplaint {}
