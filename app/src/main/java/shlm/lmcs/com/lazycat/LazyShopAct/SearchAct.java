@@ -94,28 +94,10 @@ public class SearchAct extends LazyCatAct {
     private void init() {
         InitPageXml();/*整理编辑框的界面*/
         InitListener();
-        ArrayList<String> text_list2 = new ArrayList<>();
-        text_list2.add("流浪地球");
-        text_list2.add("逍遥散人");
-        text_list2.add("东宫");
-        text_list2.add("EXO");
-        text_list2.add("老番茄");
-        text_list2.add("假面骑士ZI-O");
-        text_list2.add("信誓旦旦");
-        ArrayList<LinearLayout> tv_list2 = Tools.handleToarraylist(getApplicationContext(),
-                text_list2, 20, 10, 20, 10, "#e9e9e9", "#666666", 13, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         everyoneSearch = findViewById(R.id.activity_everyone_searchBody);/*大家都在搜*/
         searchLog = findViewById(R.id.activity_search_searchLogBody);/*用户的搜索记录*/
 
-        for (int i = 0; i < tv_list2.size(); i++) {
-            searchLog.addView(tv_list2.get(i));
-        }
     }
 
 
@@ -337,51 +319,6 @@ public class SearchAct extends LazyCatAct {
             /*处理文字等*/
             Log.i(MSG, "标题为:" + this.list.get(position).getTitle().trim());
             _viewpage.title.setText(this.list.get(position).getTitle().trim());
-            switch (this.list.get(position).getStatus()) {
-                case LocalValues.VALUES_SHOPPAGE.NORMAL:
-                    TextUnt.with(_viewpage._static).setVisibility(false);
-                    break;
-                case LocalValues.VALUES_SHOPPAGE.PROMOTION:
-                    TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
-                            .shop_promotion).setBackground(Tools.CreateDrawable(getApplication(),
-                            1, R.color.colorPromotion, R.color.colorPromotion, 5));
-                    break;
-                case LocalValues.VALUES_SHOPPAGE.REDUCTION:
-                    TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
-                            .shop_reduction).setBackground(Tools.CreateDrawable(getApplication(),
-                            1, R.color.colorReduction, R.color.colorReduction, 5));
-
-                    break;
-                case LocalValues.VALUES_SHOPPAGE.VOLUME:
-                    TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
-                            .shop_volume).setBackground(Tools.CreateDrawable(getApplication(), 1,
-                            R.color.colorVolumn, R.color.colorVolumn, 5));
-                    break;
-                case LocalValues.VALUES_SHOPPAGE.ONLY_VIP:
-                    TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
-                            .shop_vip).setBackground(Tools.CreateDrawable(getApplication(), 1, R
-                            .color.colorVip, R.color.colorVip, 5));
-
-                    break;
-                case LocalValues.VALUES_SHOPPAGE.ONLY_ONE:
-                    TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
-                            .shop_only).setBackground(Tools.CreateDrawable(getApplication(), 1, R
-                            .color.colorPayonly, R.color.colorPayonly, 5));
-
-                    break;
-                case LocalValues.VALUES_SHOPPAGE.WHOLEASALE:
-                    TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
-                            .shop_wholeasale).setBackground(Tools.CreateDrawable(getApplication()
-                            , 1, R.color.colorWholeasale, R.color.colorWholeasale, 5));
-
-                    break;
-                case LocalValues.VALUES_SHOPPAGE.RESERVE:
-                    TextUnt.with(_viewpage._static).setVisibility(false).setText(R.string
-                            .shop_reserve).setBackground(Tools.CreateDrawable(getApplication(),
-                            1, R.color.colorReserve, R.color.colorReserve, 5));
-
-                    break;
-            }
             return convertView;
 
         }
@@ -450,12 +387,12 @@ public class SearchAct extends LazyCatAct {
                          * 开始整理热搜界面
                          */
                         ArrayList<LinearLayout> hotTitlearray = Tools.handleToarraylist
-                                (getApplicationContext(), hotTitle, 20, 10, 20, 10, "#e9e9e9",
-                                        "#666666", 13, new View.OnClickListener() {
+                                (getApplicationContext(), hotTitle, 25, 15, 25, 15, "#efefef",
+                                        "#a9a9a9", 13, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 TextView tv = (TextView) v;
-                                LazyCatStartActivityWithBundler(SearchShoplist.class, true,
+                                LazyCatStartActivityWithBundler(SearchShoplist.class, false,
                                         LocalAction.WINDOWS_TO_WINDOWS.ACTION_SEARCH_KEY, tv
                                                 .getText().toString().trim());
                             }

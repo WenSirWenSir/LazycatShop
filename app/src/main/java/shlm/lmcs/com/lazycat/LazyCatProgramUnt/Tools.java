@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -1233,11 +1234,13 @@ public class Tools {
 
     /**
      * 获取手机的IMEI
+     *
      * @param _context
      * @return
      */
     public static String toGetIMEI(Context _context) {
-        TelephonyManager telephonyManager = (TelephonyManager) _context.getSystemService(_context.TELEPHONY_SERVICE);
+        TelephonyManager telephonyManager = (TelephonyManager) _context.getSystemService(_context
+                .TELEPHONY_SERVICE);
         if (ActivityCompat.checkSelfPermission(_context, Manifest.permission.READ_PHONE_STATE) !=
                 PackageManager.PERMISSION_GRANTED) {
             return "";
@@ -1246,5 +1249,24 @@ public class Tools {
             return imei;
         }
 
+    }
+
+    /**
+     * 获取设备号
+     *
+     * @return
+     */
+    public static String getDevice(Context _context) {
+        int code = 0;
+        String name = "";
+        try {
+            PackageManager pm = _context.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(_context.getPackageName(), 0);
+            code = pi.versionCode;
+            name = pi.versionName;
+        } catch (Exception e) {
+            Log.e(MSG, "获取系统设备号失败,开始网络记录LOG");
+        }
+        return "系统设备号:" + code + ";" + name;
     }
 }
