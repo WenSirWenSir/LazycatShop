@@ -361,7 +361,10 @@ public class MainAct extends LazyCatAct {
                 break;
             case ICO_FRAGMENT_RECOMD:
                 if (recomfrg != null) {
-                    ft.show(recomfrg);
+                    ft.remove(recomfrg);
+                    recomfrg = null;
+                    recomfrg = new Recomdfrg();
+                    ft.add(R.id.activity_main_Framelayout,recomfrg);
                 } else {
                     recomfrg = new Recomdfrg();
                     ft.add(R.id.activity_main_Framelayout, recomfrg);

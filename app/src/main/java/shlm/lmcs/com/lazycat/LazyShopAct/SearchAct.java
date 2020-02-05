@@ -112,9 +112,9 @@ public class SearchAct extends LazyCatAct {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 viewpage _viewpage = (viewpage) view.getTag();
-                LazyCatStartActivityWithBundler(SearchShoplist.class, true, LocalAction
-                        .WINDOWS_TO_WINDOWS.ACTION_SEARCH_KEY, _viewpage.title.getText().toString
-                        ().trim());
+                LazyCatStartActivityWithBundler(SearchShoplist.class, true,
+                        LocalAction.WINDOWS_TO_WINDOWS.ACTION_SEARCH_KEY,
+                        _viewpage.title.getText().toString().trim());
             }
         });
         /**
@@ -139,20 +139,19 @@ public class SearchAct extends LazyCatAct {
                 if (TextUtils.isEmpty(s.toString())) {
                     /*为空*/
                     findViewById(R.id.activity_search_listview).setVisibility(View.GONE);
-                    findViewById(R.id.activity_search_RefreshScrollView).setVisibility(View
-                            .VISIBLE);
+                    findViewById(R.id.activity_search_RefreshScrollView).setVisibility(View.VISIBLE);
                 } else {
                     /*不为空*/
                     /*模拟网络访问有数据*/
                     XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(true);
                     xmlInstance.setXmlTree(LocalAction.ACTION, "0");/*设置XML树结构*/
-                    xmlInstance.setXmlTree(LocalAction.ACTION_SEARCHKEY.ACTION_KEYWORD, s
-                            .toString().trim());
+                    xmlInstance.setXmlTree(LocalAction.ACTION_SEARCHKEY.ACTION_KEYWORD,
+                            s.toString().trim());
                     xmlInstance.overDom();
                     Net.doPostXml(http_addrs.HTTP_ADDR_SEARCH_KEY, new ProgramInterface() {
                         @Override
-                        public void onSucess(String data, int code, WaitDialog.RefreshDialog
-                                _refreshDialog) {
+                        public void onSucess(String data, int code,
+                                             WaitDialog.RefreshDialog _refreshDialog) {
                             Log.i(MSG, "返回的数据为:" + data.toString().trim());
                             XmlanalysisFactory xml = new XmlanalysisFactory(data.trim());
                             xml.Startanalysis(new XmlanalysisFactory.XmlanalysisInterface() {
@@ -171,18 +170,15 @@ public class SearchAct extends LazyCatAct {
                                                        Integer id) {
                                     try {
 
-                                        if (tag.equals(LocalAction.ACTION_SEARCHKEY
-                                                .ACTION_KEY_RESULT)) {
+                                        if (tag.equals(LocalAction.ACTION_SEARCHKEY.ACTION_KEY_RESULT)) {
                                             key_result = new Key_result();
                                         }
                                         /*商品的关键字搜索回传*/
-                                        if (tag.equals(LocalAction.ACTION_SEARCHKEY
-                                                .ACTION_KEY_RESULT_TITLE)) {
+                                        if (tag.equals(LocalAction.ACTION_SEARCHKEY.ACTION_KEY_RESULT_TITLE)) {
                                             key_result.setTitle(pullParser.nextText().trim());
                                         }
                                         /*商品的状态*/
-                                        if (tag.equals(LocalAction.ACTION_SEARCHKEY
-                                                .ACTION_KEY_RESULT_STATUS)) {
+                                        if (tag.equals(LocalAction.ACTION_SEARCHKEY.ACTION_KEY_RESULT_STATUS)) {
                                             key_result.setStatus(pullParser.nextText().trim());
                                         }
 
@@ -195,8 +191,7 @@ public class SearchAct extends LazyCatAct {
                                 @Override
                                 public void onEndTag(String tag, XmlPullParser pullParser,
                                                      Integer id) {
-                                    if (tag.equals(LocalAction.ACTION_SEARCHKEY
-                                            .ACTION_KEY_RESULT)) {
+                                    if (tag.equals(LocalAction.ACTION_SEARCHKEY.ACTION_KEY_RESULT)) {
                                         SearchkeyList.add(key_result);
                                     }
                                 }
@@ -206,10 +201,8 @@ public class SearchAct extends LazyCatAct {
                                     //解析完成
                                     SearchLogAdapter adapter = new SearchLogAdapter(SearchkeyList);
                                     SearchlogListview.setAdapter(adapter);
-                                    findViewById(R.id.activity_search_listview).setVisibility
-                                            (View.VISIBLE);
-                                    findViewById(R.id.activity_search_RefreshScrollView)
-                                            .setVisibility(View.GONE);
+                                    findViewById(R.id.activity_search_listview).setVisibility(View.VISIBLE);
+                                    findViewById(R.id.activity_search_RefreshScrollView).setVisibility(View.GONE);
 
                                 }
                             });
@@ -243,12 +236,11 @@ public class SearchAct extends LazyCatAct {
                 if (!TextUtils.isEmpty(input.getText().toString().trim())) {
                     /*记录系统商品的搜索记录*/
                     Search._saveSearch(SearchAct.this, input.getText().toString().trim());
-                    LazyCatStartActivityWithBundler(SearchShoplist.class, true, LocalAction
-                            .WINDOWS_TO_WINDOWS.ACTION_SEARCH_KEY, input.getText().toString()
-                            .trim());
+                    LazyCatStartActivityWithBundler(SearchShoplist.class, true,
+                            LocalAction.WINDOWS_TO_WINDOWS.ACTION_SEARCH_KEY,
+                            input.getText().toString().trim());
                 } else {
-                    Toast.makeText(getApplicationContext(), "错误!检索的名称不能为空", Toast.LENGTH_LONG)
-                            .show();
+                    Toast.makeText(getApplicationContext(), "错误!检索的名称不能为空", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -258,8 +250,7 @@ public class SearchAct extends LazyCatAct {
             public void onClick(View v) {
                 searchLog.removeAllViews();
                 TextView noLog = new TextView(searchLog.getContext());
-                noLog.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams
-                        .MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                noLog.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 noLog.setGravity(Gravity.CENTER);
                 searchLog.addView(noLog);
                 TextUnt.with(noLog).setText("没有搜索记录").setTextColor("#666666").setTextSize(12);
@@ -307,13 +298,13 @@ public class SearchAct extends LazyCatAct {
                 _viewpage = (viewpage) convertView.getTag();
 
             } else {
-                convertView = LayoutInflater.from(getApplicationContext()).inflate(R.layout
-                        .assembly_searchact_showsearchitem, null);
+                convertView =
+                        LayoutInflater.from(getApplicationContext()).inflate(R.layout.assembly_searchact_showsearchitem, null);
                 _viewpage = new viewpage();
-                _viewpage.title = convertView.findViewById(R.id
-                        .assembly_searchact_showsearchitem_title);
-                _viewpage._static = convertView.findViewById(R.id
-                        .assembly_searchact_showsearchitem_static);
+                _viewpage.title =
+                        convertView.findViewById(R.id.assembly_searchact_showsearchitem_title);
+                _viewpage._static =
+                        convertView.findViewById(R.id.assembly_searchact_showsearchitem_static);
                 convertView.setTag(_viewpage);
             }
             /*处理文字等*/
@@ -382,19 +373,21 @@ public class SearchAct extends LazyCatAct {
                     }
 
                     @Override
+                    @SuppressLint("ResourceType")
                     public void onEndDocument() {
                         /**
                          * 开始整理热搜界面
                          */
-                        ArrayList<LinearLayout> hotTitlearray = Tools.handleToarraylist
-                                (getApplicationContext(), hotTitle, 25, 15, 25, 15, "#efefef",
-                                        "#a9a9a9", 13, new View.OnClickListener() {
+                        ArrayList<LinearLayout> hotTitlearray =
+                                Tools.handleToarraylist(getApplicationContext(), hotTitle, 25, 15
+                                        , 25, 15, getResources().getString(R.color.ThemeColor),
+                                        "#ffffff", 13, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 TextView tv = (TextView) v;
                                 LazyCatStartActivityWithBundler(SearchShoplist.class, false,
-                                        LocalAction.WINDOWS_TO_WINDOWS.ACTION_SEARCH_KEY, tv
-                                                .getText().toString().trim());
+                                        LocalAction.WINDOWS_TO_WINDOWS.ACTION_SEARCH_KEY,
+                                        tv.getText().toString().trim());
                             }
                         });
                         for (int i = 0; i < hotTitlearray.size(); i++) {
@@ -408,8 +401,8 @@ public class SearchAct extends LazyCatAct {
             @Override
             public WaitDialog.RefreshDialog onStartLoad() {
                 /*初始化一个DIALOG*/
-                final WaitDialog.RefreshDialog refreshDialog = new WaitDialog.RefreshDialog
-                        (SearchAct.this);
+                final WaitDialog.RefreshDialog refreshDialog =
+                        new WaitDialog.RefreshDialog(SearchAct.this);
                 WAIT_ITME_DIALOGPAGE wait_itme_dialogpage = new WAIT_ITME_DIALOGPAGE();
                 wait_itme_dialogpage.setImg(R.id.item_wait_img);
                 wait_itme_dialogpage.setView(R.layout.item_wait);
