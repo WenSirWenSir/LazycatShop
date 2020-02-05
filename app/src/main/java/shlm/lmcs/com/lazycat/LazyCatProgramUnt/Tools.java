@@ -66,6 +66,7 @@ import java.util.Date;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.WebServiceAct;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WEB_VALUES_ACT;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyPage.WINDOW_PAGE;
@@ -74,6 +75,7 @@ import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.FastBlur;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Interface.ProgramInterface;
 import shlm.lmcs.com.lazycat.LazyShopView.SystemTextView;
+import shlm.lmcs.com.lazycat.R;
 
 
 /**
@@ -1269,4 +1271,64 @@ public class Tools {
         }
         return "系统设备号:" + code + ";" + name;
     }
+
+
+    /**
+     * 展示一个错误的界面
+     *
+     * @param _context
+     * @param _title
+     * @param _msg
+     */
+    @SuppressLint("ResourceType")
+    public static void showError(Context _context, String _title, String _msg) {
+        /*没有登录*/
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(_context, SweetAlertDialog
+                .ERROR_TYPE);
+        sweetAlertDialog.setContentTextSize(13);
+        sweetAlertDialog.setContentText(_msg);
+        sweetAlertDialog.setTitle(_title);
+        sweetAlertDialog.setConfirmButtonTextColor(Color.WHITE);
+        sweetAlertDialog.setConfirmButtonBackgroundColor(Color.parseColor(_context.getResources()
+                .getString(R.color.ThemeColor)));
+        sweetAlertDialog.setConfirmButton("关闭", new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                sweetAlertDialog.dismiss();
+            }
+        });
+        sweetAlertDialog.show();
+    }
+
+    @SuppressLint("ResourceType")
+    public static void showConfirm(Context _context, String _title, String _msg, SweetAlertDialog
+            .OnSweetClickListener _click) {
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(_context, SweetAlertDialog
+                .WARNING_TYPE);
+        sweetAlertDialog.setContentTextSize(13);
+        sweetAlertDialog.setContentText(_msg);
+        sweetAlertDialog.setTitle(_title);
+        sweetAlertDialog.setConfirmButtonTextColor(Color.WHITE);
+        sweetAlertDialog.setConfirmButtonBackgroundColor(Color.parseColor(_context.getResources()
+                .getString(R.color.ThemeColor)));
+        sweetAlertDialog.setConfirmButton("确定", _click);
+        sweetAlertDialog.show();
+    }
+
+    @SuppressLint("ResourceType")
+    public static void showDelete(Context _context, String _title, String _msg, SweetAlertDialog
+            .OnSweetClickListener _click) {
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(_context, SweetAlertDialog
+                .SUCCESS_TYPE);
+        sweetAlertDialog.setContentTextSize(13);
+        sweetAlertDialog.setContentText(_msg);
+        sweetAlertDialog.setTitle(_title);
+        sweetAlertDialog.setConfirmButtonTextColor(Color.WHITE);
+        sweetAlertDialog.setConfirmButtonBackgroundColor(Color.parseColor(_context.getResources()
+                .getString(R.color.ThemeColor)));
+        sweetAlertDialog.setConfirmButton("确定", _click);
+        sweetAlertDialog.show();
+    }
+
+
 }

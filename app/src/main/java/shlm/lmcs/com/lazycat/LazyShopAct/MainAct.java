@@ -78,7 +78,22 @@ public class MainAct extends LazyCatAct {
         SystemVip systemVip = new SystemVip(MainAct.this);
         systemVip.Start(new SystemVip.OnVipcheck() {
             @Override
-            public void onCheckdone(int _vip) {
+            public void onIsvip() {
+
+            }
+
+            @Override
+            public void onIsnovip() {
+
+            }
+
+            @Override
+            public void onIsnologin() {
+
+            }
+
+            @Override
+            public void onIslogin() {
 
             }
         });

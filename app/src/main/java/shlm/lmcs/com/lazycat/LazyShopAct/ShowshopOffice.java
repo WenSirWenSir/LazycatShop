@@ -503,44 +503,54 @@ public class ShowshopOffice extends LazyCatAct {
         SystemVip systemVip = new SystemVip(ShowshopOffice.this);
         systemVip.Start(new SystemVip.OnVipcheck() {
             @Override
-            public void onCheckdone(int _vip) {
-                if (_vip == SystemVip.USER_IS_VIP) {
-                    IsVip = true;
-                } else if (_vip == SystemVip.USER_NOT_VIP) {
-                    IsVip = false;
-                } else if (_vip == SystemVip.USER_NO_LOGIN) {
-                    //不做处理  是没有登录的界面  用来处理
-                    SystemMonitor.SaveTag(ShowshopOffice.this, SystemMonitor.TAG_LOG, MSG,
-                            "用户没有登录,点击了发送订货单");
-                }
+            public void onIsvip() {
+                IsVip = true;
 
-                if (shopvalues.get_static().equals(LocalValues.VALUES_SHOPPAGE.ONLY_VIP) &&
-                        !IsVip) {
-                    /**
-                     * 不是VIP  就告诉用户不能订购商品
-                     */
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ShowshopOffice.this);
-                    View item = LayoutInflater.from(getApplicationContext()).inflate(R.layout
-                            .alert_message, null);
-                    builder.setView(item);
-                    TextUnt.with(item, R.id.alert_messageTitle).setText("购买限制");
-                    TextUnt.with(item, R.id.alert_messageText).setText(getResources().getString(R
-                            .string.onVipcantOrder));
-                    TextUnt.with(item, R.id.alert_messageBtnConfirm).setText("我已了解").setTag
-                            (builder.show()).setOnClick(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            AlertDialog alertDialog = (AlertDialog) v.getTag();
-                            alertDialog.dismiss();
+            }
 
-                        }
-                    });
-                } else {
-                    /*不是VIP的商品提交数据*/
-                    AlertOrderPage();
-                }
+            @Override
+            public void onIsnovip() {
+                IsVip = false;
+
+
+            }
+
+            @Override
+            public void onIsnologin() {
+                SystemMonitor.SaveTag(ShowshopOffice.this, SystemMonitor.TAG_LOG, MSG,
+                        "用户没有登录,点击了发送订货单");
+            }
+
+            @Override
+            public void onIslogin() {
+
             }
         });
+        if (shopvalues.get_static().equals(LocalValues.VALUES_SHOPPAGE.ONLY_VIP) &&
+                !IsVip) {
+            /**
+             * 不是VIP  就告诉用户不能订购商品
+             */
+            AlertDialog.Builder builder = new AlertDialog.Builder(ShowshopOffice.this);
+            View item = LayoutInflater.from(getApplicationContext()).inflate(R.layout
+                    .alert_message, null);
+            builder.setView(item);
+            TextUnt.with(item, R.id.alert_messageTitle).setText("购买限制");
+            TextUnt.with(item, R.id.alert_messageText).setText(getResources().getString(R
+                    .string.onVipcantOrder));
+            TextUnt.with(item, R.id.alert_messageBtnConfirm).setText("我已了解").setTag
+                    (builder.show()).setOnClick(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog alertDialog = (AlertDialog) v.getTag();
+                    alertDialog.dismiss();
+
+                }
+            });
+        } else {
+            /*不是VIP的商品提交数据*/
+            AlertOrderPage();
+        }
 
     }
 
