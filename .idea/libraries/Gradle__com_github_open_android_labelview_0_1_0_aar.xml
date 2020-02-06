@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.open-android:labelview:0.1.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/labelview-0.1.0.aar/990d48a50c5c0bc4d60f0fc3f091871b/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/labelview-0.1.0.aar/990d48a50c5c0bc4d60f0fc3f091871b/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.open-android/labelview/0.1.0/6ee3571e7e331866dfc227bd7e81369c016d023d/labelview-0.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
