@@ -54,8 +54,8 @@ public class Net {
      * @param mOnVisitInterServiceListener 监听回调
      * @param kvs                          参数对,没有就直接用NULL
      */
-    public static void doGet(final Context context, String tUrl, final Net
-            .onVisitInterServiceListener mOnVisitInterServiceListener, String... kvs) {
+    public static void doGet(final Context context, String tUrl,
+                             final Net.onVisitInterServiceListener mOnVisitInterServiceListener, String... kvs) {
         if (!Tools.isIntentConnect(context)) {
             //网络无连接 就不做什么操作了
             if (mOnVisitInterServiceListener != null) {
@@ -63,8 +63,7 @@ public class Net {
             }
             return;
         } else {
-            final WaitDialog.RefreshDialog refreshDialog = mOnVisitInterServiceListener
-                    .onStartLoad();
+            final WaitDialog.RefreshDialog refreshDialog = mOnVisitInterServiceListener.onStartLoad();
 
             final StringBuffer kvsBuffer = new StringBuffer();
             if (kvs != null && kvs.length > 1) {
@@ -80,18 +79,16 @@ public class Net {
                 @Override
                 protected String doInBackground(String... urls) {
                     try {
-                        HttpURLConnection con = (HttpURLConnection) new URL(urls[0].trim()
-                                .toString() + "?" + kvsBuffer.toString()).openConnection();
-                        Log.i(Config.DEBUG, "访问网络地址:" + urls[0].trim().toString() + "?" +
-                                kvsBuffer.toString());
+                        HttpURLConnection con =
+                                (HttpURLConnection) new URL(urls[0].trim().toString() + "?" + kvsBuffer.toString()).openConnection();
+                        Log.i(Config.DEBUG, "访问网络地址:" + urls[0].trim().toString() + "?" + kvsBuffer.toString());
                         con.setRequestMethod("GET");
                         con.setConnectTimeout(5000);
                         con.setReadTimeout(5000);
                         con.connect();
                         if (con != null) {
                             InputStream is = con.getInputStream();
-                            BufferedReader bufferedReader = new BufferedReader(new
-                                    InputStreamReader(is));
+                            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
                             StringBuffer sb = new StringBuffer();
                             String ReadLine = "";
                             while ((ReadLine = bufferedReader.readLine()) != null) {
@@ -143,8 +140,8 @@ public class Net {
      * 获取XML文件的网络访问
      */
     @SuppressLint("StaticFieldLeak")
-    public static void doGetXml(Context mContext, String url, final ProgramInterface
-            .XMLDomServiceInterface xmlDomServiceInterface, String... kvs) {
+    public static void doGetXml(Context mContext, String url,
+                                final ProgramInterface.XMLDomServiceInterface xmlDomServiceInterface, String... kvs) {
 
         /**
          * 判断是否没有网络访问
@@ -177,8 +174,7 @@ public class Net {
                     InputStream in = null;
                     try {
                         URL url = new URL(urls[0].trim().toString() + "?" + kvsBuffer.toString());
-                        Log.i(Config.DEBUG, "网络访问的地址" + urls[0].trim().toString() + "?" +
-                                kvsBuffer.toString());
+                        Log.i(Config.DEBUG, "网络访问的地址" + urls[0].trim().toString() + "?" + kvsBuffer.toString());
                         if (url != null) {
                             HttpURLConnection con = (HttpURLConnection) url.openConnection();
                             con.setConnectTimeout(2000);
@@ -193,8 +189,8 @@ public class Net {
                                         if (con.getHeaderField(i).indexOf("text/html") != -1) {
                                             Log.e(Config.DEBUG, "应该要用json解析");
                                             isJson = true;
-                                            BufferedReader bufferedReader = new BufferedReader
-                                                    (new InputStreamReader(con.getInputStream()));
+                                            BufferedReader bufferedReader =
+                                                    new BufferedReader(new InputStreamReader(con.getInputStream()));
                                             String len;
                                             StringBuffer stringBuffer = new StringBuffer();
                                             while ((len = bufferedReader.readLine()) != null) {
@@ -248,13 +244,11 @@ public class Net {
      * @param programInterface 接口信息
      * @param xmldata          xml数据
      */
-    public static void doPostXml(String url, final ProgramInterface programInterface, final
-    String xmldata) {
+    public static void doPostXml(String url, final ProgramInterface programInterface, final String xmldata) {
         final WaitDialog.RefreshDialog _refreshDialog;
-        if(programInterface != null){
+        if (programInterface != null) {
             _refreshDialog = programInterface.onStartLoad();
-        }
-        else{
+        } else {
             _refreshDialog = null;
         }
         new AsyncTask<String, Void, String>() {
@@ -289,8 +283,7 @@ public class Net {
                     int code = conn.getResponseCode();
                     if (code == 200) {
                         InputStream is = conn.getInputStream();
-                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader
-                                (is));
+                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
                         StringBuffer sb = new StringBuffer();
                         String ReadLine = "";
                         while ((ReadLine = bufferedReader.readLine()) != null) {
@@ -341,8 +334,7 @@ public class Net {
 
     }
 
-    public static void doGetimg(final LOAD_IMAGEPAGE imgfile, final ProgramInterface.doGetImg
-            _doGetimg) {
+    public static void doGetimg(final LOAD_IMAGEPAGE imgfile, final ProgramInterface.doGetImg _doGetimg) {
         new AsyncTask<String, Void, Bitmap>() {
             @Override
             protected Bitmap doInBackground(String... imgurl) {
@@ -415,10 +407,9 @@ public class Net {
                     //获取文件大小
                     int size = conn.getContentLength();
                     is = conn.getInputStream();
-                    fos = new FileOutputStream(new File(Environment.getExternalStorageDirectory()
-                            + "/yunCanku.apk"));
-                    Log.i("Net.java[+]", "下载的APK文件路径:" + new File(Environment
-                            .getExternalStorageDirectory() + "/yunCanku.apk"));
+                    fos = new FileOutputStream(new File(Environment.getExternalStorageDirectory() + "/yunCanku.apk"));
+                    Log.i("Net.java[+]", "下载的APK文件路径:" + new File(Environment.getExternalStorageDirectory() +
+                            "/yunCanku.apk"));
                     bis = new BufferedInputStream(is);
                     byte[] buffer = new byte[1024];
                     int len;
@@ -444,14 +435,12 @@ public class Net {
                     /*开始要求用户安装新的程序*/
                     Log.i("Net.java[+]", "下载APK成功");
                     Intent i = new Intent();
-                    Uri contentUr = FileProvider.getUriForFile(_context, "shlm.lmcs.com.lazycat"
-                            + ".fileprovider", new File(Environment.getExternalStorageDirectory()
-                            + "/yunCanku.apk"));
+                    Uri contentUr = FileProvider.getUriForFile(_context, "shlm.lmcs.com.lazycat" + ".fileprovider",
+                            new File(Environment.getExternalStorageDirectory() + "/yunCanku.apk"));
                     Log.i("Net.java[+]", contentUr.toString());
                     i.setDataAndType(contentUr, "application/vnd.android.package-archive");
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent
-                            .FLAG_GRANT_READ_URI_PERMISSION);
+                    i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     _context.startActivity(i);
                 } else {
                     Toast.makeText(_context, "无法下载更新文件", Toast.LENGTH_SHORT).show();

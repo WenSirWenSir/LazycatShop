@@ -125,6 +125,8 @@
     <orderEntry type="library" name="Gradle: com.github.gzu-liyujiang.AndroidPicker:WheelPicker:1.5.6@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.itsnows:android-upgrade:1.2.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.makeramen:roundedimageview:2.2.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40@aar" level="project" />
+    <orderEntry type="library" name="Gradle: jp.wasabeef:blurry:2.1.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.gzu-liyujiang.AndroidPicker:Common:1.5.6@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-v4:25.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-media-compat:25.0.1@aar" level="project" />
