@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.florent37:longshadow:1.0.1@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/longshadow-1.0.1.aar/d6ef5fe57ad6fc113da340cc857380ec/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/longshadow-1.0.1.aar/d6ef5fe57ad6fc113da340cc857380ec/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.florent37/longshadow/1.0.1/c820c0f9be0988a3505d7b8a4aa64355955e7fbe/longshadow-1.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

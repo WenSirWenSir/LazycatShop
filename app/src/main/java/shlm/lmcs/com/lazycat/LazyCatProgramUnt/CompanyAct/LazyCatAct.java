@@ -27,6 +27,9 @@ public class LazyCatAct extends Activity {
     private Boolean isBackTwo = false;//退出再按一次
     private Boolean isBackOk = false;
 
+    private boolean isBacklistener = false;
+    private onBacklistener _onBacklistener;/*监听退回*/
+
     /**
      * 打开一个窗口
      *
@@ -45,8 +48,7 @@ public class LazyCatAct extends Activity {
     /**
      *
      */
-    protected void LeftCompanyActStartActivityForResult(Class<?> mClass, Boolean ColseF, int
-            requestCode) {
+    protected void LeftCompanyActStartActivityForResult(Class<?> mClass, Boolean ColseF, int requestCode) {
         Intent i = new Intent();
         i.setClass(this, mClass);
         startActivityForResult(i, requestCode);
@@ -58,8 +60,7 @@ public class LazyCatAct extends Activity {
     /**
      * 打开一个窗口 并且传入值
      */
-    protected void LazyCatStartActivityWithBundler(Class<?> Bclass, Boolean ColoseF, String...
-            values) {
+    protected void LazyCatStartActivityWithBundler(Class<?> Bclass, Boolean ColoseF, String... values) {
         Intent intent = new Intent();
         for (int i = 0; i < values.length; i += 2) {
             intent.putExtra(values[i], values[i + 1]);
@@ -167,6 +168,12 @@ public class LazyCatAct extends Activity {
 
     }
 
+    protected void setBackStatic(Boolean i, onBacklistener _onBack) {
+        isBacklistener = i;
+        _onBacklistener = _onBack;
+    }
+
+
     @Override
     public void onBackPressed() {
         /*判断是否需要退出提示*/
@@ -179,7 +186,15 @@ public class LazyCatAct extends Activity {
             }
 
         } else {
-            super.onBackPressed();
+            if (isBacklistener) {
+                /*如果回调返回可以关闭 就关闭该窗口*/
+                if (this._onBacklistener.onBack()) {
+                    super.onBackPressed();
+                } else {
+
+                }
+
+            }
         }
     }
 
@@ -189,8 +204,7 @@ public class LazyCatAct extends Activity {
             v.setSystemUiVisibility(View.GONE);
         } else if (Build.VERSION.SDK_INT >= 19) {
             View decorView = getWindow().getDecorView();
-            int options = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View
-                    .SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+            int options = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
             decorView.setSystemUiVisibility(options);
         }
     }
@@ -225,5 +239,10 @@ public class LazyCatAct extends Activity {
                 finish();
             }
         });
+    }
+
+
+    public interface onBacklistener {
+        Boolean onBack();
     }
 }
