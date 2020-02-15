@@ -195,6 +195,9 @@ public class LazyCatAct extends Activity {
                 }
 
             }
+            else{
+                super.onBackPressed();
+            }
         }
     }
 

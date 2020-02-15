@@ -11,9 +11,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -26,6 +25,7 @@ import java.util.TimerTask;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;
+import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyClass.SensorManagerHelper;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.TextUnt;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyTools.XmlBuilder;
 import shlm.lmcs.com.lazycat.LazyCatProgramUnt.Factory.WaitDialog;
@@ -90,6 +90,7 @@ public class lazyCatLogAct extends LazyCatAct {
         /**
          * 测试代码区
          */
+
 
         LocalValues.HTTP_ADDRS http_addrs = new LocalValues.HTTP_ADDRS(getApplicationContext());
         XmlBuilder.XmlInstance xmlInitPage = XmlBuilder.getXmlinstanceBuilder(true);
@@ -164,14 +165,14 @@ public class lazyCatLogAct extends LazyCatAct {
                 public void run() {
                     handler.sendMessage(new Message());
                 }
-            }, 1600);
+            }, 1500);
 
             /**
              * 展示引导界面  引导用户了解云仓库的运营模式
              */
 
         } else {
-            Tools.showConfirm(getApplicationContext(), "请求权限", "检测到您没有开启定位权限,请您开启定位权限用来获取您的店铺位置",
+            Tools.showConfirm(lazyCatLogAct.this, "请求权限", "检测到您没有开启定位权限,请您开启定位权限用来获取您的店铺位置",
                     new SweetAlertDialog.OnSweetClickListener() {
                 @Override
                 public void onClick(SweetAlertDialog sweetAlertDialog) {
@@ -201,7 +202,7 @@ public class lazyCatLogAct extends LazyCatAct {
                 }, 1600);
             } else {
                 /*地址获取失败 直接告知 并且退出程序*/
-                Tools.showError(getApplicationContext(), "错误信息", "没有获取到您的地址");
+                Tools.showError(lazyCatLogAct.this, "错误信息", "没有获取到您的地址");
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
