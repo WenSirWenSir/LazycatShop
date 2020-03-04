@@ -39,6 +39,7 @@ import shlm.lmcs.com.lazycat.LazyShopAct.SystemAct.SystemGuidepage;
 import shlm.lmcs.com.lazycat.LazyShopTools.LocalProgramTools;
 import shlm.lmcs.com.lazycat.LazyShopValues.LocalValues;
 import shlm.lmcs.com.lazycat.TerminalSystemMO.Record.SystemVs;
+import shlm.lmcs.com.lazycat.TerminalSystemOS.OS;
 
 import static shlm.lmcs.com.lazycat.LazyCatProgramUnt.Tools.isPermission;
 
@@ -77,10 +78,10 @@ public class lazyCatLogAct extends LazyCatAct {
                         LazyCatActStartActivity(SystemGuidepage.class, true);
                     } else {
                         //引导过了  进入广告界面
-                        LazyCatActStartActivity(PromotionAct.class, true);
+                            LazyCatActStartActivity(PromotionAct.class, true);
                     }
                 } else {
-                    LazyCatActStartActivity(MainAct.class, true);
+                     LazyCatActStartActivity(MainAct.class, true);
                 }
                 super.handleMessage(msg);
             }
@@ -90,14 +91,13 @@ public class lazyCatLogAct extends LazyCatAct {
         /**
          * 测试代码区
          */
-
-
-        LocalValues.HTTP_ADDRS http_addrs = new LocalValues.HTTP_ADDRS(getApplicationContext());
-        XmlBuilder.XmlInstance xmlInitPage = XmlBuilder.getXmlinstanceBuilder(true);
-        Net.doPostXml(http_addrs.HTTP_ADDR_ABOUTTO_AS, new ProgramInterface() {
+        XmlBuilder.XmlInstance xmlInstance = XmlBuilder.getXmlinstanceBuilder(true);
+        xmlInstance.overDom();
+        Log.i(MSG, "发送的XML数据:" + xmlInstance.getXmlTree());
+        Net.doPostXml("http://47.115.144.133/pick_system_war/getbusiness", new ProgramInterface() {
             @Override
             public void onSucess(String data, int code, WaitDialog.RefreshDialog _refreshDialog) {
-
+                Log.i(MSG, "网络JavaWeb测试返回:" + data.trim());
             }
 
             @Override
@@ -109,27 +109,9 @@ public class lazyCatLogAct extends LazyCatAct {
             public void onFaile(String data, int code) {
 
             }
-        }, "");
+        }, xmlInstance.getXmlTree().trim());
 
 
-/*
-        OS._saveOrder(lazyCatLogAct.this, "1", "onlyid", "122", new OS.onSaveorder() {
-            @Override
-            public void onSaveOk() {
-
-            }
-
-            @Override
-            public void onSaveError() {
-
-            }
-
-            @Override
-            public void onSaveNologin() {
-
-            }
-        });
-*/
         /*保存系统的访问记录*/
         SystemVs._start(lazyCatLogAct.this);
         /*找到Ico控件*/

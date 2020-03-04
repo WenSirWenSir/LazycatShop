@@ -29,15 +29,12 @@ public class XmlBuilder {
         if (haveingUserdata) {
             /*需要加入用户的账户和密码*/
             xmlInstance.initDom();
-            LocalProgramTools.UserToolsInstance userToolsInstance = LocalProgramTools
-                    .getUserToolsInstance();/*获取工具类*/
+            LocalProgramTools.UserToolsInstance userToolsInstance = LocalProgramTools.getUserToolsInstance();/*获取工具类*/
             if (userToolsInstance.isLogin()) {
-                xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, userToolsInstance
-                        .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE
-                                .ACTION_LOCALUSERPAGE_ACCOUNT));
-                xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_TOKEN, userToolsInstance
-                        .GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE
-                                .ACTION_LOCALUSERPAGE_TOKEN));
+                xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE,
+                        userToolsInstance.GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_ACCOUNT));
+                xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_TOKEN,
+                        userToolsInstance.GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_TOKEN));
 
             } else {
                 xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, "");
@@ -46,6 +43,35 @@ public class XmlBuilder {
             }
         }
         return xmlInstance;
+    }
+
+
+    /**
+     * 获取java服务器的XML数据构造器
+     *
+     * @param haveingUserdata
+     * @return
+     */
+    public static XmlInstance getJavaXmlinstanceBuilder(boolean haveingUserdata) {
+        xmlInstance = new XmlInstance();
+        if (haveingUserdata) {
+            /*需要加入用户的账户和密码*/
+            xmlInstance.initJaveDom();
+            LocalProgramTools.UserToolsInstance userToolsInstance = LocalProgramTools.getUserToolsInstance();/*获取工具类*/
+            if (userToolsInstance.isLogin()) {
+                xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE,
+                        userToolsInstance.GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_ACCOUNT));
+                xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_TOKEN,
+                        userToolsInstance.GetUserpageOnAction(LocalAction.ACTION_LOCALUSERPAGE.ACTION_LOCALUSERPAGE_TOKEN));
+
+            } else {
+                xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_PHONE, "");
+                xmlInstance.setXmlTree(LocalAction.ACTION_LOGIN.ACTION_TOKEN, "");
+                Log.e("XmlBuilder.java[+]", "增加用户的树形结构出现用户没有登录");
+            }
+        }
+        return xmlInstance;
+
     }
 
     /**
@@ -91,10 +117,28 @@ public class XmlBuilder {
         }
 
         /**
+         * 初始化JAVADome层
+         */
+
+        public void initJaveDom() {
+            xmlDom = new StringBuilder();
+            xmlDom.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");/*添加头部信息*/
+            xmlDom.append("<xml><body>");
+        }
+
+        /**
          * 结束Xml的树
          */
         public void overDom() {
             xmlDom.append("</xml>");
+        }
+
+
+        /**
+         * 结束Java服务格式的XMLdone
+         */
+        public void overJavaDom() {
+            xmlDom.append("</body></xml>");
         }
 
 

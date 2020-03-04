@@ -1,1 +1,1 @@
-/* * 我会用双手书写我来到这个世界的意义 */package shlm.lmcs.com.lazycat.SuperSystemOS;/** * 地勤物流管理系统 */public class Logistics {}
+/* * 我会用双手书写我来到这个世界的意义 */package shlm.lmcs.com.lazycat.SuperSystemOS;import android.os.Bundle;import android.support.annotation.Nullable;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;/** * 地勤物流管理系统 */public class Logistics extends LazyCatAct {    @Override    protected void onCreate(@Nullable Bundle savedInstanceState) {        super.onCreate(savedInstanceState);    }}
