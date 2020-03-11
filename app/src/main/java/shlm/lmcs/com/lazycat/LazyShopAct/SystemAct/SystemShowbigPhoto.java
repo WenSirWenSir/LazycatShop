@@ -1,0 +1,1 @@
+package shlm.lmcs.com.lazycat.LazyShopAct.SystemAct;import shlm.lmcs.com.lazycat.LazyCatProgramUnt.CompanyAct.LazyCatAct;/** * 展示更大一些的图片 */public class SystemShowbigPhoto extends LazyCatAct {}
