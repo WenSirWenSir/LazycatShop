@@ -154,8 +154,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ico_admin" />
-                            <entry key="sourceFile" value="$USER_HOME$/Downloads/shouquanzhanghao-yimidida-.svg" />
+                            <entry key="outputName" value="ico_downarrow" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/shixiangxiajiantou-.svg" />
                           </map>
                         </option>
                       </PersistentState>
