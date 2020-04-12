@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.ShogoMizumoto:ZDepthShadowLayout:1.0.4@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ZDepthShadowLayout-1.0.4.aar/c4b57207f1efd6b02d62142593fbe972/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ZDepthShadowLayout-1.0.4.aar/c4b57207f1efd6b02d62142593fbe972/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ZDepthShadowLayout-1.0.4.aar/51814b8e9bddf85d9bd1f794c27699cd/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/ZDepthShadowLayout-1.0.4.aar/51814b8e9bddf85d9bd1f794c27699cd/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
